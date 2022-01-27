@@ -1,16 +1,14 @@
 html,
 body {
+  /* height: 100%; is necessary here for so that #app will be 100% */
+  height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Open Sans", Hevetica, Verdana, Arial, sans-serif;
+  font-size: 14px;
+  color: #212e35;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
+*, *:before, *:after {
+  box-sizing: inherit;
 }
