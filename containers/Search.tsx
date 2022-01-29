@@ -3,6 +3,7 @@ import { loadGoogle } from '../lib/google'
 import type { NextPage } from 'next'
 import ListingMap from '../containers/ListingMap'
 
+// TODO: figure out how to add this to environment file per next.js docs
 declare global {
   interface Window { google: any; }
 }
