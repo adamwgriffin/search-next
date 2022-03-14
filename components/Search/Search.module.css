@@ -1,0 +1,14 @@
+#search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.resultsAndMap {
+  display: flex;
+  height: 100%;
+}
+
+.searchResults {
+  width: 50%;
+}

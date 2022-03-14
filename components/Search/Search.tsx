@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react"
-import { loadGoogle } from '../lib/google'
+import { loadGoogle } from '../../lib/google'
 import type { NextPage } from 'next'
-import ListingMap from '../containers/ListingMap'
-
-// TODO: figure out how to add this to environment file per next.js docs
-declare global {
-  interface Window { google: any; }
-}
+import Filters from '../form/Filters/Filters'
+import ListingMap from '../ListingMap'
+import styles from './Search.module.css'
 
 const defaultLocations = [
   {
@@ -51,38 +48,20 @@ const initializeGoogleMaps = async (setGoogleLoaded: Function) => {
 
 const searchTemplate = () => {
   return (
-    <>
-      <div id="search">
-        <div className="form-and-search-results">
+    <div id={styles.search}>
+      <Filters />
+      <div className={styles.resultsAndMap}>
+        <div className={styles.searchResults}>
+          <ul>
+            <li>Listing 1</li>
+            <li>Listing 2</li>
+            <li>Listing 3</li>
+            <li>Listing 4</li>
+          </ul>
         </div>
         <ListingMap />
       </div>
-
-      <style jsx>{`
-        #search {
-          /* if html, body & parent are all height 100% & parent is display: flex, then #search will also be 100% wthout
-          having to specify it's own height. display: flex in turn allows this element's child, .search-results to also
-          have 100% height without specifying it. flex also causes the divs for each column to sit side-by-side */
-          display: flex;
-          /* width is necessary, otherwise the whole layout shrinks down */
-          width: 100%;
-        }
-
-        .form-and-search-results {
-          display: flex;
-          flex-direction: column;
-          width: 65%;
-          background: #f6f6f6;
-        }
-
-        .listings-loading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 2rem;
-        }
-      `}</style>
-    </>
+    </div>
   )
 }
 

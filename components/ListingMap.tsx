@@ -1,19 +1,19 @@
 import type { NextPage } from 'next'
 import { mapOptions } from '../config/google'
-import GoogleMap from '../components/GoogleMap'
+import GoogleMap from './GoogleMap'
 
 const ListingMap: NextPage = () => {
   return (
     <>
-      <div id="listing-map">
+      <div id="listingMap">
         <GoogleMap options={mapOptions}>
         </GoogleMap>
       </div>
       
       <style jsx>{`
-        #listing-map {
+        #listingMap {
           position: relative;
-          width: 35%;
+          width: 50%;
         }
       `}</style>
     </>

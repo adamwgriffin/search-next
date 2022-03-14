@@ -25,6 +25,7 @@ const GoogleMap: NextPage<Props> = ({ options }) => {
         #google-map {
           width: 100%;
           height: 100%;
+          border-radius: .5rem;
         }
       `}</style>
     </>

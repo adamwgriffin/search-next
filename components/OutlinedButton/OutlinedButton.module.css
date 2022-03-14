@@ -1,0 +1,21 @@
+.outlinedButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #cccccc;;
+  border-radius: 6px;
+  padding: 0.6rem .8rem;
+  background: #fefefe;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+.outlinedButton:hover {
+  background: #f6f6f6;
+}
+
+.outlinedButtonHighlighted {
+  composes: outlinedButton;
+  background: rgba(4, 87, 175, 0.24);
+}
