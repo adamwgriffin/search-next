@@ -1,24 +1,28 @@
+import { useRef, useState } from 'react'
+import { useClickAway } from 'react-use'
 import type { NextPage } from 'next'
 import styles from './MenuButton.module.css'
 import OutlinedButton from '../OutlinedButton/OutlinedButton'
 import MenuOpenIcon from '../icons/MenuOpenIcon/MenuOpenIcon'
 
-type MenuButtonProps = {
-  open: boolean
-  label: string
-  onClick?: () => void
-}
+const MenuButton: NextPage<{ label: string }> = (props) => {
+  const ref = useRef(null)
+  const [open, setOpen] = useState(false)
+  useClickAway(ref, () => setOpen(false))
 
-const MenuButton: NextPage<MenuButtonProps> = (props) => {
   return (
-    <div className={styles.menuButton} onClick={props.onClick}>
-      <OutlinedButton highlighted={props.open}>
+    <div
+      ref={ref}
+      className={styles.menuButton}
+      onClick={() => setOpen(!open)}
+    >
+      <OutlinedButton highlighted={open}>
         <span className={styles.label}>
           {props.label}
         </span>
-        <MenuOpenIcon open={props.open} />
+        <MenuOpenIcon open={open} />
       </OutlinedButton>
-      <div className={props.open ? styles.open : styles.closed}>
+      <div className={open ? styles.open : styles.closed}>
         {props.children}
       </div>
     </div>
