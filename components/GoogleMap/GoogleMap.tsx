@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import type { NextPage } from 'next'
+import styles from './GoogleMap.module.css'
 
 declare global {
   interface Window { google: any; }
@@ -18,17 +19,7 @@ const GoogleMap: NextPage<Props> = ({ options }) => {
   })
 
   return (
-    <>
-      <div ref={mapEl} id="google-map"></div>
-
-      <style jsx>{`
-        #google-map {
-          width: 100%;
-          height: 100%;
-          border-radius: .5rem;
-        }
-      `}</style>
-    </>
+    <div ref={mapEl} id={styles.googleMap}></div>
   )
 }
 

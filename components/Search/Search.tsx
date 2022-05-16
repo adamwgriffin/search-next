@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import { loadGoogle } from '../../lib/google'
 import type { NextPage } from 'next'
+import Header from '../Header/Header'
 import Filters from '../form/Filters/Filters'
-import ListingMap from '../ListingMap'
+import SearchResults from '../SearchResults/SearchResults'
+import ListingMap from '../ListingMap/ListingMap'
 import styles from './Search.module.css'
 
 const defaultLocations = [
@@ -48,17 +50,17 @@ const initializeGoogleMaps = async (setGoogleLoaded: Function) => {
 
 const searchTemplate = () => {
   return (
-    <div id={styles.search}>
-      <Filters />
-      <div className={styles.resultsAndMap}>
-        <div className={styles.searchResults}>
-          <ul>
-            <li>Listing 1</li>
-            <li>Listing 2</li>
-            <li>Listing 3</li>
-            <li>Listing 4</li>
-          </ul>
-        </div>
+    <div className={styles.search}>
+      <div className={styles.header}>
+        <Header />
+      </div>
+      <div className={styles.filters}>
+        <Filters />
+      </div>
+      <div className={styles.searchResults}>
+        <SearchResults />
+      </div>
+      <div className={styles.map}>
         <ListingMap />
       </div>
     </div>

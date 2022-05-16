@@ -1,0 +1,5 @@
+.listingMap {
+  position: relative;
+  /* 100% height required for both ListingMap and GoogleMap, otherwise it doesn't display */
+  height: 100%;
+}

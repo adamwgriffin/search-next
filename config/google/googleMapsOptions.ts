@@ -9,8 +9,8 @@ export const mapLoaderOptions = Object.freeze({
 // seems that we can't use Object.freeze on this object, otherwise the map won't load
 export const mapOptions = {
   center: {
-    lat: 47.6847,
-    lng: -122.3848,
+    lat: 37.76022,
+    lng: -122.41415
   },
   clickableIcons: false,
   zoom: 11,

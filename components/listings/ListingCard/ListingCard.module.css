@@ -1,0 +1,33 @@
+.listingCard {
+  cursor: pointer;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px 0px;
+}
+
+.listingCard:hover {
+  box-shadow: 0 0 7px 0 rgba(0,0,0,.35);
+}
+
+.details {
+  padding: 1rem;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.stats {
+  display: flex;
+}
+
+.price,
+.stats {
+  margin-bottom: .5rem;
+}
+
+.beds,
+.baths,
+.size {
+  margin-right: .5rem;
+}
