@@ -1,0 +1,7 @@
+.bedsAndBaths {
+  padding: 1rem;
+  min-height: 11.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
