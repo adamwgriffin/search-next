@@ -14,9 +14,8 @@ const MenuButton: NextPage<{ label: string }> = (props) => {
     <div
       ref={ref}
       className={styles.menuButton}
-      onClick={() => setOpen(!open)}
     >
-      <OutlinedButton highlighted={open}>
+      <OutlinedButton highlighted={open} onClick={() => setOpen(!open)}>
         <span className={styles.label}>
           {props.label}
         </span>
