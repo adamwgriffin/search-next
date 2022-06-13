@@ -4,7 +4,7 @@ import styles from './Filters.module.css'
 import Price from '../Price/Price'
 import Beds from '../Beds/BedsAndBaths'
 import PropertyType from '../PropertyType/PropertyType'
-import { PropertyTypeParams } from '../../../lib/property_types'
+import { PropertyTypes } from '../../../lib/property_types'
 import More from '../More/More'
 
 const Filters: NextPage = () => {
@@ -23,7 +23,7 @@ const Filters: NextPage = () => {
       <Price />
       <Beds countArr={[0, 1, 2, 3, 4, 5]} />
       <PropertyType
-        propertyTypes={PropertyTypeParams}
+        propertyTypes={PropertyTypes}
         params={selectedPropertyTypes}
         onChange={handlePropertyTypeChange}
       />

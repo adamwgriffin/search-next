@@ -6,8 +6,8 @@ import { PropertyTypesInterface } from '../../../lib/property_types'
 import MenuButton from '../../MenuButton/MenuButton'
 
 interface PropertyTypeProps {
-  propertyTypes: PropertyTypesInterface
-  params: number[]
+  propertyTypes: ReadonlyArray<PropertyTypesInterface>
+  params: Array<number|string>
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 
@@ -15,7 +15,7 @@ const PropertyTypes: NextPage<PropertyTypeProps> = (props) => {
   return (
     <MenuButton label="Home Type">
       <ul className={styles.propertyTypesList}>
-        {Object.entries(props.propertyTypes).map(([name, id]) => (
+        {props.propertyTypes.map(({name, label, id}) => (
           <li key={id} className={styles.propertyTypesListItem}>
             <input
               type='checkbox'
@@ -27,7 +27,7 @@ const PropertyTypes: NextPage<PropertyTypeProps> = (props) => {
               onChange={props.onChange}
             />
             <label htmlFor={name} className={styles.propertyTypesLabel}>
-              {name}
+              {label}
             </label>
           </li>
         ))}

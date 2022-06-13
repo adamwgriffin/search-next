@@ -1,23 +1,48 @@
 export interface PropertyTypesInterface {
-  residential?: number
-  condo?: number
-  co_op?: number
-  townhouse?: number
-  manufactured?: number
-  land?: number
-  farm_and_ranch?: number
-  multi_family?: number
-  rental?: number
+  readonly id: number|string
+  readonly name: string
+  readonly label: string
 }
 
-export const PropertyTypeParams: PropertyTypesInterface = Object.freeze({
-  residential: 1,
-  condo: 2,
-  co_op: 8,
-  townhouse: 9,
-  manufactured: 4,
-  land: 3,
-  farm_and_ranch: 5,
-  multi_family: 7,
-  rental: 6
-})
+export const PropertyTypes: ReadonlyArray<PropertyTypesInterface> = Object.freeze([
+  {
+    id: 1,
+    name: 'residential',
+    label: 'Single-Family'
+  },
+  {
+    id: 2,
+    name: 'condo',
+    label: 'Condo'
+  },
+  {
+    id: 8,
+    name: 'co_op',
+    label: 'Co-Op'
+  },
+  {
+    id: 9,
+    name: 'townhouse',
+    label: 'Townhouse'
+  },
+  {
+    id: 4,
+    name: 'manufactured',
+    label: 'Manufactured'
+  },
+  {
+    id: 3,
+    name: 'land',
+    label: 'Land'
+  },
+  {
+    id: 5,
+    name: 'farm_and_ranch',
+    label: 'Farm & Ranch'
+  },
+  {
+    id: 7,
+    name: 'multi_family',
+    label: 'Multi-Family'
+  }
+])
