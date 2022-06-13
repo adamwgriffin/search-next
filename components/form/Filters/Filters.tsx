@@ -5,6 +5,7 @@ import Price from '../Price/Price'
 import Beds from '../Beds/BedsAndBaths'
 import PropertyType from '../PropertyType/PropertyType'
 import { PropertyTypes } from '../../../lib/property_types'
+import { StatusTypes } from '../../../lib/status_types'
 import More from '../More/More'
 
 const Filters: NextPage = () => {
@@ -27,7 +28,9 @@ const Filters: NextPage = () => {
         params={selectedPropertyTypes}
         onChange={handlePropertyTypeChange}
       />
-      <More />
+      <More
+        status={StatusTypes}
+      />
     </div>
   )
 }
