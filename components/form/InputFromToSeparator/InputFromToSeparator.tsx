@@ -3,7 +3,7 @@ import styles from './InputFromToSeparator.module.css'
 
 const InputFromToSeparator: NextPage = () => {
   return (
-    <span className={styles.inputFromToSeparator}>—</span>
+    <span role="presentation" className={styles.inputFromToSeparator}>—</span>
   )
 }
 

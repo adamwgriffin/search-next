@@ -13,19 +13,31 @@ const Price: NextPage<PriceProps> = (props) => {
   return (
     <MenuButton label="Price">
       <div className={styles.price}>
+        <label
+          htmlFor="pricemin"
+          className={formStyles.accesibileLabel}
+        >
+          Min Price
+        </label>
         <input
           type="text"
           placeholder='Min'
           className={formStyles.input}
-          name="pricemin"
+          id="pricemin"
           onBlur={props.onBlur}
         />
         <InputFromToSeparator />
+        <label
+          htmlFor="pricemax"
+          className={formStyles.accesibileLabel}
+        >
+          Max Price
+        </label>
         <input
           type="text"
           placeholder='Max'
           className={formStyles.input}
-          name="pricemax"
+          id="pricemax"
           onBlur={props.onBlur}
         />
       </div>

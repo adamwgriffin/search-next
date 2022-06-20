@@ -1,3 +1,7 @@
+.accesibileLabel {
+  display: none;
+}
+
 .input {
   padding: 0.6rem .8rem;
   border-radius: 0.375rem;
