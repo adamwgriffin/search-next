@@ -1,33 +1,24 @@
-import { Fragment } from 'react'
 import type { NextPage } from 'next'
 import type { CountOption } from '../../../lib/types'
+import Fieldset from '../Fieldset/Fieldset'
+import Legend from '../Legend/Legend'
+import RadioButton from '../RadioButton/RadioButton'
 import styles from './RadioButtonGroup.module.css'
 
-const RadioButtonGroup: NextPage<{ name: string, options: CountOption[] }> = ({ name, options }) => {
+export interface RadioButtonGroupProps {
+  name: string
+  label: string
+  options: CountOption[]
+}
 
-  const radioCountButton = (option: CountOption) => {
-    return (
-      <Fragment key={`${name}-radio-${option.value}`}>
-        <input
-          type="radio"
-          name={name}
-          id={`${name}_${option.value}`}
-          className={styles.radioButtonGroupInput}
-        />
-        <label
-          htmlFor={`${name}_${option.value}`}
-          className={styles.radioButtonGroupLabel}
-        >
-          {option.label}
-        </label>
-      </Fragment>
-    )
-  }
-
+const RadioButtonGroup: NextPage<RadioButtonGroupProps> = ({ name, label, options }) => {  
   return (
-    <div className={styles.radioButtonGroup}>
-      {options.map(o => radioCountButton(o))}
-    </div>
+    <Fieldset>
+      <Legend>{label}</Legend>
+      <div className={styles.radioButtonGroup}>
+        {options.map(o => <RadioButton key={`${name}-radio-${o.value}`} name={name} {...o} />)}
+      </div>
+    </Fieldset>
   )
 }
 
