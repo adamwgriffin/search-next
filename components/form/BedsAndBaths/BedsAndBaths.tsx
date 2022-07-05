@@ -4,16 +4,19 @@ import styles from './BedsAndBaths.module.css'
 import MenuButton from '../../MenuButton/MenuButton'
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
 
-const BedsAndBaths: NextPage<{ countArr: number[] }> = ({ countArr }) => {
+export interface BedsAndBathsProps {
+  countArr: number[]
+}
 
-  const countFormatted = (n: number) => {
-    return n ? `${n}+` : 'Any'
-  }
+export const countFormatted = (n: number) => {
+  return n ? `${n}+` : 'Any'
+}
 
-  const countOptions = (countArr: number[]): CountOption[] => {
-    return countArr.map(c => ({ label: countFormatted(c), value: c }) )
-  }
+export const countOptions = (countArr: number[]): CountOption[] => {
+  return countArr.map(c => ({ label: countFormatted(c), value: c }) )
+}
 
+const BedsAndBaths: NextPage<BedsAndBathsProps> = ({ countArr }) => {
   return (
     <MenuButton label="Beds & Baths">
       <div className={styles.bedsAndBaths}>
