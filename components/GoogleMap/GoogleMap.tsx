@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import type { NextPage } from 'next'
+import { googleMap, setMap } from '../../lib/google'
 import styles from './GoogleMap.module.css'
 
 declare global {
@@ -11,11 +12,12 @@ interface Props {
 }
 
 const GoogleMap: NextPage<Props> = ({ options }) => {
-  const [map, setMap] = useState(null)
   const mapEl = useRef(null)
 
   useEffect(() => {
-    if (!map) setMap(new window.google.maps.Map(mapEl.current, options))
+    if (!googleMap && mapEl.current !== null) {
+      setMap(mapEl.current, options)
+    }
   })
 
   return (
@@ -24,4 +26,3 @@ const GoogleMap: NextPage<Props> = ({ options }) => {
 }
 
 export default GoogleMap
-
