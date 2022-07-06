@@ -32,7 +32,7 @@ export const loadGoogle = async (
   setAutocompleteService()
 }
 
-export const setMap = (mapDiv: HTMLElement, opts: google.maps.MapOptions) => {
+export const setMap = (mapDiv: HTMLElement, opts: google.maps.MapOptions): google.maps.Map => {
   googleMap = new google.maps.Map(mapDiv, opts)
   // setting this here since it requires the map
   setPlacesService(googleMap)
