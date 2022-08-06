@@ -7,7 +7,7 @@ export interface RadioButtonProps extends CountOption {
   name: string
 }
 
-const RadioButton: NextPage<RadioButtonProps> = ({ name, label, value }) => {
+const RadioButton: NextPage<RadioButtonProps> = ({ name, label, value, checked }) => {
   const radioButtonId = uniqueId(`${name}_${value}_`)
   return (
     <div className={styles.radioButton}>
@@ -16,6 +16,7 @@ const RadioButton: NextPage<RadioButtonProps> = ({ name, label, value }) => {
         name={name}
         id={radioButtonId}
         className={styles.radioButtonInput}
+        defaultChecked={checked}
       />
       <label
         htmlFor={radioButtonId}

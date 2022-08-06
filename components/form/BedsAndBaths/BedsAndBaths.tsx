@@ -13,7 +13,7 @@ export const countFormatted = (n: number) => {
 }
 
 export const countOptions = (countArr: number[]): CountOption[] => {
-  return countArr.map(c => ({ label: countFormatted(c), value: c }) )
+  return countArr.map(c => ({ label: countFormatted(c), value: c, checked: (c === 0) }) )
 }
 
 const BedsAndBaths: NextPage<BedsAndBathsProps> = ({ countArr }) => {
