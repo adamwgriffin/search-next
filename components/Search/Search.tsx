@@ -7,21 +7,16 @@ import SearchResults from '../SearchResults/SearchResults'
 import ListingMap from '../ListingMap/ListingMap'
 import styles from './Search.module.css'
 
-const initializeGoogleMaps = async (setGoogleLoaded: Function) => {
-  try {
-    await loadGoogle()
-    setGoogleLoaded(true)
-  } catch (error) {
-    console.error("Unable to load Google Maps API", error)
-  }
-}
-
 const Search: NextPage = () => {
   const [googleLoaded, setGoogleLoaded] = useState(false)
 
   useEffect(() => {
-    initializeGoogleMaps(setGoogleLoaded)
-  })
+    const initializeGoogleMaps = async () => {
+      await loadGoogle()
+      setGoogleLoaded(true)
+    }
+    initializeGoogleMaps().catch(error => console.error("Unable to load Google Maps API", error))
+  }, [])
 
   const searchLayout = () => {
     return (
