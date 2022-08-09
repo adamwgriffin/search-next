@@ -1,27 +1,32 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useEffect, ReactNode } from 'react'
 import type { NextPage } from 'next'
 import { googleMap, setMap } from '../../lib/google'
 import styles from './GoogleMap.module.css'
 
 declare global {
-  interface Window { google: any; }
+  interface Window {
+    google: any
+  }
 }
 
-interface Props {
-  options: google.maps.MapOptions;
+export interface GoogleMapProps {
+  options: google.maps.MapOptions
+  children: ReactNode
 }
 
-const GoogleMap: NextPage<Props> = ({ options }) => {
+const GoogleMap: NextPage<GoogleMapProps> = ({ options, children }) => {
   const mapEl = useRef(null)
 
   useEffect(() => {
     if (!googleMap && mapEl.current !== null) {
       setMap(mapEl.current, options)
     }
-  })
+  }, [])
 
   return (
-    <div ref={mapEl} id={styles.googleMap}></div>
+    <div ref={mapEl} id={styles.googleMap}>
+      {children}
+    </div>
   )
 }
 
