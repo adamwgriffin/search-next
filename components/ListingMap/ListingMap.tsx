@@ -6,6 +6,7 @@ import GoogleMap from '../GoogleMap/GoogleMap'
 import styles from './ListingMap.module.css'
 import ListingMarker from '../ListingMarker/ListingMarker'
 import MapBoundary from '../MapBoundary/MapBoundary'
+import BoundaryControl from '../BoundaryControl/BoundaryControl'
 
 const ListingMap: NextPage = () => {
   
@@ -15,6 +16,7 @@ const ListingMap: NextPage = () => {
         {placeHolderLocations.map(l => <ListingMarker position={l} key={l.lat} /> )}
         <MapBoundary coordinates={placeholderBoundary} options={MapBoundaryOptions} />
       </GoogleMap>
+      <BoundaryControl />
     </div>
   )
 }

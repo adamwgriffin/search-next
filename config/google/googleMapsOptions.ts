@@ -16,7 +16,7 @@ export const mapOptions: google.maps.MapOptions = {
     lng: -122.41415
   },
   clickableIcons: false,
-  zoom: 11,
+  zoom: 12,
   zoomControl: true,
   mapTypeControl: false,
   scaleControl: false,
