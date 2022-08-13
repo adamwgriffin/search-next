@@ -1,6 +1,6 @@
-export const geoLayerPolygonOptions = () => ({
-  strokeColor: '#484745',
+export const MapBoundaryOptions: google.maps.PolygonOptions = {
+  strokeColor: 'MediumPurple',
   strokeOpacity: 1,
-  strokeWeight: 3,
-  fillOpacity: 0.05
-})
+  strokeWeight: 2,
+  fillOpacity: 0
+}
