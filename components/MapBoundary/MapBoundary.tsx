@@ -15,7 +15,7 @@ const MapBoundary: NextPage<MapBoundaryProps> = ({ coordinates=[], options={} })
   useEffect(() => {
     polygon.setMap(googleMap)
     polygon.setPaths(coordinates)
-    polygon.setOptions(options)
+    polygon.setOptions(options) 
     return () => polygon.setMap(null)
   })
 
