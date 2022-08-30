@@ -3,7 +3,7 @@ import { ChangeEventHandler } from 'react'
 import styles from './PropertyType.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { PropertyTypesInterface } from '../../../lib/property_types'
-import MenuButton from '../../MenuButton/MenuButton'
+import MenuButton from '../MenuButton/MenuButton'
 
 interface PropertyTypeProps {
   propertyTypes: ReadonlyArray<PropertyTypesInterface>

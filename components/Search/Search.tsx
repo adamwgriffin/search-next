@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import Header from '../Header/Header'
 import Filters from '../form/Filters/Filters'
 import SearchResults from '../SearchResults/SearchResults'
-import ListingMap from '../ListingMap/ListingMap'
+import ListingMap from '../map/ListingMap/ListingMap'
 import styles from './Search.module.css'
 
 const Search: NextPage = () => {

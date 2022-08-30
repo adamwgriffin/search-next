@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'
-import type { GoogleMapState } from '../../lib/google'
-import { googleMap, getCurrentMapState, setMap } from '../../lib/google'
+import type { GoogleMapState } from '../../../lib/google'
+import { googleMap, getCurrentMapState, setMap } from '../../../lib/google'
 import styles from './GoogleMap.module.css'
 
 declare global {

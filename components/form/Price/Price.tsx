@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { FocusEventHandler } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
-import MenuButton from '../../MenuButton/MenuButton'
+import MenuButton from '../MenuButton/MenuButton'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 interface PriceProps {

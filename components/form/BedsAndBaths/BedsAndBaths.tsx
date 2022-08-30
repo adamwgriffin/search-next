@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { CountOption } from '../../../lib/types'
 import styles from './BedsAndBaths.module.css'
-import MenuButton from '../../MenuButton/MenuButton'
+import MenuButton from '../MenuButton/MenuButton'
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
 
 export interface BedsAndBathsProps {

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { googleMap } from '../../lib/google'
+import { googleMap } from '../../../lib/google'
 import ListingMarkerIcon from '../ListingMarkerIcon/ListingMarkerIcon'
 import { ListingMarkerIconProps } from '../ListingMarkerIcon/ListingMarkerIcon'
 

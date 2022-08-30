@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import { googleMap } from '../../lib/google'
+import { googleMap } from '../../../lib/google'
 
 export interface MapBoundaryProps {
   coordinates: Array<Array<google.maps.LatLngLiteral>>

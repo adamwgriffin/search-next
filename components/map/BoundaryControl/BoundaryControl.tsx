@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import ContainedButton from '../ContainedButton/ContainedButton'
+import ContainedButton from '../../form/ContainedButton/ContainedButton'
 import styles from './BoundaryControl.module.css'
 
 const BoundaryControl: NextPage = () => {
