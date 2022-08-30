@@ -16,6 +16,12 @@ export interface PlaceResultWithStatus {
   status: google.maps.places.PlacesServiceStatus
 }
 
+export interface GoogleMapState {
+  bounds: google.maps.LatLngBoundsLiteral|undefined
+  center: google.maps.LatLngLiteral|undefined
+  zoom: number|undefined
+}
+
 let geocoder: google.maps.Geocoder
 export let googleMap: google.maps.Map
 export let autocompleteService: google.maps.places.AutocompleteService
@@ -37,6 +43,14 @@ export const setMap = (mapDiv: HTMLElement, opts: google.maps.MapOptions): googl
   // setting this here since it requires the map
   setPlacesService(googleMap)
   return googleMap
+}
+
+export const getCurrentMapState = (): GoogleMapState => {
+  return {
+    bounds: googleMap?.getBounds()?.toJSON(),
+    center: googleMap?.getCenter()?.toJSON(),
+    zoom: googleMap?.getZoom(),
+  }
 }
 
 export const setGeocoder = (geocoderInstance: google.maps.Geocoder) => {
