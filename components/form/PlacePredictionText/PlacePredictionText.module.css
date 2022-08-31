@@ -1,0 +1,12 @@
+.matched {
+  color: black;
+  font-weight: 700;
+}
+
+.mainText {
+  padding: 0 .25rem;
+}
+
+.secondaryText {
+  color: #999;
+}

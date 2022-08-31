@@ -17,6 +17,10 @@
   flex-grow: 1;
   display: flex;
   border-radius: 6px 0 0 6px;
+}
+
+.comboboxInputNoFocus {
+  composes: comboboxInput;
   /* the margin stops content from moving around when focus ring is active */
   padding: 1px;
   border-top: 1px solid #cccccc;
@@ -24,7 +28,8 @@
   border-bottom: 1px solid #cccccc;
 }
 
-.inputHasFocus .comboboxInput {
+.comboboxInputHasFocus {
+  composes: comboboxInput;
   padding: 0;
   border: 2px solid #0773f8;
 }
@@ -44,7 +49,6 @@
 .locationSearchField:focus { outline: none; }
 
 .listboxMenu {
-  display: none;
   position: absolute;
   z-index: 1;
   overflow-x: hidden;
@@ -57,6 +61,11 @@
   padding: 0;
 }
 
+.listboxMenuClosed {
+  composes: listboxMenu;
+  display: none;
+}
+
 .listItem {
   display: flex;
   align-items: flex-start;
@@ -64,8 +73,12 @@
   cursor: pointer;
 }
 
-.listItem:hover,
-.listItem.active {
+.listItemActive {
+  composes: listItem;
+  background-color: #f6f6f6;
+}
+
+.listItem:hover {
   background-color: #f6f6f6;
 }
 
