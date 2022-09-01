@@ -6,11 +6,6 @@ export interface GeocoderResponseWithStatus {
   status: google.maps.GeocoderStatus
 }
 
-export interface AutocompleteResponseWithStatus {
-  results: Array<google.maps.places.AutocompletePrediction> | null
-  status: google.maps.places.PlacesServiceStatus
-}
-
 export interface PlaceResultWithStatus {
   results: google.maps.places.PlaceResult | null
   status: google.maps.places.PlacesServiceStatus
@@ -65,6 +60,7 @@ export const setPlacesService = (map: google.maps.Map) => {
   placesService = new google.maps.places.PlacesService(map)
 }
 
+// TODO: try using new promise API that's available instead of wrapping in a promise here.
 export const geocode = (
   request: google.maps.GeocoderRequest
 ): Promise<GeocoderResponseWithStatus> => {
@@ -75,16 +71,7 @@ export const geocode = (
   })
 }
 
-export const getPlacePredictions = (
-  request: google.maps.places.AutocompletionRequest
-): Promise<AutocompleteResponseWithStatus> => {
-  return new Promise((resolve, reject) => {
-    autocompleteService.getPlacePredictions(request, (results, status) => {
-      status === 'OK' ? resolve({ results, status }) : reject(new Error(status))
-    })
-  })
-}
-
+// TODO: try using new promise API that's available instead of wrapping in a promise here.
 export const getPlaceDetails = (
   request: google.maps.places.PlaceDetailsRequest
 ): Promise<PlaceResultWithStatus> => {

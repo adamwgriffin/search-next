@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import SearchField from '../form/SearchField/SearchField'
 import styles from './Header.module.css'
-import { getPlacePredictions } from '../../lib/google'
+import { autocompleteService } from '../../lib/google'
 import { autocompleteOptions } from '../../config/google'
 
 const Header: NextPage = () => {
@@ -11,21 +11,13 @@ const Header: NextPage = () => {
   const [value, setValue] = useState<string>('')
 
   const handleOnGetPlaceAutocompletePredictions = async (val:string) => {
-    const params = { input: val, types: ['geocode'], components: autocompleteOptions.componentRestrictions }
+    const request = { input: val, types: ['geocode'], components: autocompleteOptions.componentRestrictions }
     try {
-      const res = await getPlacePredictions(params)
-      if (res.status === 'OK') {
-        res.results ? setOptions(res.results) : setOptions([])
-      } else {
-        throw new Error("Request to autocomplete service did not return OK")   
-      }
+      const res = await autocompleteService.getPlacePredictions(request)
+      setOptions(res.predictions)
     } catch (error) {
-      if (error instanceof Error && error.message === 'ZERO_RESULTS') {
-        setOptions([])
-      } else {
-        setOptions([])
-        console.error(error)
-      }
+      setOptions([])
+      console.error(error)
     }
   }
 
