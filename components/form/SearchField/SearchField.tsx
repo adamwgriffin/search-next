@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import { useState, useEffect, FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
-import uniqueId from 'lodash/uniqueId'
+import { useState, useEffect, useId, FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
 import SearchButton from '../SearchButton/SearchButton'
 import LocationPinFilledIcon from '../../icons/LocationPinFilledIcon/LocationPinFilledIcon'
 import PlacePredictionText from '../PlacePredictionText/PlacePredictionText'
@@ -17,8 +16,6 @@ export interface SearchFieldProps {
   onGetPlaceAutocompletePredictions?: (val: string) => void
 }
 
-const ariaListboxId = uniqueId('search-listbox-')
-
 const SearchField: NextPage<SearchFieldProps> = ({
     value,
     placeholder = 'Search for City, Neighborhood, Zip, County',
@@ -29,6 +26,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
     onOptionSelected,
     onGetPlaceAutocompletePredictions
   }) => {
+  const id = useId()
   const [open, setOpen] = useState(false)
   const [inputHasFocus, setInputHasFocus] = useState(false)
   const [activeDescendantKey, setActiveDescendantKey] = useState(-1)
@@ -41,7 +39,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
   // this is used for the aria-activedescendant attribute. it identifies the currently selected item in the dropdown
   // menu for accessibility purposes.
   const activeDescendant = () => {
-    return listItemSelected() ? `${ariaListboxId}-list-item-${activeDescendantKey}` : ''
+    return listItemSelected() ? `search-listbox-${id}-list-item-${activeDescendantKey}` : ''
   }
 
   const deselectListItem = () => setActiveDescendantKey(-1)
@@ -190,7 +188,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded={open}
-          aria-owns={ariaListboxId}
+          aria-owns={`search-listbox-${id}`}
         >
           <input
             id="locationSearchField"
@@ -198,7 +196,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
             className={styles.locationSearchField}
             aria-label="Location Search"
             aria-autocomplete="list"
-            aria-controls={ariaListboxId}
+            aria-controls={`search-listbox-${id}`}
             aria-activedescendant={activeDescendant()}
             type="text"
             placeholder={placeholder}
@@ -216,7 +214,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
         {options.map((option, index) => (
           <li
             role="option"
-            id={`${ariaListboxId}-list-item-${index}`}
+            id={`search-listbox-${id}-list-item-${index}`}
             key={option.place_id}
             className={activeDescendantKey === index ? styles.listItemActive : styles.listItem}
             onClick={() => handleMenuItemClick(option)}
