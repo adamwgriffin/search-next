@@ -15,7 +15,7 @@ const Price: NextPage<PriceProps> = (props) => {
       <div className={styles.price}>
         <label
           htmlFor="pricemin"
-          className={formStyles.accesibileLabel}
+          className={formStyles.accessibleLabel}
         >
           Min Price
         </label>
@@ -29,7 +29,7 @@ const Price: NextPage<PriceProps> = (props) => {
         <InputFromToSeparator />
         <label
           htmlFor="pricemax"
-          className={formStyles.accesibileLabel}
+          className={formStyles.accessibleLabel}
         >
           Max Price
         </label>
