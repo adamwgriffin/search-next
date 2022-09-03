@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { googleMap } from '../../../lib/google'
+import { useGoogleMaps } from '../../../context/google_maps_context'
 import ListingMarkerIcon from '../ListingMarkerIcon/ListingMarkerIcon'
 import { ListingMarkerIconProps } from '../ListingMarkerIcon/ListingMarkerIcon'
 
@@ -18,6 +18,8 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
   colorHover = 'RebeccaPurple',
   clickEventZoomLevel = 16
 }) => {
+  const { googleMap } = useGoogleMaps()
+
   const createListingMarkerIcon = (options: ListingMarkerIconProps) => {
     const svgString = renderToStaticMarkup(<ListingMarkerIcon {...options} />)
     return {
@@ -26,6 +28,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
   }
 
   useEffect(() => {
+    if (!googleMap) return
     const markerIcon = createListingMarkerIcon({ fill: color })
     const markerIconHover = createListingMarkerIcon({ fill: colorHover })
     const marker = new google.maps.Marker({

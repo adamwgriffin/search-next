@@ -2,7 +2,7 @@ import type { LoaderOptions } from '@googlemaps/js-api-loader'
 
 // options for @googlemaps/loader, which loads Google Maps by creating a script tag with these params in it. things like
 // your api key and the libraries you want to load go here
-export const mapLoaderOptions: LoaderOptions = {
+export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: '',
   client: "gme-windermeresolutions",
   libraries: ['drawing', 'places', 'geometry']
@@ -10,7 +10,7 @@ export const mapLoaderOptions: LoaderOptions = {
 
 // default options for the map itself, such as what UI controls to enable, etc.
 // seems that we can't use Object.freeze on this object, otherwise the map won't load
-export const mapOptions: google.maps.MapOptions = {
+export const DefaultMapOptions: google.maps.MapOptions = {
   center: {
     lat: 37.76022,
     lng: -122.41415
@@ -25,4 +25,9 @@ export const mapOptions: google.maps.MapOptions = {
   fullscreenControl: false,
   // passing any style causes the Google logo to appear white
   styles: [{ stylers: [{}] }]
+}
+
+export const DefaultAutocompleteOptions = {
+  fields: ['place_id', 'address_components', 'geometry', 'icon', 'name'],
+  componentRestrictions: { country: ['us', 'ca', 'mx'] }
 }

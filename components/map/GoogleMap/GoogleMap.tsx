@@ -1,15 +1,8 @@
-import { useRef, useState, useEffect, ReactNode } from 'react'
+import { useRef, useEffect, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'
-import type { GoogleMapState } from '../../../lib/google'
-import { googleMap, getCurrentMapState, setMap } from '../../../lib/google'
+import { useGoogleMaps } from '../../../context/google_maps_context'
 import styles from './GoogleMap.module.css'
-
-declare global {
-  interface Window {
-    google: any
-  }
-}
 
 export interface GoogleMapProps {
   options: google.maps.MapOptions
@@ -19,6 +12,12 @@ export interface GoogleMapProps {
   onUserChangedZoom?: (currentMapState:GoogleMapState) => void
   onIdle?: (currentMapState:GoogleMapState) => void
   children: ReactNode
+}
+
+export interface GoogleMapState {
+  bounds: google.maps.LatLngBoundsLiteral|undefined
+  center: google.maps.LatLngLiteral|undefined
+  zoom: number|undefined
 }
 
 const eventListeners:google.maps.MapsEventListener[] = []
@@ -33,15 +32,22 @@ let zoomChangedProgrammatically = false
 const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const { options, bounds, children, onDragStart, onDragEnd, onUserChangedZoom, onIdle } = props
   const mapEl = useRef(null)
-  // we need this to trigger a re-render once we create the map, so that children can be rendered when it's ready
-  const [mapCreated, setMapCreated] = useState(false)
+  const { googleMap, setGoogleMap } = useGoogleMaps()
+
+  const getCurrentMapState = (): GoogleMapState => {
+    return {
+      bounds: googleMap?.getBounds()?.toJSON(),
+      center: googleMap?.getCenter()?.toJSON(),
+      zoom: googleMap?.getZoom(),
+    }
+  }
 
   const updateMapPosition = (bounds: google.maps.LatLngBoundsLiteral) => {
     // calling fitBounds() below will trigger a "zoom_changed" event, which we want to ignore in our handleZoomChanged()
     // event handler so set this flag
     zoomChangedProgrammatically = true
     // sets the viewport to contain the given bounds
-    googleMap.fitBounds(bounds)
+    googleMap?.fitBounds(bounds)
   }
 
   const handleZoomChanged = () => {
@@ -68,7 +74,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
 
   const createEventListeners = () => {
     for (const [eventName, callback] of Object.entries(eventListenerMapping)) {
-      if (typeof callback === 'function') {
+      if (googleMap && typeof callback === 'function') {
         eventListeners.push(google.maps.event.addListener(googleMap, eventName, callback))
       }
     }
@@ -80,8 +86,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
 
   useEffectOnce(() => {
     if (mapEl.current !== null) {
-      setMap(mapEl.current, options)
-      setMapCreated(true)
+      setGoogleMap(new google.maps.Map(mapEl.current, options))
     } else {
       throw new Error('Reference to map is null. Unable to create map instance.')
     }
@@ -98,7 +103,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
 
   return (
     <div ref={mapEl} id={styles.googleMap}>
-      {mapCreated && children}
+      {googleMap && children}
     </div>
   )
 }
