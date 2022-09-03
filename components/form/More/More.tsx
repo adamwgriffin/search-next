@@ -9,7 +9,6 @@ interface MoreProps {
 }
 
 const More: NextPage<MoreProps> = (props) => {
-
   return (
     <MenuButton label="More">
       <div className={styles.more}>
