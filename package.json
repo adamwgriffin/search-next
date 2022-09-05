@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.14.3",
+    "@reduxjs/toolkit": "^1.8.5",
+    "axios": "^0.27.2",
+    "axios-jsonp": "^1.0.4",
     "lodash": "^4.17.21",
     "next": "12.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.2",
     "react-use": "^17.4.0"
   },
   "devDependencies": {
@@ -23,6 +27,7 @@
     "@types/lodash": "^4.14.182",
     "@types/node": "18.0.1",
     "@types/react": "18.0.12",
+    "@types/react-redux": "^7.1.24",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.0",
     "jest": "^28.1.1",

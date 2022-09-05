@@ -1,18 +1,21 @@
-import type { NextPage } from "next"
+import type { NextPage } from 'next'
+import type { Listing } from '../../lib/types'
 import styles from './SearchResults.module.css'
 import ListingCard from '../listings/ListingCard/ListingCard'
 
-const SearchResults: NextPage = () => {
+export interface SearchResultsProps {
+  listings: Listing[]
+}
+
+const SearchResults: NextPage<SearchResultsProps> = ({ listings=[] }) => {
+  
   return (  
     <ul className={styles.searchResultsList}>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
-      <li><ListingCard /></li>
+      {listings.map((listing) => (
+        <li key={listing.listingid.toString()}>
+          <ListingCard listing={listing} />
+        </li>
+      ))}
     </ul>
   )
 }

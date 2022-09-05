@@ -5,8 +5,12 @@ import Header from '../Header/Header'
 import Filters from '../form/Filters/Filters'
 import SearchResults from '../SearchResults/SearchResults'
 import ListingMap from '../map/ListingMap/ListingMap'
+import { useAppSelector } from '../../hooks'
+import { selectListings } from '../../store/listingSearch/listingSearchSlice'
 
 const Search: NextPage = () => {
+  const listings = useAppSelector(selectListings)
+
   return (
     <GoogleMapsProvider>
       <div className={styles.search}>
@@ -17,7 +21,7 @@ const Search: NextPage = () => {
           <Filters />
         </div>
         <div className={styles.searchResults}>
-          <SearchResults />
+          <SearchResults listings={listings} />
         </div>
         <div className={styles.map}>
           <ListingMap />

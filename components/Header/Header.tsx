@@ -4,8 +4,12 @@ import { useGoogleMaps } from '../../context/google_maps_context'
 import SearchField from '../form/SearchField/SearchField'
 import styles from './Header.module.css'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
+import { useAppSelector, useAppDispatch } from '../../hooks'
+import { searchListings, selectSearchParams } from '../../store/listingSearch/listingSearchSlice'
 
 const Header: NextPage = () => {
+  const dispatch = useAppDispatch()
+  const params = useAppSelector(selectSearchParams)
   const { googleLoaded } = useGoogleMaps()
   const [autocompleteService, setAutocompleteService] = useState<google.maps.places.AutocompleteService|null>(null)
   const [options, setOptions] = useState<google.maps.places.AutocompletePrediction[]>([])
@@ -28,7 +32,9 @@ const Header: NextPage = () => {
     setOptions([])
   }
 
-  const handleOnSearchInitiated = () => console.log("onSearchInitiated triggered")
+  const handleOnSearchInitiated = () => {
+    dispatch(searchListings(params))
+  }
 
   const handleOnOptionSelected = (option: google.maps.places.AutocompletePrediction) => {
     setValue(option.description)

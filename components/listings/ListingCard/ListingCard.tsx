@@ -1,26 +1,37 @@
 import type { NextPage } from 'next'
+import type { Listing } from '../../../lib/types'
 import styles from './ListingCard.module.css'
-import ListingImage from '../ListingImage/ListingImage'
+import {
+  formatPrice,
+  getBathrooms,
+  formatSqft,
+  cityStateZip
+} from '../../../lib/helpers/listing_helpers'
+import ListingCardImage from '../ListingImage/ListingCardImage'
 
-const ListingCard: NextPage = () => {
+export interface ListingCardProps {
+  listing: Listing
+}
+
+const ListingCard: NextPage<ListingCardProps> = ({ listing }) => {
   return (
     <div className={styles.listingCard}>
-      <ListingImage />
+      <ListingCardImage listing={listing} />
       <div className={styles.details}>
         <div className={styles.price}>
-          $2,295,000
+          {formatPrice(listing)}
         </div>
         <div className={styles.stats}>
-          <div className={styles.beds}>6bd</div>
-          <div className={styles.baths}>3ba</div>
-          <div className={styles.size}>3,090 sqft</div>
+          <div className={styles.beds}>{listing.bedrooms}bd</div>
+          <div className={styles.baths}>{getBathrooms(listing)}ba</div>
+          <div className={styles.size}>{formatSqft(listing)} sqft</div>
         </div>
         <div className={styles.address}>
           <div className={styles.addressLine1}>
-            770-772 Treat Ave
+            {listing.location.address}
           </div>
           <div className={styles.addressLine2}>
-            San Francisco, CA 94110
+            {cityStateZip(listing.location)}
           </div>
         </div>
       </div>
