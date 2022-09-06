@@ -1,13 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
-// import { useGoogleMaps } from '../../context/google_maps_context'
 import { GoogleToServiceAddressTypeMapping } from '../../lib/constants/geocoder_constants'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
-
-// TODO: this doesn't work, presumably because there is no provider. research if there's a way to use context inside at
-// arbitary file like this
-// const { googleMap } = useGoogleMaps()
-const googleMap = {} as google.maps.Map
 
 export interface ListingMapGeocoderResult {
   type: string | null
@@ -19,6 +13,20 @@ export interface PlacesState {
   geocoderResult: ListingMapGeocoderResult
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
 }
+
+export interface PlaceDetailsResponse {
+  results: google.maps.places.PlaceResult | null
+  status: google.maps.places.PlacesServiceStatus
+}
+
+export interface GetPlaceAutocompleteDetailsPayload {
+  placeId: string
+  googleMap: google.maps.Map
+}
+
+let geocoder: google.maps.Geocoder
+let autocompleteService: google.maps.places.AutocompleteService
+let placesService: google.maps.places.PlacesService
 
 const initialState: PlacesState = {
   geocoderResult: {
@@ -35,18 +43,16 @@ const initialState: PlacesState = {
   autcompletePlacePredictions: []
 }
 
-let geocoder: google.maps.Geocoder
-
 export const geocodeMap = createAsyncThunk(
   'places/geocodeMap',
-  async (request: google.maps.GeocoderRequest): Promise<google.maps.GeocoderResult> => {
+  async (
+    request: google.maps.GeocoderRequest
+  ): Promise<google.maps.GeocoderResult> => {
     geocoder ||= new google.maps.Geocoder()
     const res = await geocoder.geocode(request)
     return res.results[0]
   }
 )
-
-let autocompleteService: google.maps.places.AutocompleteService
 
 export const getPlaceAutocompletePredictions = createAsyncThunk(
   'places/getPlaceAutocompletePredictions',
@@ -63,42 +69,31 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
   }
 )
 
-let placesService: google.maps.places.PlacesService
-
-export interface PlaceDetailsResponse {
-  results: google.maps.places.PlaceResult | null
-  status: google.maps.places.PlacesServiceStatus
-}
-
-export const getPlaceDetails = (
+// PlacesService doesn't support the promise API yet, so we're wrapping the callback request in a promise
+const getPlaceDetails = (
   request: google.maps.places.PlaceDetailsRequest
 ): Promise<PlaceDetailsResponse> => {
   return new Promise((resolve, reject) => {
-    if (googleMap) {
-      placesService ||= new google.maps.places.PlacesService(googleMap)
-      placesService.getDetails(request, (results, status) => {
-        status === 'OK'
-          ? resolve({ results, status })
-          : reject(new Error(status))
-      })
-    } else {
-      reject(new Error('Google Maps library not available.'))
-    }
+    placesService.getDetails(request, (results, status) => {
+      status === 'OK' ? resolve({ results, status }) : reject(new Error(status))
+    })
   })
 }
 
 export const getPlaceAutocompleteDetails = createAsyncThunk(
   'places/getPlaceAutocompleteDetails',
-  async (placeId: string): Promise<google.maps.places.PlaceResult | null> => {
-    if (googleMap) {
-      const res = await getPlaceDetails({
-        placeId,
-        fields: ['address_component', 'geometry']
-      })
-      return res.results
-    } else {
-      throw new Error('Google Maps library not available.')
-    }
+  async ({
+    placeId,
+    // we need the map to create a PlacesService instance but the GoogleMapsContext it's in is only available to
+    // components that are inside <GoogleMapsProvider>, so we will need to pass the map in with the request
+    googleMap
+  }: GetPlaceAutocompleteDetailsPayload): Promise<google.maps.places.PlaceResult | null> => {
+    placesService ||= new google.maps.places.PlacesService(googleMap)
+    const res = await getPlaceDetails({
+      placeId,
+      fields: ['address_component', 'geometry']
+    })
+    return res.results
   }
 )
 
@@ -145,7 +140,10 @@ export const placesSlice = createSlice({
               viewport: geometry.viewport
             }
           } else {
-            console.warn("getPlaceAutocompleteDetails payload was empty, action.payload:", action.payload)
+            console.warn(
+              'getPlaceAutocompleteDetails payload was empty, action.payload:',
+              action.payload
+            )
           }
         }
       )
