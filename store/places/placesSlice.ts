@@ -102,7 +102,11 @@ export const placesSlice = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    resetAutcompletePlacePredictions: (state) => {
+      state.autcompletePlacePredictions = initialState.autcompletePlacePredictions
+    }
+  },
 
   extraReducers: (builder) => {
     builder
@@ -150,9 +154,13 @@ export const placesSlice = createSlice({
   }
 })
 
+export const { resetAutcompletePlacePredictions } = placesSlice.actions
+
 export const selectGeoType = (state: AppState) => {
   // @ts-ignore
   return GoogleToServiceAddressTypeMapping[state.places.geocoderResult.type]
 }
+
+export const selectAutcompletePlacePredictions = (state: AppState) => state.places.autcompletePlacePredictions
 
 export default placesSlice.reducer

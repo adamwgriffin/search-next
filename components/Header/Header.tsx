@@ -1,50 +1,50 @@
 import type { NextPage } from 'next'
-import { useState, useEffect } from 'react'
 import { useGoogleMaps } from '../../context/google_maps_context'
 import SearchField from '../form/SearchField/SearchField'
 import styles from './Header.module.css'
-import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { searchListings, selectSearchParams } from '../../store/listingSearch/listingSearchSlice'
+import {
+  setLocationSearchField,
+  searchListings,
+  selectLocationSearchField,
+  selectSearchParams
+} from '../../store/listingSearch/listingSearchSlice'
+import {
+  getPlaceAutocompletePredictions,
+  resetAutcompletePlacePredictions,
+  getPlaceAutocompleteDetails,
+  selectAutcompletePlacePredictions
+} from '../../store/places/placesSlice'
 
 const Header: NextPage = () => {
   const dispatch = useAppDispatch()
+  const value = useAppSelector(selectLocationSearchField)
   const params = useAppSelector(selectSearchParams)
-  const { googleLoaded } = useGoogleMaps()
-  const [autocompleteService, setAutocompleteService] = useState<google.maps.places.AutocompleteService|null>(null)
-  const [options, setOptions] = useState<google.maps.places.AutocompletePrediction[]>([])
-  const [value, setValue] = useState<string>('')
+  const options = useAppSelector(selectAutcompletePlacePredictions)
+  const { googleLoaded, googleMap } = useGoogleMaps()  
 
   const handleOnGetPlaceAutocompletePredictions = async (val:string) => {
-    if (autocompleteService) {
-      const request = { input: val, types: ['geocode'], components: DefaultAutocompleteOptions.componentRestrictions }
-      try {
-        const res = await autocompleteService.getPlacePredictions(request)
-        setOptions(res.predictions)
-      } catch (error) {
-        setOptions([])
-        console.error(error)
-      }
-    }
+    googleLoaded && dispatch(getPlaceAutocompletePredictions(val))
   }
 
   const handleOnClearPlaceAutocompletePredictions = () => {
-    setOptions([])
+    dispatch(resetAutcompletePlacePredictions())
   }
 
   const handleOnSearchInitiated = () => {
-    dispatch(searchListings(params))
+    googleLoaded && dispatch(searchListings(params))
   }
 
   const handleOnOptionSelected = (option: google.maps.places.AutocompletePrediction) => {
-    setValue(option.description)
+    if (googleLoaded && googleMap) {
+      dispatch(setLocationSearchField(option.description))
+      dispatch(getPlaceAutocompleteDetails({ placeId: option.place_id, googleMap: googleMap}))
+    } else {
+      console.warn("The googleMap instance is not available")
+    }
   }
 
-  const handleOnInput = (details:string) => setValue(details)
-
-  useEffect(() => {
-    googleLoaded && setAutocompleteService(new google.maps.places.AutocompleteService())
-  }, [googleLoaded])
+  const handleOnInput = (details:string) => dispatch(setLocationSearchField(details))
 
   return (
     <header className={styles.Header}>
