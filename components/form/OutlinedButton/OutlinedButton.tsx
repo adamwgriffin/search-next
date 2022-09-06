@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
+import type { MouseEventHandler, ReactNode } from 'react'
 import styles from './OutlinedButton.module.css'
-import { MouseEventHandler } from 'react'
-import type { ReactNode } from 'react'
 
 interface OutlinedButtonProps {
   highlighted: boolean

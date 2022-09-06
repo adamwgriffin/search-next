@@ -15,6 +15,7 @@ import {
   getPlaceAutocompleteDetails,
   selectAutcompletePlacePredictions
 } from '../../store/places/placesSlice'
+import { setBoundaryActive } from '../../store/listingMap/listingMapSlice'
 
 const Header: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -37,6 +38,7 @@ const Header: NextPage = () => {
 
   const handleOnOptionSelected = (option: google.maps.places.AutocompletePrediction) => {
     if (googleLoaded && googleMap) {
+      dispatch(setBoundaryActive(true))
       dispatch(setLocationSearchField(option.description))
       dispatch(getPlaceAutocompleteDetails({ placeId: option.place_id, googleMap: googleMap}))
     } else {

@@ -82,4 +82,6 @@ export const listingMapSlice = createSlice({
 
 export const { setMapData, setBoundaryActive } = listingMapSlice.actions
 
+export const selectBoundaryActive = (state: AppState) => state.listingMap.boundaryActive
+
 export default listingMapSlice.reducer
