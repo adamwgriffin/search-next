@@ -30,7 +30,7 @@ const initialState: ListingSearchState = {
   // coordinates. those coordinates are all that's really necessary to send the service if you already have them.
   location_search_field: '',
   searchListingsResponse: {},
-  searchParams: WebsitesSearchParams,
+  searchParams: WebsitesSearchParams
 }
 
 // The function below is called a thunk and allows us to perform async logic. It can be dispatched like a regular
@@ -68,17 +68,18 @@ export const listingSearchSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder
-      .addCase(searchListings.pending, (state) => {
-        state.listingSearchPending = true
-      })
-      .addCase(searchListings.fulfilled, (state, action) => {
-        state.listingSearchPending = false
-        state.searchListingsResponse = action.payload
-      })
-      .addCase(searchListings.rejected, (state) => {
-        state.listingSearchPending = false
-      })
+    builder.addCase(searchListings.pending, (state) => {
+      state.listingSearchPending = true
+    })
+
+    builder.addCase(searchListings.fulfilled, (state, action) => {
+      state.listingSearchPending = false
+      state.searchListingsResponse = action.payload
+    })
+
+    builder.addCase(searchListings.rejected, (state) => {
+      state.listingSearchPending = false
+    })
   }
 })
 
@@ -136,17 +137,18 @@ export const listingServiceParams = (state: AppState) => {
   }
 }
 
-// modify params by adding, removing or changing params based on the values of other params, or the app's state  
+// modify params by adding, removing or changing params based on the values of other params, or the app's state
 export const modifyParams = (state: AppState, originalParams: object) => {
   return Object.keys(originalParams).reduce((params, param) => {
-     // @ts-ignore
+    // @ts-ignore
     return { ...params, ...modifyParam[param]?.(state, params) }
   }, originalParams)
 }
 
 // TODO: maybe should remove undefined as well
 // remove falsey params (usually null)
-export const removeUnecessaryParams = (params: object) => omitBy(params, (value, param) => value === null)
+export const removeUnecessaryParams = (params: object) =>
+  omitBy(params, (value, param) => value === null)
 
 export const selectSearchParams = (state: AppState) => {
   const originalParams = listingServiceParams(state)

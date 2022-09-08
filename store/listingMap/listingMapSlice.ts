@@ -72,10 +72,9 @@ export const listingMapSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder
-      .addCase(getGeoLayer.fulfilled, (state, action) => {
-        state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(action.payload)
-      })
+    builder.addCase(getGeoLayer.fulfilled, (state, action) => {
+      state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(action.payload)
+    })
   }
 
 })
