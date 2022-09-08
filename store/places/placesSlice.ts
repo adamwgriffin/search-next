@@ -149,6 +149,8 @@ export const selectGeoType = (state: AppState) => {
   return GoogleToServiceAddressTypeMapping[state.places.geocoderResult.type]
 }
 
+export const selectGeocoderResult = (state: AppState) => state.places.geocoderResult
+
 export const selectAutcompletePlacePredictions = (state: AppState) =>
   state.places.autcompletePlacePredictions
 

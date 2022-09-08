@@ -83,4 +83,6 @@ export const { setMapData, setBoundaryActive } = listingMapSlice.actions
 
 export const selectBoundaryActive = (state: AppState) => state.listingMap.boundaryActive
 
+export const selectBufferMiles = (state: AppState) => state.listingMap.buffer_miles
+
 export default listingMapSlice.reducer
