@@ -1,5 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
+import type { SerializedPlaceResult } from '../../lib/places_service_wrapper'
+import { getPlaceDetails } from '../../lib/places_service_wrapper'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GoogleToServiceAddressTypeMapping } from '../../lib/constants/geocoder_constants'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
 
@@ -12,11 +14,6 @@ export interface ListingMapGeocoderResult {
 export interface PlacesState {
   geocoderResult: ListingMapGeocoderResult
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
-}
-
-export interface PlaceDetailsResponse {
-  results: google.maps.places.PlaceResult | null
-  status: google.maps.places.PlacesServiceStatus
 }
 
 export interface GetPlaceAutocompleteDetailsPayload {
@@ -69,17 +66,6 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
   }
 )
 
-// PlacesService doesn't support the promise API yet, so we're wrapping the callback request in a promise
-const getPlaceDetails = (
-  request: google.maps.places.PlaceDetailsRequest
-): Promise<PlaceDetailsResponse> => {
-  return new Promise((resolve, reject) => {
-    placesService.getDetails(request, (results, status) => {
-      status === 'OK' ? resolve({ results, status }) : reject(new Error(status))
-    })
-  })
-}
-
 export const getPlaceAutocompleteDetails = createAsyncThunk(
   'places/getPlaceAutocompleteDetails',
   async ({
@@ -87,12 +73,15 @@ export const getPlaceAutocompleteDetails = createAsyncThunk(
     // we need the map to create a PlacesService instance but the GoogleMapsContext it's in is only available to
     // components that are inside <GoogleMapsProvider>, so we will need to pass the map in with the request
     googleMap
-  }: GetPlaceAutocompleteDetailsPayload): Promise<google.maps.places.PlaceResult | null> => {
+  }: GetPlaceAutocompleteDetailsPayload): Promise<SerializedPlaceResult | null> => {
     placesService ||= new google.maps.places.PlacesService(googleMap)
-    const res = await getPlaceDetails({
-      placeId,
-      fields: ['address_component', 'geometry']
-    })
+    const res = await getPlaceDetails(
+      {
+        placeId,
+        fields: ['address_component', 'geometry']
+      },
+      placesService
+    )
     return res.results
   }
 )
@@ -104,53 +93,52 @@ export const placesSlice = createSlice({
 
   reducers: {
     resetAutcompletePlacePredictions: (state) => {
-      state.autcompletePlacePredictions = initialState.autcompletePlacePredictions
+      state.autcompletePlacePredictions =
+        initialState.autcompletePlacePredictions
     }
   },
 
   extraReducers: (builder) => {
-    builder
-      .addCase(
-        geocodeMap.fulfilled,
-        (state, action: PayloadAction<google.maps.GeocoderResult>) => {
-          const { location, viewport } = action.payload.geometry
+    builder.addCase(
+      geocodeMap.fulfilled,
+      (state, action: PayloadAction<google.maps.GeocoderResult>) => {
+        const { location, viewport } = action.payload.geometry
+        state.geocoderResult = {
+          type: action.payload.types[0],
+          location: location.toJSON(), // calling toJSON() returns the LatLngBounds instance as a LatLngLiteral
+          viewport
+        }
+      }
+    )
+
+    builder.addCase(
+      getPlaceAutocompletePredictions.fulfilled,
+      (
+        state,
+        action: PayloadAction<google.maps.places.AutocompletePrediction[]>
+      ) => {
+        state.autcompletePlacePredictions = action.payload
+      }
+    )
+
+    builder.addCase(
+      getPlaceAutocompleteDetails.fulfilled,
+      (state, action: PayloadAction<SerializedPlaceResult | null>) => {
+        const { address_components, geometry } = action.payload || {}
+        if (address_components && geometry?.location && geometry?.viewport) {
           state.geocoderResult = {
-            type: action.payload.types[0],
-            location: location.toJSON(), // calling toJSON() returns the LatLngBounds instance as a LatLngLiteral
-            viewport
+            type: address_components[0].types[0],
+            location: geometry.location,
+            viewport: geometry.viewport
           }
+        } else {
+          console.warn(
+            'getPlaceAutocompleteDetails payload was empty, action.payload:',
+            action.payload
+          )
         }
-      )
-      .addCase(
-        getPlaceAutocompletePredictions.fulfilled,
-        (
-          state,
-          action: PayloadAction<google.maps.places.AutocompletePrediction[]>
-        ) => {
-          state.autcompletePlacePredictions = action.payload
-        }
-      )
-      .addCase(
-        getPlaceAutocompleteDetails.fulfilled,
-        (
-          state,
-          action: PayloadAction<google.maps.places.PlaceResult | null>
-        ) => {
-          const { address_components, geometry } = action.payload || {}
-          if (address_components && geometry?.location && geometry?.viewport) {
-            state.geocoderResult = {
-              type: address_components[0].types[0],
-              location: geometry.location.toJSON(),
-              viewport: geometry.viewport
-            }
-          } else {
-            console.warn(
-              'getPlaceAutocompleteDetails payload was empty, action.payload:',
-              action.payload
-            )
-          }
-        }
-      )
+      }
+    )
   }
 })
 
@@ -161,6 +149,7 @@ export const selectGeoType = (state: AppState) => {
   return GoogleToServiceAddressTypeMapping[state.places.geocoderResult.type]
 }
 
-export const selectAutcompletePlacePredictions = (state: AppState) => state.places.autcompletePlacePredictions
+export const selectAutcompletePlacePredictions = (state: AppState) =>
+  state.places.autcompletePlacePredictions
 
 export default placesSlice.reducer
