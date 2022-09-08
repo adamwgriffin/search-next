@@ -5,6 +5,7 @@ import styles from './Header.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   setLocationSearchField,
+  resetListings,
   searchListings,
   selectLocationSearchField,
   selectSearchParams
@@ -40,6 +41,7 @@ const Header: NextPage = () => {
     if (googleLoaded && googleMap) {
       dispatch(setBoundaryActive(true))
       dispatch(setLocationSearchField(option.description))
+      dispatch(resetListings())
       dispatch(getPlaceAutocompleteDetails({ placeId: option.place_id, googleMap: googleMap}))
     } else {
       console.warn("The googleMap instance is not available")
