@@ -15,9 +15,9 @@ export interface GoogleMapProps {
 }
 
 export interface GoogleMapState {
-  bounds: google.maps.LatLngBoundsLiteral|undefined
-  center: google.maps.LatLngLiteral|undefined
-  zoom: number|undefined
+  bounds: google.maps.LatLngBoundsLiteral
+  center: google.maps.LatLngLiteral
+  zoom: number
 }
 
 const eventListeners: google.maps.MapsEventListener[] = []
@@ -43,10 +43,32 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const { googleMap, setGoogleMap } = useGoogleMaps()
 
   const getCurrentMapState = (): GoogleMapState => {
+    // each of these values can potentially be undefined, which Typescript complains about. since we depend on these
+    // values in other parts of the app it's probably better to just throw an exception rather than potentially return
+    // bad data.
+    if (!googleMap) {
+      throw new Error('googleMap is not available.')
+    }
+    const bounds = googleMap.getBounds()
+    if (typeof bounds === 'undefined') {
+      throw new Error(
+        'No bounds available from getBounds(). The map is not yet initialized or center and zoom have not been set.'
+      )
+    }
+    const center = googleMap.getCenter()
+    if (typeof center === 'undefined') {
+      throw new Error(
+        'No center available from getCenter(). Center or bounds have not been set '
+      )
+    }
+    const zoom = googleMap.getZoom()
+    if (typeof zoom === 'undefined') {
+      throw new Error('Zoom has not been set')
+    }
     return {
-      bounds: googleMap?.getBounds()?.toJSON(),
-      center: googleMap?.getCenter()?.toJSON(),
-      zoom: googleMap?.getZoom(),
+      bounds: bounds.toJSON(),
+      center: center.toJSON(),
+      zoom: zoom
     }
   }
 
