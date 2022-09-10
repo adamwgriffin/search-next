@@ -199,6 +199,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
             aria-controls={`search-listbox-${id}`}
             aria-activedescendant={activeDescendant()}
             type="text"
+            autoComplete='off'
             placeholder={placeholder}
             value={value}
             onChange={handleChange}
