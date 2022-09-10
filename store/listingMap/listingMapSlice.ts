@@ -28,11 +28,11 @@ const initialState: ListingMapState = {
       north: 47.745274294284506,
       east: -122.38844700157635,
       south: 47.610393280504454,
-      west:  -122.47058697044842
+      west: -122.47058697044842
     },
     center: {
       lat: 47.6792172,
-      lng:  -122.3860312
+      lng: -122.3860312
     },
     zoom: null,
     mapTypeId: 'roadmap'

@@ -1,16 +1,16 @@
-import { useRef, useEffect, ReactNode } from 'react'
-import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'
+import { useRef, useEffect, ReactNode } from 'react'
+import { useEffectOnce, usePrevious } from 'react-use'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import styles from './GoogleMap.module.css'
 
 export interface GoogleMapProps {
   options: google.maps.MapOptions
   bounds?: google.maps.LatLngBoundsLiteral | null
-  onDragStart?: (currentMapState:GoogleMapState) => void
-  onDragEnd?: (currentMapState:GoogleMapState) => void
-  onUserChangedZoom?: (currentMapState:GoogleMapState) => void
-  onIdle?: (currentMapState:GoogleMapState) => void
+  onDragStart?: (currentMapState: GoogleMapState) => void
+  onDragEnd?: (currentMapState: GoogleMapState) => void
+  onUserChangedZoom?: (currentMapState: GoogleMapState) => void
+  onIdle?: (currentMapState: GoogleMapState) => void
   children: ReactNode
 }
 
@@ -20,7 +20,7 @@ export interface GoogleMapState {
   zoom: number|undefined
 }
 
-const eventListeners:google.maps.MapsEventListener[] = []
+const eventListeners: google.maps.MapsEventListener[] = []
 // a side effect of calling fitBounds() inside updateMapPosition() is that it will trigger a "zoom_changed" event. we
 // only want to call the onUserChangedZoom() event callback if the user actually took some action to trigger
 // "zoom_changed", like clicking the zoom button on the map. the recommended way of handling this is to set a flag to
@@ -30,7 +30,15 @@ const eventListeners:google.maps.MapsEventListener[] = []
 let zoomChangedProgrammatically = false
 
 const GoogleMap: NextPage<GoogleMapProps> = (props) => {
-  const { options, bounds, children, onDragStart, onDragEnd, onUserChangedZoom, onIdle } = props
+  const {
+    options,
+    bounds,
+    children,
+    onDragStart,
+    onDragEnd,
+    onUserChangedZoom,
+    onIdle
+  } = props
   const mapEl = useRef(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
 
@@ -53,7 +61,8 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const handleZoomChanged = () => {
     // only call onUserChangedZoom() if the user took some action to trigger the "zoom_changed" event
     if (!zoomChangedProgrammatically) {
-      typeof onUserChangedZoom === 'function' && onUserChangedZoom(getCurrentMapState())
+      typeof onUserChangedZoom === 'function' &&
+        onUserChangedZoom(getCurrentMapState())
     } else {
       // reset the flag after handling the event
       zoomChangedProgrammatically = false
@@ -75,13 +84,17 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const createEventListeners = () => {
     for (const [eventName, callback] of Object.entries(eventListenerMapping)) {
       if (googleMap && typeof callback === 'function') {
-        eventListeners.push(google.maps.event.addListener(googleMap, eventName, callback))
+        eventListeners.push(
+          google.maps.event.addListener(googleMap, eventName, callback)
+        )
       }
     }
   }
 
   const destroyEventListeners = () => {
-    eventListeners.forEach((eventListener) => google.maps.event.removeListener(eventListener))
+    eventListeners.forEach((eventListener) =>
+      google.maps.event.removeListener(eventListener)
+    )
   }
 
   useEffectOnce(() => {

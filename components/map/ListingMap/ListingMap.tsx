@@ -31,11 +31,13 @@ const ListingMap: NextPage = () => {
             options={MapBoundaryOptions}
           />
         </GoogleMap>
-        {boundaryActive && <BoundaryControl onClick={handleBoundaryControlClick} />}
+        {boundaryActive && (
+          <BoundaryControl onClick={handleBoundaryControlClick} />
+        )}
       </div>
     )
   }
-  return (<div className={styles.listingMap}></div>)
+  return <div className={styles.listingMap}></div>
 }
 
 export default ListingMap
