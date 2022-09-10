@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import { useRef, useEffect, ReactNode } from 'react'
 import { useEffectOnce, usePrevious } from 'react-use'
+import isEqual from 'lodash/isEqual'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import styles from './GoogleMap.module.css'
 
@@ -41,6 +42,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   } = props
   const mapEl = useRef(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
+  const previousBounds = usePrevious(bounds)
 
   const getCurrentMapState = (): GoogleMapState => {
     // each of these values can potentially be undefined, which Typescript complains about. since we depend on these
@@ -77,7 +79,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
     // event handler so set this flag
     zoomChangedProgrammatically = true
     // sets the viewport to contain the given bounds
-    googleMap?.fitBounds(bounds)
+    if (googleMap) googleMap.fitBounds(bounds)
   }
 
   const handleZoomChanged = () => {
@@ -123,12 +125,18 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
     if (mapEl.current !== null) {
       setGoogleMap(new google.maps.Map(mapEl.current, options))
     } else {
-      throw new Error('Reference to map is null. Unable to create map instance.')
+      throw new Error(
+        'Reference to map container div is null. Unable to create map instance.'
+      )
     }
   })
 
   useEffect(() => {
-    if (bounds) updateMapPosition(bounds)
+    // avoid adjusting the map unless bounds have changed. passing the same bounds in on every render can potentially
+    // cause the app to get stuck in a loop because of the way we are managing state
+    if (googleMap && bounds && !isEqual(previousBounds, bounds)) {
+      updateMapPosition(bounds)
+    }
   }, [bounds])
 
   useEffect(() => {

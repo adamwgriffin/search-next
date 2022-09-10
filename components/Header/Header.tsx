@@ -5,29 +5,19 @@ import styles from './Header.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   setLocationSearchField,
-  resetListings,
-  searchListings,
   selectLocationSearchField,
-  selectSearchParams
+  initiateListingSearch
 } from '../../store/listingSearch/listingSearchSlice'
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
-  getPlaceAutocompleteDetails,
   selectAutcompletePlacePredictions,
-  selectGeocoderResult,
-  selectGeoType
 } from '../../store/places/placesSlice'
-import { setBoundaryActive, getGeoLayer, selectBufferMiles } from '../../store/listingMap/listingMapSlice'
 
 const Header: NextPage = () => {
   const dispatch = useAppDispatch()
-  const value = useAppSelector(selectLocationSearchField)
-  const params = useAppSelector(selectSearchParams)
+  const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
-  const geocoderResult = useAppSelector(selectGeocoderResult)
-  const geotype = useAppSelector(selectGeoType)
-  const bufferMiles = useAppSelector(selectBufferMiles)
   const { googleLoaded, googleMap } = useGoogleMaps()  
 
   const handleOnGetPlaceAutocompletePredictions = async (val:string) => {
@@ -39,21 +29,19 @@ const Header: NextPage = () => {
   }
 
   const handleOnSearchInitiated = () => {
-    googleLoaded && dispatch(searchListings(params))
+    if (googleLoaded) {
+      dispatch(initiateListingSearch())
+    } else {
+      console.warn("Google library isn't loaded yet")
+    }
   }
 
-  const handleOnOptionSelected = (option: google.maps.places.AutocompletePrediction) => {
+  const handleOnOptionSelected = (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
+    dispatch(setLocationSearchField(autocompletePrediction.description))
     if (googleLoaded && googleMap) {
-      dispatch(setBoundaryActive(true))
-      dispatch(setLocationSearchField(option.description))
-      dispatch(resetListings())
-      dispatch(getPlaceAutocompleteDetails({ placeId: option.place_id, googleMap: googleMap}))
-      dispatch(getGeoLayer({
-        center_lat: geocoderResult.location.lat,
-        center_lon: geocoderResult.location.lng,
-        geotype: geotype,
-        buffer_miles: bufferMiles,
-        source: 'agent website'
+      dispatch(initiateListingSearch({
+        placeId: autocompletePrediction.place_id,
+        googleMap: googleMap
       }))
     } else {
       console.warn("The googleMap instance is not available")
@@ -65,7 +53,7 @@ const Header: NextPage = () => {
   return (
     <header className={styles.Header}>
       <SearchField
-        value={value}
+        value={locationSearchField}
         options={options}
         onInput={handleOnInput}
         onGetPlaceAutocompletePredictions={handleOnGetPlaceAutocompletePredictions}

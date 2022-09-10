@@ -2,31 +2,60 @@ import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config'
-import { placeHolderLocations, placeholderBoundary } from '../../../config/placeholders'
 import styles from './ListingMap.module.css'
-import GoogleMap from '../GoogleMap/GoogleMap'
+import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
 import ListingMarker from '../ListingMarker/ListingMarker'
 import MapBoundary from '../MapBoundary/MapBoundary'
 import BoundaryControl from '../BoundaryControl/BoundaryControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
-import { setBoundaryActive, selectBoundaryActive } from '../../../store/listingMap/listingMapSlice'
+import {
+  setBoundaryActive,
+  setMapData,
+  selectBoundaryActive,
+  selectGeoLayerBounds,
+  selectGeoLayerCoordinates,
+} from '../../../store/listingMap/listingMapSlice'
+import {
+  setListingSearchPending,
+  searchListings,
+  selectListingSearchPending,
+  selectListings
+} from '../../../store/listingSearch/listingSearchSlice'
 
 const ListingMap: NextPage = () => {
   const { googleLoaded } = useGoogleMaps()
   const dispatch = useAppDispatch()
   const boundaryActive = useAppSelector(selectBoundaryActive)
+  const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
+  const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
+  const listingSearchPending = useAppSelector(selectListingSearchPending)
+  const listings = useAppSelector(selectListings)
 
   const handleBoundaryControlClick = () => {
     dispatch(setBoundaryActive(!boundaryActive))
   }
 
+  const handleIdle = (currentMapState: GoogleMapState) => {
+    dispatch(setMapData(currentMapState))
+    if (listingSearchPending) {
+      dispatch(setListingSearchPending(false))
+      dispatch(searchListings())
+    }
+  }
+
   if (googleLoaded) {
     return (
       <div className={styles.listingMap}>
-        <GoogleMap options={DefaultMapOptions}>
-          {placeHolderLocations.map(l => <ListingMarker position={l} key={l.lat} /> )}
+        <GoogleMap
+          options={DefaultMapOptions}
+          bounds={geoLayerBounds}
+          onIdle={handleIdle}
+        >
+          {listings.map((l) => (
+            <ListingMarker listing={l} key={l.listingid} />
+          ))}
           <MapBoundary
-            coordinates={placeholderBoundary}
+            coordinates={geoLayerCoordinates}
             visible={boundaryActive}
             options={MapBoundaryOptions}
           />

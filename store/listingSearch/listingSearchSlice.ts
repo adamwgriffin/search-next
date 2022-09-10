@@ -1,5 +1,6 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
+import type { GetPlaceAutocompleteDetailsPayload } from '../places/placesSlice'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
@@ -8,7 +9,12 @@ import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectBaseUrl } from '../environment/environmentSlice'
-import { selectGeoType } from '../places/placesSlice'
+import {
+  getPlaceAutocompleteDetails,
+  geocodeMap,
+  selectGeoType
+} from '../places/placesSlice'
+import { setBoundaryActive, getGeoLayer } from '../listingMap/listingMapSlice'
 
 export interface ListingSearchState {
   listingsPageIndex: number
@@ -24,6 +30,8 @@ const initialState: ListingSearchState = {
   // TODO: we probably will not even use cluster_threshold anymore. paging through small sets of listings is a better
   // user experince that clustering large sets IMO
   cluster_threshold: 200,
+  // "pending" in this context means it's waiting to be executed after the map "idle" event is triggered, not that the
+  // request to the service is pending
   listingSearchPending: false,
   // "location_search_field" is a synonym for "street" in listing service. it is a valid search param but we don't
   // include it in "searchParams" because we are using it to geocode on the front end to get the center_lat & center_lon
@@ -33,19 +41,50 @@ const initialState: ListingSearchState = {
   searchParams: WebsitesSearchParams
 }
 
-// The function below is called a thunk and allows us to perform async logic. It can be dispatched like a regular
-// action: `dispatch(searchListings(params))`. This will call the thunk with the `dispatch` function as the first
-// argument. Async code can then be executed and other actions can be dispatched. Thunks are typically used to make
-// async requests. The reducers for these async thunk actions need to be created in the "extraReducers" property of the
-// slice below
+export const getGeoSpatialData = createAsyncThunk(
+  'listingSearch/getGeoSpatialData',
+  async (args: GetPlaceAutocompleteDetailsPayload | undefined, { dispatch, getState }) => {
+    const { listingSearch } = getState() as AppState
+    if (args?.placeId && args?.googleMap) {
+      // if we have an AutocompletePrediction.place_id we can get goespatial data via getPlaceDetails(place_id) request
+      // & assign to state.placesgeocoderResult 
+      return await dispatch(
+        getPlaceAutocompleteDetails({
+          placeId: args.placeId,
+          googleMap: args.googleMap
+        })
+      )
+    } else{
+      // otherwise just geocode the text in the search field & assign that to geocoderResult instead
+      return await dispatch(geocodeMap({ address: listingSearch.location_search_field }))
+    }
+  }
+)
+
+export const initiateListingSearch = createAsyncThunk(
+  'listingSearch/initiateListingSearch',
+  async (args: GetPlaceAutocompleteDetailsPayload | undefined, { dispatch }) => {
+    dispatch(setBoundaryActive(true))
+    dispatch(resetListings())
+    // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
+    // after getGeoLayer and we get the previous location instead of the current one.
+    await dispatch(getGeoSpatialData(args))
+    // getGeoLayer() uses the geospatial data that was assigned to geocoderResult above for the lat, lng & geotype
+    // params that it needs to get the layer from the service (boundary)
+    return await dispatch(getGeoLayer())
+  }
+)
+
 export const searchListings = createAsyncThunk(
   'listingSearch/searchListings',
-  async (params: object, { getState }) => {
-    // need to declare return value of getState() as AppState otherwise Typscript complains that the "environment"
-    // property does not exist
-    const { environment } = getState() as AppState
-    const baseUrl = selectBaseUrl(environment)
-    const response = await searchListingsNonDedupe(baseUrl, params)
+  async (_arg, { getState }) => {
+    // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
+    const state = getState() as AppState
+    const baseUrl = selectBaseUrl(state.environment)
+    const response = await searchListingsNonDedupe(
+      baseUrl,
+      selectParamsForListingServiceCall(state)
+    )
     // The value we return becomes the `fulfilled` action payload in extraReducers below
     return response.data
   }
@@ -60,15 +99,19 @@ export const listingSearchSlice = createSlice({
     setLocationSearchField: (state, action: PayloadAction<string>) => {
       state.location_search_field = action.payload
     },
-  
-    resetListings: (state, action: PayloadAction) => {
+
+    resetListings: (state) => {
       state.listingsPageIndex = initialState.listingsPageIndex
       state.searchListingsResponse = initialState.searchListingsResponse
+    },
+
+    setListingSearchPending: (state, action: PayloadAction<boolean>) => {
+      state.listingSearchPending = action.payload
     }
   },
 
   extraReducers: (builder) => {
-    builder.addCase(searchListings.pending, (state) => {
+    builder.addCase(initiateListingSearch.fulfilled, (state) => {
       state.listingSearchPending = true
     })
 
@@ -83,7 +126,11 @@ export const listingSearchSlice = createSlice({
   }
 })
 
-export const { setLocationSearchField, resetListings } = listingSearchSlice.actions
+export const {
+  setLocationSearchField,
+  resetListings,
+  setListingSearchPending
+} = listingSearchSlice.actions
 
 // The function below is called a selector and allows us to select a value from the state. Selectors can also be defined
 // inline where they're used instead of in the slice file. For example: `useSelector((state: RootState) =>
@@ -112,12 +159,17 @@ export const selectMoreFiltersParams = (state: AppState) => {
   ])
 }
 
-export const centerLatLonParams = (location: google.maps.LatLngLiteral) => {
-  const { lat, lng } = location
+export const selectListingSearchPending = (state: AppState) =>
+  state.listingSearch.listingSearchPending
+
+export const selectCenterLatLonParams = (
+  centerlatLng: google.maps.LatLngLiteral
+) => {
+  const { lat, lng } = centerlatLng
   return { center_lat: lat, center_lon: lng }
 }
 
-export const boundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
+export const selectBoundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
   const { north, east, south, west } = bounds
   return {
     bounds_north: north,
@@ -127,11 +179,11 @@ export const boundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
   }
 }
 
-export const listingServiceParams = (state: AppState) => {
+export const selectAllListingServiceParams = (state: AppState) => {
   return {
     ...state.listingSearch.searchParams,
-    ...centerLatLonParams(state.places.geocoderResult.location),
-    ...boundsParams(state.listingMap.mapData.bounds),
+    ...selectCenterLatLonParams(state.listingMap.mapData.center),
+    ...selectBoundsParams(state.listingMap.mapData.bounds),
     agent_uuid: state.environment.agent_uuid,
     geotype: selectGeoType(state)
   }
@@ -150,8 +202,9 @@ export const modifyParams = (state: AppState, originalParams: object) => {
 export const removeUnecessaryParams = (params: object) =>
   omitBy(params, (value, param) => value === null)
 
-export const selectSearchParams = (state: AppState) => {
-  const originalParams = listingServiceParams(state)
+// TODO: make this a memoized selector with createSelector
+export const selectParamsForListingServiceCall = (state: AppState) => {
+  const originalParams = selectAllListingServiceParams(state)
   const modifiedParams = modifyParams(state, originalParams)
   return removeUnecessaryParams(modifiedParams)
 }

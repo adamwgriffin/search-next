@@ -9,6 +9,8 @@ export interface ListingLocation {
   city: string
   state: string
   zip: string
+  latitude: string
+  longitude: string
 }
 
 export interface ListingBathroomDetails {
