@@ -1,6 +1,4 @@
 import type { AppState } from '..'
-import type { SerializedPlaceResult } from '../../lib/places_service_wrapper'
-import { getPlaceDetails } from '../../lib/places_service_wrapper'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GoogleToServiceAddressTypeMapping } from '../../lib/constants/geocoder_constants'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
@@ -27,7 +25,6 @@ export interface SerializedGeocoderResult extends Omit<google.maps.GeocoderResul
 
 let geocoder: google.maps.Geocoder
 let autocompleteService: google.maps.places.AutocompleteService
-let placesService: google.maps.places.PlacesService
 
 const initialState: PlacesState = {
   geocoderResult: {
@@ -86,23 +83,6 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
   }
 )
 
-export const getPlaceAutocompleteDetails = createAsyncThunk(
-  'places/getPlaceAutocompleteDetails',
-  async (placeId: string): Promise<SerializedPlaceResult | null> => {
-    // for some reason google requires this "service" to take either a Map instance or a <div> as an argument to create
-    // it, so we're just creating a dummy div element that's not attached to the dom to workaround this.
-    placesService ||= new google.maps.places.PlacesService(document.createElement('div'))
-    const res = await getPlaceDetails(
-      {
-        placeId,
-        fields: ['address_component', 'geometry']
-      },
-      placesService
-    )
-    return res.results
-  }
-)
-
 export const placesSlice = createSlice({
   name: 'places',
 
@@ -138,24 +118,6 @@ export const placesSlice = createSlice({
       }
     )
 
-    builder.addCase(
-      getPlaceAutocompleteDetails.fulfilled,
-      (state, action: PayloadAction<SerializedPlaceResult | null>) => {
-        const { address_components, geometry } = action.payload || {}
-        if (address_components && geometry?.location && geometry?.viewport) {
-          state.geocoderResult = {
-            type: address_components[0].types[0],
-            location: geometry.location,
-            viewport: geometry.viewport
-          }
-        } else {
-          console.warn(
-            'getPlaceAutocompleteDetails payload was empty, action.payload:',
-            action.payload
-          )
-        }
-      }
-    )
   }
 })
 

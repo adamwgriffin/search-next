@@ -39,7 +39,7 @@ const Header: NextPage = () => {
   const handleOnOptionSelected = (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
     dispatch(setLocationSearchField(autocompletePrediction.description))
     if (googleLoaded && googleMap) {
-      dispatch(initiateListingSearch(autocompletePrediction.place_id))
+      dispatch(initiateListingSearch({ placeId: autocompletePrediction.place_id }))
     } else {
       console.warn("The googleMap instance is not available")
     }

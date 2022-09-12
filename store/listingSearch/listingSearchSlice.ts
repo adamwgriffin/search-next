@@ -9,7 +9,6 @@ import { WebsitesSearchParams } from '../../lib/constants/search_param_constants
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectBaseUrl } from '../environment/environmentSlice'
 import {
-  getPlaceAutocompleteDetails,
   geocodeMap,
   selectGeoType
 } from '../places/placesSlice'
@@ -40,29 +39,21 @@ const initialState: ListingSearchState = {
   searchParams: WebsitesSearchParams
 }
 
-export const getGeoSpatialData = createAsyncThunk(
-  'listingSearch/getGeoSpatialData',
-  async (placeId: string | undefined, { dispatch, getState }) => {
-    const { listingSearch } = getState() as AppState
-    if (placeId) {
-      // if we have an AutocompletePrediction.place_id we can get goespatial data via getPlaceDetails(place_id) request
-      // & assign to state.places.placesgeocoderResult 
-      return await dispatch(getPlaceAutocompleteDetails(placeId))
-    } else{
-      // otherwise just geocode the text in the search field & assign that to geocoderResult instead
-      return await dispatch(geocodeMap({ address: listingSearch.location_search_field }))
-    }
-  }
-)
-
 export const initiateListingSearch = createAsyncThunk(
   'listingSearch/initiateListingSearch',
-  async (placeId: string | undefined, { dispatch }) => {
+  async (geocoderRequest: google.maps.GeocoderRequest | undefined, { dispatch, getState }) => {
     dispatch(setBoundaryActive(true))
     dispatch(resetListings())
     // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
     // after getGeoLayer and we get the previous location instead of the current one.
-    await dispatch(getGeoSpatialData(placeId))
+    let request
+    if (geocoderRequest) {
+      request = geocoderRequest
+    } else {
+      const { listingSearch } = getState() as AppState
+      request = { address: listingSearch.location_search_field }
+    }
+    await dispatch(geocodeMap(request))
     // getGeoLayer() uses the geospatial data that was assigned to geocoderResult above for the lat, lng & geotype
     // params that it needs to get the layer from the service (boundary)
     return await dispatch(getGeoLayer())
