@@ -9,26 +9,42 @@ import MenuOpenIcon from '../../icons/MenuOpenIcon/MenuOpenIcon'
 interface MenuButtonProps {
   label: string
   children: ReactNode
+  onOpen?: () => void
+  onClose?: () => void
 }
 
-const MenuButton: NextPage<MenuButtonProps> = (props) => {
+const MenuButton: NextPage<MenuButtonProps> = ({ label, children, onOpen, onClose }) => {
   const ref = useRef(null)
   const [open, setOpen] = useState(false)
-  useClickAway(ref, () => setOpen(false))
+
+  const closeMenu = () => {
+    if (open) {
+      setOpen(false)
+      onClose?.()
+    }
+  }
+
+  const toggleMenu = () => {
+    const opened = !open
+    setOpen(opened)
+    opened ? onOpen?.() : onClose?.()
+  }
+
+  useClickAway(ref, closeMenu)
 
   return (
     <div
       ref={ref}
       className={styles.menuButton}
     >
-      <OutlinedButton highlighted={open} onClick={() => setOpen(!open)}>
+      <OutlinedButton highlighted={open} onClick={toggleMenu}>
         <span className={styles.label}>
-          {props.label}
+          {label}
         </span>
         <MenuOpenIcon open={open} />
       </OutlinedButton>
       <div className={open ? styles.open : styles.closed}>
-        {props.children}
+        {children}
       </div>
     </div>
   )
