@@ -1,6 +1,5 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { GetPlaceAutocompleteDetailsPayload } from '../places/placesSlice'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
@@ -43,17 +42,12 @@ const initialState: ListingSearchState = {
 
 export const getGeoSpatialData = createAsyncThunk(
   'listingSearch/getGeoSpatialData',
-  async (args: GetPlaceAutocompleteDetailsPayload | undefined, { dispatch, getState }) => {
+  async (placeId: string | undefined, { dispatch, getState }) => {
     const { listingSearch } = getState() as AppState
-    if (args?.placeId && args?.googleMap) {
+    if (placeId) {
       // if we have an AutocompletePrediction.place_id we can get goespatial data via getPlaceDetails(place_id) request
-      // & assign to state.placesgeocoderResult 
-      return await dispatch(
-        getPlaceAutocompleteDetails({
-          placeId: args.placeId,
-          googleMap: args.googleMap
-        })
-      )
+      // & assign to state.places.placesgeocoderResult 
+      return await dispatch(getPlaceAutocompleteDetails(placeId))
     } else{
       // otherwise just geocode the text in the search field & assign that to geocoderResult instead
       return await dispatch(geocodeMap({ address: listingSearch.location_search_field }))
@@ -63,12 +57,12 @@ export const getGeoSpatialData = createAsyncThunk(
 
 export const initiateListingSearch = createAsyncThunk(
   'listingSearch/initiateListingSearch',
-  async (args: GetPlaceAutocompleteDetailsPayload | undefined, { dispatch }) => {
+  async (placeId: string | undefined, { dispatch }) => {
     dispatch(setBoundaryActive(true))
     dispatch(resetListings())
     // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
     // after getGeoLayer and we get the previous location instead of the current one.
-    await dispatch(getGeoSpatialData(args))
+    await dispatch(getGeoSpatialData(placeId))
     // getGeoLayer() uses the geospatial data that was assigned to geocoderResult above for the lat, lng & geotype
     // params that it needs to get the layer from the service (boundary)
     return await dispatch(getGeoLayer())

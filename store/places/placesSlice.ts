@@ -16,11 +16,6 @@ export interface PlacesState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
 }
 
-export interface GetPlaceAutocompleteDetailsPayload {
-  placeId: string
-  googleMap: google.maps.Map
-}
-
 let geocoder: google.maps.Geocoder
 let autocompleteService: google.maps.places.AutocompleteService
 let placesService: google.maps.places.PlacesService
@@ -68,13 +63,10 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
 
 export const getPlaceAutocompleteDetails = createAsyncThunk(
   'places/getPlaceAutocompleteDetails',
-  async ({
-    placeId,
-    // we need the map to create a PlacesService instance but the GoogleMapsContext it's in is only available to
-    // components that are inside <GoogleMapsProvider>, so we will need to pass the map in with the request
-    googleMap
-  }: GetPlaceAutocompleteDetailsPayload): Promise<SerializedPlaceResult | null> => {
-    placesService ||= new google.maps.places.PlacesService(googleMap)
+  async (placeId: string): Promise<SerializedPlaceResult | null> => {
+    // for some reason google requires this "service" to take either a Map instance or a <div> as an argument to create
+    // it, so we're just creating a dummy div element that's not attached to the dom to workaround this.
+    placesService ||= new google.maps.places.PlacesService(document.createElement('div'))
     const res = await getPlaceDetails(
       {
         placeId,
