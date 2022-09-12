@@ -16,6 +16,15 @@ export interface PlacesState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
 }
 
+export interface SerializedGeocoderResult extends Omit<google.maps.GeocoderResult, 'geometry'> {
+  geometry: {
+    location: google.maps.LatLngLiteral
+    location_type: google.maps.GeocoderLocationType
+    viewport: google.maps.LatLngBoundsLiteral
+    bounds?: google.maps.LatLngBoundsLiteral
+  }
+}
+
 let geocoder: google.maps.Geocoder
 let autocompleteService: google.maps.places.AutocompleteService
 let placesService: google.maps.places.PlacesService
@@ -35,14 +44,30 @@ const initialState: PlacesState = {
   autcompletePlacePredictions: []
 }
 
+// since we are using redux for state management we want to serialize the response from the geocoder as a plain
+// javascript object. redux will give a warning about using complex objects otherwise. location and viewport are
+// returned as instances of LatLng & LatLngBounds so we convert them to their POJO equivalents LatLngLiteral &
+// LatLngBoundsLiteral with toJSON().
+export const seralizeGeocoderResult = (result: google.maps.GeocoderResult): SerializedGeocoderResult => {
+  return {
+    ...result,
+    geometry: {
+      location: result.geometry.location.toJSON(),
+      location_type: result.geometry.location_type,
+      viewport: result.geometry.viewport.toJSON(),
+      bounds: result.geometry?.bounds?.toJSON()
+    }
+  }
+}
+
 export const geocodeMap = createAsyncThunk(
   'places/geocodeMap',
   async (
     request: google.maps.GeocoderRequest
-  ): Promise<google.maps.GeocoderResult> => {
+  ): Promise<SerializedGeocoderResult> => {
     geocoder ||= new google.maps.Geocoder()
     const res = await geocoder.geocode(request)
-    return res.results[0]
+    return seralizeGeocoderResult(res.results[0])
   }
 )
 
@@ -93,11 +118,11 @@ export const placesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       geocodeMap.fulfilled,
-      (state, action: PayloadAction<google.maps.GeocoderResult>) => {
+      (state, action: PayloadAction<SerializedGeocoderResult>) => {
         const { location, viewport } = action.payload.geometry
         state.geocoderResult = {
           type: action.payload.types[0],
-          location: location.toJSON(), // calling toJSON() returns the LatLngBounds instance as a LatLngLiteral
+          location,
           viewport
         }
       }
