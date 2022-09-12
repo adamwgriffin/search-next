@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../context/google_maps_context'
-import SearchField from '../form/SearchField/SearchField'
+import SearchField from '../../components/form/SearchField/SearchField'
 import styles from './Header.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {

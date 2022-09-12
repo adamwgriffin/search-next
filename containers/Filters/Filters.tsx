@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import { useState, ChangeEvent } from 'react'
 import styles from './Filters.module.css'
-import Price from '../Price/Price'
-import BedsAndBaths from '../BedsAndBaths/BedsAndBaths'
-import PropertyType from '../PropertyType/PropertyType'
-import { PropertyTypes } from '../../../lib/property_types'
-import { StatusTypes } from '../../../lib/status_types'
-import More from '../More/More'
+import Price from '../../components/form/Price/Price'
+import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
+import PropertyType from '../../components/form/PropertyType/PropertyType'
+import { PropertyTypes } from '../../lib/property_types'
+import { StatusTypes } from '../../lib/status_types'
+import More from '../../components/form/More/More'
 
 const Filters: NextPage = () => {
   const [selectedPropertyTypes, setSelectedPropertyTypes] = useState([1, 2])
