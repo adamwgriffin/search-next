@@ -3,13 +3,10 @@ import styles from './Search.module.css'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import Header from '../../containers/Header/Header'
 import Filters from '../../containers/Filters/Filters'
-import SearchResults from '../SearchResults/SearchResults'
+import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../map/ListingMap/ListingMap'
-import { useAppSelector } from '../../hooks'
-import { selectListings } from '../../store/listingSearch/listingSearchSlice'
 
 const Search: NextPage = () => {
-  const listings = useAppSelector(selectListings)
 
   return (
     <GoogleMapsProvider>
@@ -21,7 +18,7 @@ const Search: NextPage = () => {
           <Filters />
         </div>
         <div className={styles.searchResults}>
-          <SearchResults listings={listings} />
+          <SearchResults />
         </div>
         <div className={styles.map}>
           <ListingMap />

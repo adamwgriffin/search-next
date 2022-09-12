@@ -1,14 +1,12 @@
 import type { NextPage } from 'next'
-import type { Listing } from '../../lib/types'
 import styles from './SearchResults.module.css'
-import ListingCard from '../listings/ListingCard/ListingCard'
+import ListingCard from '../../components/listings/ListingCard/ListingCard'
+import { useAppSelector } from '../../hooks'
+import { selectListings } from '../../store/listingSearch/listingSearchSlice'
 
-export interface SearchResultsProps {
-  listings: Listing[]
-}
+const SearchResults: NextPage = () => {
+  const listings = useAppSelector(selectListings)
 
-const SearchResults: NextPage<SearchResultsProps> = ({ listings=[] }) => {
-  
   return (  
     <ul className={styles.searchResultsList}>
       {listings.map((listing) => (
