@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import { useState, useEffect, useId, FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
+import { useState, useEffect, useRef, useId, FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
+import { useClickAway } from 'react-use'
 import SearchButton from '../SearchButton/SearchButton'
 import LocationPinFilledIcon from '../../icons/LocationPinFilledIcon/LocationPinFilledIcon'
 import PlacePredictionText from '../PlacePredictionText/PlacePredictionText'
@@ -27,6 +28,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
     onGetPlaceAutocompletePredictions
   }) => {
   const id = useId()
+  const ref = useRef(null)
   const [open, setOpen] = useState(false)
   const [inputHasFocus, setInputHasFocus] = useState(false)
   const [activeDescendantKey, setActiveDescendantKey] = useState(-1)
@@ -174,6 +176,8 @@ const SearchField: NextPage<SearchFieldProps> = ({
     return active ? '#e96262' : '#999'
   }
 
+  useClickAway(ref, closeDropdown)
+
   useEffect(() => {
     options.length ? openDropdown() : closeDropdown()
   }, [options])
@@ -181,6 +185,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
   return (
     <div
       className={styles.comboboxWrapper}
+      ref={ref}
     >
       <div className={styles.searchFieldElements}>
         <div
