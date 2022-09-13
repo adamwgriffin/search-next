@@ -1,17 +1,39 @@
 import type { NextPage } from 'next'
-import { FocusEventHandler } from 'react'
+import { useRef } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
-interface PriceProps {
-  onBlur?: FocusEventHandler<HTMLInputElement>
+export interface PriceRange {
+  pricemin: number | null
+  pricemax: number | null
 }
 
-const Price: NextPage<PriceProps> = (props) => {
+export interface PriceProps {
+  priceRange: PriceRange
+  onBlur?: () => void
+  onClose?: () => void
+  onChange?: (priceRange: PriceRange) => void
+}
+
+const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) => {
+  const priceminRef = useRef<HTMLInputElement>(null)
+  const pricemaxRef = useRef<HTMLInputElement>(null)
+
+  const getPriceRange = () => {
+    return {
+      pricemin: Number(priceminRef.current?.value) || null,
+      pricemax: Number(pricemaxRef.current?.value) || null
+    }
+  }
+
+  const handleChange = () => {
+    onChange?.(getPriceRange())
+  }
+
   return (
-    <MenuButton label="Price">
+    <MenuButton label="Price" onClose={() => onClose?.()}>
       <div className={styles.price}>
         <label
           htmlFor="pricemin"
@@ -20,11 +42,14 @@ const Price: NextPage<PriceProps> = (props) => {
           Min Price
         </label>
         <input
+          ref={priceminRef}
           type="text"
           placeholder='Min'
           className={formStyles.input}
           id="pricemin"
-          onBlur={props.onBlur}
+          value={priceRange.pricemin || ''}
+          onChange={handleChange}
+          onBlur={() => onBlur?.()}
         />
         <InputFromToSeparator />
         <label
@@ -34,11 +59,14 @@ const Price: NextPage<PriceProps> = (props) => {
           Max Price
         </label>
         <input
+          ref={pricemaxRef}
           type="text"
           placeholder='Max'
           className={formStyles.input}
           id="pricemax"
-          onBlur={props.onBlur}
+          value={priceRange.pricemax || ''}
+          onChange={handleChange}
+          onBlur={() => onBlur?.()}
         />
       </div>
     </MenuButton>

@@ -7,6 +7,11 @@
 
 // TODO: create a Typescript interface for WebsitesSearchParams that could identifiy param types as well as required
 // params
+export interface WebsitesSearchParamsInterface {
+  pricemin?: number | null
+  pricemax?: number | null
+}
+
 export const WebsitesSearchParams = Object.freeze({
   agent_uuid: 'f74a3f6d-aeda-4daa-835e-029386152405',
   pgsize: 20,

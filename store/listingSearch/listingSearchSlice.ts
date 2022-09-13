@@ -1,5 +1,7 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
+import type { WebsitesSearchParamsInterface } from '../../lib/constants/search_param_constants'
+import type { PriceRange } from '../../components/form/Price/Price'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
@@ -8,10 +10,7 @@ import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectBaseUrl } from '../environment/environmentSlice'
-import {
-  geocodeMap,
-  selectGeoType
-} from '../places/placesSlice'
+import { geocodeMap, selectGeoType } from '../places/placesSlice'
 import { setBoundaryActive, getGeoLayer } from '../listingMap/listingMapSlice'
 
 export interface ListingSearchState {
@@ -41,7 +40,10 @@ const initialState: ListingSearchState = {
 
 export const initiateListingSearch = createAsyncThunk(
   'listingSearch/initiateListingSearch',
-  async (geocoderRequest: google.maps.GeocoderRequest | undefined, { dispatch, getState }) => {
+  async (
+    geocoderRequest: google.maps.GeocoderRequest | undefined,
+    { dispatch, getState }
+  ) => {
     dispatch(setBoundaryActive(true))
     dispatch(resetListings())
     // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
@@ -57,6 +59,15 @@ export const initiateListingSearch = createAsyncThunk(
     // getGeoLayer() uses the geospatial data that was assigned to geocoderResult above for the lat, lng & geotype
     // params that it needs to get the layer from the service (boundary)
     return await dispatch(getGeoLayer())
+  }
+)
+
+export const searchWithUpdatedParams = createAsyncThunk(
+  'listingSearch/searchWithUpdatedParams',
+  async (_args, { dispatch }) => {
+    dispatch(setBoundaryActive(true))
+    dispatch(resetListings())
+    dispatch(searchListings())
   }
 )
 
@@ -92,6 +103,10 @@ export const listingSearchSlice = createSlice({
 
     setListingSearchPending: (state, action: PayloadAction<boolean>) => {
       state.listingSearchPending = action.payload
+    },
+
+    setSearchParams: (state, action: PayloadAction<PriceRange>) => {
+      state.searchParams = { ...state.searchParams, ...action.payload }
     }
   },
 
@@ -114,7 +129,8 @@ export const listingSearchSlice = createSlice({
 export const {
   setLocationSearchField,
   resetListings,
-  setListingSearchPending
+  setListingSearchPending,
+  setSearchParams
 } = listingSearchSlice.actions
 
 // The function below is called a selector and allows us to select a value from the state. Selectors can also be defined
@@ -164,6 +180,11 @@ export const selectBoundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
   }
 }
 
+export const selectPriceRange = (state: AppState) => {
+  const { pricemin, pricemax } = state.listingSearch.searchParams
+  return { pricemin, pricemax }
+}
+
 export const selectAllListingServiceParams = (state: AppState) => {
   return {
     ...state.listingSearch.searchParams,
@@ -182,10 +203,11 @@ export const modifyParams = (state: AppState, originalParams: object) => {
   }, originalParams)
 }
 
-// TODO: maybe should remove undefined as well
-// remove falsey params (usually null)
 export const removeUnecessaryParams = (params: object) =>
-  omitBy(params, (value, param) => value === null)
+  omitBy(
+    params,
+    (value, param) => typeof value === 'undefined' || value === null
+  )
 
 // TODO: make this a memoized selector with createSelector
 export const selectParamsForListingServiceCall = (state: AppState) => {
