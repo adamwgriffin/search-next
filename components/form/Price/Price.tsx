@@ -47,6 +47,7 @@ const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) 
           placeholder='Min'
           className={formStyles.input}
           id="pricemin"
+          autoComplete='off'
           value={priceRange.pricemin || ''}
           onChange={handleChange}
           onBlur={() => onBlur?.()}
@@ -64,6 +65,7 @@ const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) 
           placeholder='Max'
           className={formStyles.input}
           id="pricemax"
+          autoComplete='off'
           value={priceRange.pricemax || ''}
           onChange={handleChange}
           onBlur={() => onBlur?.()}
