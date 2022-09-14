@@ -5,16 +5,16 @@ import formStyles from '../../../styles/forms.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
-export interface PriceRange {
+export interface PriceRangeParam {
   pricemin: number | null
   pricemax: number | null
 }
 
 export interface PriceProps {
-  priceRange: PriceRange
+  priceRange: PriceRangeParam
   onBlur?: () => void
   onClose?: () => void
-  onChange?: (priceRange: PriceRange) => void
+  onChange?: (priceRange: PriceRangeParam) => void
 }
 
 const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) => {

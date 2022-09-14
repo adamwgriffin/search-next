@@ -5,12 +5,24 @@
 // TODO: not sure if search params should actually be considerted "constants". maybe relocating these to a different
 // file would make more sense.
 
+export interface BedsParam {
+  bed_min: number
+}
+
+export interface BathsParam {
+  bath_min: number
+}
+
+export type BedsBathsParam = BedsParam | BathsParam
+
 // TODO: create a Typescript interface for WebsitesSearchParams that could identifiy param types as well as required
 // params
 export interface WebsitesSearchParamsInterface {
   pricemin: number | null
   pricemax: number | null
   ptype: number[]
+  bed_min: number,
+  bath_min: number,
 }
 
 export const WebsitesSearchParams = Object.freeze({

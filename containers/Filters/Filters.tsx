@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import type { PriceRange } from '../../components/form/Price/Price'
+import type { PriceRangeParam } from '../../components/form/Price/Price'
+import type { BedsBathsParam } from '../../lib/constants/search_param_constants'
 import { ChangeEvent } from 'react'
 import styles from './Filters.module.css'
 import Price from '../../components/form/Price/Price'
@@ -12,6 +13,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectPriceRange,
   selectPropertyTypes,
+  selectBedBathParams,
   setSearchParams,
   searchWithUpdatedFilters,
 } from '../../store/listingSearch/listingSearchSlice'
@@ -20,17 +22,23 @@ const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
   const priceRange = useAppSelector(selectPriceRange)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
+  const bedsAndBaths = useAppSelector(selectBedBathParams)
 
   const handlePropertyTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const updatedPropertyTypes = e.target.checked ?
       selectedPropertyTypes.concat(+e.target.value) :
-      selectedPropertyTypes.filter((t) => t !== +e.target.value)
+      selectedPropertyTypes.filter(t => t !== +e.target.value)
     dispatch(setSearchParams({ ptype: updatedPropertyTypes }))
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePriceChange = (priceRange: PriceRange) => {
+  const handlePriceChange = (priceRange: PriceRangeParam) => {
     dispatch(setSearchParams(priceRange))
+  }
+
+  const handleBedsAndBathsChange = (param: BedsBathsParam) => {
+    dispatch(setSearchParams(param))
+    dispatch(searchWithUpdatedFilters())
   }
 
   const handleSearchInitiated = () => {
@@ -44,7 +52,11 @@ const Filters: NextPage = () => {
         onChange={handlePriceChange}
         onBlur={handleSearchInitiated}
       />
-      <BedsAndBaths countArr={[0, 1, 2, 3, 4, 5]} />
+      <BedsAndBaths
+        countArr={[0, 1, 2, 3, 4, 5]}
+        onChange={handleBedsAndBathsChange}
+        bedsAndBaths={bedsAndBaths}
+      />
       <PropertyType
         propertyTypes={PropertyTypes}
         params={selectedPropertyTypes}

@@ -1,10 +1,9 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { PriceRange } from '../../components/form/Price/Price'
-import type { WebsitesSearchParamsInterface } from '../../lib/constants/search_param_constants'
+import type { PriceRangeParam } from '../../components/form/Price/Price'
+import type { WebsitesSearchParamsInterface, BedsBathsParam } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
-import pick from 'lodash/pick'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
@@ -26,6 +25,8 @@ export interface SearchParamsUpdatePatch {
   pricemin?: number | null
   pricemax?: number | null
   ptype?: number[]
+  bed_min?: number
+  bath_min?: number
 }
 
 const initialState: ListingSearchState = {
@@ -149,14 +150,15 @@ export const selectLocationSearchField = (state: AppState): string => {
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []
 
-export const selectPriceRange = (state: AppState): PriceRange => {
-  // return pick(state.listingSearch.searchParams, ['pricemin', 'pricemax'])
+export const selectPriceRange = (state: AppState): PriceRangeParam => {
   const { pricemin, pricemax } = state.listingSearch.searchParams
   return { pricemin, pricemax  }
 }
 
-export const selectBedBathParams = (state: AppState) =>
-  pick(state.listingSearch.searchParams, ['bed_min', 'bath_min'])
+export const selectBedBathParams = (state: AppState): BedsBathsParam => {
+  const { bed_min, bath_min } = state.listingSearch.searchParams
+  return { bed_min, bath_min }
+}
 
 export const selectMoreFiltersParams = (state: AppState) => {
   return omit(state.listingSearch.searchParams, [

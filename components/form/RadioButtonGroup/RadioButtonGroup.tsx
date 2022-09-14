@@ -9,14 +9,27 @@ export interface RadioButtonGroupProps {
   name: string
   label: string
   options: CountOption[]
+  onChange?: (value: number) => void
 }
 
-const RadioButtonGroup: NextPage<RadioButtonGroupProps> = ({ name, label, options }) => {  
+const RadioButtonGroup: NextPage<RadioButtonGroupProps> = ({
+  name,
+  label,
+  options,
+  onChange
+}) => {
   return (
     <Fieldset>
       <Legend>{label}</Legend>
       <div className={styles.radioButtonGroup}>
-        {options.map(o => <RadioButton key={`${name}-radio-${o.value}`} name={name} {...o} />)}
+        {options.map((o) => (
+          <RadioButton
+            key={`${name}-radio-${o.value}`}
+            name={name}
+            {...o}
+            onChange={() => onChange?.(o.value)}
+          />
+        ))}
       </div>
     </Fieldset>
   )
