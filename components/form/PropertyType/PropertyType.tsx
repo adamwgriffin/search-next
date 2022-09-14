@@ -7,7 +7,7 @@ import MenuButton from '../MenuButton/MenuButton'
 
 interface PropertyTypeProps {
   propertyTypes: ReadonlyArray<PropertyTypesInterface>
-  params: Array<number|string>
+  params: number[]
   onChange: ChangeEventHandler<HTMLInputElement>
 }
 

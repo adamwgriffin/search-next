@@ -1,5 +1,5 @@
 export interface PropertyTypesInterface {
-  readonly id: number|string
+  readonly id: number
   readonly name: string
   readonly label: string
 }
@@ -8,7 +8,7 @@ export const PropertyTypes: ReadonlyArray<PropertyTypesInterface> = Object.freez
   {
     id: 1,
     name: 'residential',
-    label: 'Single-Family'
+    label: 'Home'
   },
   {
     id: 2,

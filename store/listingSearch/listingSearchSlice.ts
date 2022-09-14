@@ -1,7 +1,7 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { WebsitesSearchParamsInterface } from '../../lib/constants/search_param_constants'
 import type { PriceRange } from '../../components/form/Price/Price'
+import type { WebsitesSearchParamsInterface } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
@@ -19,7 +19,13 @@ export interface ListingSearchState {
   listingSearchPending: boolean
   location_search_field: string
   searchListingsResponse: any
-  searchParams: any
+  searchParams: WebsitesSearchParamsInterface
+}
+
+export interface SearchParamsUpdatePatch {
+  pricemin?: number | null
+  pricemax?: number | null
+  ptype?: number[]
 }
 
 const initialState: ListingSearchState = {
@@ -62,7 +68,7 @@ export const initiateListingSearch = createAsyncThunk(
   }
 )
 
-export const searchWithUpdatedParams = createAsyncThunk(
+export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
     dispatch(setBoundaryActive(true))
@@ -105,7 +111,7 @@ export const listingSearchSlice = createSlice({
       state.listingSearchPending = action.payload
     },
 
-    setSearchParams: (state, action: PayloadAction<PriceRange>) => {
+    setSearchParams: (state, action: PayloadAction<SearchParamsUpdatePatch>) => {
       state.searchParams = { ...state.searchParams, ...action.payload }
     }
   },
@@ -143,8 +149,11 @@ export const selectLocationSearchField = (state: AppState): string => {
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []
 
-export const selectPriceRangeParams = (state: AppState) =>
-  pick(state.listingSearch.searchParams, ['pricemin', 'pricemax'])
+export const selectPriceRange = (state: AppState): PriceRange => {
+  // return pick(state.listingSearch.searchParams, ['pricemin', 'pricemax'])
+  const { pricemin, pricemax } = state.listingSearch.searchParams
+  return { pricemin, pricemax  }
+}
 
 export const selectBedBathParams = (state: AppState) =>
   pick(state.listingSearch.searchParams, ['bed_min', 'bath_min'])
@@ -180,10 +189,7 @@ export const selectBoundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
   }
 }
 
-export const selectPriceRange = (state: AppState) => {
-  const { pricemin, pricemax } = state.listingSearch.searchParams
-  return { pricemin, pricemax }
-}
+export const selectPropertyTypes = (state: AppState): number[] => state.listingSearch.searchParams.ptype || []
 
 export const selectAllListingServiceParams = (state: AppState) => {
   return {

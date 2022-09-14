@@ -8,8 +8,9 @@
 // TODO: create a Typescript interface for WebsitesSearchParams that could identifiy param types as well as required
 // params
 export interface WebsitesSearchParamsInterface {
-  pricemin?: number | null
-  pricemax?: number | null
+  pricemin: number | null
+  pricemax: number | null
+  ptype: number[]
 }
 
 export const WebsitesSearchParams = Object.freeze({
