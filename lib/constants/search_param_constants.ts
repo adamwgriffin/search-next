@@ -23,6 +23,7 @@ export interface WebsitesSearchParamsInterface {
   ptype: number[]
   bed_min: number,
   bath_min: number,
+  status: 'active' | 'sold'
 }
 
 export const WebsitesSearchParams = Object.freeze({

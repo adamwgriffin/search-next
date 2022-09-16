@@ -4,6 +4,8 @@ export interface PropertyTypesInterface {
   readonly label: string
 }
 
+export const RentalPropertytypeID = 6
+
 export const PropertyTypes: ReadonlyArray<PropertyTypesInterface> = Object.freeze([
   {
     id: 1,

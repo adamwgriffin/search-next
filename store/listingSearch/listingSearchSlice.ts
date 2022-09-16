@@ -7,12 +7,22 @@ import omit from 'lodash/omit'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
+import { RentalPropertytypeID } from '../../lib/property_types'
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectBaseUrl } from '../environment/environmentSlice'
 import { geocodeMap, selectGeoType } from '../places/placesSlice'
 import { setBoundaryActive, getGeoLayer } from '../listingMap/listingMapSlice'
 
+export const SearchTypes = {
+  Buy: 1,
+  Rent: 2,
+  Sold: 3
+} as const
+
+export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
+
 export interface ListingSearchState {
+  searchType: SearchTypeOption
   listingsPageIndex: number
   cluster_threshold: number
   listingSearchPending: boolean
@@ -30,6 +40,7 @@ export interface SearchParamsUpdatePatch {
 }
 
 const initialState: ListingSearchState = {
+  searchType: SearchTypes.Buy,
   listingsPageIndex: 0,
   // TODO: we probably will not even use cluster_threshold anymore. paging through small sets of listings is a better
   // user experince that clustering large sets IMO
@@ -99,6 +110,22 @@ export const listingSearchSlice = createSlice({
   initialState,
 
   reducers: {
+    setSearchType: (state, action: PayloadAction<SearchTypeOption>) => {
+      state.searchType = action.payload
+      switch (action.payload) {
+        case SearchTypes.Buy:
+          state.searchParams.status = 'active'
+          break;
+        case SearchTypes.Rent:
+          state.searchParams.status = 'active'
+          // for some reason rental is considered a property type in our system
+          state.searchParams.ptype = [RentalPropertytypeID]
+          break;
+        case SearchTypes.Sold:
+          state.searchParams.status = 'sold'
+      }
+    },
+
     setLocationSearchField: (state, action: PayloadAction<string>) => {
       state.location_search_field = action.payload
     },
@@ -134,11 +161,15 @@ export const listingSearchSlice = createSlice({
 })
 
 export const {
+  setSearchType,
   setLocationSearchField,
   resetListings,
   setListingSearchPending,
   setSearchParams
 } = listingSearchSlice.actions
+
+export const selectSearchType = (state: AppState) =>
+  state.listingSearch.searchType
 
 // The function below is called a selector and allows us to select a value from the state. Selectors can also be defined
 // inline where they're used instead of in the slice file. For example: `useSelector((state: RootState) =>

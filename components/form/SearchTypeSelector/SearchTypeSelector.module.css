@@ -1,0 +1,17 @@
+.searchTypesList {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 1rem .5rem 1rem;
+}
+
+.searchTypesListItem {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-bottom: .5rem;
+}
+
+.searchTypesLabel {
+  user-select: none;
+  padding-left: .5rem;
+}
