@@ -19,7 +19,7 @@ const RadioButton: NextPage<RadioButtonProps> = ({ name, label, value, checked, 
         name={name}
         id={inputId}
         className={styles.radioButtonInput}
-        defaultChecked={checked}
+        checked={checked}
         onChange={(e) => onChange?.(e)}
       />
       <label
