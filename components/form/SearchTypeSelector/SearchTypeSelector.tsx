@@ -3,7 +3,7 @@ import {
   SearchTypeOption,
   SearchTypes
 } from '../../../store/listingSearch/listingSearchSlice'
-import styles from './SearchTypeSelector.module.css'
+import formStyles from '../../../styles/forms.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import Fieldset from '../Fieldset/Fieldset'
 
@@ -25,25 +25,24 @@ const SearchTypeSelector: NextPage<SearchTypeProps> = ({
   return (
     <MenuButton label={SearchTypeLabels[searchType]}>
       <Fieldset>
-        <ul className={styles.searchTypesList}>
+        <ul className={formStyles.inputList}>
           {Object.values(SearchTypes).map((value) => {
             return (
               <li
                 key={`search-type-${value}`}
-                className={styles.searchTypesListItem}
+                className={formStyles.inputListItem}
               >
                 <input
                   type='radio'
                   name={`search-type-${value}`}
                   id={`search-type-${value}`}
-                  className={styles.radioButtonInput}
                   checked={value === searchType}
                   value={value}
                   onChange={() => onChange?.(value)}
                 />
                 <label
                   htmlFor={`search-type-${value}`}
-                  className={styles.searchTypesLabel}
+                  className={formStyles.inputListLabel}
                 >
                   {SearchTypeLabels[value]}
                 </label>

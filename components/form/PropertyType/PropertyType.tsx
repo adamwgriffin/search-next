@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { ChangeEventHandler } from 'react'
-import styles from './PropertyType.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { PropertyTypesInterface } from '../../../lib/property_types'
 import MenuButton from '../MenuButton/MenuButton'
@@ -14,9 +13,9 @@ interface PropertyTypeProps {
 const PropertyTypes: NextPage<PropertyTypeProps> = (props) => {
   return (
     <MenuButton label="Home Type">
-      <ul className={styles.propertyTypesList}>
+      <ul className={formStyles.inputList}>
         {props.propertyTypes.map(({name, label, id}) => (
-          <li key={id} className={styles.propertyTypesListItem}>
+          <li key={id} className={formStyles.inputListItem}>
             <input
               type='checkbox'
               id={name}
@@ -26,7 +25,7 @@ const PropertyTypes: NextPage<PropertyTypeProps> = (props) => {
               checked={props.params.includes(id)}
               onChange={props.onChange}
             />
-            <label htmlFor={name} className={styles.propertyTypesLabel}>
+            <label htmlFor={name} className={formStyles.inputListLabel}>
               {label}
             </label>
           </li>
