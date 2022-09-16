@@ -1,7 +1,10 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
 import type { PriceRangeParam } from '../../components/form/Price/Price'
-import type { WebsitesSearchParamsInterface, BedsBathsParam } from '../../lib/constants/search_param_constants'
+import type {
+  WebsitesSearchParamsInterface,
+  BedsBathsParam
+} from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
 import omit from 'lodash/omit'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -139,7 +142,10 @@ export const listingSearchSlice = createSlice({
       state.listingSearchPending = action.payload
     },
 
-    setSearchParams: (state, action: PayloadAction<SearchParamsUpdatePatch>) => {
+    setSearchParams: (
+      state,
+      action: PayloadAction<SearchParamsUpdatePatch>
+    ) => {
       state.searchParams = { ...state.searchParams, ...action.payload }
     }
   },
@@ -183,7 +189,7 @@ export const selectListings = (state: AppState): Listing[] =>
 
 export const selectPriceRange = (state: AppState): PriceRangeParam => {
   const { pricemin, pricemax } = state.listingSearch.searchParams
-  return { pricemin, pricemax  }
+  return { pricemin, pricemax }
 }
 
 export const selectBedBathParams = (state: AppState): BedsBathsParam => {
@@ -222,7 +228,8 @@ export const selectBoundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
   }
 }
 
-export const selectPropertyTypes = (state: AppState): number[] => state.listingSearch.searchParams.ptype || []
+export const selectPropertyTypes = (state: AppState): number[] =>
+  state.listingSearch.searchParams.ptype || []
 
 export const selectAllListingServiceParams = (state: AppState) => {
   return {
