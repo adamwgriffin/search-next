@@ -1,38 +1,46 @@
 import type { NextPage } from 'next'
-import type { ChangeEventHandler } from 'react'
+import type { ChangeEvent } from 'react'
+import type { ExcludeStatusParams } from '../../../lib/constants/search_param_constants'
 import type { StatusType } from '../../../lib/status_types'
+import { StatusTypes } from '../../../lib/status_types'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
 import styles from './ListingStatus.module.css'
+import formStyles from '../../../styles/forms.module.css'
 
 interface ListingStatusProps {
-  status: StatusType[]
-  onChange?: ChangeEventHandler<HTMLInputElement>
+  statusParms: ExcludeStatusParams
+  onChange?: (param: ExcludeStatusParams) => void
 }
 
-const ListingStatus: NextPage<ListingStatusProps> = (props) => {
+const ListingStatus: NextPage<ListingStatusProps> = ({
+  statusParms,
+  onChange
+}) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange?.({ [e.target.name]: !e.target.checked })
+  }
+
   return (
     <Fieldset>
-      <Legend>
-        Status
-      </Legend>
-      {props.status.map(({name, id, label, selected}) => (
-        <label
-          key={id}
-          htmlFor={name}
-          className={styles.statusLabel}
-        >
-          <input
-            type="checkbox"
-            name={name}
-            value={id}
-            id={name}
-            defaultChecked={selected}
-            onChange={props.onChange}
-          />
-          {label}
-        </label>
-      ))}
+      <Legend>Status</Legend>
+      <ul className={styles.listingStatusList}>
+        {StatusTypes.map(({ param, id, label }: StatusType) => (
+          <li key={id} className={formStyles.inputListItem}>
+            <input
+              type='checkbox'
+              name={param}
+              value={id}
+              id={param}
+              checked={!statusParms[param as keyof ExcludeStatusParams]}
+              onChange={handleChange}
+            />
+            <label htmlFor={param} className={formStyles.inputListLabel}>
+              {label}
+            </label>
+          </li>
+        ))}
+      </ul>
     </Fieldset>
   )
 }

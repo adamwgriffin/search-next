@@ -40,6 +40,8 @@ export interface SearchParamsUpdatePatch {
   ptype?: number[]
   bed_min?: number
   bath_min?: number
+  ex_pend?: boolean
+  ex_cs?: boolean
 }
 
 const initialState: ListingSearchState = {

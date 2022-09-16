@@ -8,7 +8,6 @@ import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchT
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import PropertyType from '../../components/form/PropertyType/PropertyType'
 import { PropertyTypes } from '../../lib/property_types'
-import { StatusTypes } from '../../lib/status_types'
 import More from '../../components/form/More/More'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
@@ -16,6 +15,7 @@ import {
   selectPriceRange,
   selectPropertyTypes,
   selectBedBathParams,
+  selectMoreFiltersParams,
   setSearchType,
   setSearchParams,
   searchWithUpdatedFilters,
@@ -29,6 +29,7 @@ const Filters: NextPage = () => {
   const priceRange = useAppSelector(selectPriceRange)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const bedsAndBaths = useAppSelector(selectBedBathParams)
+  const moreFiltersParams = useAppSelector(selectMoreFiltersParams)
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
@@ -49,6 +50,11 @@ const Filters: NextPage = () => {
 
   const handleBedsAndBathsChange = (param: BedsBathsParam) => {
     dispatch(setSearchParams(param))
+    dispatch(searchWithUpdatedFilters())
+  }
+
+  const handleMoreFiltersChange = (params: any) => {
+    dispatch(setSearchParams(params))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -77,7 +83,7 @@ const Filters: NextPage = () => {
         params={selectedPropertyTypes}
         onChange={handlePropertyTypeChange}
       />}
-      <More status={StatusTypes} />
+      <More params={moreFiltersParams} onChange={handleMoreFiltersChange} />
     </div>
   )
 }

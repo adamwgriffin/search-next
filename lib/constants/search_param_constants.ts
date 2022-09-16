@@ -13,6 +13,11 @@ export interface BathsParam {
   bath_min: number
 }
 
+export interface ExcludeStatusParams {
+  ex_pend?: boolean
+  ex_cs?: boolean
+}
+
 export type BedsBathsParam = BedsParam | BathsParam
 
 // TODO: create a Typescript interface for WebsitesSearchParams that could identifiy param types as well as required
@@ -21,9 +26,11 @@ export interface WebsitesSearchParamsInterface {
   pricemin: number | null
   pricemax: number | null
   ptype: number[]
-  bed_min: number,
-  bath_min: number,
+  bed_min: number
+  bath_min: number
   status: 'active' | 'sold'
+  ex_pend: boolean
+  ex_cs: boolean
 }
 
 export const WebsitesSearchParams = Object.freeze({

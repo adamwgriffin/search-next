@@ -1,27 +1,18 @@
 export interface StatusType {
   id: number
-  name: string
+  param: string
   label: string
-  selected: boolean
 }
 
 export const StatusTypes: StatusType[] = [
   {
     id: 11,
-    name: 'coming_soon',
-    label: 'Coming Soon',
-    selected: false
-  },
-  {
-    id: 1,
-    name: 'active',
-    label: 'Active',
-    selected: true
+    param: 'ex_cs',
+    label: 'Include Coming Soon'
   },
   {
     id: 2,
-    name: 'pending',
-    label: 'Pending',
-    selected: false
+    param: 'ex_pend',
+    label: 'Include Pending'
   }
 ]
