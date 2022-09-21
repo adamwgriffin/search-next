@@ -1,7 +1,3 @@
-// TODO: should this include all potential params, such as bounds_north, bounds_east, center_lat, center_lon, etc., or
-// do we only want to add those when we get them from the map data attributes in the store? the question is whether it's
-// useful to keep all params here as a way to kind of document what params are available or not.
-
 // TODO: not sure if search params should actually be considerted "constants". maybe relocating these to a different
 // file would make more sense.
 
@@ -13,15 +9,15 @@ export interface BathsParam {
   bath_min: number
 }
 
-export interface ExcludeStatusParams {
-  ex_pend?: boolean
-  ex_cs?: boolean
-}
-
 export type BedsBathsParam = BedsParam | BathsParam
 
-// TODO: create a Typescript interface for WebsitesSearchParams that could identifiy param types as well as required
-// params
+export interface ExcludeStatusParams {
+  ex_pend: boolean
+  ex_cs: boolean
+}
+
+export interface MoreFiltersParams extends ExcludeStatusParams {}
+
 export interface WebsitesSearchParamsInterface {
   pricemin: number | null
   pricemax: number | null

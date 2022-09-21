@@ -3,10 +3,10 @@ import type { Listing } from '../../lib/types'
 import type { PriceRangeParam } from '../../components/form/Price/Price'
 import type {
   WebsitesSearchParamsInterface,
-  BedsBathsParam
+  BedsBathsParam,
+  MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
-import omit from 'lodash/omit'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
@@ -34,14 +34,17 @@ export interface ListingSearchState {
   searchParams: WebsitesSearchParamsInterface
 }
 
-export interface SearchParamsUpdatePatch {
+export interface MoreFiltersParamsUpdatePatch {
+  ex_pend?: boolean
+  ex_cs?: boolean
+}
+
+export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
   pricemin?: number | null
   pricemax?: number | null
   ptype?: number[]
   bed_min?: number
   bath_min?: number
-  ex_pend?: boolean
-  ex_cs?: boolean
 }
 
 const initialState: ListingSearchState = {
@@ -199,15 +202,9 @@ export const selectBedBathParams = (state: AppState): BedsBathsParam => {
   return { bed_min, bath_min }
 }
 
-export const selectMoreFiltersParams = (state: AppState) => {
-  return omit(state.listingSearch.searchParams, [
-    'agent_uuid',
-    'pgsize',
-    'pricemin',
-    'pricemax',
-    'bed_min',
-    'bath_min'
-  ])
+export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
+  const { ex_cs, ex_pend } = state.listingSearch.searchParams
+  return { ex_cs, ex_pend }
 }
 
 export const selectListingSearchPending = (state: AppState) =>

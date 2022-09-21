@@ -18,7 +18,7 @@ const ListingStatus: NextPage<ListingStatusProps> = ({
   onChange
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange?.({ [e.target.name]: !e.target.checked })
+    onChange?.({ ...statusParms, [e.target.name]: !e.target.checked })
   }
 
   return (
@@ -32,7 +32,7 @@ const ListingStatus: NextPage<ListingStatusProps> = ({
               name={param}
               value={id}
               id={param}
-              checked={!statusParms[param as keyof ExcludeStatusParams]}
+              checked={!statusParms[param]}
               onChange={handleChange}
             />
             <label htmlFor={param} className={formStyles.inputListLabel}>
