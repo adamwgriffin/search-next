@@ -10,7 +10,7 @@ export const PropertyTypes: ReadonlyArray<PropertyTypesInterface> = Object.freez
   {
     id: 1,
     name: 'residential',
-    label: 'Home'
+    label: 'Single-Family'
   },
   {
     id: 2,
