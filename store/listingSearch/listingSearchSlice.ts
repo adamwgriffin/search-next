@@ -7,6 +7,7 @@ import type {
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
+import isEqual from 'lodash/isEqual'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
@@ -71,20 +72,35 @@ export const initiateListingSearch = createAsyncThunk(
     { dispatch, getState }
   ) => {
     dispatch(setBoundaryActive(true))
-    dispatch(resetListings())
+    const state = getState() as AppState
+    const request = geocoderRequest ?
+      geocoderRequest :
+      { address: state.listingSearch.location_search_field }
     // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
     // after getGeoLayer and we get the previous location instead of the current one.
-    let request
-    if (geocoderRequest) {
-      request = geocoderRequest
-    } else {
-      const { listingSearch } = getState() as AppState
-      request = { address: listingSearch.location_search_field }
-    }
     await dispatch(geocodeMap(request))
-    // getGeoLayer() uses the geospatial data that was assigned to geocoderResult above for the lat, lng & geotype
-    // params that it needs to get the layer from the service (boundary)
-    return await dispatch(getGeoLayer())
+    // getGeoLayer() uses the geospatial data that was assigned to state.places.geocoderResult after dispatching
+    // geocodeMap() for the lat, lng & geotype params that it needs to get the layer (boundary) from the service
+    await dispatch(getGeoLayer())
+    const updatedState = getState() as AppState
+    const geoLayerCoordinatesChanged = !isEqual(
+      state.listingMap.geoLayerCoordinates,
+      updatedState.listingMap.geoLayerCoordinates
+    )
+    dispatch(resetListings())
+    if (geoLayerCoordinatesChanged) {
+      // since we have new geoLayerCoordinates, we need to wait until the map finishes adjusting to fit the new boundary
+      // created by those coordinates, otherwise the search results will be incorrect because the map's bounds/center
+      // that we sent to the service will end up being different once the map stops moving. the listingSearchPending
+      // flag is what we use to indicate that a listing search needs to be performed once the map is ready. the map's
+      // idle event tells us it's ready, so we use an event handler inside the ListingMap component to check this flag
+      // and dispatch searchListings() when it's true.
+      dispatch(setListingSearchPending(true))
+    } else {
+      // the new map boundary is exactly the same as the old one. likely the user just clicked the search button again
+      // without changing anything, in which case we just perform another search in case results might have changed.
+      dispatch(searchListings())
+    }
   }
 )
 
@@ -123,12 +139,12 @@ export const listingSearchSlice = createSlice({
       switch (action.payload) {
         case SearchTypes.Buy:
           state.searchParams.status = 'active'
-          break;
+          break
         case SearchTypes.Rent:
           state.searchParams.status = 'active'
           // for some reason rental is considered a property type in our system
           state.searchParams.ptype = [RentalPropertytypeID]
-          break;
+          break
         case SearchTypes.Sold:
           state.searchParams.status = 'sold'
       }
@@ -156,10 +172,6 @@ export const listingSearchSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(initiateListingSearch.fulfilled, (state) => {
-      state.listingSearchPending = true
-    })
-
     builder.addCase(searchListings.fulfilled, (state, action) => {
       state.listingSearchPending = false
       state.searchListingsResponse = action.payload
