@@ -27,11 +27,14 @@ export interface WebsitesSearchParamsInterface {
   status: 'active' | 'sold'
   ex_pend: boolean
   ex_cs: boolean
+  startidx: number
+  pgsize: number
 }
 
 export const WebsitesSearchParams = Object.freeze({
   agent_uuid: 'f74a3f6d-aeda-4daa-835e-029386152405',
-  pgsize: 20,
+  startidx: 0,
+  pgsize: 40,
   pricemin: null,
   pricemax: null,
   bed_min: 0,
@@ -62,7 +65,7 @@ export const WebsitesSearchParams = Object.freeze({
   virtual_tour: null,
   has_pool: null,
   senior_community: null,
-  sort_by: 1,
+  sort_by: 1
 })
 
 export const sortByEnum = Object.freeze({

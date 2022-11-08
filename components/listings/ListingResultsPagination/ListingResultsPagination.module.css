@@ -1,0 +1,69 @@
+.listingResultsPagination {
+  margin-top: 2rem;
+}
+
+.paginationButtons {
+  text-align: center;
+}
+
+.pageButton {
+  margin: 0 .3rem;
+  cursor: pointer;
+  border: 1px solid #cccccc;;
+  border-radius: 6px;
+  padding: .3rem .6rem;
+  background: #fefefe;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+.pageButton:hover {
+  background: #f6f6f6;
+}
+
+.pageButton:disabled {
+  background: #d1c1f0;
+  color: MediumPurple;
+  border-color: MediumPurple;
+}
+
+.paginationButton {
+  margin: 0 .3rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  border-radius: 6px;
+  padding: .4rem .7rem;
+  background: MediumPurple;
+  font-size: inherit;
+  font-family: inherit;
+  color: white;
+}
+
+.paginationButton:hover {
+  background: RebeccaPurple;
+}
+
+.paginationButton:disabled {
+  background: #d1c1f0;
+  color: #a787e1;
+}
+
+.morePages {
+  composes: pageButton;
+  padding: .3rem;
+}
+
+.morePagesItemSelected {
+  composes: morePages;
+  background: #d1c1f0;
+  color: MediumPurple;
+  border-color: MediumPurple;
+}
+
+.resultTotals {
+  text-align: center;
+  margin-top: .5rem;
+  font-size: 0.875rem;
+}

@@ -8,6 +8,7 @@ import type {
 } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
 import isEqual from 'lodash/isEqual'
+import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
@@ -46,6 +47,7 @@ export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
   ptype?: number[]
   bed_min?: number
   bath_min?: number
+  startidx?: number
 }
 
 const initialState: ListingSearchState = {
@@ -87,6 +89,7 @@ export const initiateListingSearch = createAsyncThunk(
       state.listingMap.geoLayerCoordinates,
       updatedState.listingMap.geoLayerCoordinates
     )
+    dispatch(resetStartIndex())
     dispatch(resetListings())
     if (geoLayerCoordinatesChanged) {
       // since we have new geoLayerCoordinates, we need to wait until the map finishes adjusting to fit the new boundary
@@ -154,6 +157,10 @@ export const listingSearchSlice = createSlice({
       state.location_search_field = action.payload
     },
 
+    resetStartIndex: (state) => {
+      state.searchParams.startidx = initialState.searchParams.startidx
+    },
+
     resetListings: (state) => {
       state.listingsPageIndex = initialState.listingsPageIndex
       state.searchListingsResponse = initialState.searchListingsResponse
@@ -186,6 +193,7 @@ export const listingSearchSlice = createSlice({
 export const {
   setSearchType,
   setLocationSearchField,
+  resetStartIndex,
   resetListings,
   setListingSearchPending,
   setSearchParams
@@ -249,6 +257,19 @@ export const selectAllListingServiceParams = (state: AppState) => {
     ...selectBoundsParams(state.listingMap.mapData.bounds),
     agent_uuid: state.environment.agent_uuid,
     geotype: selectGeoType(state)
+  }
+}
+
+export const selectPagination = (state: AppState) => {
+  const { startidx, pgsize } = state.listingSearch.searchParams
+  const { number_returned, number_available } = state.listingSearch.searchListingsResponse
+  return {
+    start: (startidx + 1),
+    end: (startidx + number_returned ?? 0),
+    total: (number_available ?? 0),
+    pages: range(0, number_available, pgsize),
+    currentPage: startidx,
+    pageSize: pgsize
   }
 }
 
