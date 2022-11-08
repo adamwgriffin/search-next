@@ -7,14 +7,14 @@
   height: 40px;
   border-radius: 6px;
   padding: 0 .8rem;
-  background: #fefefe;
-  font-size: 14px;
+  background: MediumPurple;
+  font-size: 0.875rem;
   font-family: inherit;
-  color: inherit;
+  color: white;
 }
 
 .containedButton:hover {
-  background: #f6f6f6;
+  background: RebeccaPurple;
 }
 
 .containedButton.highlighted {
