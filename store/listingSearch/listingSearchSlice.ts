@@ -230,10 +230,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
 export const selectListingSearchPending = (state: AppState) =>
   state.listingSearch.listingSearchPending
 
-export const selectCenterLatLonParams = (
-  centerlatLng: google.maps.LatLngLiteral
-) => {
-  const { lat, lng } = centerlatLng
+export const selectCenterLatLonParams = (state: AppState) => {
+  const { lat, lng } = state.places.geocoderResult.location
   return { center_lat: lat, center_lon: lng }
 }
 
@@ -253,7 +251,7 @@ export const selectPropertyTypes = (state: AppState): number[] =>
 export const selectAllListingServiceParams = (state: AppState) => {
   return {
     ...state.listingSearch.searchParams,
-    ...selectCenterLatLonParams(state.listingMap.mapData.center),
+    ...selectCenterLatLonParams(state),
     ...selectBoundsParams(state.listingMap.mapData.bounds),
     agent_uuid: state.environment.agent_uuid,
     geotype: selectGeoType(state)

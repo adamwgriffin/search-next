@@ -13,11 +13,13 @@ import {
   setMapData,
   selectBoundaryActive,
   selectGeoLayerBounds,
-  selectGeoLayerCoordinates,
+  selectGeoLayerCoordinates
 } from '../../../store/listingMap/listingMapSlice'
 import {
   setListingSearchPending,
   searchListings,
+  resetStartIndex,
+  resetListings,
   selectListingSearchPending,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
@@ -33,6 +35,12 @@ const ListingMap: NextPage = () => {
 
   const handleBoundaryControlClick = () => {
     dispatch(setBoundaryActive(!boundaryActive))
+
+  const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
+    await dispatch(setMapData(currentMapState))
+    dispatch(resetStartIndex())
+    dispatch(resetListings())
+    dispatch(setListingSearchPending(true))
   }
 
   const handleIdle = (currentMapState: GoogleMapState) => {
@@ -50,6 +58,8 @@ const ListingMap: NextPage = () => {
           options={DefaultMapOptions}
           bounds={geoLayerBounds}
           onIdle={handleIdle}
+          onDragEnd={handleUserAdjustedMap}
+          onUserChangedZoom={handleUserAdjustedMap}
         >
           {listings.map((l) => (
             <ListingMarker listing={l} key={l.listingid} />
