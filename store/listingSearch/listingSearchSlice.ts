@@ -234,8 +234,8 @@ export const selectCenterLatLonParams = (state: AppState) => {
   return { center_lat: lat, center_lon: lng }
 }
 
-export const selectBoundsParams = (bounds: google.maps.LatLngBoundsLiteral) => {
-  const { north, east, south, west } = bounds
+export const selectBoundsParams = (state: AppState) => {
+  const { north, east, south, west } = state.listingMap.mapData.bounds
   return {
     bounds_north: north,
     bounds_east: east,
@@ -251,7 +251,7 @@ export const selectAllListingServiceParams = (state: AppState) => {
   return {
     ...state.listingSearch.searchParams,
     ...selectCenterLatLonParams(state),
-    ...selectBoundsParams(state.listingMap.mapData.bounds),
+    ...selectBoundsParams(state),
     agent_uuid: state.environment.agent_uuid,
     geotype: selectGeoType(state)
   }
