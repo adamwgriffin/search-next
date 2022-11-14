@@ -110,7 +110,6 @@ export const initiateListingSearch = createAsyncThunk(
 export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
-    dispatch(setBoundaryActive(true))
     dispatch(resetListings())
     dispatch(searchListings())
   }

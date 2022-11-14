@@ -18,6 +18,7 @@ import {
 import {
   setListingSearchPending,
   searchListings,
+  searchWithUpdatedFilters,
   resetStartIndex,
   resetListings,
   selectListingSearchPending,
@@ -34,7 +35,10 @@ const ListingMap: NextPage = () => {
   const listings = useAppSelector(selectListings)
 
   const handleBoundaryControlClick = () => {
-    dispatch(setBoundaryActive(!boundaryActive))
+    dispatch(setBoundaryActive(false))
+    dispatch(resetStartIndex())
+    dispatch(searchWithUpdatedFilters())
+  }
 
   const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
     await dispatch(setMapData(currentMapState))
