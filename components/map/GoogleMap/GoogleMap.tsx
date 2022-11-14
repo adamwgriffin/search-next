@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { useRef, useEffect, ReactNode } from 'react'
-import { useEffectOnce, usePrevious } from 'react-use'
-import isEqual from 'lodash/isEqual'
+import { useEffectOnce } from 'react-use'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import styles from './GoogleMap.module.css'
 
@@ -42,7 +41,6 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   } = props
   const mapEl = useRef(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
-  const previousBounds = usePrevious(bounds)
 
   const getCurrentMapState = (): GoogleMapState => {
     // each of these values can potentially be undefined, which Typescript complains about. since we depend on these
@@ -132,9 +130,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   })
 
   useEffect(() => {
-    // avoid adjusting the map unless bounds have changed. passing the same bounds in on every render can potentially
-    // cause the app to get stuck in a loop because of the way we are managing state
-    if (googleMap && bounds && !isEqual(previousBounds, bounds)) {
+    if (googleMap && bounds) {
       updateMapPosition(bounds)
     }
   }, [bounds])
