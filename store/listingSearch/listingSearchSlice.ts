@@ -84,26 +84,9 @@ export const initiateListingSearch = createAsyncThunk(
     // getGeoLayer() uses the geospatial data that was assigned to state.places.geocoderResult after dispatching
     // geocodeMap() for the lat, lng & geotype params that it needs to get the layer (boundary) from the service
     await dispatch(getGeoLayer())
-    const updatedState = getState() as AppState
-    const geoLayerCoordinatesChanged = !isEqual(
-      state.listingMap.geoLayerCoordinates,
-      updatedState.listingMap.geoLayerCoordinates
-    )
     dispatch(resetStartIndex())
     dispatch(resetListings())
-    if (geoLayerCoordinatesChanged) {
-      // since we have new geoLayerCoordinates, we need to wait until the map finishes adjusting to fit the new boundary
-      // created by those coordinates, otherwise the search results will be incorrect because the map's bounds/center
-      // that we sent to the service will end up being different once the map stops moving. the listingSearchPending
-      // flag is what we use to indicate that a listing search needs to be performed once the map is ready. the map's
-      // idle event tells us it's ready, so we use an event handler inside the ListingMap component to check this flag
-      // and dispatch searchListings() when it's true.
-      dispatch(setListingSearchPending(true))
-    } else {
-      // the new map boundary is exactly the same as the old one. likely the user just clicked the search button again
-      // without changing anything, in which case we just perform another search in case results might have changed.
-      dispatch(searchListings())
-    }
+    dispatch(setListingSearchPending(true))
   }
 )
 
