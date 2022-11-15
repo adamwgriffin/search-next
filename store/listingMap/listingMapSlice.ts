@@ -15,6 +15,7 @@ import {
 import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
+export type GeoJSONCoordinates = Array<Array<Array<number>>>
 
 export interface ListingMapState {
   buffer_miles: number
@@ -46,7 +47,7 @@ const initialState: ListingMapState = {
 
 export const getGeoLayer = createAsyncThunk(
   'listingMap/getGeoLayer',
-  async (_args, { getState }) => {
+  async (_args, { getState }):Promise<GeoJSONCoordinates> => {
     const state  = getState() as AppState
     const baseUrl = selectBaseUrl(state.environment)
     const res = await geoLayerSearch(

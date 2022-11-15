@@ -1,3 +1,4 @@
+import type { GeoLayerCoordinates, GeoJSONCoordinates } from '../../store/listingMap/listingMapSlice'
 /*
 we need to transform the geojson we get from the service into a shape that works for the Polygon class we need to use
 it for. we get the data as:
@@ -29,13 +30,14 @@ but instead we need:
   ]
 ]
 */
-export const convertGeojsonCoordinatesToPolygonPaths = (geoJsonCoordinates) => {
-  return geoJsonCoordinates.map(arr => arr[0].map( c => ({ lat: c[1], lng: c[0] }) ))
+export const convertGeojsonCoordinatesToPolygonPaths = (geoJsonCoordinates: GeoJSONCoordinates):GeoLayerCoordinates => {
+    // @ts-ignore
+  return geoJsonCoordinates.map((arr:Array<Array<number>>) => arr[0].map( (c) => ({ lat: c[1], lng: c[0] }) ))
 }
 
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we
 // used to create the polygon paths, so we might as well just use that data since we already have it
-export const getGeoLayerBounds = (geoLayerCoordinates) => {
+export const getGeoLayerBounds = (geoLayerCoordinates:GeoLayerCoordinates) => {
   const bounds = new google.maps.LatLngBounds()
   geoLayerCoordinates.forEach(latLngArr => latLngArr.forEach(latLng => bounds.extend(latLng)))
   return bounds.toJSON()

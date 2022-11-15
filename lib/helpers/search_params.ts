@@ -1,3 +1,4 @@
+import type { AppState } from '../../store'
 import { sortByDistanceValues } from '../constants/search_param_constants'
 
 // the values of certain search params ("sort_by" for instance) may require us to include, exclude or change the values
@@ -7,10 +8,8 @@ import { sortByDistanceValues } from '../constants/search_param_constants'
 // if params need to be removed we can do so by setting their values to null. if nothing needs to be changed then the
 // function should not return a value.
 export const modifyParam = {
-  // TODO: remove state from these functions. if params should change in response to changes in other state, the reducer
-  // that sets that state, like state.listingMap.boundaryActive here, should also change the param that should be
-  // different.
-  geotype(state, params) {
+  // TODO: add actual types for the params argument
+  geotype(state:AppState, params: any) {
     if (!state.listingMap?.boundaryActive) {
       // excluding geotype from the service request causes it to not restrict the search to a geospatial boundary but
       // instead return all the listings that are within the the bounds provided in bounds_north, bounds_east, etc.
@@ -20,32 +19,32 @@ export const modifyParam = {
 
   // no boundary means we're doing a bounds search instead of a geospatial search, which doesn't require center_lat or
   // center_lon. including them probably doesn't hurt but removing them probably makes things more clear.
-  center_lat(state, params) {
+  center_lat(state:AppState, params: any) {
     if (!state.listingMap?.boundaryActive) {
       return { center_lat: null }
     }
   },
   
-  center_lon(state, params) {
+  center_lon(state:AppState, params: any) {
     if (!state.listingMap?.boundaryActive) {
       return { center_lon: null }
     }
   },
 
-  sort_by(state, params) {
+  sort_by(state:AppState, params: any) {
     // listing service uses user_lat & user_lon as basis for distance sort
     if (sortByDistanceValues.includes(params.sort_by)) {
       return { user_lat: params.center_lat, user_lon: params.center_lon }
     }
   },
 
-  sold_days(state, params) {
+  sold_days(state:AppState, params: any) {
     if (params.status === 'active') {
       return { sold_days: null }
     }
   },
 
-  openhouse(state, params) {
+  openhouse(state:AppState, params: any) {
     const { openhouse, openhouse_virtual, openhouse_in_person } = params
     // if the user selected both openhouse_virtual and openhouse_in_person, then what will get them both from the
     // listing service is to only send the openhouse param
