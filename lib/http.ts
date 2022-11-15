@@ -1,7 +1,4 @@
 import axios from 'axios'
-// @ts-ignore
-import jsonAdapter from 'axios-jsonp'
-
-const instance = axios.create({ adapter: jsonAdapter })
+const instance = axios.create()
 
 export default instance

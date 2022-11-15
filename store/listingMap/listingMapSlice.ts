@@ -5,14 +5,13 @@ import {
   PayloadAction
 } from '@reduxjs/toolkit'
 import type { AppState } from '..'
-import { selectBaseUrl } from '../environment/environmentSlice'
 import { selectGeoType } from '../places/placesSlice'
-import { geoLayerSearch } from './listingMapAPI'
 import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
 } from '../../lib/helpers/polygon'
 import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+import http from '../../lib/http'
 
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 export type GeoJSONCoordinates = Array<Array<Array<number>>>
@@ -49,23 +48,17 @@ export const getGeoLayer = createAsyncThunk(
   'listingMap/getGeoLayer',
   async (_args, { getState }):Promise<GeoJSONCoordinates> => {
     const state  = getState() as AppState
-    const baseUrl = selectBaseUrl(state.environment)
-    const res = await geoLayerSearch(
-      baseUrl,
-      {
+    const response = await http({
+      url: '/api/geolayer',
+      params: {
         center_lat: state.places.geocoderResult.location.lat,
         center_lon: state.places.geocoderResult.location.lng,
         geotype: selectGeoType(state),
         buffer_miles: state.listingMap.buffer_miles,
         source: 'agent website'
       }
-    )
-    if (res.data.status !== 'error') {
-      // @ts-ignore
-      return res.data.result_list[0].geojson.coordinates
-    } else {
-      throw new Error('GeoLayer response had error in status')
-    }
+    })
+    return response.data.data.result_list[0].geojson.coordinates
   }
 )
 

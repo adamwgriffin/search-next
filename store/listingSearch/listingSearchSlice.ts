@@ -9,13 +9,12 @@ import type {
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { searchListingsNonDedupe } from './listingSearchAPI'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
 import { RentalPropertytypeID } from '../../lib/property_types'
 import { modifyParam } from '../../lib/helpers/search_params'
-import { selectBaseUrl } from '../environment/environmentSlice'
 import { geocodeMap, selectGeoType } from '../places/placesSlice'
 import { setBoundaryActive, getGeoLayer } from '../listingMap/listingMapSlice'
+import http from '../../lib/http'
 
 export const SearchTypes = {
   Buy: 1,
@@ -96,13 +95,12 @@ export const searchListings = createAsyncThunk(
   async (_arg, { getState }) => {
     // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
     const state = getState() as AppState
-    const baseUrl = selectBaseUrl(state.environment)
-    const response = await searchListingsNonDedupe(
-      baseUrl,
-      selectParamsForListingServiceCall(state)
-    )
+    const response = await http({
+      url: '/api/listing',
+      params: selectParamsForListingServiceCall(state)
+    })
     // The value we return becomes the `fulfilled` action payload in extraReducers below
-    return response.data
+    return response.data.data
   }
 )
 
