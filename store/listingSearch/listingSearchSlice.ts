@@ -7,7 +7,6 @@ import type {
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
 import omitBy from 'lodash/omitBy'
-import isEqual from 'lodash/isEqual'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { searchListingsNonDedupe } from './listingSearchAPI'
@@ -28,8 +27,6 @@ export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
 
 export interface ListingSearchState {
   searchType: SearchTypeOption
-  listingsPageIndex: number
-  cluster_threshold: number
   listingSearchPending: boolean
   location_search_field: string
   searchListingsResponse: any
@@ -52,10 +49,6 @@ export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
 
 const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
-  listingsPageIndex: 0,
-  // TODO: we probably will not even use cluster_threshold anymore. paging through small sets of listings is a better
-  // user experince that clustering large sets IMO
-  cluster_threshold: 200,
   // "pending" in this context means it's waiting to be executed after the map "idle" event is triggered, not that the
   // request to the service is pending
   listingSearchPending: false,
@@ -144,7 +137,6 @@ export const listingSearchSlice = createSlice({
     },
 
     resetListings: (state) => {
-      state.listingsPageIndex = initialState.listingsPageIndex
       state.searchListingsResponse = initialState.searchListingsResponse
     },
 
