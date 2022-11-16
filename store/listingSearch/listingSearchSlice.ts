@@ -232,12 +232,12 @@ export const selectAllListingServiceParams = (state: AppState) => {
 
 export const selectPagination = (state: AppState) => {
   const { startidx, pgsize } = state.listingSearch.searchParams
-  const { number_returned, number_available } = state.listingSearch.searchListingsResponse
+  const { number_returned, number_found } = state.listingSearch.searchListingsResponse
   return {
     start: (startidx + 1),
     end: (startidx + number_returned ?? 0),
-    total: (number_available ?? 0),
-    pages: range(0, number_available, pgsize),
+    total: (number_found ?? 0),
+    pages: range(0, number_found, pgsize),
     currentPage: startidx,
     pageSize: pgsize
   }
