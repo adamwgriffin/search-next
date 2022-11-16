@@ -1,0 +1,31 @@
+.sortMenu {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-grow: 1;
+  /* width: 100%; */
+}
+
+.sortLabel {
+  margin-right: .3rem;
+}
+
+.sortByDropdown {
+  cursor: pointer;
+  border: 1px solid #cccccc;;
+  border-radius: 6px;
+  padding: 0.3rem;
+  background: #fefefe;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+.sortByDropdown:hover {
+  background: #f6f6f6;
+}
+
+.sortByDropdownHighlighted {
+  composes: sortByDropdown;
+  background: rgba(4, 87, 175, 0.24);
+}

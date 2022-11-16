@@ -44,6 +44,7 @@ export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
   bed_min?: number
   bath_min?: number
   startidx?: number
+  sort_by?: number
 }
 
 const initialState: ListingSearchState = {
@@ -228,6 +229,9 @@ export const selectBoundsParams = (state: AppState) => {
 
 export const selectPropertyTypes = (state: AppState): number[] =>
   state.listingSearch.searchParams.ptype || []
+
+export const selectSortBy = (state: AppState): number =>
+  state.listingSearch.searchParams.sort_by
 
 export const selectAllListingServiceParams = (state: AppState) => {
   return {

@@ -55,6 +55,7 @@ export interface WebsitesSearchParamsInterface {
   ex_cs: boolean
   startidx: number
   pgsize: number
+  sort_by: number
 }
 
 export const WebsitesSearchParams = Object.freeze({
