@@ -1,6 +1,32 @@
 // TODO: not sure if search params should actually be considerted "constants". maybe relocating these to a different
 // file would make more sense.
 
+export const sortByEnum = Object.freeze({
+  baths_desc: 3,
+  baths_asc: 4,
+  beds_desc: 5,
+  beds_asc: 6,
+  distance_from_user_lat_lon_asc: 11,
+  distance_from_user_lat_lon_desc: 12,
+  listing_date_asc: 9,
+  listing_date_desc: 10,
+  price_desc: 1,
+  price_asc: 2,
+  status_category_asc: 7,
+  status_category_desc: 8,
+  total_square_footage_desc: 13,
+  total_square_footage_asc: 14,
+  total_lot_square_footage_desc: 15,
+  total_lot_square_footage_asc: 16,
+  sold_date_desc: 17,
+  sold_date_asc: 18
+})
+
+export const sortByDistanceValues = Object.freeze([
+  sortByEnum.distance_from_user_lat_lon_asc,
+  sortByEnum.distance_from_user_lat_lon_desc
+])
+
 export interface BedsParam {
   bed_min: number
 }
@@ -65,31 +91,5 @@ export const WebsitesSearchParams = Object.freeze({
   virtual_tour: null,
   has_pool: null,
   senior_community: null,
-  sort_by: 1
+  sort_by: sortByEnum.distance_from_user_lat_lon_asc
 })
-
-export const sortByEnum = Object.freeze({
-  baths_desc: 3,
-  baths_asc: 4,
-  beds_desc: 5,
-  beds_asc: 6,
-  distance_from_user_lat_lon_asc: 11,
-  distance_from_user_lat_lon_desc: 12,
-  listing_date_asc: 9,
-  listing_date_desc: 10,
-  price_desc: 1,
-  price_asc: 2,
-  status_category_asc: 7,
-  status_category_desc: 8,
-  total_square_footage_desc: 13,
-  total_square_footage_asc: 14,
-  total_lot_square_footage_desc: 15,
-  total_lot_square_footage_asc: 16,
-  sold_date_desc: 17,
-  sold_date_asc: 18
-})
-
-export const sortByDistanceValues = Object.freeze([
-  sortByEnum.distance_from_user_lat_lon_asc,
-  sortByEnum.distance_from_user_lat_lon_desc
-])
