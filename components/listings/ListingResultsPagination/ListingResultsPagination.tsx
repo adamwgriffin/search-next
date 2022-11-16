@@ -104,7 +104,7 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
       )}
       <p className={styles.resultTotals}>
         {start.toLocaleString()}-{end.toLocaleString()} of{' '}
-        {total.toLocaleString()} Results
+        {total.toLocaleString()} {total === 1 ? 'Result' : 'Results'}
       </p>
     </div>
   )
