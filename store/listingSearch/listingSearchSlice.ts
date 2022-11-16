@@ -85,6 +85,15 @@ export const initiateListingSearch = createAsyncThunk(
 export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
+    dispatch(resetStartIndex())
+    dispatch(resetListings())
+    dispatch(searchListings())
+  }
+)
+
+export const getNextPageOfListingResults = createAsyncThunk(
+  'listingSearch/getNextPageOfListingResults',
+  async (_args, { dispatch }) => {
     dispatch(resetListings())
     dispatch(searchListings())
   }

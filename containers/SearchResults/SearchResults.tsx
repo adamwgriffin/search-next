@@ -7,6 +7,7 @@ import {
   selectListings,
   selectPagination,
   setSearchParams,
+  getNextPageOfListingResults,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 
@@ -15,9 +16,9 @@ const SearchResults: NextPage = () => {
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
 
-  const handleClick = (pageIndex: number) => {
+  const handlePaginationButtonClick = (pageIndex: number) => {
     dispatch(setSearchParams({ startidx: pageIndex }))
-    dispatch(searchWithUpdatedFilters())
+    dispatch(getNextPageOfListingResults())
   }
 
   return (
@@ -30,7 +31,7 @@ const SearchResults: NextPage = () => {
         ))}
       </ul>
       {listings.length > 0 && (
-        <ListingResultsPagination {...pagination} onClick={handleClick} />
+        <ListingResultsPagination {...pagination} onClick={handlePaginationButtonClick} />
       )}
     </div>
   )
