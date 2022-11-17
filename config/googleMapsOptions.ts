@@ -3,8 +3,7 @@ import type { LoaderOptions } from '@googlemaps/js-api-loader'
 // options for @googlemaps/loader, which loads Google Maps by creating a script tag with these params in it. things like
 // your api key and the libraries you want to load go here
 export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
-  apiKey: '',
-  client: "gme-windermeresolutions",
+  apiKey: 'AIzaSyASYR8zEF6T-bqsFEelZL_YpNspUQPvT8U',
   libraries: ['drawing', 'places', 'geometry']
 }
 
