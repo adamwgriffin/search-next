@@ -1,4 +1,7 @@
 import type { NextPage } from 'next'
+import type { Listing } from '../../../lib/types'
+import { useEffect, useState  } from 'react'
+import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config'
@@ -24,15 +27,36 @@ import {
   selectListingSearchPending,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
+import ListingMarkerPopup from '../../map/ListingMarkerPopup/ListingMarkerPopup'
+import MyPopup from '../../../lib/popup_new'
+import { listingLocationToLatLngLiteral } from '../../../lib/helpers/listing_helpers'
 
 const ListingMap: NextPage = () => {
-  const { googleLoaded } = useGoogleMaps()
+  let Popup:any
+  let popup:any
+  const { googleMap, googleLoaded } = useGoogleMaps()
   const dispatch = useAppDispatch()
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
   const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
   const listingSearchPending = useAppSelector(selectListingSearchPending)
   const listings = useAppSelector(selectListings)
+
+  const handleListingMarkerMouseover = (listing:Listing) => {
+    const containerDiv = document.createElement('div')
+    const position = listingLocationToLatLngLiteral(listing.location)
+    createRoot(containerDiv).render(<ListingMarkerPopup listing={listing} />)
+    Popup ||= MyPopup()
+    popup = new Popup(
+      new google.maps.LatLng(position),
+      containerDiv
+    )
+    popup.setMap(googleMap)
+  }
+
+  const handleListingMarkerMouseout = () => {
+    popup?.setMap(null)
+  }
 
   const handleBoundaryControlClick = () => {
     dispatch(setBoundaryActive(false))
@@ -66,7 +90,12 @@ const ListingMap: NextPage = () => {
           onUserChangedZoom={handleUserAdjustedMap}
         >
           {listings.map((l) => (
-            <ListingMarker listing={l} key={l.listingid} />
+            <ListingMarker
+              key={l.listingid}
+              listing={l}
+              onMouseover={handleListingMarkerMouseover}
+              onMouseout={handleListingMarkerMouseout}
+            />
           ))}
           <MapBoundary
             coordinates={geoLayerCoordinates}

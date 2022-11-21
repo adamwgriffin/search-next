@@ -42,3 +42,10 @@ export const cityStateZip = (location: ListingLocation) => {
     .filter(a => a)
     .join(', ')
 }
+
+export const listingLocationToLatLngLiteral = (location: ListingLocation): google.maps.LatLngLiteral => {
+  return {
+     lat: +location?.latitude,
+     lng: +location?.longitude
+  }
+}

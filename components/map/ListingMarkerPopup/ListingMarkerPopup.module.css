@@ -1,0 +1,40 @@
+.listingMarkerPopup {
+  width: 14rem;
+  height: 16rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px 0px;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 8rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.details {
+  padding: .5rem;
+  font-size: 1rem;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.stats {
+  display: flex;
+}
+
+.price,
+.stats {
+  margin-bottom: .5rem;
+}
+
+.beds,
+.baths,
+.size {
+  margin-right: .5rem;
+}
