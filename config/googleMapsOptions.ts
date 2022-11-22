@@ -22,8 +22,14 @@ export const DefaultMapOptions: google.maps.MapOptions = {
   streetViewControl: false,
   rotateControl: false,
   fullscreenControl: false,
-  // passing any style causes the Google logo to appear white
-  styles: [{ stylers: [{}] }]
+  // removes points of interest markers from map. passing any style causes the Google logo to appear white
+  styles: [
+    {
+      featureType: 'poi',
+      elementType: 'labels',
+      stylers: [{ visibility: 'off' }]
+    }
+  ]
 }
 
 export const DefaultAutocompleteOptions = {
