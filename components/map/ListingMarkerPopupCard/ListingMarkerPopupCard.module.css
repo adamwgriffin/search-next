@@ -6,6 +6,11 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px 0px;
 }
 
+.link {
+  color: initial;
+  text-decoration: none;
+}
+
 .image {
   object-fit: cover;
   width: 100%;
