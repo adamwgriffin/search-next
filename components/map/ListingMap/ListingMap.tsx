@@ -29,7 +29,7 @@ import {
 import ListingMarkerPopup from '../../../containers/ListingMarkerPopup/ListingMarkerPopup'
 
 const ListingMap: NextPage = () => {
-  const { googleMap, googleLoaded } = useGoogleMaps()  
+  const { googleLoaded } = useGoogleMaps()  
   const dispatch = useAppDispatch()
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)

@@ -13,8 +13,7 @@ let popupInstance: any
 
 const ListingMarkerPopup: NextPage = () => {
   const { googleMap, googleLoaded } = useGoogleMaps()
-  const listing = useAppSelector(selectPopupListing)
-  
+  const listing = useAppSelector(selectPopupListing)  
   // we have to wait until google is loaded to return the Popup class otherwise the google.maps.OverlayView it inherits
   // from will not exist yet.
   useEffect(() => {
@@ -22,7 +21,7 @@ const ListingMarkerPopup: NextPage = () => {
   }, [googleLoaded])
 
   useEffect(() => {
-    // triggers Popup.onRemove() method to remove the overlay from the map
+    // setMap(null) triggers Popup.onRemove() method to remove the overlay from the map
     popupInstance?.setMap(null)
     if (googleMap && listing) {
       const containerDiv = document.createElement('div')
