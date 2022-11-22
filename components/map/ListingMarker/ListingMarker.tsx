@@ -58,8 +58,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
     })
     // TODO: make click event open the listing detail page in a new tab instead
     marker.addListener('click', () => {
-      googleMap.setZoom(clickEventZoomLevel)
-      googleMap.setCenter(marker.getPosition() as google.maps.LatLng)
+      window.open('about:blank', '_blank')
     })
     marker.addListener('mouseover', () => handleMouseover(marker))
     marker.addListener('mouseout', () => handleMouseout(marker))
