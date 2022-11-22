@@ -24,11 +24,14 @@ export const SearchTypes = {
 
 export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
 
+export type PopupListing = Listing | null
+
 export interface ListingSearchState {
   searchType: SearchTypeOption
   listingSearchPending: boolean
   location_search_field: string
   searchListingsResponse: any
+  popupListing: PopupListing
   searchParams: WebsitesSearchParamsInterface
 }
 
@@ -57,6 +60,7 @@ const initialState: ListingSearchState = {
   // coordinates. those coordinates are all that's really necessary to send the service if you already have them.
   location_search_field: '',
   searchListingsResponse: {},
+  popupListing: null,
   searchParams: WebsitesSearchParams
 }
 
@@ -140,6 +144,10 @@ export const listingSearchSlice = createSlice({
       state.location_search_field = action.payload
     },
 
+    setPopupListing: (state, action: PayloadAction<PopupListing>) => {
+      state.popupListing = action.payload
+    },
+
     resetStartIndex: (state) => {
       state.searchParams.startidx = initialState.searchParams.startidx
     },
@@ -175,6 +183,7 @@ export const listingSearchSlice = createSlice({
 export const {
   setSearchType,
   setLocationSearchField,
+  setPopupListing,
   resetStartIndex,
   resetListings,
   setListingSearchPending,
@@ -189,6 +198,10 @@ export const selectSearchType = (state: AppState) =>
 // state.counter.value)`
 export const selectLocationSearchField = (state: AppState): string => {
   return state.listingSearch.location_search_field
+}
+
+export const selectPopupListing = (state: AppState): PopupListing => {
+  return state.listingSearch.popupListing
 }
 
 export const selectListings = (state: AppState): Listing[] =>

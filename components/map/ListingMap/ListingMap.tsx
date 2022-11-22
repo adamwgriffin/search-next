@@ -1,7 +1,5 @@
 import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types'
-import { useEffect, useState  } from 'react'
-import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config'
@@ -20,6 +18,7 @@ import {
 } from '../../../store/listingMap/listingMapSlice'
 import {
   setListingSearchPending,
+  setPopupListing,
   searchListings,
   searchWithUpdatedFilters,
   resetStartIndex,
@@ -27,14 +26,10 @@ import {
   selectListingSearchPending,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
-import ListingMarkerPopup from '../../map/ListingMarkerPopup/ListingMarkerPopup'
-import MyPopup from '../../../lib/popup_new'
-import { listingLocationToLatLngLiteral } from '../../../lib/helpers/listing_helpers'
+import ListingMarkerPopup from '../../../containers/ListingMarkerPopup/ListingMarkerPopup'
 
 const ListingMap: NextPage = () => {
-  let Popup:any
-  let popup:any
-  const { googleMap, googleLoaded } = useGoogleMaps()
+  const { googleMap, googleLoaded } = useGoogleMaps()  
   const dispatch = useAppDispatch()
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
@@ -43,19 +38,11 @@ const ListingMap: NextPage = () => {
   const listings = useAppSelector(selectListings)
 
   const handleListingMarkerMouseover = (listing:Listing) => {
-    const containerDiv = document.createElement('div')
-    const position = listingLocationToLatLngLiteral(listing.location)
-    createRoot(containerDiv).render(<ListingMarkerPopup listing={listing} />)
-    Popup ||= MyPopup()
-    popup = new Popup(
-      new google.maps.LatLng(position),
-      containerDiv
-    )
-    popup.setMap(googleMap)
+    dispatch(setPopupListing(listing))
   }
 
   const handleListingMarkerMouseout = () => {
-    popup?.setMap(null)
+    dispatch(setPopupListing(null))
   }
 
   const handleBoundaryControlClick = () => {
@@ -97,6 +84,7 @@ const ListingMap: NextPage = () => {
               onMouseout={handleListingMarkerMouseout}
             />
           ))}
+          <ListingMarkerPopup />
           <MapBoundary
             coordinates={geoLayerCoordinates}
             visible={boundaryActive}
