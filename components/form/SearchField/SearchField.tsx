@@ -1,5 +1,13 @@
 import type { NextPage } from 'next'
-import { useState, useEffect, useRef, useId, FocusEvent, ChangeEvent, KeyboardEvent } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  useId,
+  FocusEvent,
+  ChangeEvent,
+  KeyboardEvent
+} from 'react'
 import { useClickAway } from 'react-use'
 import SearchButton from '../SearchButton/SearchButton'
 import LocationPinFilledIcon from '../../icons/LocationPinFilledIcon/LocationPinFilledIcon'
@@ -10,7 +18,7 @@ export interface SearchFieldProps {
   value?: string
   placeholder?: string
   options: Array<google.maps.places.AutocompletePrediction>
-  onInput?: (details:string) => void
+  onInput?: (details: string) => void
   onClearPlaceAutocompletePredictions?: () => void
   onSearchInitiated?: () => void
   onOptionSelected?: (option: google.maps.places.AutocompletePrediction) => void
@@ -18,21 +26,21 @@ export interface SearchFieldProps {
 }
 
 const SearchField: NextPage<SearchFieldProps> = ({
-    value,
-    placeholder = 'Search for City, Neighborhood, Zip, County',
-    options,
-    onInput,
-    onClearPlaceAutocompletePredictions,
-    onSearchInitiated,
-    onOptionSelected,
-    onGetPlaceAutocompletePredictions
-  }) => {
+  value,
+  placeholder = 'Search for City, Neighborhood, Zip, County',
+  options,
+  onInput,
+  onClearPlaceAutocompletePredictions,
+  onSearchInitiated,
+  onOptionSelected,
+  onGetPlaceAutocompletePredictions
+}) => {
   const id = useId()
   const ref = useRef(null)
   const [open, setOpen] = useState(false)
   const [inputHasFocus, setInputHasFocus] = useState(false)
   const [activeDescendantKey, setActiveDescendantKey] = useState(-1)
-  const [lastInputValue, setLastInputValue] = useState<string|undefined>()
+  const [lastInputValue, setLastInputValue] = useState<string | undefined>()
 
   const listItemSelected = () => {
     return activeDescendantKey > -1 && activeDescendantKey < options.length
@@ -41,7 +49,9 @@ const SearchField: NextPage<SearchFieldProps> = ({
   // this is used for the aria-activedescendant attribute. it identifies the currently selected item in the dropdown
   // menu for accessibility purposes.
   const activeDescendant = () => {
-    return listItemSelected() ? `search-listbox-${id}-list-item-${activeDescendantKey}` : ''
+    return listItemSelected()
+      ? `search-listbox-${id}-list-item-${activeDescendantKey}`
+      : ''
   }
 
   const deselectListItem = () => setActiveDescendantKey(-1)
@@ -58,9 +68,11 @@ const SearchField: NextPage<SearchFieldProps> = ({
   // moved past the items in the list menu, which causes nothing to be selected, we want to set the input back to it's
   // last value before we had made any selections.
   const setInputAccordingToListItemSelection = () => {
-    listItemSelected() ? setInputToListItemSelection() : setInputBackToLastValue()
+    listItemSelected()
+      ? setInputToListItemSelection()
+      : setInputBackToLastValue()
   }
-  
+
   const openDropdown = () => {
     if (!open) {
       setOpen(true)
@@ -91,7 +103,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
   }
 
   const moveUp = () => {
-    openDropdown();
+    openDropdown()
     if (activeDescendantKey > -1) {
       setActiveDescendantKey(activeDescendantKey - 1)
       setInputAccordingToListItemSelection()
@@ -113,7 +125,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
     if (options.length) openDropdown()
   }
 
-  const handleEscape = () =>  {
+  const handleEscape = () => {
     closeDropdown()
     setInputBackToLastValue()
   }
@@ -122,7 +134,9 @@ const SearchField: NextPage<SearchFieldProps> = ({
     setInputHasFocus(false)
   }
 
-  const handleMenuItemClick = (option: google.maps.places.AutocompletePrediction) => {
+  const handleMenuItemClick = (
+    option: google.maps.places.AutocompletePrediction
+  ) => {
     onOptionSelected?.(option)
     onClearPlaceAutocompletePredictions?.()
     closeDropdown()
@@ -168,7 +182,9 @@ const SearchField: NextPage<SearchFieldProps> = ({
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     onInput?.(val)
-    val ? onGetPlaceAutocompletePredictions?.(val) : onClearPlaceAutocompletePredictions?.()
+    val
+      ? onGetPlaceAutocompletePredictions?.(val)
+      : onClearPlaceAutocompletePredictions?.()
     setLastInputValue(val)
   }
 
@@ -183,27 +199,28 @@ const SearchField: NextPage<SearchFieldProps> = ({
   }, [options])
 
   return (
-    <div
-      className={styles.comboboxWrapper}
-      ref={ref}
-    >
+    <div className={styles.comboboxWrapper} ref={ref}>
       <div className={styles.searchFieldElements}>
         <div
-          className={inputHasFocus ? styles.comboboxInputHasFocus : styles.comboboxInputNoFocus}
-          role="combobox"
-          aria-haspopup="listbox"
+          className={
+            inputHasFocus
+              ? styles.comboboxInputHasFocus
+              : styles.comboboxInputNoFocus
+          }
+          role='combobox'
+          aria-haspopup='listbox'
           aria-expanded={open}
           aria-owns={`search-listbox-${id}`}
         >
           <input
-            id="locationSearchField"
-            name="locationSearchField"
+            id='locationSearchField'
+            name='locationSearchField'
             className={styles.locationSearchField}
-            aria-label="Location Search"
-            aria-autocomplete="list"
+            aria-label='Location Search'
+            aria-autocomplete='list'
             aria-controls={`search-listbox-${id}`}
             aria-activedescendant={activeDescendant()}
-            type="text"
+            type='text'
             autoComplete='off'
             placeholder={placeholder}
             value={value}
@@ -216,16 +233,26 @@ const SearchField: NextPage<SearchFieldProps> = ({
         </div>
         <SearchButton onClick={initiateSearch} />
       </div>
-      <ul className={open ? styles.listboxMenu : styles.listboxMenuClosed} role="listbox" tabIndex={-1}>
+      <ul
+        className={open ? styles.listboxMenu : styles.listboxMenuClosed}
+        role='listbox'
+        tabIndex={-1}
+      >
         {options.map((option, index) => (
           <li
-            role="option"
+            role='option'
             id={`search-listbox-${id}-list-item-${index}`}
             key={option.place_id}
-            className={activeDescendantKey === index ? styles.listItemActive : styles.listItem}
+            className={
+              activeDescendantKey === index
+                ? styles.listItemActive
+                : styles.listItem
+            }
             onClick={() => handleMenuItemClick(option)}
           >
-            <LocationPinFilledIcon color={pinIconColor(activeDescendantKey === index)} />
+            <LocationPinFilledIcon
+              color={pinIconColor(activeDescendantKey === index)}
+            />
             <PlacePredictionText prediction={option} />
           </li>
         ))}
