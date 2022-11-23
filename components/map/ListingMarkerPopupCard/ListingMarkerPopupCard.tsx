@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import type { Listing } from '../../../lib/types'
 import styles from './ListingMarkerPopupCard.module.css'
 import {
@@ -24,11 +23,7 @@ const ListingMarkerPopupCard: NextPage<ListingMarkerPopupCardProps> = ({
       className={styles.link}
     >
       <div className={styles.listingMarkerPopupCard}>
-        <Image
-          className={styles.image}
-          src={listing.image[0].small_url}
-          alt="Listing image"
-        />
+        <img className={styles.image} src={listing.image[0].small_url}></img>
         <div className={styles.details}>
           <div className={styles.price}>{formatPrice(listing)}</div>
           <div className={styles.stats}>
