@@ -72,9 +72,7 @@ export const initiateListingSearch = createAsyncThunk(
   ) => {
     dispatch(setBoundaryActive(true))
     const state = getState() as AppState
-    const request = geocoderRequest ?
-      geocoderRequest :
-      { address: state.listingSearch.location_search_field }
+    const request = geocoderRequest || { address: state.listingSearch.location_search_field }
     // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
     // after getGeoLayer and we get the previous location instead of the current one.
     await dispatch(geocodeMap(request))
