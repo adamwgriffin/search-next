@@ -1,6 +1,10 @@
 {
   "name": "search-next",
   "private": true,
+  "engines": {
+    "node": ">=18.12.1",
+    "yarn": "^1.22.10"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
