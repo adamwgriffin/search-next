@@ -92,5 +92,5 @@ export const WebsitesSearchParams = Object.freeze({
   virtual_tour: null,
   has_pool: null,
   senior_community: null,
-  sort_by: sortByEnum.distance_from_user_lat_lon_asc
+  sort_by: sortByEnum.listing_date_desc
 })

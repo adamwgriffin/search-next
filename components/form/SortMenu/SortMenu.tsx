@@ -7,7 +7,7 @@ export interface SortMenuProps {
   onChange: (sortById: number) => void
 }
 
-const SortMenu: NextPage<SortMenuProps> = ({ sortBy=11, onChange }) => {
+const SortMenu: NextPage<SortMenuProps> = ({ sortBy=sortByEnum.listing_date_desc, onChange }) => {
   return (
     <div className={styles.sortMenu}>
       <div className={styles.sortLabel}>
@@ -18,9 +18,6 @@ const SortMenu: NextPage<SortMenuProps> = ({ sortBy=11, onChange }) => {
         value={sortBy}
         onChange={(e) => onChange(+e.target.value)}
       >
-        <option value={sortByEnum.distance_from_user_lat_lon_asc}>
-          Recommended
-        </option>
         <option value={sortByEnum.listing_date_desc}>
           Newest
         </option>
