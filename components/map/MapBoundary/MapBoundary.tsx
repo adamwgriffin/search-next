@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { GeoLayerCoordinates } from '../../../store//listingMap/listingMapSlice'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 
 export interface MapBoundaryProps {
@@ -9,9 +9,11 @@ export interface MapBoundaryProps {
   options: google.maps.PolygonOptions
 }
 
+let polygon:google.maps.Polygon
+
 const MapBoundary: NextPage<MapBoundaryProps> = ({ coordinates=[], visible=true, options={} }) => {
   const { googleMap } = useGoogleMaps()
-  const [polygon, setPolygon] = useState<google.maps.Polygon>(new google.maps.Polygon())
+  polygon ||= new google.maps.Polygon()
 
   useEffect(() => {
     // if paths is empty then the polygon will not show on the map, so we can easily create it without showing it and
