@@ -208,6 +208,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
               : styles.comboboxInputNoFocus
           }
           role='combobox'
+          aria-controls='search-listbox'
           aria-haspopup='listbox'
           aria-expanded={open}
           aria-owns={`search-listbox-${id}`}
@@ -234,6 +235,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
         <SearchButton onClick={initiateSearch} />
       </div>
       <ul
+        id='search-listbox'
         className={open ? styles.listboxMenu : styles.listboxMenuClosed}
         role='listbox'
         tabIndex={-1}
@@ -248,6 +250,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
                 ? styles.listItemActive
                 : styles.listItem
             }
+            aria-selected={activeDescendantKey === index}
             onClick={() => handleMenuItemClick(option)}
           >
             <LocationPinFilledIcon
