@@ -23,7 +23,11 @@ const ListingMarkerPopupCard: NextPage<ListingMarkerPopupCardProps> = ({
       className={styles.link}
     >
       <div className={styles.listingMarkerPopupCard}>
-        <img className={styles.image} src={listing.image[0].small_url}></img>
+        <img
+          className={styles.image}
+          src={listing.image[0].small_url}
+          alt="Listing image"
+        ></img>
         <div className={styles.details}>
           <div className={styles.price}>{formatPrice(listing)}</div>
           <div className={styles.stats}>

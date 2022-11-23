@@ -12,6 +12,7 @@ const ListingCardImage: NextPage<ListingCardImageProps> = ({ listing }) => {
       <img
         className={styles.listingImage}
         src={listing.image[0].small_url}
+        alt="Listing image"
       ></img>
     </div>
   )
