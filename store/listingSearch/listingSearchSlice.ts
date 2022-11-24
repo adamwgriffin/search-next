@@ -28,6 +28,7 @@ export type PopupListing = Listing | null
 export interface ListingSearchState {
   searchType: SearchTypeOption
   listingSearchPending: boolean
+  listingSearchRunning: boolean
   location_search_field: string
   searchListingsResponse: any
   popupListing: PopupListing
@@ -54,6 +55,8 @@ const initialState: ListingSearchState = {
   // "pending" in this context means it's waiting to be executed after the map "idle" event is triggered, not that the
   // request to the service is pending
   listingSearchPending: false,
+  // this one actually means that the request to the service is pending
+  listingSearchRunning: false,
   // "location_search_field" is a synonym for "street" in listing service. it is a valid search param but we don't
   // include it in "searchParams" because we are using it to geocode on the front end to get the center_lat & center_lon
   // coordinates. those coordinates are all that's really necessary to send the service if you already have them.
@@ -75,6 +78,7 @@ export const doGeospatialGeocodeSearch = createAsyncThunk(
   'listingSearch/doGeospatialGeocodeSearch',
   async (_arg, { dispatch, getState }) => {
     dispatch(resetStartIndex())
+    dispatch(setListingSearchRunning(true))
     // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
     const state = getState() as AppState
     const response = await http({
@@ -156,6 +160,10 @@ export const listingSearchSlice = createSlice({
     setListingSearchPending: (state, action: PayloadAction<boolean>) => {
       state.listingSearchPending = action.payload
     },
+    
+    setListingSearchRunning: (state, action: PayloadAction<boolean>) => {
+      state.listingSearchRunning = action.payload
+    },
 
     setSearchParams: (
       state,
@@ -180,6 +188,7 @@ export const listingSearchSlice = createSlice({
 
     builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
       state.searchListingsResponse = action.payload
+      state.listingSearchRunning = false
       if (action.payload.number_returned === 0) {
         console.debug('In doGeospatialGeocodeSearch.fulfilled, payload.number_returned is 0.')
       }
@@ -193,6 +202,7 @@ export const {
   setPopupListing,
   resetStartIndex,
   setListingSearchPending,
+  setListingSearchRunning,
   setSearchParams
 } = listingSearchSlice.actions
 
@@ -230,6 +240,9 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
 
 export const selectListingSearchPending = (state: AppState) =>
   state.listingSearch.listingSearchPending
+
+  export const selectListingSearchRunning = (state: AppState) =>
+    state.listingSearch.listingSearchRunning
 
 export const selectCenterLatLonParams = (state: AppState) => {
   const { lat, lng } = state.places.geocoderResult.location

@@ -8,16 +8,19 @@ import {
   selectSortBy,
   selectListings,
   selectPagination,
+  selectListingSearchRunning,
   setSearchParams,
   getNextPageOfListingResults,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
+import ListingCardLoader from '../../components/listings/ListingCardLoader/ListingCardLoader'
 
 const SearchResults: NextPage = () => {
   const dispatch = useAppDispatch()
   const sortBy = useAppSelector(selectSortBy)
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
+  const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
   const handleSortMenuChange = (sortById: number) => {
     dispatch(setSearchParams({ sort_by: sortById }))
@@ -37,14 +40,25 @@ const SearchResults: NextPage = () => {
         onSortMenuChange={handleSortMenuChange}
       />
       <ul className={styles.searchResultsList}>
-        {listings.map((listing) => (
-          <li key={listing.listingid.toString()}>
-            <ListingCard listing={listing} />
-          </li>
-        ))}
+        {!listingSearchRunning &&
+          listings.map((listing) => (
+            <li key={listing.listingid.toString()}>
+              <ListingCard listing={listing} />
+            </li>
+          ))}
+
+        {listingSearchRunning &&
+          [...Array(6)].map((_, i) => (
+            <li key={i}>
+              <ListingCardLoader />
+            </li>
+          ))}
       </ul>
       {listings.length > 0 && (
-        <ListingResultsPagination {...pagination} onClick={handlePaginationButtonClick} />
+        <ListingResultsPagination
+          {...pagination}
+          onClick={handlePaginationButtonClick}
+        />
       )}
     </div>
   )
