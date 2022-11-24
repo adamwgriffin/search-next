@@ -19,7 +19,7 @@ import {
 import {
   setListingSearchPending,
   setPopupListing,
-  searchListings,
+  doGeospatialSearch,
   searchWithUpdatedFilters,
   resetStartIndex,
   resetListings,
@@ -47,7 +47,6 @@ const ListingMap: NextPage = () => {
 
   const handleBoundaryControlClick = () => {
     dispatch(setBoundaryActive(false))
-    dispatch(resetStartIndex())
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -62,7 +61,7 @@ const ListingMap: NextPage = () => {
     dispatch(setMapData(currentMapState))
     if (listingSearchPending) {
       dispatch(setListingSearchPending(false))
-      dispatch(searchListings())
+      dispatch(doGeospatialSearch())
     }
   }
 

@@ -1,17 +1,15 @@
 import {
-  createAsyncThunk,
   createSlice,
   createSelector,
   PayloadAction
 } from '@reduxjs/toolkit'
 import type { AppState } from '..'
-import { selectGeoType } from '../places/placesSlice'
 import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
 } from '../../lib/helpers/polygon'
 import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
-import http from '../../lib/http'
+import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 export type GeoJSONCoordinates = Array<Array<Array<number>>>
@@ -44,24 +42,6 @@ const initialState: ListingMapState = {
   geoLayerCoordinates: []
 }
 
-export const getGeoLayer = createAsyncThunk(
-  'listingMap/getGeoLayer',
-  async (_args, { getState }):Promise<GeoJSONCoordinates> => {
-    const state  = getState() as AppState
-    const response = await http({
-      url: '/api/geolayer',
-      params: {
-        center_lat: state.places.geocoderResult.location.lat,
-        center_lon: state.places.geocoderResult.location.lng,
-        geotype: selectGeoType(state),
-        buffer_miles: state.listingMap.buffer_miles,
-        source: 'agent website'
-      }
-    })
-    return response.data.data.result_list[0].geojson.coordinates
-  }
-)
-
 export const listingMapSlice = createSlice({
   name: 'listingMap',
 
@@ -78,14 +58,15 @@ export const listingMapSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(getGeoLayer.fulfilled, (state, action) => {
-      state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
-        action.payload
-      )
-    })
-
-    builder.addCase(getGeoLayer.rejected, (state, action) => {
-      console.error('getGeoLayer.rejected', action.error)
+    builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
+      if (action.payload.result_geo) {
+        state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
+          action.payload.result_geo[0].geojson.coordinates
+        )
+        state.boundaryActive = true
+      } else {
+        console.debug('In doGeospatialGeocodeSearch.fulfilled, nothing in payload.result_geo.')
+      }
     })
   }
 })
@@ -94,9 +75,6 @@ export const { setMapData, setBoundaryActive } = listingMapSlice.actions
 
 export const selectBoundaryActive = (state: AppState) =>
   state.listingMap.boundaryActive
-
-export const selectBufferMiles = (state: AppState) =>
-  state.listingMap.buffer_miles
 
 export const selectGeoLayerCoordinates = (state: AppState) =>
   state.listingMap.geoLayerCoordinates
