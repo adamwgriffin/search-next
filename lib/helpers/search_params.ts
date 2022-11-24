@@ -55,5 +55,11 @@ export const modifyParam = {
       // sending just the openhouse param will be interpreted as selecting both openhouse_in_person & openhouse_virtual
       return { openhouse: null }
     }
+  },
+
+  ptype(state:AppState, params: any) {
+     // we're maintaining this list internally as an array but the service is expecting a string of comma-separated
+     // numbers.
+     return { ptype: params.ptype.join(',') }
   }
 }
