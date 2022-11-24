@@ -108,7 +108,6 @@ export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
     dispatch(resetStartIndex())
-    dispatch(resetListings())
     dispatch(doGeospatialSearch())
   }
 )
@@ -116,7 +115,6 @@ export const searchWithUpdatedFilters = createAsyncThunk(
 export const getNextPageOfListingResults = createAsyncThunk(
   'listingSearch/getNextPageOfListingResults',
   async (_args, { dispatch }) => {
-    dispatch(resetListings())
     dispatch(doGeospatialSearch())
   }
 )
@@ -153,10 +151,6 @@ export const listingSearchSlice = createSlice({
 
     resetStartIndex: (state) => {
       state.searchParams.startidx = initialState.searchParams.startidx
-    },
-
-    resetListings: (state) => {
-      state.searchListingsResponse = initialState.searchListingsResponse
     },
 
     setListingSearchPending: (state, action: PayloadAction<boolean>) => {
@@ -198,7 +192,6 @@ export const {
   setLocationSearchField,
   setPopupListing,
   resetStartIndex,
-  resetListings,
   setListingSearchPending,
   setSearchParams
 } = listingSearchSlice.actions

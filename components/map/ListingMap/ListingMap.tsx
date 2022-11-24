@@ -22,7 +22,6 @@ import {
   doGeospatialSearch,
   searchWithUpdatedFilters,
   resetStartIndex,
-  resetListings,
   selectListingSearchPending,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
@@ -53,7 +52,6 @@ const ListingMap: NextPage = () => {
   const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
     await dispatch(setMapData(currentMapState))
     dispatch(resetStartIndex())
-    dispatch(resetListings())
     dispatch(setListingSearchPending(true))
   }
 
