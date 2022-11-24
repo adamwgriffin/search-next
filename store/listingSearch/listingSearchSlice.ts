@@ -63,13 +63,13 @@ const initialState: ListingSearchState = {
   searchParams: WebsitesSearchParams
 }
 
-// performas a geospatial search using just the "street" param. we use the text that was entered in the search field for
+// performs a geospatial search using just the "street" param. we use the text that was entered in the search field for
 // the this param. with this method the service takes care of getting all the geospatial data we need to find the
 // listings. first, it geocodes the place text that was passed in the street param using google's geocoder service. then
 // it uses the geocoder response to get the appropriate geotype. next, it gets the boundary layer from our database
-// using the lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which have
-// coordinates that are inside that boundary layer. the resulting response from the service includes the listings and
-// the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
+// using the lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which
+// have coordinates that are inside that boundary layer. the resulting response from the service includes the listings
+// and the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
 // requests for the current location using the center_lat, center_lon & geotype that were provided by the geocoder.
 export const doGeospatialGeocodeSearch = createAsyncThunk(
   'listingSearch/doGeospatialGeocodeSearch',
@@ -88,9 +88,9 @@ export const doGeospatialGeocodeSearch = createAsyncThunk(
 
 // performs a geospatial search by passing the center_lat, center_lon & all bounds parmas. we would want to use this
 // request if the place that was entered in the search field has already been geocoded. usually, we would perform the
-// initial search using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it in
-// the response. then we would use this for requests, such as if the user dragged the map or changes the filters. since
-// we have the geocoder response data stored from the previous request we can just pass it directly to the service
+// initial search using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it
+// in the response. then we would use this for requests, such as if the user dragged the map or changes the filters.
+// since we have the geocoder response data stored from the previous request we can just pass it directly to the service
 // instead of having the service geocode the place for us again.
 export const doGeospatialSearch = createAsyncThunk(
   'listingSearch/doGeospatialSearch',
