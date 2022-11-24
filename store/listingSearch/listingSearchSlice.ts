@@ -12,8 +12,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
 import { RentalPropertytypeID } from '../../lib/property_types'
 import { modifyParam } from '../../lib/helpers/search_params'
-import { geocodeMap, selectGeoType } from '../places/placesSlice'
-import { setBoundaryActive, getGeoLayer } from '../listingMap/listingMapSlice'
+import { selectGeoType } from '../places/placesSlice'
 import http from '../../lib/http'
 
 export const SearchTypes = {
@@ -64,24 +63,44 @@ const initialState: ListingSearchState = {
   searchParams: WebsitesSearchParams
 }
 
-export const initiateListingSearch = createAsyncThunk(
-  'listingSearch/initiateListingSearch',
-  async (
-    geocoderRequest: google.maps.GeocoderRequest | undefined,
-    { dispatch, getState }
-  ) => {
-    dispatch(setBoundaryActive(true))
-    const state = getState() as AppState
-    const request = geocoderRequest || { address: state.listingSearch.location_search_field }
-    // gets goespatial data & assigns to state.placesgeocoderResult. have to use await here otherwise this finishes
-    // after getGeoLayer and we get the previous location instead of the current one.
-    await dispatch(geocodeMap(request))
-    // getGeoLayer() uses the geospatial data that was assigned to state.places.geocoderResult after dispatching
-    // geocodeMap() for the lat, lng & geotype params that it needs to get the layer (boundary) from the service
-    await dispatch(getGeoLayer())
+// performs a geospatial search using just the "street" param. we use the text that was entered in the search field for
+// the this param. with this method the service takes care of getting all the geospatial data we need to find the
+// listings. first, it geocodes the place text that was passed in the street param using google's geocoder service. then
+// it uses the geocoder response to get the appropriate geotype. next, it gets the boundary layer from our database
+// using the lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which
+// have coordinates that are inside that boundary layer. the resulting response from the service includes the listings
+// and the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
+// requests for the current location using the center_lat, center_lon & geotype that were provided by the geocoder.
+export const doGeospatialGeocodeSearch = createAsyncThunk(
+  'listingSearch/doGeospatialGeocodeSearch',
+  async (_arg, { dispatch, getState }) => {
     dispatch(resetStartIndex())
-    dispatch(resetListings())
-    dispatch(setListingSearchPending(true))
+    // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
+    const state = getState() as AppState
+    const response = await http({
+      url: '/api/listing',
+      params: selectParamsForGeospatialGeocodeSearch(state)
+    })
+    // The value we return becomes the `fulfilled` action payload in extraReducers below
+    return response.data.data
+  }
+)
+
+// performs a geospatial search by passing the center_lat, center_lon & all bounds parmas. we would want to use this
+// request if the place that was entered in the search field has already been geocoded. usually, we would perform the
+// initial search using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it
+// in the response. then we would use this for requests, such as if the user dragged the map or changes the filters.
+// since we have the geocoder response data stored from the previous request we can just pass it directly to the service
+// instead of having the service geocode the place for us again.
+export const doGeospatialSearch = createAsyncThunk(
+  'listingSearch/doGeospatialSearch',
+  async (_arg, { getState }) => {
+    const state = getState() as AppState
+    const response = await http({
+      url: '/api/listing',
+      params: selectParamsForGeospatialSearch(state)
+    })
+    return response.data.data
   }
 )
 
@@ -89,30 +108,14 @@ export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
     dispatch(resetStartIndex())
-    dispatch(resetListings())
-    dispatch(searchListings())
+    dispatch(doGeospatialSearch())
   }
 )
 
 export const getNextPageOfListingResults = createAsyncThunk(
   'listingSearch/getNextPageOfListingResults',
   async (_args, { dispatch }) => {
-    dispatch(resetListings())
-    dispatch(searchListings())
-  }
-)
-
-export const searchListings = createAsyncThunk(
-  'listingSearch/searchListings',
-  async (_arg, { getState }) => {
-    // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
-    const state = getState() as AppState
-    const response = await http({
-      url: '/api/listing',
-      params: selectParamsForListingServiceCall(state)
-    })
-    // The value we return becomes the `fulfilled` action payload in extraReducers below
-    return response.data.data
+    dispatch(doGeospatialSearch())
   }
 )
 
@@ -150,10 +153,6 @@ export const listingSearchSlice = createSlice({
       state.searchParams.startidx = initialState.searchParams.startidx
     },
 
-    resetListings: (state) => {
-      state.searchListingsResponse = initialState.searchListingsResponse
-    },
-
     setListingSearchPending: (state, action: PayloadAction<boolean>) => {
       state.listingSearchPending = action.payload
     },
@@ -167,13 +166,23 @@ export const listingSearchSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(searchListings.fulfilled, (state, action) => {
+    builder.addCase(doGeospatialSearch.fulfilled, (state, action) => {
       state.listingSearchPending = false
       state.searchListingsResponse = action.payload
+      if (action.payload.number_returned === 0) {
+        console.debug('In doGeospatialSearch.fulfilled, payload.number_returned is 0.')
+      }
     })
 
-    builder.addCase(searchListings.rejected, (state) => {
+    builder.addCase(doGeospatialSearch.rejected, (state) => {
       state.listingSearchPending = false
+    })
+
+    builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
+      state.searchListingsResponse = action.payload
+      if (action.payload.number_returned === 0) {
+        console.debug('In doGeospatialGeocodeSearch.fulfilled, payload.number_returned is 0.')
+      }
     })
   }
 })
@@ -183,7 +192,6 @@ export const {
   setLocationSearchField,
   setPopupListing,
   resetStartIndex,
-  resetListings,
   setListingSearchPending,
   setSearchParams
 } = listingSearchSlice.actions
@@ -244,16 +252,6 @@ export const selectPropertyTypes = (state: AppState): number[] =>
 export const selectSortBy = (state: AppState): number =>
   state.listingSearch.searchParams.sort_by
 
-export const selectAllListingServiceParams = (state: AppState) => {
-  return {
-    ...state.listingSearch.searchParams,
-    ...selectCenterLatLonParams(state),
-    ...selectBoundsParams(state),
-    agent_uuid: state.environment.agent_uuid,
-    geotype: selectGeoType(state)
-  }
-}
-
 export const selectPagination = (state: AppState) => {
   const { startidx, pgsize } = state.listingSearch.searchParams
   const { number_returned, number_found } = state.listingSearch.searchListingsResponse
@@ -282,8 +280,25 @@ export const removeUnecessaryParams = (params: object) =>
   )
 
 // TODO: make this a memoized selector with createSelector
-export const selectParamsForListingServiceCall = (state: AppState) => {
-  const originalParams = selectAllListingServiceParams(state)
+export const selectParamsForGeospatialSearch = (state: AppState) => {
+  const originalParams = {
+    ...state.listingSearch.searchParams,
+    ...selectCenterLatLonParams(state),
+    ...selectBoundsParams(state),
+    agent_uuid: state.environment.agent_uuid,
+    geotype: selectGeoType(state)
+  }
+  const modifiedParams = modifyParams(state, originalParams)
+  return removeUnecessaryParams(modifiedParams)
+}
+
+// TODO: make this a memoized selector with createSelector
+export const selectParamsForGeospatialGeocodeSearch = (state: AppState) => {
+  const originalParams = {
+    street: state.listingSearch.location_search_field,
+    agent_uuid: state.environment.agent_uuid,
+    ...state.listingSearch.searchParams
+  }
   const modifiedParams = modifyParams(state, originalParams)
   return removeUnecessaryParams(modifiedParams)
 }

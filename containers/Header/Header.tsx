@@ -6,7 +6,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   setLocationSearchField,
   selectLocationSearchField,
-  initiateListingSearch
+  doGeospatialGeocodeSearch
 } from '../../store/listingSearch/listingSearchSlice'
 import {
   getPlaceAutocompletePredictions,
@@ -27,10 +27,10 @@ const Header: NextPage = () => {
   const handleOnClearPlaceAutocompletePredictions = () => {
     dispatch(resetAutcompletePlacePredictions())
   }
-
+  
   const handleOnSearchInitiated = () => {
     if (googleLoaded) {
-      dispatch(initiateListingSearch())
+      dispatch(doGeospatialGeocodeSearch())
     } else {
       console.warn("Google library isn't loaded yet")
     }
@@ -39,7 +39,7 @@ const Header: NextPage = () => {
   const handleOnOptionSelected = (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
     dispatch(setLocationSearchField(autocompletePrediction.description))
     if (googleLoaded && googleMap) {
-      dispatch(initiateListingSearch({ placeId: autocompletePrediction.place_id }))
+      dispatch(doGeospatialGeocodeSearch())
     } else {
       console.warn("The googleMap instance is not available")
     }

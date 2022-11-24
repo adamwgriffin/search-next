@@ -19,10 +19,9 @@ import {
 import {
   setListingSearchPending,
   setPopupListing,
-  searchListings,
+  doGeospatialSearch,
   searchWithUpdatedFilters,
   resetStartIndex,
-  resetListings,
   selectListingSearchPending,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
@@ -47,14 +46,12 @@ const ListingMap: NextPage = () => {
 
   const handleBoundaryControlClick = () => {
     dispatch(setBoundaryActive(false))
-    dispatch(resetStartIndex())
     dispatch(searchWithUpdatedFilters())
   }
 
   const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
     await dispatch(setMapData(currentMapState))
     dispatch(resetStartIndex())
-    dispatch(resetListings())
     dispatch(setListingSearchPending(true))
   }
 
@@ -62,7 +59,7 @@ const ListingMap: NextPage = () => {
     dispatch(setMapData(currentMapState))
     if (listingSearchPending) {
       dispatch(setListingSearchPending(false))
-      dispatch(searchListings())
+      dispatch(doGeospatialSearch())
     }
   }
 
