@@ -1,18 +1,18 @@
 .header {
   height: 3rem;
-  padding-top: .8rem;
+  padding-top: .5rem;
   border-bottom: 1px solid #cccccc;
 }
 
 .listingDetail {
   margin: 0 auto;
   width: 50rem;
-  padding: 2rem 0;
+  padding: 1rem 0 2rem 0;
 }
 
 .gallery {
   height: 30rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .galleryImage {
@@ -21,6 +21,20 @@
   object-fit: cover;
   width: 100%;
   height: 30rem;
+}
+
+.status {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.3rem .4rem;
+  background: #fefefe;
+  border: 1px solid #cccccc;
+}
+
+.statusActive {
+  composes: status;
+  border: 1px solid green;
+  color: green;
 }
 
 .price {
@@ -33,7 +47,13 @@
 }
 
 .addressLine1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+
+.neighborhood {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: .3rem;
 }
 
 .stats {
@@ -41,8 +61,30 @@
   column-gap: .5rem;
 }
 
+.detailsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.detailsList > li {
+  display: grid;
+  /* grid-gap: 1rem; */
+  grid-template-columns: minmax(100px, 34%) auto;
+  grid-template-rows: auto auto;
+}
+
+.detailsName {
+  color: #767676;
+}
+
+.status,
 .price,
-.address,
-.stats {
+.neighborhood,
+.stats,
+.description {
   margin-bottom: 1rem;
 }

@@ -31,17 +31,20 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
       <header className={styles.header}>Header</header>
       {listing && (
         <div className={styles.listingDetail}>
+
+          <div className={listing.pstatus_id === 1 ? styles.statusActive : styles.status}>
+            {listing.status_name_for_view}
+          </div>
+
           <div className={styles.gallery}>
             <img
               className={styles.galleryImage}
-              src={listing.images[0].gallery_url}
+              src={listing.images[0].full_url}
               alt='Listing image'
             />
           </div>
 
-          <div className={styles.price}>
-            {formatPrice(listing)}
-          </div>
+          <div className={styles.price}>{formatPrice(listing)}</div>
 
           <address className={styles.address}>
             <div className={styles.addressLine1}>
@@ -52,17 +55,44 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
             </div>
           </address>
 
+          <div title='Neighborhood' className={styles.neighborhood}>
+            {listing.neighborhood}
+          </div>
+
           <div className={styles.stats}>
-            <div className={styles.beds}>{listing.bedrooms}bd</div>
-            <div className={styles.baths}>{getBathrooms(listing)}ba</div>
+            <div className={styles.beds}>{listing.bedrooms} Bed</div>
+            <div className={styles.baths}>{getBathrooms(listing)} Bath</div>
             <div className={styles.size}>{formatSqft(listing)} sqft</div>
           </div>
 
           <div className={styles.description}>
-            <h4>Description</h4>
+            <h4 className={styles.heading}>Description</h4>
             <p>{listing.comments}</p>
           </div>
 
+          <div className={styles.details}>
+            <h4 className={styles.heading}>Property Details</h4>
+            <ul className={styles.detailsList}>
+              <li>
+                <div className={styles.detailsName}>Property Type</div>
+                <div>{listing.property_type}</div>
+              </li>
+              <li>
+                <div className={styles.detailsName}>Time on Site</div>
+                <div>{`${listing.days_on_market.toLocaleString()} ${
+                  listing.days_on_market > 1 ? 'days' : 'day'
+                }`}</div>
+              </li>
+              <li>
+                <div className={styles.detailsName}>Year Built</div>
+                <div>{listing.year_build}</div>
+              </li>
+              <li>
+                <div className={styles.detailsName}>MLS Number</div>
+                <div>{listing.mlsnumber}</div>
+              </li>
+            </ul>
+          </div>
         </div>
       )}
     </div>
