@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import environmentReducer from './environment/environmentSlice'
 import listingSearchReducer from './listingSearch/listingSearchSlice'
+import listingDetailReducer from './listingDetail/listingDetailSlice'
 import listingMapReducer from './listingMap/listingMapSlice'
 import placesReducer from './places/placesSlice'
 
@@ -10,6 +11,7 @@ export function makeStore() {
     reducer: {
       environment: environmentReducer,
       listingSearch: listingSearchReducer,
+      listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
       places: placesReducer
     },
