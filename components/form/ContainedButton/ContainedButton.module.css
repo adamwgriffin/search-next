@@ -4,11 +4,11 @@
   cursor: pointer;
   border: none;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-  height: 40px;
   border-radius: 6px;
+  height: 40px;
   padding: 0 .8rem;
   background: MediumPurple;
-  font-size: 0.875rem;
+  font-size: inherit;
   font-family: inherit;
   color: white;
 }

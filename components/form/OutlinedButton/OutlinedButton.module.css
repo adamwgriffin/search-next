@@ -4,7 +4,8 @@
   cursor: pointer;
   border: 1px solid #cccccc;
   border-radius: 6px;
-  padding: 0.6rem .8rem;
+  height: 40px;
+  padding: 0 .8rem;
   background: #fefefe;
   font-size: inherit;
   font-family: inherit;
