@@ -1,8 +1,5 @@
 .filters {
   display: flex;
+  column-gap: .6rem;
   margin-bottom: 1rem;
-}
-
-.filters > * {
-  margin-right: .6rem;
 }
