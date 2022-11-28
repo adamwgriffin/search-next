@@ -23,6 +23,7 @@ import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchT
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import PropertyType from '../../components/form/PropertyType/PropertyType'
 import More from '../../components/form/More/More'
+import ContainedButton from '../../components/form/ContainedButton/ContainedButton'
 
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -63,6 +64,10 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
+  const handleSaveSearch = () => {
+    alert("TBD")
+  }
+
   return (
     <div className={styles.filters}>
       <SearchTypeSelector
@@ -88,6 +93,9 @@ const Filters: NextPage = () => {
         params={moreFiltersParams}
         onChange={handleMoreFiltersChange}
       />
+      <ContainedButton onClick={handleSaveSearch}>
+        Save Search
+      </ContainedButton>
     </div>
   )
 }
