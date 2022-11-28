@@ -28,7 +28,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
 
   return (
     <div>
-      <header className={styles.header}>Header</header>
+      {/* <header className={styles.header}>Header</header> */}
       {listing && (
         <div className={styles.listingDetail}>
 
@@ -46,6 +46,10 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
 
           <div className={styles.price}>{formatPrice(listing)}</div>
 
+          <div title='Neighborhood' className={styles.neighborhood}>
+            {listing.neighborhood}
+          </div>
+
           <address className={styles.address}>
             <div className={styles.addressLine1}>
               {listing.location.address}
@@ -54,10 +58,6 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
               {cityStateZip(listing.location)}
             </div>
           </address>
-
-          <div title='Neighborhood' className={styles.neighborhood}>
-            {listing.neighborhood}
-          </div>
 
           <div className={styles.stats}>
             <div className={styles.beds}>{listing.bedrooms} Bed</div>

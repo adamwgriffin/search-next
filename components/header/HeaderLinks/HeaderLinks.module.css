@@ -1,0 +1,15 @@
+.headerLinks {
+  display: flex;
+  column-gap: 2rem;
+  align-items: center;
+}
+
+.link {
+  color: MediumPurple;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  color: RebeccaPurple;
+}

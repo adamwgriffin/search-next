@@ -58,7 +58,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
     })
     // TODO: make click event open the listing detail page in a new tab instead
     marker.addListener('click', () => {
-      window.open('about:blank', '_blank')
+      window.open(`/listing/${listing.listingid}`, '_blank')
     })
     marker.addListener('mouseover', () => handleMouseover(marker))
     marker.addListener('mouseout', () => handleMouseout(marker))

@@ -84,6 +84,7 @@
 .status,
 .price,
 .neighborhood,
+.address,
 .stats,
 .description {
   margin-bottom: 1rem;

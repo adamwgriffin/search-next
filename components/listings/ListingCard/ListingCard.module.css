@@ -4,6 +4,11 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px 0px;
 }
 
+.link {
+  color: initial;
+  text-decoration: none;
+}
+
 .listingCard:hover {
   box-shadow: 0 0 7px 0 rgba(0,0,0,.35);
 }

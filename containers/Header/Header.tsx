@@ -1,7 +1,5 @@
 import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../context/google_maps_context'
-import SearchField from '../../components/form/SearchField/SearchField'
-import styles from './Header.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   setLocationSearchField,
@@ -11,23 +9,27 @@ import {
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
-  selectAutcompletePlacePredictions,
+  selectAutcompletePlacePredictions
 } from '../../store/places/placesSlice'
+import styles from './Header.module.css'
+import SearchField from '../../components/form/SearchField/SearchField'
+import HeaderLinks from '../../components/header/HeaderLinks/HeaderLinks'
+import Login from '../../components/header/Login/Login'
 
 const Header: NextPage = () => {
   const dispatch = useAppDispatch()
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
-  const { googleLoaded, googleMap } = useGoogleMaps()  
+  const { googleLoaded, googleMap } = useGoogleMaps()
 
-  const handleOnGetPlaceAutocompletePredictions = async (val:string) => {
+  const handleOnGetPlaceAutocompletePredictions = async (val: string) => {
     googleLoaded && dispatch(getPlaceAutocompletePredictions(val))
   }
 
   const handleOnClearPlaceAutocompletePredictions = () => {
     dispatch(resetAutcompletePlacePredictions())
   }
-  
+
   const handleOnSearchInitiated = () => {
     if (googleLoaded) {
       dispatch(doGeospatialGeocodeSearch())
@@ -36,28 +38,38 @@ const Header: NextPage = () => {
     }
   }
 
-  const handleOnOptionSelected = (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
+  const handleOnOptionSelected = (
+    autocompletePrediction: google.maps.places.AutocompletePrediction
+  ) => {
     dispatch(setLocationSearchField(autocompletePrediction.description))
     if (googleLoaded && googleMap) {
       dispatch(doGeospatialGeocodeSearch())
     } else {
-      console.warn("The googleMap instance is not available")
+      console.warn('The googleMap instance is not available')
     }
   }
 
-  const handleOnInput = (details:string) => dispatch(setLocationSearchField(details))
+  const handleOnInput = (details: string) =>
+    dispatch(setLocationSearchField(details))
 
   return (
     <header className={styles.Header}>
+      <img src='/moxiworks_logo_stacked.png' alt='Company Logo' height='36px' />
       <SearchField
         value={locationSearchField}
         options={options}
         onInput={handleOnInput}
-        onGetPlaceAutocompletePredictions={handleOnGetPlaceAutocompletePredictions}
-        onClearPlaceAutocompletePredictions={handleOnClearPlaceAutocompletePredictions}
+        onGetPlaceAutocompletePredictions={
+          handleOnGetPlaceAutocompletePredictions
+        }
+        onClearPlaceAutocompletePredictions={
+          handleOnClearPlaceAutocompletePredictions
+        }
         onSearchInitiated={handleOnSearchInitiated}
         onOptionSelected={handleOnOptionSelected}
       />
+      <HeaderLinks />
+      <Login />
     </header>
   )
 }
