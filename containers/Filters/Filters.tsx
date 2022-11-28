@@ -3,13 +3,6 @@ import type { PriceRangeParam } from '../../components/form/Price/Price'
 import type { BedsBathsParam, MoreFiltersParams } from '../../lib/constants/search_param_constants'
 import type { MoreFiltersParamsUpdatePatch } from '../../store/listingSearch/listingSearchSlice'
 import { ChangeEvent } from 'react'
-import styles from './Filters.module.css'
-import Price from '../../components/form/Price/Price'
-import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
-import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
-import PropertyType from '../../components/form/PropertyType/PropertyType'
-import { PropertyTypes } from '../../lib/property_types'
-import More from '../../components/form/More/More'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectSearchType,
@@ -23,6 +16,13 @@ import {
   SearchTypes,
   SearchTypeOption,
 } from '../../store/listingSearch/listingSearchSlice'
+import { PropertyTypes } from '../../lib/property_types'
+import styles from './Filters.module.css'
+import Price from '../../components/form/Price/Price'
+import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
+import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
+import PropertyType from '../../components/form/PropertyType/PropertyType'
+import More from '../../components/form/More/More'
 
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
