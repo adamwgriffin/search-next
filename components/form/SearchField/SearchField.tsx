@@ -195,8 +195,17 @@ const SearchField: NextPage<SearchFieldProps> = ({
   useClickAway(ref, closeDropdown)
 
   useEffect(() => {
-    options.length ? openDropdown() : closeDropdown()
-  }, [options])
+    // we have updated autocomplete options, open the dropdown unless it's currently open
+    if (options.length && !open) {
+      setOpen(true)
+      setLastInputValue(value)
+    }
+    // update has no autocomplete options, close the dropdown if it's currently open
+    if (!options.length && open) {
+      setOpen(false)
+      deselectListItem()
+    }
+  }, [options, open, value])
 
   return (
     <div className={styles.comboboxWrapper} ref={ref}>
