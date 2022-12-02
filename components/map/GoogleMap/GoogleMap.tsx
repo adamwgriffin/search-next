@@ -21,12 +21,12 @@ export interface GoogleMapState {
 }
 
 const eventListeners: google.maps.MapsEventListener[] = []
-// a side effect of calling fitBounds() inside updateMapPosition() is that it will trigger a "zoom_changed" event. we
-// only want to call the onUserChangedZoom() event callback if the user actually took some action to trigger
-// "zoom_changed", like clicking the zoom button on the map. the recommended way of handling this is to set a flag to
-// indicate this, hence zoomChangedProgrammatically. it's just a normal variable because making it state with useState
-// wasn't working correctly and isn't really necessary. it's outside the component because it was getting reset to false
-// every time the componenet re-rendered.
+// a side effect of calling fitBounds() inside the useEffect function for bounds is that it will trigger a
+// "zoom_changed" event. we only want to call the onUserChangedZoom() event callback if the user actually took some
+// action to trigger "zoom_changed", like clicking the zoom button on the map. the recommended way of handling this is
+// to set a flag to indicate this, hence zoomChangedProgrammatically. it's just a normal variable because making it
+// state with useState wasn't working correctly and isn't really necessary. it's outside the component because it was
+// getting reset to false every time the componenet re-rendered.
 let zoomChangedProgrammatically = false
 
 const GoogleMap: NextPage<GoogleMapProps> = (props) => {
@@ -70,14 +70,6 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
       center: center.toJSON(),
       zoom: zoom
     }
-  }
-
-  const updateMapPosition = (bounds: google.maps.LatLngBoundsLiteral) => {
-    // calling fitBounds() below will trigger a "zoom_changed" event, which we want to ignore in our handleZoomChanged()
-    // event handler so set this flag
-    zoomChangedProgrammatically = true
-    // sets the viewport to contain the given bounds
-    if (googleMap) googleMap.fitBounds(bounds)
   }
 
   const handleZoomChanged = () => {
@@ -130,10 +122,14 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   })
 
   useEffect(() => {
-    if (googleMap && bounds) {
-      updateMapPosition(bounds)
+    if (bounds && googleMap) {
+      // calling fitBounds() below will trigger a "zoom_changed" event, which we want to ignore in our
+      // handleZoomChanged() event handler so set this flag
+      zoomChangedProgrammatically = true
+      // sets the viewport to contain the given bounds
+      googleMap.fitBounds(bounds)
     }
-  }, [bounds])
+  }, [bounds, googleMap])
 
   useEffect(() => {
     createEventListeners()
