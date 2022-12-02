@@ -3,18 +3,27 @@ import type { MouseEventHandler, ReactNode } from 'react'
 import styles from './OutlinedButton.module.css'
 
 interface OutlinedButtonProps {
-  highlighted: boolean
+  highlighted?: boolean
+  textColor?: string
+  onClick?: MouseEventHandler<HTMLButtonElement>
   children: ReactNode
-  onClick: MouseEventHandler<HTMLButtonElement>
 }
 
-const OutlinedButton: NextPage<OutlinedButtonProps> = (props) => {
+const OutlinedButton: NextPage<OutlinedButtonProps> = ({
+  highlighted = false,
+  textColor = '',
+  onClick,
+  children
+}) => {
   return (
     <button
-      className={props.highlighted ? styles.outlinedButtonHighlighted : styles.outlinedButton}
-      onClick={props.onClick}
+      className={
+        highlighted ? styles.outlinedButtonHighlighted : styles.outlinedButton
+      }
+      onClick={onClick}
+      style={{ color: textColor }}
     >
-      {props.children}
+      {children}
     </button>
   )
 }

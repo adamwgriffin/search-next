@@ -23,7 +23,7 @@ import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchT
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import PropertyType from '../../components/form/PropertyType/PropertyType'
 import More from '../../components/form/More/More'
-import ContainedButton from '../../components/form/ContainedButton/ContainedButton'
+import OutlinedButton from '../../components/form/OutlinedButton/OutlinedButton'
 
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -93,9 +93,9 @@ const Filters: NextPage = () => {
         params={moreFiltersParams}
         onChange={handleMoreFiltersChange}
       />
-      <ContainedButton onClick={handleSaveSearch}>
+      <OutlinedButton textColor='MediumPurple' onClick={handleSaveSearch}>
         Save Search
-      </ContainedButton>
+      </OutlinedButton>
     </div>
   )
 }

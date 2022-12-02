@@ -9,11 +9,15 @@ export interface BoundaryControlProps {
 
 const BoundaryControl: NextPage<BoundaryControlProps> = ({ onClick }) => {
   return (
-      <div className={styles.boundaryControl}>
-        <ContainedButton onClick={onClick}>
-          Remove Boundary
-        </ContainedButton>
-      </div>
+    <div className={styles.boundaryControl}>
+      <ContainedButton
+        textColor='inherit'
+        backgroundColor='rgba(255, 255, 255, 0.7)'
+        onClick={onClick}
+      >
+        Remove Boundary
+      </ContainedButton>
+    </div>
   )
 }
 
