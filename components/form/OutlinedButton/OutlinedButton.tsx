@@ -11,7 +11,7 @@ interface OutlinedButtonProps {
 
 const OutlinedButton: NextPage<OutlinedButtonProps> = ({
   highlighted = false,
-  textColor = '',
+  textColor = 'inherit',
   onClick,
   children
 }) => {
@@ -20,8 +20,8 @@ const OutlinedButton: NextPage<OutlinedButtonProps> = ({
       className={
         highlighted ? styles.outlinedButtonHighlighted : styles.outlinedButton
       }
-      onClick={onClick}
       style={{ color: textColor }}
+      onClick={onClick}
     >
       {children}
     </button>
