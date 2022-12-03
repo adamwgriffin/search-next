@@ -100,7 +100,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
       if (googleMap && typeof callback === 'function') {
         eventListeners.push(
           google.maps.event.addListener(googleMap, eventName, callback)
-        )
+        )  
       }
     }
   }
@@ -132,9 +132,12 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   }, [bounds, googleMap])
 
   useEffect(() => {
-    createEventListeners()
+    if (googleMap) {
+      createEventListeners()
+    }
     return destroyEventListeners
-  }, [onDragStart, onDragEnd, onUserChangedZoom, onIdle])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [googleMap, onDragStart, onDragEnd, onUserChangedZoom, onIdle])
 
   return (
     <div ref={mapEl} id={styles.googleMap}>
