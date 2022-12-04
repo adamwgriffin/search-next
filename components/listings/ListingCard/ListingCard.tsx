@@ -8,7 +8,7 @@ import {
   formatSqft,
   cityStateZip
 } from '../../../lib/helpers/listing_helpers'
-import ListingCardImage from '../ListingImage/ListingCardImage'
+import ListingCardImage from '../ListingCardImage/ListingCardImage'
 
 export interface ListingCardProps {
   listing: Listing

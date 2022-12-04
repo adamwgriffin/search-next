@@ -12,6 +12,7 @@ import {
   cityStateZip
 } from '../../lib/helpers/listing_helpers'
 import styles from './ListingDetail.module.css'
+import ListingMainImage from '../../components/listings/ListingMainImage/ListingMainImage'
 
 export interface ListingDetailProps {
   // listing_id is type string | string[] because of catch all routes
@@ -37,10 +38,17 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
           </div>
 
           <div className={styles.gallery}>
-            <img
-              className={styles.galleryImage}
-              src={listing.images[0].full_url}
-              alt='Listing image'
+            <ListingMainImage
+              image={listing.images[0]}
+              location={listing.location}
+              size='full'
+              style={{
+                objectFit: 'cover',
+                cursor: 'pointer',
+                width: '100%',
+                height: '30rem',
+                borderRadius: '0.5rem'
+              }}
             />
           </div>
 

@@ -8,6 +8,7 @@ import {
   formatSqft,
   cityStateZip
 } from '../../../lib/helpers/listing_helpers'
+import ListingMainImage from '../../listings/ListingMainImage/ListingMainImage'
 
 export interface ListingMarkerPopupCardProps {
   listing: Listing
@@ -23,11 +24,18 @@ const ListingMarkerPopupCard: NextPage<ListingMarkerPopupCardProps> = ({
       className={styles.link}
     >
       <div className={styles.listingMarkerPopupCard}>
-        <img
-          className={styles.image}
-          src={listing.image[0].small_url}
-          alt='Listing image'
-        ></img>
+        <ListingMainImage
+          image={listing.image[0]}
+          location={listing.location}
+          size='small'
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            height: '8rem',
+            borderTopLeftRadius: '0.5rem',
+            borderTopRightRadius: '0.5rem'
+          }}
+        />
         <div className={styles.details}>
           <div className={styles.price}>{formatPrice(listing)}</div>
           <div className={styles.stats}>

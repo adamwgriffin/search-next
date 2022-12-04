@@ -23,9 +23,16 @@ export interface ListingBathroomDetails {
   total_bathrooms: number
 }
 
-export interface ListingImages {
+export interface ListingImage {
+  raw_url: string
+  gallery_url: string
+  full_url: string
   small_url: string
+  thumb_url: string
+  title: string
 }
+
+export type ListingImageSizes = 'raw' | 'gallery' | 'full' | 'small' | 'thumb'
 
 export interface Listing {
   listingid: number
@@ -39,5 +46,5 @@ export interface Listing {
   status: string
   list_price: number
   sold_price: number
-  image: ListingImages[]
+  image: ListingImage[]
 }
