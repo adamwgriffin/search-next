@@ -5,11 +5,12 @@ import Header from '../../containers/Header/Header'
 import Filters from '../../containers/Filters/Filters'
 import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../map/ListingMap/ListingMap'
+import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 
 const Search: NextPage = () => {
 
   return (
-    <GoogleMapsProvider>
+    <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
       <div className={styles.search}>
         <div className={styles.header}>
           <Header />

@@ -34,7 +34,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
       size: `${width}x${height}`,
       // this causes the request to request to return an http error status code if there is no image for the location
       return_error_code: 'true',
-      key: 'AIzaSyASYR8zEF6T-bqsFEelZL_YpNspUQPvT8U'
+      key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
     }).toString()
     return url.toString()
   }
