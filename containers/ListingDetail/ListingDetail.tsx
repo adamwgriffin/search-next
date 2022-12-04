@@ -27,7 +27,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
 
   useEffect(() => {
     listingID && dispatch(getListingDetail(listingID))
-  }, [listingID])
+  }, [listingID, dispatch])
 
   return (
     <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
