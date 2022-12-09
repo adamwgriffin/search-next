@@ -61,7 +61,7 @@ export interface WebsitesSearchParamsInterface {
 export const WebsitesSearchParams = Object.freeze({
   agent_uuid: 'f74a3f6d-aeda-4daa-835e-029386152405',
   startidx: 0,
-  pgsize: 40,
+  pgsize: 20,
   pricemin: null,
   pricemax: null,
   bed_min: 0,

@@ -1,0 +1,25 @@
+.listingMarker {
+  padding: .3rem .4rem;
+  cursor: pointer;
+  background-color: mediumpurple;
+  color: white;
+  border-radius: .8rem;
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 4px -1px;
+  font-size: .8rem;
+  font-weight: 500;
+  transition: all .2s ease-in-out;
+}
+
+.listingMarker:hover {
+  transform: scale(1.2);
+}
+
+.link {
+  color: initial;
+  text-decoration: none;
+}
+
+.link:visited .listingMarker  {
+  background-color: #d1c1f0;
+  color: rebeccapurple;
+}

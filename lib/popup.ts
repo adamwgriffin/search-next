@@ -27,8 +27,8 @@ export const lazyLoadPopup = () => {
     }
   
     onAdd() {
-      // "floatPane" is one of several MapPanes that we can attach our OverlayView to. it contains the info window. It is above all map
-      // overlays.
+      // "floatPane" is one of several MapPanes that we can attach our OverlayView to. it contains the info window. It
+      // is above all map overlays.
       this.getPanes()!.floatPane.appendChild(this.containerDiv)
     }
   
@@ -46,7 +46,7 @@ export const lazyLoadPopup = () => {
       // been set to position: absolute above.
       const divPosition = this.getProjection().fromLatLngToDivPixel(this.position)!
       this.containerDiv.style.left = `${divPosition.x}px`
-      this.containerDiv.style.top = `${divPosition.y - 18}px`
+      this.containerDiv.style.top = `${divPosition.y - 30}px`
     }
   }
 

@@ -4,7 +4,9 @@ import type { LoaderOptions } from '@googlemaps/js-api-loader'
 // your api key and the libraries you want to load go here
 export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: '',
-  libraries: ['drawing', 'places', 'geometry']
+  libraries: ['drawing', 'places', 'geometry', 'marker'],
+  // TODO: change this once AdvancedMarkerView is out of beta
+  version: 'beta'
 }
 
 export const AppGoogleMapsLoaderOptions: LoaderOptions = {
@@ -15,6 +17,8 @@ export const AppGoogleMapsLoaderOptions: LoaderOptions = {
 // default options for the map itself, such as what UI controls to enable, etc.
 // seems that we can't use Object.freeze on this object, otherwise the map won't load
 export const DefaultMapOptions: google.maps.MapOptions = {
+  // using a mapId is required for using AdvancedMarkerView
+  mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID!,
   center: {
     lat: 37.76022,
     lng: -122.41415
@@ -26,15 +30,7 @@ export const DefaultMapOptions: google.maps.MapOptions = {
   scaleControl: false,
   streetViewControl: false,
   rotateControl: false,
-  fullscreenControl: false,
-  // removes points of interest markers from map. passing any style causes the Google logo to appear white
-  styles: [
-    {
-      featureType: 'poi',
-      elementType: 'labels',
-      stylers: [{ visibility: 'off' }]
-    }
-  ]
+  fullscreenControl: false
 }
 
 export const DefaultAutocompleteOptions = {

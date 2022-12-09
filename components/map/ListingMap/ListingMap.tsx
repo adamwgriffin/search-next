@@ -36,11 +36,11 @@ const ListingMap: NextPage = () => {
   const listingSearchPending = useAppSelector(selectListingSearchPending)
   const listings = useAppSelector(selectListings)
 
-  const handleListingMarkerMouseover = (listing:Listing) => {
+  const handleListingMarkerMouseEnter = (listing:Listing) => {
     dispatch(setPopupListing(listing))
   }
 
-  const handleListingMarkerMouseout = () => {
+  const handleListingMarkerMouseLeave = () => {
     dispatch(setPopupListing(null))
   }
 
@@ -77,8 +77,8 @@ const ListingMap: NextPage = () => {
             <ListingMarker
               key={l.listingid}
               listing={l}
-              onMouseover={handleListingMarkerMouseover}
-              onMouseout={handleListingMarkerMouseout}
+              onMouseEnter={handleListingMarkerMouseEnter}
+              onMouseLeave={handleListingMarkerMouseLeave}
             />
           ))}
           <ListingMarkerPopup />

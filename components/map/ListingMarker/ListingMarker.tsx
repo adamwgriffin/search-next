@@ -1,71 +1,71 @@
 import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types'
 import { useEffect } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
-import ListingMarkerIcon from '../ListingMarkerIcon/ListingMarkerIcon'
-import { ListingMarkerIconProps } from '../ListingMarkerIcon/ListingMarkerIcon'
-import { listingLocationToLatLngLiteral } from '../../../lib/helpers/listing_helpers'
+import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
+import {
+  listingLocationToLatLngLiteral,
+  formatPrice,
+  ShortCurrencyFormat
+} from '../../../lib/helpers/listing_helpers'
 
 export interface ListingMarkerProps {
   listing: Listing
-  color?: string
-  colorHover?: string
-  clickEventZoomLevel?: number
-  onMouseover?: (listing:Listing) => void
-  onMouseout?: () => void
+  onMouseEnter?: (listing: Listing) => void
+  onMouseLeave?: () => void
 }
 
 const ListingMarker: NextPage<ListingMarkerProps> = ({
   listing,
-  color = 'MediumPurple',
-  colorHover = 'RebeccaPurple',
-  clickEventZoomLevel = 16,
-  onMouseover,
-  onMouseout
+  onMouseEnter,
+  onMouseLeave
 }) => {
   const { googleMap } = useGoogleMaps()
 
-  // TODO: seems like maybe we should create the marker & icons only once, outside the Marker component then pass it in
-  // somehow instead of create one for every ListingMarker component
-  const createListingMarkerIcon = (options: ListingMarkerIconProps) => {
-    const svgString = renderToStaticMarkup(<ListingMarkerIcon {...options} />)
-    return {
-      url: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`,
-    }
-  }
-
-  const markerIcon = createListingMarkerIcon({ fill: color })
-  const markerIconHover = createListingMarkerIcon({ fill: colorHover })
-
-  const handleMouseover = (marker: google.maps.Marker) => {
-    marker.setIcon(markerIconHover)
-    onMouseover?.(listing)
-  }
-  
-  const handleMouseout = (marker: google.maps.Marker) => {
-    marker.setIcon(markerIcon)
-    onMouseout?.()
-  }
-
   useEffect(() => {
     if (!googleMap) return
-    const position = listingLocationToLatLngLiteral(listing.location)
-    const marker = new google.maps.Marker({
-      position,
-      map: googleMap,
-      icon: markerIcon
-    })
-    // TODO: make click event open the listing detail page in a new tab instead
-    marker.addListener('click', () => {
-      window.open(`/listing/${listing.listingid}`, '_blank')
-    })
-    marker.addListener('mouseover', () => handleMouseover(marker))
-    marker.addListener('mouseout', () => handleMouseout(marker))
-    return () => {
-      marker.setMap(null)
+
+    const handleMouseEnter = () => {
+      element.style.zIndex = '1'
+      onMouseEnter?.(listing)
     }
-  })
+  
+    const handleMouseLeave = () => {
+      element.style.zIndex = ''
+      onMouseLeave?.()
+    }
+
+    const link = `/listing/${listing.listingid}`
+
+    const markerContainer = document.createElement('div')
+    createRoot(markerContainer).render(
+      <ListingMarkerContent
+        price={formatPrice(listing, ShortCurrencyFormat)}
+        link={link}
+      />
+    )
+
+    const marker = new google.maps.marker.AdvancedMarkerView({
+      map: googleMap,
+      position: listingLocationToLatLngLiteral(listing.location),
+      content: markerContainer
+    })
+
+    marker.addListener('click', () => window.open(link, '_blank'))
+    // there are only a few events that AdvancedMarkerView supports, so we have to attach events to the element for
+    // others.
+    const element = marker.element as HTMLElement
+    element.addEventListener('mouseenter', handleMouseEnter)
+    element.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      marker.map = null
+      element.removeEventListener('mouseenter', handleMouseEnter)
+      element.removeEventListener('mouseleave', handleMouseLeave)
+    }
+
+  }, [googleMap, listing, onMouseEnter, onMouseLeave])
 
   return null
 }
