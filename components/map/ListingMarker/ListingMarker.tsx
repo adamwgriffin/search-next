@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types'
-import { useEffect } from 'react'
+import { useEffect, memo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
@@ -70,4 +70,12 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
   return null
 }
 
-export default ListingMarker
+const areEqual = (prevProps: Readonly<ListingMarkerProps>, nextProps: Readonly<ListingMarkerProps>) => {
+  return prevProps.listing.listingid === nextProps.listing.listingid &&
+    prevProps.listing.location.latitude === nextProps.listing.location.latitude &&
+    prevProps.listing.location.longitude === nextProps.listing.location.longitude
+}
+
+// use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause all the markers to
+// flicker each time the map is dragged
+export default memo(ListingMarker, areEqual)

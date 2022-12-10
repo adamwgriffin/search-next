@@ -75,7 +75,7 @@ const ListingMap: NextPage = () => {
         >
           {listings.map((l) => (
             <ListingMarker
-              key={l.listingid}
+              key={l.listingid.toString()}
               listing={l}
               onMouseEnter={handleListingMarkerMouseEnter}
               onMouseLeave={handleListingMarkerMouseLeave}
