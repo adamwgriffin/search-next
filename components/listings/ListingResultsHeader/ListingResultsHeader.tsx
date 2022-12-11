@@ -1,22 +1,32 @@
 import type { NextPage } from 'next'
 import styles from './ListingResultsHeader.module.css'
+import ContentLoader from 'react-content-loader'
 import SortMenu from '../../form/SortMenu/SortMenu'
 
 export interface ListingResultsHeaderProps {
   totalListings: number
+  listingSearchRunning: boolean
   sortBy: number
   onSortMenuChange: (sortById: number) => void
 }
 
 const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({
   totalListings,
+  listingSearchRunning,
   sortBy,
   onSortMenuChange
 }) => {
   return (
     <div className={styles.listingResultsHeader}>
-      {totalListings > 0 && (
-        <div>{totalListings} {totalListings === 1 ? 'Home' : 'Homes'}</div>
+      {!listingSearchRunning && totalListings > 0 && (
+        <div>
+          {totalListings} {totalListings === 1 ? 'Home' : 'Homes'}
+        </div>
+      )}
+      {listingSearchRunning && (
+        <ContentLoader width={'7.4rem'} height={'1.2rem'}>
+          <rect x='0' y='0' rx='0.375rem' width='7.4rem' height='1.2rem' />
+        </ContentLoader>
       )}
       <SortMenu sortBy={sortBy} onChange={onSortMenuChange} />
     </div>

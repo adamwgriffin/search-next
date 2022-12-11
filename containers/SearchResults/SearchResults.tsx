@@ -36,6 +36,7 @@ const SearchResults: NextPage = () => {
     <div>
       <ListingResultsHeader
         totalListings={pagination.total}
+        listingSearchRunning={listingSearchRunning}
         sortBy={sortBy}
         onSortMenuChange={handleSortMenuChange}
       />
