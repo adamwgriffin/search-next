@@ -17,12 +17,12 @@ import {
   selectGeoLayerCoordinates
 } from '../../../store/listingMap/listingMapSlice'
 import {
-  setListingSearchPending,
+  setDoListingSearchOnMapIdle,
   setPopupListing,
   doGeospatialSearch,
   searchWithUpdatedFilters,
   resetStartIndex,
-  selectListingSearchPending,
+  selectDoListingSearchOnMapIdle,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
 import ListingMarkerPopup from '../../../containers/ListingMarkerPopup/ListingMarkerPopup'
@@ -33,7 +33,7 @@ const ListingMap: NextPage = () => {
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
   const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
-  const listingSearchPending = useAppSelector(selectListingSearchPending)
+  const doListingSearchOnMapIdle = useAppSelector(selectDoListingSearchOnMapIdle)
   const listings = useAppSelector(selectListings)
 
   const handleListingMarkerMouseEnter = (listing:Listing) => {
@@ -52,13 +52,13 @@ const ListingMap: NextPage = () => {
   const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
     await dispatch(setMapData(currentMapState))
     dispatch(resetStartIndex())
-    dispatch(setListingSearchPending(true))
+    dispatch(setDoListingSearchOnMapIdle(true))
   }
 
   const handleIdle = (currentMapState: GoogleMapState) => {
     dispatch(setMapData(currentMapState))
-    if (listingSearchPending) {
-      dispatch(setListingSearchPending(false))
+    if (doListingSearchOnMapIdle) {
+      dispatch(setDoListingSearchOnMapIdle(false))
       dispatch(doGeospatialSearch())
     }
   }

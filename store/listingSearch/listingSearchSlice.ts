@@ -27,7 +27,7 @@ export type PopupListing = Listing | null
 
 export interface ListingSearchState {
   searchType: SearchTypeOption
-  listingSearchPending: boolean
+  doListingSearchOnMapIdle: boolean
   listingSearchRunning: boolean
   location_search_field: string
   searchListingsResponse: any
@@ -52,9 +52,7 @@ export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
 
 const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
-  // "pending" in this context means it's waiting to be executed after the map "idle" event is triggered, not that the
-  // request to the service is pending
-  listingSearchPending: false,
+  doListingSearchOnMapIdle: false,
   // this one actually means that the request to the service is pending
   listingSearchRunning: false,
   // "location_search_field" is a synonym for "street" in listing service. it is a valid search param but we don't
@@ -148,8 +146,8 @@ export const listingSearchSlice = createSlice({
       state.searchParams.startidx = initialState.searchParams.startidx
     },
 
-    setListingSearchPending: (state, action: PayloadAction<boolean>) => {
-      state.listingSearchPending = action.payload
+    setDoListingSearchOnMapIdle: (state, action: PayloadAction<boolean>) => {
+      state.doListingSearchOnMapIdle = action.payload
     },
 
     setSearchParams: (
@@ -205,7 +203,7 @@ export const {
   setLocationSearchField,
   setPopupListing,
   resetStartIndex,
-  setListingSearchPending,
+  setDoListingSearchOnMapIdle,
   setSearchParams
 } = listingSearchSlice.actions
 
@@ -241,8 +239,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
   return { ex_cs, ex_pend }
 }
 
-export const selectListingSearchPending = (state: AppState) =>
-  state.listingSearch.listingSearchPending
+export const selectDoListingSearchOnMapIdle = (state: AppState) =>
+  state.listingSearch.doListingSearchOnMapIdle
 
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
