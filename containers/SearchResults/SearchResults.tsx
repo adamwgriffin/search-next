@@ -10,7 +10,7 @@ import {
   selectPagination,
   selectListingSearchRunning,
   setSearchParams,
-  getNextPageOfListingResults,
+  doGeospatialSearch,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import ListingCardLoader from '../../components/listings/ListingCardLoader/ListingCardLoader'
@@ -29,7 +29,7 @@ const SearchResults: NextPage = () => {
 
   const handlePaginationButtonClick = (pageIndex: number) => {
     dispatch(setSearchParams({ startidx: pageIndex }))
-    dispatch(getNextPageOfListingResults())
+    dispatch(doGeospatialSearch())
   }
 
   return (

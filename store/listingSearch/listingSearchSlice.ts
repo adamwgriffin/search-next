@@ -76,9 +76,7 @@ const initialState: ListingSearchState = {
 // requests for the current location using the center_lat, center_lon & geotype that were provided by the geocoder.
 export const doGeospatialGeocodeSearch = createAsyncThunk(
   'listingSearch/doGeospatialGeocodeSearch',
-  async (_arg, { dispatch, getState }) => {
-    dispatch(resetStartIndex())
-    dispatch(setListingSearchRunning(true))
+  async (_arg, { getState }) => {
     // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
     const state = getState() as AppState
     const response = await http({
@@ -112,13 +110,6 @@ export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
     dispatch(resetStartIndex())
-    dispatch(doGeospatialSearch())
-  }
-)
-
-export const getNextPageOfListingResults = createAsyncThunk(
-  'listingSearch/getNextPageOfListingResults',
-  async (_args, { dispatch }) => {
     dispatch(doGeospatialSearch())
   }
 )
@@ -160,10 +151,6 @@ export const listingSearchSlice = createSlice({
     setListingSearchPending: (state, action: PayloadAction<boolean>) => {
       state.listingSearchPending = action.payload
     },
-    
-    setListingSearchRunning: (state, action: PayloadAction<boolean>) => {
-      state.listingSearchRunning = action.payload
-    },
 
     setSearchParams: (
       state,
@@ -174,24 +161,41 @@ export const listingSearchSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(doGeospatialSearch.fulfilled, (state, action) => {
-      state.listingSearchPending = false
-      state.searchListingsResponse = action.payload
-      if (action.payload.number_returned === 0) {
-        console.debug('In doGeospatialSearch.fulfilled, payload.number_returned is 0.')
-      }
-    })
-
-    builder.addCase(doGeospatialSearch.rejected, (state) => {
-      state.listingSearchPending = false
+    builder.addCase(doGeospatialGeocodeSearch.pending, (state, action) => {
+      state.searchParams.startidx = initialState.searchParams.startidx
+      state.listingSearchRunning = true
     })
 
     builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
       state.searchListingsResponse = action.payload
       state.listingSearchRunning = false
       if (action.payload.number_returned === 0) {
-        console.debug('In doGeospatialGeocodeSearch.fulfilled, payload.number_returned is 0.')
+        console.debug(
+          'In doGeospatialGeocodeSearch.fulfilled, payload.number_returned is 0.'
+        )
       }
+    })
+
+    builder.addCase(doGeospatialGeocodeSearch.rejected, (state, action) => {
+      state.listingSearchRunning = false
+    })
+
+    builder.addCase(doGeospatialSearch.pending, (state, action) => {
+      state.listingSearchRunning = true
+    })
+
+    builder.addCase(doGeospatialSearch.fulfilled, (state, action) => {
+      state.listingSearchRunning = false
+      state.searchListingsResponse = action.payload
+      if (action.payload.number_returned === 0) {
+        console.debug(
+          'In doGeospatialSearch.fulfilled, payload.number_returned is 0.'
+        )
+      }
+    })
+
+    builder.addCase(doGeospatialSearch.rejected, (state) => {
+      state.listingSearchRunning = false
     })
   }
 })
@@ -202,7 +206,6 @@ export const {
   setPopupListing,
   resetStartIndex,
   setListingSearchPending,
-  setListingSearchRunning,
   setSearchParams
 } = listingSearchSlice.actions
 
@@ -241,8 +244,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
 export const selectListingSearchPending = (state: AppState) =>
   state.listingSearch.listingSearchPending
 
-  export const selectListingSearchRunning = (state: AppState) =>
-    state.listingSearch.listingSearchRunning
+export const selectListingSearchRunning = (state: AppState) =>
+  state.listingSearch.listingSearchRunning
 
 export const selectCenterLatLonParams = (state: AppState) => {
   const { lat, lng } = state.places.geocoderResult.location
@@ -267,11 +270,12 @@ export const selectSortBy = (state: AppState): number =>
 
 export const selectPagination = (state: AppState) => {
   const { startidx, pgsize } = state.listingSearch.searchParams
-  const { number_returned, number_found } = state.listingSearch.searchListingsResponse
+  const { number_returned, number_found } =
+    state.listingSearch.searchListingsResponse
   return {
-    start: (startidx + 1),
-    end: (startidx + number_returned ?? 0),
-    total: (number_found ?? 0),
+    start: startidx + 1,
+    end: startidx + number_returned ?? 0,
+    total: number_found ?? 0,
     pages: range(0, number_found, pgsize),
     currentPage: startidx,
     pageSize: pgsize
