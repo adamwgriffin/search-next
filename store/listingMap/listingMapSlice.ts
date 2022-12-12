@@ -11,8 +11,8 @@ import {
 import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 
+export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
-export type GeoJSONCoordinates = Array<Array<Array<number>>>
 
 export interface ListingMapState {
   buffer_miles: number
