@@ -30,9 +30,14 @@ but instead we need:
   ]
 ]
 */
-export const convertGeojsonCoordinatesToPolygonPaths = (geoJsonCoordinates: GeoJSONCoordinates):GeoLayerCoordinates => {
-    // @ts-ignore
-  return geoJsonCoordinates.map((arr:Array<Array<number>>) => arr[0].map( (c) => ({ lat: c[1], lng: c[0] }) ))
+export const convertGeojsonCoordinatesToPolygonPaths = (
+  geoJsonCoordinates: GeoJSONCoordinates
+): GeoLayerCoordinates => {
+  return geoJsonCoordinates.map((arr) => {
+    return arr[0].map((arr) => {
+      return { lat: arr[1], lng: arr[0] }
+    })
+  })
 }
 
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we
