@@ -31,7 +31,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
     const { width, height } = ListingImageSizeEnum[size]
     url.search = new URLSearchParams({
       location: `${location.latitude},${location.longitude}`,
-      size: `${width}x${height}`,
+      size: `${width+20}x${height}`,
       // this causes the request to request to return an http error status code if there is no image for the location
       return_error_code: 'true',
       key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!

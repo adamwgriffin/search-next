@@ -21,8 +21,8 @@ const ListingCardImage: NextPage<ListingCardImageProps> = ({ listing }) => {
         style={{
           objectFit: 'cover',
           width: '100%',
-          height: '13rem',
-          borderRadius: '0.5rem',
+          aspectRatio: '1 / 1',
+          borderRadius: '0.8rem',
         }}
       />
     </div>
