@@ -5,7 +5,7 @@ import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
 import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 
 export interface ListingMapGeocoderResult {
-  type: string | null
+  type: keyof typeof GoogleToServiceAddressTypeMapping
   location: google.maps.LatLngLiteral
   viewport: google.maps.LatLngBoundsLiteral | object
 }
@@ -89,7 +89,6 @@ export const placesSlice = createSlice({
 export const { resetAutcompletePlacePredictions } = placesSlice.actions
 
 export const selectGeoType = (state: AppState) => {
-  // @ts-ignore
   return GoogleToServiceAddressTypeMapping[state.places.geocoderResult.type]
 }
 
