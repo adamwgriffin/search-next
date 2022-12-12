@@ -63,3 +63,5 @@ export const modifyParam = {
      return { ptype: params.ptype.join(',') }
   }
 }
+ 
+export type ModifyParams = keyof typeof modifyParam

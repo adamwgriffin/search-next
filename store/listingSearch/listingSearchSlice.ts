@@ -6,6 +6,7 @@ import type {
   BedsBathsParam,
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
+import type { ModifyParams } from '../../lib/helpers/search_params'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -281,10 +282,15 @@ export const selectPagination = (state: AppState) => {
 }
 
 // modify params by adding, removing or changing params based on the values of other params, or the app's state
-export const modifyParams = (state: AppState, originalParams: object) => {
-  return Object.keys(originalParams).reduce((params, param) => {
-    // @ts-ignore
-    return { ...params, ...modifyParam[param]?.(state, params) }
+export const modifyParams = (
+  state: AppState,
+  originalParams: WebsitesSearchParamsInterface
+) => {
+  return Object.keys(originalParams).reduce((params, paramName) => {
+    return {
+      ...params,
+      ...modifyParam[paramName as ModifyParams]?.(state, params)
+    }
   }, originalParams)
 }
 
