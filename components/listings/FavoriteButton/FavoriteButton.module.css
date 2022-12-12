@@ -1,0 +1,61 @@
+.favoriteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 100%;
+  outline: none;
+  border: none;
+  transition: 0.2s;
+  background: none;
+}
+
+.favoriteButton:hover {
+  transform: scale(1.1);
+}
+
+#favoriteStroke,
+#favoriteFilled {
+  stroke: white;
+  fill: rgba(0, 0, 0, 0.5);  
+}
+
+#favoriteStroke {
+	animation: 300ms addFavorite forwards;
+}
+
+#favoriteFilled {
+  animation: 300ms removeFavorite forwards ease-in-out;
+}
+
+@keyframes addFavorite {
+  0% {
+		transform: scale(1);
+	}
+	20% {
+		transform: scale(0.9);
+	}
+	40% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+		fill: #ff385c;
+	}
+}
+
+@keyframes removeFavorite {
+  0% {
+		transform: scale(1);
+	}
+  20% {
+		transform: scale(0.9);
+	}
+	40% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
