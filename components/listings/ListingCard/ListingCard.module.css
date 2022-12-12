@@ -1,20 +1,10 @@
-.listingCard {
-  cursor: pointer;
-  border-radius: 0.5rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 5px 0px;
-}
-
 .link {
   color: initial;
   text-decoration: none;
 }
 
-.listingCard:hover {
-  box-shadow: 0 0 7px 0 rgba(0,0,0,.35);
-}
-
 .details {
-  padding: 1rem;
+  padding: .5rem 0;
 }
 
 .price {
@@ -22,17 +12,17 @@
   font-weight: 600;
 }
 
-.stats {
+.bedBathSqft {
   display: flex;
 }
 
 .price,
-.stats {
+.bedBathSqft {
   margin-bottom: .5rem;
 }
 
 .beds,
 .baths,
-.size {
+.sqft {
   margin-right: .5rem;
 }
