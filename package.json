@@ -15,7 +15,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.15.1",
     "@reduxjs/toolkit": "^1.9.1",
-    "axios": "^0.27.2",
+    "axios": "^1.2.1",
     "lodash": "^4.17.21",
     "next": "13.0.4",
     "react": "18.2.0",
