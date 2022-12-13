@@ -14,12 +14,6 @@ const HeaderLinks: NextPage = () => {
         <Link href='#!' className={styles.link}>
           Mortgage
         </Link>
-        <Link href='#!' className={styles.link}>
-          Saved Homes
-        </Link>
-        <Link href='#!' className={styles.link}>
-          Saved Searches
-        </Link>
       </div>
   )
 }

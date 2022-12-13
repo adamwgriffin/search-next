@@ -8,9 +8,11 @@ const Login: NextPage = () => {
   }
 
   return (
-    <OutlinedButton onClick={handleLogin} highlighted={false}>
-      Sign up or Log in
-    </OutlinedButton>
+    <div className={styles.login}>
+      <OutlinedButton onClick={handleLogin} highlighted={false}>
+        Log in
+      </OutlinedButton>
+    </div>
   )
 }
 
