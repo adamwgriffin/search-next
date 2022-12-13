@@ -69,7 +69,6 @@ const Header: NextPage = () => {
         onSearchInitiated={handleOnSearchInitiated}
         onOptionSelected={handleOnOptionSelected}
       />
-      <HeaderLinks />
       <Login />
     </header>
   )
