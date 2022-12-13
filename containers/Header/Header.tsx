@@ -12,6 +12,7 @@ import {
   selectAutcompletePlacePredictions
 } from '../../store/places/placesSlice'
 import styles from './Header.module.css'
+import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'
 import HeaderLinks from '../../components/header/HeaderLinks/HeaderLinks'
 import Login from '../../components/header/Login/Login'
@@ -54,7 +55,7 @@ const Header: NextPage = () => {
 
   return (
     <header className={styles.Header}>
-      <img src='/moxiworks_logo_stacked.png' alt='Company Logo' height='36px' />
+      <Logo width='167' height='36' />
       <SearchField
         value={locationSearchField}
         options={options}
