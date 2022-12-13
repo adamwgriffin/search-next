@@ -1,14 +1,10 @@
 import type { NextPage } from 'next'
+import type { PriceRangeParam } from '../../../lib/constants/search_param_constants'
 import { useRef } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
-
-export interface PriceRangeParam {
-  pricemin: number | null
-  pricemax: number | null
-}
 
 export interface PriceProps {
   priceRange: PriceRangeParam
@@ -21,15 +17,11 @@ const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) 
   const priceminRef = useRef<HTMLInputElement>(null)
   const pricemaxRef = useRef<HTMLInputElement>(null)
 
-  const getPriceRange = () => {
-    return {
+  const handleChange = () => {
+    onChange?.({
       pricemin: Number(priceminRef.current?.value) || null,
       pricemax: Number(pricemaxRef.current?.value) || null
-    }
-  }
-
-  const handleChange = () => {
-    onChange?.(getPriceRange())
+    })
   }
 
   return (

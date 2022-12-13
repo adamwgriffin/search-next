@@ -1,6 +1,6 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { PriceRangeParam } from '../../components/form/Price/Price'
+import type { PriceRangeParam } from '../../lib/constants/search_param_constants'
 import type {
   WebsitesSearchParamsInterface,
   BedsBathsParam,

@@ -37,6 +37,11 @@ export interface BathsParam {
 
 export type BedsBathsParam = BedsParam | BathsParam
 
+export interface PriceRangeParam {
+  pricemin: number | null
+  pricemax: number | null
+}
+
 export interface ExcludeStatusParams {
   ex_pend: boolean
   ex_cs: boolean

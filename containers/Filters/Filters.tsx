@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParam } from '../../components/form/Price/Price'
+import type { PriceRangeParam } from '../../lib/constants/search_param_constants' 
 import type { BedsBathsParam, MoreFiltersParams } from '../../lib/constants/search_param_constants'
 import type { MoreFiltersParamsUpdatePatch } from '../../store/listingSearch/listingSearchSlice'
 import { ChangeEvent } from 'react'
