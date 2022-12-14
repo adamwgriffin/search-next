@@ -1,35 +1,47 @@
 import type { NextPage } from 'next'
 import type {
   MoreFiltersParams,
-  ExcludeStatusParams
+  ExcludeStatusParams,
+  SquareFeetRangeParam
 } from '../../../lib/constants/search_param_constants'
 import type { MoreFiltersParamsUpdatePatch } from '../../../store/listingSearch/listingSearchSlice'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'
+import SquareFeet from '../SquareFeet/SquareFeet'
 
 interface MoreProps {
   params: MoreFiltersParams
-  onChange?: (params: MoreFiltersParamsUpdatePatch) => void
+  onUpdateSearch?: (params: MoreFiltersParamsUpdatePatch) => void
+  onChangeParams?: (params: MoreFiltersParamsUpdatePatch) => void
 }
 
-const More: NextPage<MoreProps> = ({ params, onChange }) => {
-  const selectStatusParms = (
+const More: NextPage<MoreProps> = ({ params, onUpdateSearch, onChangeParams }) => {
+  const selectStatusParams = (
     params: MoreFiltersParams
   ): ExcludeStatusParams => {
     const { ex_pend, ex_cs } = params
     return { ex_pend, ex_cs }
   }
 
-  const handleListingStatusChange = (param: ExcludeStatusParams) =>
-    onChange?.(param)
+  const selectSquareFeetParams = (
+    params: MoreFiltersParams
+  ): SquareFeetRangeParam => {
+    const { sqft_min, sqft_max } = params
+    return { sqft_min, sqft_max }
+  }
 
   return (
     <MenuButton label='More'>
       <div className={styles.more}>
         <ListingStatus
-          statusParms={selectStatusParms(params)}
-          onChange={handleListingStatusChange}
+          statusParms={selectStatusParams(params)}
+          onChange={onUpdateSearch}
+        />
+        <SquareFeet
+          squareFeetRange={selectSquareFeetParams(params)}
+          onChange={onChangeParams}
+          onBlur={onUpdateSearch}
         />
       </div>
     </MenuButton>

@@ -55,11 +55,15 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handleMoreFiltersChange = (params: MoreFiltersParamsUpdatePatch) => {
+  const handleMoreChangeParams = (params: MoreFiltersParamsUpdatePatch) => {
+    dispatch(setSearchParams(params))
+  }
+
+  const handleMoreUpdateSearch = (params: MoreFiltersParamsUpdatePatch) => {
     dispatch(setSearchParams(params))
     dispatch(searchWithUpdatedFilters())
   }
-
+  
   const handleSearchInitiated = () => {
     dispatch(searchWithUpdatedFilters())
   }
@@ -91,7 +95,8 @@ const Filters: NextPage = () => {
       />}
       <More
         params={moreFiltersParams}
-        onChange={handleMoreFiltersChange}
+        onChangeParams={handleMoreChangeParams}
+        onUpdateSearch={handleMoreUpdateSearch}
       />
       <OutlinedButton textColor='MediumPurple' onClick={handleSaveSearch}>
         Save Search

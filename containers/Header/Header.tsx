@@ -14,7 +14,6 @@ import {
 import styles from './Header.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'
-import HeaderLinks from '../../components/header/HeaderLinks/HeaderLinks'
 import Login from '../../components/header/Login/Login'
 
 const Header: NextPage = () => {

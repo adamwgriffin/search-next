@@ -42,16 +42,23 @@ export interface PriceRangeParam {
   pricemax: number | null
 }
 
+export interface SquareFeetRangeParam {
+  sqft_min: number | null
+  sqft_max: number | null
+}
+
 export interface ExcludeStatusParams {
   ex_pend: boolean
   ex_cs: boolean
 }
 
-export interface MoreFiltersParams extends ExcludeStatusParams {}
+export interface MoreFiltersParams extends ExcludeStatusParams, SquareFeetRangeParam {}
 
 export interface WebsitesSearchParamsInterface {
   pricemin: number | null
   pricemax: number | null
+  sqft_min: number | null
+  sqft_max: number | null
   ptype: number[]
   bed_min: number
   bath_min: number

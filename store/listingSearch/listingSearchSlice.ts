@@ -39,6 +39,8 @@ export interface ListingSearchState {
 export interface MoreFiltersParamsUpdatePatch {
   ex_pend?: boolean
   ex_cs?: boolean
+  sqft_min?: number | null
+  sqft_max?: number | null
 }
 
 export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
@@ -236,8 +238,8 @@ export const selectBedBathParams = (state: AppState): BedsBathsParam => {
 }
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
-  const { ex_cs, ex_pend } = state.listingSearch.searchParams
-  return { ex_cs, ex_pend }
+  const { ex_cs, ex_pend, sqft_min, sqft_max } = state.listingSearch.searchParams
+  return { ex_cs, ex_pend, sqft_min, sqft_max }
 }
 
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>
@@ -297,7 +299,7 @@ export const modifyParams = (
 export const removeUnecessaryParams = (params: object) =>
   omitBy(
     params,
-    (value, param) => typeof value === 'undefined' || value === null
+    (value, _param) => typeof value === 'undefined' || value === null
   )
 
 // TODO: make this a memoized selector with createSelector
