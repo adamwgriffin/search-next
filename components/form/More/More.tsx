@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type {
   MoreFiltersParams,
   ExcludeStatusParams,
-  SquareFeetRangeParam
+  SquareFeetRangeParams
 } from '../../../lib/constants/search_param_constants'
 import type { MoreFiltersParamsUpdatePatch } from '../../../store/listingSearch/listingSearchSlice'
 import styles from './More.module.css'
@@ -26,7 +26,7 @@ const More: NextPage<MoreProps> = ({ params, onUpdateSearch, onChangeParams }) =
 
   const selectSquareFeetParams = (
     params: MoreFiltersParams
-  ): SquareFeetRangeParam => {
+  ): SquareFeetRangeParams => {
     const { sqft_min, sqft_max } = params
     return { sqft_min, sqft_max }
   }

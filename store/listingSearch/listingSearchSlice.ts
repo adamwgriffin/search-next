@@ -1,8 +1,9 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { PriceRangeParam } from '../../lib/constants/search_param_constants'
+import type { PriceRangeParams } from '../../lib/constants/search_param_constants'
 import type {
-  WebsitesSearchParamsInterface,
+  SortById,
+  SearchParams,
   BedsBathsParam,
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
@@ -10,7 +11,7 @@ import type { ModifyParams } from '../../lib/helpers/search_params'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { WebsitesSearchParams } from '../../lib/constants/search_param_constants'
+import { DefaultSearchParams } from '../../lib/constants/search_param_constants'
 import { RentalPropertytypeID } from '../../lib/property_types'
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectGeoType } from '../places/placesSlice'
@@ -33,25 +34,12 @@ export interface ListingSearchState {
   location_search_field: string
   searchListingsResponse: any
   popupListing: PopupListing
-  searchParams: WebsitesSearchParamsInterface
+  searchParams: SearchParams
 }
 
-export interface MoreFiltersParamsUpdatePatch {
-  ex_pend?: boolean
-  ex_cs?: boolean
-  sqft_min?: number | null
-  sqft_max?: number | null
-}
+export type MoreFiltersParamsUpdatePatch = Partial<MoreFiltersParams>
 
-export interface SearchParamsUpdatePatch extends MoreFiltersParamsUpdatePatch {
-  pricemin?: number | null
-  pricemax?: number | null
-  ptype?: number[]
-  bed_min?: number
-  bath_min?: number
-  startidx?: number
-  sort_by?: number
-}
+export type SearchParamsUpdatePatch = Partial<SearchParams>
 
 const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
@@ -64,7 +52,7 @@ const initialState: ListingSearchState = {
   location_search_field: '',
   searchListingsResponse: {},
   popupListing: null,
-  searchParams: WebsitesSearchParams
+  searchParams: DefaultSearchParams
 }
 
 // performs a geospatial search using just the "street" param. we use the text that was entered in the search field for
@@ -227,7 +215,7 @@ export const selectPopupListing = (state: AppState): PopupListing => {
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []
 
-export const selectPriceRange = (state: AppState): PriceRangeParam => {
+export const selectPriceRange = (state: AppState): PriceRangeParams => {
   const { pricemin, pricemax } = state.listingSearch.searchParams
   return { pricemin, pricemax }
 }
@@ -266,7 +254,7 @@ export const selectBoundsParams = (state: AppState) => {
 export const selectPropertyTypes = (state: AppState): number[] =>
   state.listingSearch.searchParams.ptype || []
 
-export const selectSortBy = (state: AppState): number =>
+export const selectSortBy = (state: AppState): SortById =>
   state.listingSearch.searchParams.sort_by
 
 export const selectPagination = (state: AppState) => {
@@ -286,7 +274,7 @@ export const selectPagination = (state: AppState) => {
 // modify params by adding, removing or changing params based on the values of other params, or the app's state
 export const modifyParams = (
   state: AppState,
-  originalParams: WebsitesSearchParamsInterface
+  originalParams: SearchParams
 ) => {
   return Object.keys(originalParams).reduce((params, paramName) => {
     return {
@@ -308,7 +296,6 @@ export const selectParamsForGeospatialSearch = (state: AppState) => {
     ...state.listingSearch.searchParams,
     ...selectCenterLatLonParams(state),
     ...selectBoundsParams(state),
-    agent_uuid: state.environment.agent_uuid,
     geotype: selectGeoType(state)
   }
   const modifiedParams = modifyParams(state, originalParams)
@@ -319,7 +306,6 @@ export const selectParamsForGeospatialSearch = (state: AppState) => {
 export const selectParamsForGeospatialGeocodeSearch = (state: AppState) => {
   const originalParams = {
     street: state.listingSearch.location_search_field,
-    agent_uuid: state.environment.agent_uuid,
     ...state.listingSearch.searchParams
   }
   const modifiedParams = modifyParams(state, originalParams)

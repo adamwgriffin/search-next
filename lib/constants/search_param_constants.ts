@@ -1,7 +1,96 @@
 // TODO: not sure if search params should actually be considerted "constants". maybe relocating these to a different
 // file would make more sense.
 
-export const sortByEnum = Object.freeze({
+export type SortById =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | 13
+  | 14
+  | 15
+  | 16
+  | 17
+  | 18
+
+export interface SearchParams {
+  agent_uuid: string
+  startidx: number
+  pgsize: number
+  pricemin: number | null
+  pricemax: number | null
+  bed_min: number | null
+  bath_min: number | null
+  sold_days: number | null
+  openhouse: 2 | 3 | 4 | 5 | 6 | 7 | null
+  openhouse_virtual: boolean | null
+  openhouse_in_person: boolean | null
+  ptype: number[]
+  status: 'active' | 'sold'
+  ex_pend: boolean | null
+  ex_cs: boolean | null
+  sqft_min: number | null
+  sqft_max: number | null
+  ls_conversion: 'sqft' | 'acres'
+  lotsize_min: number | null
+  lotsize_max: number | null
+  yearblt_min: number | null
+  yearblt_max: number | null
+  days_indb: number | null
+  water: boolean | null
+  view: boolean | null
+  onestory: boolean | null
+  has_garage: boolean | null
+  new_const: boolean | null
+  virtual_tour: boolean | null
+  has_pool: boolean | null
+  senior_community: boolean | null
+  sort_by: SortById
+}
+
+export type PriceRangeParams = Pick<SearchParams, 'pricemin' | 'pricemax'>
+
+export type SquareFeetRangeParams = Pick<SearchParams, 'sqft_min' | 'sqft_max'>
+
+export type ExcludeStatusParams = Pick<SearchParams, 'ex_pend' | 'ex_cs'>
+
+export type MoreFiltersParams = Pick<
+  SearchParams,
+  'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max'
+>
+
+export type BedsBathsParam = Pick<SearchParams, 'bed_min' | 'bath_min'>
+
+export interface SortByEnum {
+  baths_desc: SortById
+  baths_asc: SortById
+  beds_desc: SortById
+  beds_asc: SortById
+  distance_from_user_lat_lon_asc: SortById
+  distance_from_user_lat_lon_desc: SortById
+  listing_date_asc: SortById
+  listing_date_desc: SortById
+  price_desc: SortById
+  price_asc: SortById
+  status_category_asc: SortById
+  status_category_desc: SortById
+  total_square_footage_desc: SortById
+  total_square_footage_asc: SortById
+  total_lot_square_footage_desc: SortById
+  total_lot_square_footage_asc: SortById
+  sold_date_desc: SortById
+  sold_date_asc: SortById
+}
+
+export const sortByEnum: SortByEnum = Object.freeze({
   baths_desc: 3,
   baths_asc: 4,
   beds_desc: 5,
@@ -27,50 +116,7 @@ export const sortByDistanceValues = Object.freeze([
   sortByEnum.distance_from_user_lat_lon_desc
 ])
 
-export interface BedsParam {
-  bed_min: number
-}
-
-export interface BathsParam {
-  bath_min: number
-}
-
-export type BedsBathsParam = BedsParam | BathsParam
-
-export interface PriceRangeParam {
-  pricemin: number | null
-  pricemax: number | null
-}
-
-export interface SquareFeetRangeParam {
-  sqft_min: number | null
-  sqft_max: number | null
-}
-
-export interface ExcludeStatusParams {
-  ex_pend: boolean
-  ex_cs: boolean
-}
-
-export interface MoreFiltersParams extends ExcludeStatusParams, SquareFeetRangeParam {}
-
-export interface WebsitesSearchParamsInterface {
-  pricemin: number | null
-  pricemax: number | null
-  sqft_min: number | null
-  sqft_max: number | null
-  ptype: number[]
-  bed_min: number
-  bath_min: number
-  status: 'active' | 'sold'
-  ex_pend: boolean
-  ex_cs: boolean
-  startidx: number
-  pgsize: number
-  sort_by: number
-}
-
-export const WebsitesSearchParams = Object.freeze({
+export const DefaultSearchParams = Object.freeze({
   agent_uuid: 'f74a3f6d-aeda-4daa-835e-029386152405',
   startidx: 0,
   pgsize: 20,

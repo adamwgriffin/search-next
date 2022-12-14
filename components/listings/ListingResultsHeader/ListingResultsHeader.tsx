@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import type { SortById } from '../../../lib/constants/search_param_constants'
 import styles from './ListingResultsHeader.module.css'
 import ContentLoader from 'react-content-loader'
 import SortMenu from '../../form/SortMenu/SortMenu'
@@ -6,8 +7,8 @@ import SortMenu from '../../form/SortMenu/SortMenu'
 export interface ListingResultsHeaderProps {
   totalListings: number
   listingSearchRunning: boolean
-  sortBy: number
-  onSortMenuChange: (sortById: number) => void
+  sortBy: SortById
+  onSortMenuChange: (sortById: SortById) => void
 }
 
 const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({

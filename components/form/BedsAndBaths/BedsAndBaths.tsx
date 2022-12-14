@@ -8,7 +8,7 @@ import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
 export interface BedsAndBathsProps {
   countArr: number[]
   bedsAndBaths: BedsBathsParam
-  onChange?: (param: BedsBathsParam) => void
+  onChange?: (param: Partial<BedsBathsParam>) => void
 }
 
 const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
@@ -35,13 +35,13 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
           name='bed_min'
           label='Beds'
           options={countOptions('bed_min', countArr)}
-          onChange={(value) => onChange?.({ bed_min: value })}
+          onChange={(value) => onChange?.({ bed_min: value || null })}
         />
         <RadioButtonGroup
           name='bath_min'
           label='Baths'
           options={countOptions('bath_min', countArr)}
-          onChange={(value) => onChange?.({ bath_min: value })}
+          onChange={(value) => onChange?.({ bath_min: value || null })}
         />
       </div>
     </MenuButton>

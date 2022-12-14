@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
+import type { SortById } from '../../../lib/constants/search_param_constants'
 import styles from './SortMenu.module.css'
 import { sortByEnum } from '../../../lib/constants/search_param_constants'
 
 export interface SortMenuProps {
-  sortBy: number
-  onChange: (sortById: number) => void
+  sortBy: SortById
+  onChange: (sortById: SortById) => void
 }
 
 const SortMenu: NextPage<SortMenuProps> = ({ sortBy=sortByEnum.listing_date_desc, onChange }) => {
@@ -16,7 +17,7 @@ const SortMenu: NextPage<SortMenuProps> = ({ sortBy=sortByEnum.listing_date_desc
       <select
         className={styles.sortByDropdown}
         value={sortBy}
-        onChange={(e) => onChange(+e.target.value)}
+        onChange={(e) => onChange(+e.target.value as SortById)}
       >
         <option value={sortByEnum.listing_date_desc}>
           Newest

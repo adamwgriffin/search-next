@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SquareFeetRangeParam } from '../../../lib/constants/search_param_constants'
+import type { SquareFeetRangeParams } from '../../../lib/constants/search_param_constants'
 import { useRef } from 'react'
 import styles from './SquareFeet.module.css'
 import formStyles from '../../../styles/forms.module.css'
@@ -8,9 +8,9 @@ import Legend from '../Legend/Legend'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 export interface SquareFeetProps {
-  squareFeetRange: SquareFeetRangeParam
-  onBlur?: (squareFeetRange: SquareFeetRangeParam) => void
-  onChange?: (squareFeetRange: SquareFeetRangeParam) => void
+  squareFeetRange: SquareFeetRangeParams
+  onBlur?: (squareFeetRange: SquareFeetRangeParams) => void
+  onChange?: (squareFeetRange: SquareFeetRangeParams) => void
 }
 
 const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChange }) => {

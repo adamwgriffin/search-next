@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParam } from '../../../lib/constants/search_param_constants'
+import type { PriceRangeParams } from '../../../lib/constants/search_param_constants'
 import { useRef } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
@@ -7,10 +7,10 @@ import MenuButton from '../MenuButton/MenuButton'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 export interface PriceProps {
-  priceRange: PriceRangeParam
+  priceRange: PriceRangeParams
   onBlur?: () => void
   onClose?: () => void
-  onChange?: (priceRange: PriceRangeParam) => void
+  onChange?: (priceRange: PriceRangeParams) => void
 }
 
 const Price: NextPage<PriceProps> = ({ priceRange, onBlur, onClose, onChange }) => {
