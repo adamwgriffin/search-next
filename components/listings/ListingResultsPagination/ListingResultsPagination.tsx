@@ -1,13 +1,16 @@
 import type { NextPage } from 'next'
 import styles from './ListingResultsPagination.module.css'
 
-export interface ListingResultsPaginationProps {
+export interface Pagination {
   start: number
   end: number
   total: number
   pages: Array<number>
   currentPage: number
   pageSize: number
+}
+
+export interface ListingResultsPaginationProps extends Pagination {
   visiblePageAmount?: number
   onClick: (page: number) => void
 }

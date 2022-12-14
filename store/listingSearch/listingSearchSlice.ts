@@ -9,6 +9,7 @@ import type {
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
 import type { ModifyParams } from '../../lib/helpers/search_params'
+import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -147,7 +148,7 @@ export const listingSearchSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(doGeospatialGeocodeSearch.pending, (state, action) => {
+    builder.addCase(doGeospatialGeocodeSearch.pending, (state) => {
       state.searchParams.startidx = initialState.searchParams.startidx
       state.listingSearchRunning = true
     })
@@ -162,11 +163,11 @@ export const listingSearchSlice = createSlice({
       }
     })
 
-    builder.addCase(doGeospatialGeocodeSearch.rejected, (state, action) => {
+    builder.addCase(doGeospatialGeocodeSearch.rejected, (state) => {
       state.listingSearchRunning = false
     })
 
-    builder.addCase(doGeospatialSearch.pending, (state, action) => {
+    builder.addCase(doGeospatialSearch.pending, (state) => {
       state.listingSearchRunning = true
     })
 
@@ -254,7 +255,7 @@ export const selectPropertyTypes = (state: AppState): number[] =>
 export const selectSortBy = (state: AppState): SortById =>
   state.listingSearch.searchParams.sort_by
 
-export const selectPagination = (state: AppState) => {
+export const selectPagination = (state: AppState): Pagination => {
   const { startidx, pgsize } = state.listingSearch.searchParams
   const { number_returned, number_found } =
     state.listingSearch.searchListingsResponse
