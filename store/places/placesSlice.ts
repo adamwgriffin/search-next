@@ -16,7 +16,6 @@ export interface PlacesState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
 }
 
-let geocoder: google.maps.Geocoder
 let autocompleteService: google.maps.places.AutocompleteService
 
 const initialState: PlacesState = {
