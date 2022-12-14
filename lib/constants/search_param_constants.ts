@@ -40,30 +40,12 @@ export interface SearchParams {
   pricemax: number | null
   bed_min: number | null
   bath_min: number | null
-  sold_days: number | null
-  openhouse: 2 | 3 | 4 | 5 | 6 | 7 | null
-  openhouse_virtual: boolean | null
-  openhouse_in_person: boolean | null
   ptype: number[]
   status: 'active' | 'sold'
   ex_pend: boolean | null
   ex_cs: boolean | null
   sqft_min: number | null
   sqft_max: number | null
-  ls_conversion: 'sqft' | 'acres'
-  lotsize_min: number | null
-  lotsize_max: number | null
-  yearblt_min: number | null
-  yearblt_max: number | null
-  days_indb: number | null
-  water: boolean | null
-  view: boolean | null
-  onestory: boolean | null
-  has_garage: boolean | null
-  new_const: boolean | null
-  virtual_tour: boolean | null
-  has_pool: boolean | null
-  senior_community: boolean | null
   sort_by: SortById
 }
 
@@ -139,10 +121,6 @@ export const DefaultSearchParams = Object.freeze({
   pricemax: null,
   bed_min: 0,
   bath_min: 0,
-  sold_days: 180,
-  openhouse: null,
-  openhouse_virtual: null,
-  openhouse_in_person: null,
   // a.k.a., "property type"
   ptype: [1, 2, 8, 9],
   status: 'active',
@@ -150,20 +128,5 @@ export const DefaultSearchParams = Object.freeze({
   ex_cs: true,
   sqft_min: null,
   sqft_max: null,
-  ls_conversion: 'acres',
-  lotsize_min: null,
-  lotsize_max: null,
-  yearblt_min: null,
-  yearblt_max: null,
-  // a.k.a, Time on MLS
-  days_indb: null,
-  water: null,
-  view: null,
-  onestory: null,
-  has_garage: null,
-  new_const: null,
-  virtual_tour: null,
-  has_pool: null,
-  senior_community: null,
   sort_by: sortByEnum.listing_date_desc
 })
