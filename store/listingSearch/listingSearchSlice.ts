@@ -4,6 +4,7 @@ import type { PriceRangeParams } from '../../lib/constants/search_param_constant
 import type {
   SortById,
   SearchParams,
+  SearchParamsPartial,
   BedsBathsParam,
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
@@ -36,10 +37,6 @@ export interface ListingSearchState {
   popupListing: PopupListing
   searchParams: SearchParams
 }
-
-export type MoreFiltersParamsUpdatePatch = Partial<MoreFiltersParams>
-
-export type SearchParamsUpdatePatch = Partial<SearchParams>
 
 const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
@@ -143,7 +140,7 @@ export const listingSearchSlice = createSlice({
 
     setSearchParams: (
       state,
-      action: PayloadAction<SearchParamsUpdatePatch>
+      action: PayloadAction<SearchParamsPartial>
     ) => {
       state.searchParams = { ...state.searchParams, ...action.payload }
     }

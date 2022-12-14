@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { PriceRangeParams } from '../../lib/constants/search_param_constants' 
 import type { BedsBathsParam, MoreFiltersParams } from '../../lib/constants/search_param_constants'
-import type { MoreFiltersParamsUpdatePatch } from '../../store/listingSearch/listingSearchSlice'
+import type { MoreFiltersParamsPartial } from '../../lib/constants/search_param_constants'
 import { ChangeEvent } from 'react'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
@@ -55,11 +55,11 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handleMoreChangeParams = (params: MoreFiltersParamsUpdatePatch) => {
+  const handleMoreChangeParams = (params: MoreFiltersParamsPartial) => {
     dispatch(setSearchParams(params))
   }
 
-  const handleMoreUpdateSearch = (params: MoreFiltersParamsUpdatePatch) => {
+  const handleMoreUpdateSearch = (params: MoreFiltersParamsPartial) => {
     dispatch(setSearchParams(params))
     dispatch(searchWithUpdatedFilters())
   }

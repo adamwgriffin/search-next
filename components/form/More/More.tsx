@@ -4,7 +4,7 @@ import type {
   ExcludeStatusParams,
   SquareFeetRangeParams
 } from '../../../lib/constants/search_param_constants'
-import type { MoreFiltersParamsUpdatePatch } from '../../../store/listingSearch/listingSearchSlice'
+import type { MoreFiltersParamsPartial } from '../../../lib/constants/search_param_constants'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'
@@ -12,8 +12,8 @@ import SquareFeet from '../SquareFeet/SquareFeet'
 
 interface MoreProps {
   params: MoreFiltersParams
-  onUpdateSearch?: (params: MoreFiltersParamsUpdatePatch) => void
-  onChangeParams?: (params: MoreFiltersParamsUpdatePatch) => void
+  onUpdateSearch?: (params: MoreFiltersParamsPartial) => void
+  onChangeParams?: (params: MoreFiltersParamsPartial) => void
 }
 
 const More: NextPage<MoreProps> = ({ params, onUpdateSearch, onChangeParams }) => {

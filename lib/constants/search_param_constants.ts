@@ -56,6 +56,8 @@ export interface SearchParams {
   sort_by: SortById
 }
 
+export type SearchParamsPartial = Partial<SearchParams>
+
 export type PriceRangeParams = Pick<SearchParams, 'pricemin' | 'pricemax'>
 
 export type SquareFeetRangeParams = Pick<SearchParams, 'sqft_min' | 'sqft_max'>
@@ -66,6 +68,8 @@ export type MoreFiltersParams = Pick<
   SearchParams,
   'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max'
 >
+
+export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
 
 export type BedsBathsParam = Pick<SearchParams, 'bed_min' | 'bath_min'>
 
