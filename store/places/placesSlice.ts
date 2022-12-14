@@ -1,4 +1,5 @@
 import type { AppState } from '..'
+import type { ListingServiceGeotype } from '../../lib/constants/search_param_constants'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GoogleToServiceAddressTypeMapping } from '../../lib/constants/geocoder_constants'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
@@ -88,7 +89,7 @@ export const placesSlice = createSlice({
 
 export const { resetAutcompletePlacePredictions } = placesSlice.actions
 
-export const selectGeoType = (state: AppState) => {
+export const selectGeoType = (state: AppState): ListingServiceGeotype => {
   return GoogleToServiceAddressTypeMapping[state.places.geocoderResult.type]
 }
 

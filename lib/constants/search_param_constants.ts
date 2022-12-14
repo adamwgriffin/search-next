@@ -21,6 +21,17 @@ export type SortById =
   | 17
   | 18
 
+export type ListingServiceGeotype =
+  | 'AdminDivision1'
+  | 'AdminDivision2'
+  | 'AdminDivision3'
+  | 'Postcode1'
+  | 'Neighborhood'
+  | 'PopulatedPlace'
+  | 'Address'
+  | 'NaturalFeature'
+
+// params that we use to maintain state in the app that are also listing service params
 export interface SearchParams {
   agent_uuid: string
   startidx: number
