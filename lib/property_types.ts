@@ -1,50 +1,61 @@
-export interface PropertyTypesInterface {
-  readonly id: number
-  readonly name: string
-  readonly label: string
+export type PropertyTypeID = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+export type PropertyTypeIDArray = Array<PropertyTypeID>
+
+export type PropertyTypeName =
+  | 'residential'
+  | 'condo'
+  | 'co_op'
+  | 'townhouse'
+  | 'manufactured'
+  | 'land'
+  | 'farm_and_ranch'
+  | 'multi_family'
+
+export interface PropertyTypeConfig {
+  id: PropertyTypeID
+  label: string
 }
 
-export const RentalPropertytypeID = 6
+export type PropertyTypesInterface = Record<PropertyTypeName, PropertyTypeConfig>
 
-export const PropertyTypes: ReadonlyArray<PropertyTypesInterface> = Object.freeze([
-  {
+export const RentalPropertytypeID:PropertyTypeID = 6
+
+export const PropertyTypes: PropertyTypesInterface = Object.seal({
+  residential: {
     id: 1,
-    name: 'residential',
     label: 'Single-Family'
   },
-  {
+  condo: {
     id: 2,
-    name: 'condo',
     label: 'Condo'
   },
-  {
+  co_op: {
     id: 8,
-    name: 'co_op',
     label: 'Co-Op'
   },
-  {
+  townhouse: {
     id: 9,
-    name: 'townhouse',
     label: 'Townhouse'
   },
-  {
+  manufactured: {
     id: 4,
-    name: 'manufactured',
     label: 'Manufactured'
   },
-  {
+  land: {
     id: 3,
-    name: 'land',
     label: 'Land'
   },
-  {
+  farm_and_ranch: {
     id: 5,
-    name: 'farm_and_ranch',
     label: 'Farm & Ranch'
   },
-  {
+  multi_family: {
     id: 7,
-    name: 'multi_family',
     label: 'Multi-Family'
   }
-])
+})
+
+export const DefaultPropertyTypes = ['residential', 'condo', 'co_op', 'townhouse'].map(
+  (t) => PropertyTypes[t as keyof typeof PropertyTypes].id as PropertyTypeID
+)

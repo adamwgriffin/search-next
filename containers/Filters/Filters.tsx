@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import type { PriceRangeParams } from '../../lib/constants/search_param_constants' 
 import type { BedsBathsParam, MoreFiltersParams } from '../../lib/constants/search_param_constants'
 import type { MoreFiltersParamsPartial } from '../../lib/constants/search_param_constants'
-import { ChangeEvent } from 'react'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectSearchType,
@@ -12,11 +11,12 @@ import {
   selectMoreFiltersParams,
   setSearchType,
   setSearchParams,
+  setPropertyTypes,
   searchWithUpdatedFilters,
   SearchTypes,
   SearchTypeOption,
 } from '../../store/listingSearch/listingSearchSlice'
-import { PropertyTypes } from '../../lib/property_types'
+import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import styles from './Filters.module.css'
 import Price from '../../components/form/Price/Price'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
@@ -38,11 +38,8 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePropertyTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const updatedPropertyTypes = e.target.checked ?
-      selectedPropertyTypes.concat(+e.target.value) :
-      selectedPropertyTypes.filter(t => t !== +e.target.value)
-    dispatch(setSearchParams({ ptype: updatedPropertyTypes }))
+  const handlePropertyTypeChange = (updatedPropertyTypes: PropertyTypeIDArray) => {
+    dispatch(setPropertyTypes(updatedPropertyTypes))
     dispatch(searchWithUpdatedFilters())
   }
 

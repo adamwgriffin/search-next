@@ -40,7 +40,6 @@ export interface SearchParams {
   pricemax: number | null
   bed_min: number | null
   bath_min: number | null
-  ptype: number[]
   status: 'active' | 'sold'
   ex_pend: boolean | null
   ex_cs: boolean | null
@@ -50,6 +49,19 @@ export interface SearchParams {
 }
 
 export type SearchParamsPartial = Partial<SearchParams>
+
+// listing service params used to do a normal geospatial search
+export interface ListingServiceParams extends SearchParamsPartial {
+  center_lat?: number
+  center_lon?: number
+  bounds_north?: number
+  bounds_east?: number
+  bounds_south?: number
+  bounds_west?: number
+  geotype?: ListingServiceGeotype
+  street?: string
+  ptype?: string | null
+}
 
 export type PriceRangeParams = Pick<SearchParams, 'pricemin' | 'pricemax'>
 
@@ -121,8 +133,6 @@ export const DefaultSearchParams = Object.freeze({
   pricemax: null,
   bed_min: 0,
   bath_min: 0,
-  // a.k.a., "property type"
-  ptype: [1, 2, 8, 9],
   status: 'active',
   ex_pend: true,
   ex_cs: true,

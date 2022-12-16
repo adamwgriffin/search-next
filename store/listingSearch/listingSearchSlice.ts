@@ -4,6 +4,7 @@ import type { PriceRangeParams } from '../../lib/constants/search_param_constant
 import type {
   SortById,
   SearchParams,
+  ListingServiceParams,
   SearchParamsPartial,
   BedsBathsParam,
   MoreFiltersParams
@@ -14,7 +15,11 @@ import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { DefaultSearchParams } from '../../lib/constants/search_param_constants'
-import { RentalPropertytypeID } from '../../lib/property_types'
+import {
+  PropertyTypeIDArray,
+  RentalPropertytypeID,
+  DefaultPropertyTypes
+} from '../../lib/property_types'
 import { modifyParam } from '../../lib/helpers/search_params'
 import { selectGeoType } from '../places/placesSlice'
 import http from '../../lib/http'
@@ -36,6 +41,7 @@ export interface ListingSearchState {
   location_search_field: string
   searchListingsResponse: any
   popupListing: PopupListing
+  propertyTypes: PropertyTypeIDArray
   searchParams: SearchParams
 }
 
@@ -50,6 +56,7 @@ const initialState: ListingSearchState = {
   location_search_field: '',
   searchListingsResponse: {},
   popupListing: null,
+  propertyTypes: DefaultPropertyTypes,
   searchParams: DefaultSearchParams
 }
 
@@ -116,7 +123,7 @@ export const listingSearchSlice = createSlice({
         case SearchTypes.Rent:
           state.searchParams.status = 'active'
           // for some reason rental is considered a property type in our system
-          state.searchParams.ptype = [RentalPropertytypeID]
+          state.propertyTypes = [RentalPropertytypeID]
           break
         case SearchTypes.Sold:
           state.searchParams.status = 'sold'
@@ -144,6 +151,10 @@ export const listingSearchSlice = createSlice({
       action: PayloadAction<SearchParamsPartial>
     ) => {
       state.searchParams = { ...state.searchParams, ...action.payload }
+    },
+
+    setPropertyTypes: (state, action: PayloadAction<PropertyTypeIDArray>) => {
+      state.propertyTypes = action.payload
     }
   },
 
@@ -193,7 +204,8 @@ export const {
   setPopupListing,
   resetStartIndex,
   setDoListingSearchOnMapIdle,
-  setSearchParams
+  setSearchParams,
+  setPropertyTypes
 } = listingSearchSlice.actions
 
 export const selectSearchType = (state: AppState) =>
@@ -249,8 +261,12 @@ export const selectBoundsParams = (state: AppState) => {
   }
 }
 
-export const selectPropertyTypes = (state: AppState): number[] =>
-  state.listingSearch.searchParams.ptype || []
+export const selectPropertyTypes = (state: AppState): PropertyTypeIDArray =>
+  state.listingSearch.propertyTypes
+
+export const selectPtype = (state: AppState): string | null => {
+  return state.listingSearch.propertyTypes.join(',') || null
+}
 
 export const selectSortBy = (state: AppState): SortById =>
   state.listingSearch.searchParams.sort_by
@@ -288,26 +304,37 @@ export const removeUnecessaryParams = (params: object) =>
     (value, _param) => typeof value === 'undefined' || value === null
   )
 
-// TODO: make this a memoized selector with createSelector
-export const selectParamsForGeospatialSearch = (state: AppState) => {
-  const originalParams = {
+export const selectListingServiceFilters = (state: AppState) => {
+  return removeUnecessaryParams({
     ...state.listingSearch.searchParams,
+    ptype: selectPtype(state)
+  })
+}
+
+// if the boundary is active we do a normal geospatial search, which requires center lat/lng and geotype. the geotype
+// param is what restricts the results to the geospatial boundary.
+export const selectParamsForGeospatialSearch = (
+  state: AppState
+): ListingServiceParams => {
+  const originalParams = {
+    ...selectListingServiceFilters(state),
     ...selectCenterLatLonParams(state),
     ...selectBoundsParams(state),
     geotype: selectGeoType(state)
   }
-  const modifiedParams = modifyParams(state, originalParams)
-  return removeUnecessaryParams(modifiedParams)
+  return modifyParams(state, originalParams)
+}
 }
 
 // TODO: make this a memoized selector with createSelector
-export const selectParamsForGeospatialGeocodeSearch = (state: AppState) => {
+export const selectParamsForGeospatialGeocodeSearch = (
+  state: AppState
+): ListingServiceParams => {
   const originalParams = {
-    street: state.listingSearch.location_search_field,
-    ...state.listingSearch.searchParams
+    ...selectListingServiceFilters(state),
+    street: state.listingSearch.location_search_field
   }
-  const modifiedParams = modifyParams(state, originalParams)
-  return removeUnecessaryParams(modifiedParams)
+  return modifyParams(state, originalParams)
 }
 
 export default listingSearchSlice.reducer
