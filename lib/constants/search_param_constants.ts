@@ -120,7 +120,7 @@ export const sortByEnum: SortByEnum = Object.freeze({
   sold_date_asc: 18
 })
 
-export const sortByDistanceValues = Object.freeze([
+export const sortByDistanceValues: Readonly<Array<SortById>> = Object.freeze([
   sortByEnum.distance_from_user_lat_lon_asc,
   sortByEnum.distance_from_user_lat_lon_desc
 ])
