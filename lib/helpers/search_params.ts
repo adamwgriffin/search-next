@@ -1,4 +1,5 @@
 import type { AppState } from '../../store'
+import type { ListingServiceParams } from '../constants/search_param_constants'
 import { sortByDistanceValues } from '../constants/search_param_constants'
 
 // the values of certain search params ("sort_by" for instance) may require us to include, exclude or change the values
@@ -31,10 +32,11 @@ export const modifyParam = {
     }
   },
 
-  sort_by(state:AppState, params: any) {
+  sort_by(state:AppState, params: ListingServiceParams) {
     // listing service uses user_lat & user_lon as basis for distance sort
-    if (sortByDistanceValues.includes(params.sort_by)) {
-      return { user_lat: params.center_lat, user_lon: params.center_lon }
+    const { lat, lng } = state.places.geocoderResult.location
+    if (params.sort_by && sortByDistanceValues.includes(params.sort_by)) {
+      return { user_lat: lat, user_lon: lng }
     }
   },
 
