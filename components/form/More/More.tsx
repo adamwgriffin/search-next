@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import type {
   MoreFiltersParams,
+  MoreFiltersParamsPartial,
   ExcludeStatusParams,
   SquareFeetRangeParams
-} from '../../../lib/constants/search_param_constants'
-import type { MoreFiltersParamsPartial } from '../../../lib/constants/search_param_constants'
+} from '../../../lib/listing_service_params_types'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'

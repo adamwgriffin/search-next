@@ -1,6 +1,6 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types'
-import type { PriceRangeParams } from '../../lib/constants/search_param_constants'
+import type { PriceRangeParams } from '../../lib/listing_service_params_types'
 import type {
   SortById,
   SearchParams,
@@ -10,19 +10,19 @@ import type {
   BoundsParams,
   BedsBathsParam,
   MoreFiltersParams
-} from '../../lib/constants/search_param_constants'
-import type { ModifyParams } from '../../lib/helpers/search_params'
+} from '../../lib/listing_service_params_types'
+import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DefaultSearchParams } from '../../lib/constants/search_param_constants'
+import { DefaultSearchParams } from '../../lib/listing_service_params'
 import {
   PropertyTypeIDArray,
   RentalPropertytypeID,
   DefaultPropertyTypes
 } from '../../lib/property_types'
-import { modifyParam } from '../../lib/helpers/search_params'
+import { modifyParam } from '../../lib/listing_service_params'
 import { selectGeoType } from '../places/placesSlice'
 import http from '../../lib/http'
 

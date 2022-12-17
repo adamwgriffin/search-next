@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { CountOption } from '../../../lib/types'
-import type { BedsBathsParam } from '../../../lib/constants/search_param_constants'
+import type { BedsBathsParam } from '../../../lib/listing_service_params_types'
 import styles from './BedsAndBaths.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'

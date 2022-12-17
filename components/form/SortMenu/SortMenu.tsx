@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
-import type { SortById } from '../../../lib/constants/search_param_constants'
+import type { SortById } from '../../../lib/listing_service_params_types'
 import styles from './SortMenu.module.css'
-import { sortByEnum } from '../../../lib/constants/search_param_constants'
+import { sortByEnum } from '../../../lib/listing_service_params'
 
 export interface SortMenuProps {
   sortBy: SortById
