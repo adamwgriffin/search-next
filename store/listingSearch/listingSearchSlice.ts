@@ -300,11 +300,8 @@ export const modifyParams = (
   }, originalParams)
 }
 
-export const removeUnecessaryParams = (params: object) =>
-  omitBy(
-    params,
-    (value, _param) => typeof value === 'undefined' || value === null
-  )
+export const removeUnecessaryParams = (params: ListingServiceParams) =>
+  omitBy(params, (value, _param) => value === null)
 
 export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
