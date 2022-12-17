@@ -82,7 +82,7 @@ export const doGeospatialGeocodeSearch = createAsyncThunk(
   }
 )
 
-// performs a geospatial search by passing the center_lat, center_lon & all bounds parmas. we would want to use this
+// performs a geospatial search by passing the center_lat, center_lon & all bounds params. we would want to use this
 // request if the place that was entered in the search field has already been geocoded. usually, we would perform the
 // initial search using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it
 // in the response. then we would use this for requests, such as if the user dragged the map or changes the filters.

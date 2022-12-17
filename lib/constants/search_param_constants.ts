@@ -31,7 +31,7 @@ export type ListingServiceGeotype =
   | 'Address'
   | 'NaturalFeature'
 
-// params that we use to maintain state in the app that are also listing service params
+// listing service params that are used as filters. also used to maintain filter state in the app
 export interface SearchParams {
   agent_uuid: string
   startidx: number
