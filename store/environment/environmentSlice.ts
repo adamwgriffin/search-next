@@ -6,8 +6,8 @@ export interface EnvironmentState {
 }
 
 const initialState: EnvironmentState = {
-  company_uuid: '1234567',
-  locale: 'en-US'
+  company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID!,
+  locale: process.env.NEXT_PUBLIC_LOCALE!
 }
 
 export const environmentSlice = createSlice({
@@ -17,8 +17,7 @@ export const environmentSlice = createSlice({
 
   reducers: {
     setEnvironment: (state, action: PayloadAction<EnvironmentState>) => {
-      const { company_uuid } = action.payload
-      Object.assign(state, { company_uuid })
+      Object.assign(state, action.payload)
     }
   }
 })

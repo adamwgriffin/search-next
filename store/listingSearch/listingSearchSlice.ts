@@ -309,7 +309,8 @@ export const removeUnecessaryParams = (params: ListingServiceParams) =>
 export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
     ...state.listingSearch.searchParams,
-    ptype: selectPtype(state)
+    ptype: selectPtype(state),
+    company_uuid: state.environment.company_uuid
   })
 }
 

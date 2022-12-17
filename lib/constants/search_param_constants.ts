@@ -33,7 +33,6 @@ export type ListingServiceGeotype =
 
 // listing service params that are used as filters. also used to maintain filter state in the app
 export interface SearchParams {
-  agent_uuid: string
   startidx: number
   pgsize: number
   pricemin: number | null
@@ -52,6 +51,7 @@ export type SearchParamsPartial = Partial<SearchParams>
 
 // listing service params used to do a normal geospatial search
 export interface ListingServiceParams extends SearchParamsPartial {
+  company_uuid?: string
   center_lat?: number
   center_lon?: number
   bounds_north?: number
@@ -133,7 +133,6 @@ export const sortByDistanceValues: Readonly<Array<SortById>> = Object.freeze([
 ])
 
 export const DefaultSearchParams = Object.freeze({
-  agent_uuid: 'f74a3f6d-aeda-4daa-835e-029386152405',
   startidx: 0,
   pgsize: 20,
   pricemin: null,

@@ -42,7 +42,6 @@ export const {} = listingSearchSlice.actions
 export const selectParamsForListingDetailRequest = (state: AppState) => {
   return {
     company_uuid: state.environment.company_uuid,
-    user_uuid: state.environment.agent_uuid,
     include_non_image: true
   }
 }
