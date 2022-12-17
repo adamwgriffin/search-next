@@ -1,5 +1,5 @@
 import type { AppState } from '..'
-import type { ListingServiceGeotype } from '../../lib/constants/search_param_constants'
+import type { ListingServiceGeotype } from '../../lib/listing_service_params_types'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GoogleToServiceAddressTypeMapping } from '../../lib/constants/geocoder_constants'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'

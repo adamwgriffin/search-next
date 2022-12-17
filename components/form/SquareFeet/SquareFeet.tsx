@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SquareFeetRangeParams } from '../../../lib/constants/search_param_constants'
+import type { SquareFeetRangeParams } from '../../../lib/listing_service_params_types'
 import { useRef } from 'react'
 import styles from './SquareFeet.module.css'
 import formStyles from '../../../styles/forms.module.css'

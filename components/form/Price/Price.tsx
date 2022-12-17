@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParams } from '../../../lib/constants/search_param_constants'
+import type { PriceRangeParams } from '../../../lib/listing_service_params_types'
 import { useRef } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
-import type { ExcludeStatusParams } from '../../../lib/constants/search_param_constants'
+import type { ExcludeStatusParams } from '../../../lib/listing_service_params_types'
 import type { StatusType } from '../../../lib/status_types'
 import { StatusTypes } from '../../../lib/status_types'
 import Fieldset from '../Fieldset/Fieldset'

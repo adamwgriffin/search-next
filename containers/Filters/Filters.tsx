@@ -1,7 +1,10 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParams } from '../../lib/constants/search_param_constants' 
-import type { BedsBathsParam, MoreFiltersParams } from '../../lib/constants/search_param_constants'
-import type { MoreFiltersParamsPartial } from '../../lib/constants/search_param_constants'
+import type {
+  PriceRangeParams,
+  BedsBathsParam,
+  MoreFiltersParams,
+  MoreFiltersParamsPartial
+} from '../../lib/listing_service_params_types' 
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectSearchType,
