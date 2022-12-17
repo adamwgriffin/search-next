@@ -40,7 +40,7 @@ export const modifyParam = {
     }
   },
 
-  sold_days(state:AppState, params: any) {
+  sold_days(state:AppState, params: ListingServiceParams) {
     if (params.status === 'active') {
       return { sold_days: null }
     }
