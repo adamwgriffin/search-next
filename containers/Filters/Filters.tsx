@@ -10,7 +10,7 @@ import {
   selectBedBathParams,
   selectMoreFiltersParams,
   setSearchType,
-  setSearchParams,
+  setFilterParams,
   setPropertyTypes,
   searchWithUpdatedFilters,
   SearchTypes,
@@ -44,20 +44,20 @@ const Filters: NextPage = () => {
   }
 
   const handlePriceChange = (priceRange: PriceRangeParams) => {
-    dispatch(setSearchParams(priceRange))
+    dispatch(setFilterParams(priceRange))
   }
 
   const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
-    dispatch(setSearchParams(param))
+    dispatch(setFilterParams(param))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handleMoreChangeParams = (params: MoreFiltersParamsPartial) => {
-    dispatch(setSearchParams(params))
+    dispatch(setFilterParams(params))
   }
 
   const handleMoreUpdateSearch = (params: MoreFiltersParamsPartial) => {
-    dispatch(setSearchParams(params))
+    dispatch(setFilterParams(params))
     dispatch(searchWithUpdatedFilters())
   }
   

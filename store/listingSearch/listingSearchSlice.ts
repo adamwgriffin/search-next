@@ -3,9 +3,9 @@ import type { Listing } from '../../lib/types'
 import type { PriceRangeParams } from '../../lib/listing_service_params_types'
 import type {
   SortById,
-  SearchParams,
+  FilterParams,
   ListingServiceParams,
-  SearchParamsPartial,
+  FilterParamsPartial,
   CenterLatLonParams,
   BoundsParams,
   BedsBathsParam,
@@ -16,7 +16,7 @@ import type { Pagination } from '../../components/listings/ListingResultsPaginat
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DefaultSearchParams } from '../../lib/listing_service_params'
+import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
   PropertyTypeIDArray,
   RentalPropertytypeID,
@@ -44,7 +44,7 @@ export interface ListingSearchState {
   searchListingsResponse: any
   popupListing: PopupListing
   propertyTypes: PropertyTypeIDArray
-  searchParams: SearchParams
+  filterParams: FilterParams
 }
 
 const initialState: ListingSearchState = {
@@ -52,14 +52,11 @@ const initialState: ListingSearchState = {
   doListingSearchOnMapIdle: false,
   // this one actually means that the request to the service is pending
   listingSearchRunning: false,
-  // "location_search_field" is a synonym for "street" in listing service. it is a valid search param but we don't
-  // include it in "searchParams" because we are using it to geocode on the front end to get the center_lat & center_lon
-  // coordinates. those coordinates are all that's really necessary to send the service if you already have them.
   location_search_field: '',
   searchListingsResponse: {},
   popupListing: null,
   propertyTypes: DefaultPropertyTypes,
-  searchParams: DefaultSearchParams
+  filterParams: DefaultFilterParams
 }
 
 // performs a geospatial search using just the "street" param. we use the text that was entered in the search field for
@@ -123,15 +120,15 @@ export const listingSearchSlice = createSlice({
       state.searchType = action.payload
       switch (action.payload) {
         case SearchTypes.Buy:
-          state.searchParams.status = 'active'
+          state.filterParams.status = 'active'
           break
         case SearchTypes.Rent:
-          state.searchParams.status = 'active'
+          state.filterParams.status = 'active'
           // for some reason rental is considered a property type in our system
           state.propertyTypes = [RentalPropertytypeID]
           break
         case SearchTypes.Sold:
-          state.searchParams.status = 'sold'
+          state.filterParams.status = 'sold'
       }
     },
 
@@ -144,15 +141,15 @@ export const listingSearchSlice = createSlice({
     },
 
     resetStartIndex: (state) => {
-      state.searchParams.startidx = initialState.searchParams.startidx
+      state.filterParams.startidx = initialState.filterParams.startidx
     },
 
     setDoListingSearchOnMapIdle: (state, action: PayloadAction<boolean>) => {
       state.doListingSearchOnMapIdle = action.payload
     },
 
-    setSearchParams: (state, action: PayloadAction<SearchParamsPartial>) => {
-      state.searchParams = { ...state.searchParams, ...action.payload }
+    setFilterParams: (state, action: PayloadAction<FilterParamsPartial>) => {
+      state.filterParams = { ...state.filterParams, ...action.payload }
     },
 
     setPropertyTypes: (state, action: PayloadAction<PropertyTypeIDArray>) => {
@@ -162,7 +159,7 @@ export const listingSearchSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(doGeospatialGeocodeSearch.pending, (state) => {
-      state.searchParams.startidx = initialState.searchParams.startidx
+      state.filterParams.startidx = initialState.filterParams.startidx
       state.listingSearchRunning = true
     })
 
@@ -206,7 +203,7 @@ export const {
   setPopupListing,
   resetStartIndex,
   setDoListingSearchOnMapIdle,
-  setSearchParams,
+  setFilterParams,
   setPropertyTypes
 } = listingSearchSlice.actions
 
@@ -228,18 +225,18 @@ export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []
 
 export const selectPriceRange = (state: AppState): PriceRangeParams => {
-  const { pricemin, pricemax } = state.listingSearch.searchParams
+  const { pricemin, pricemax } = state.listingSearch.filterParams
   return { pricemin, pricemax }
 }
 
 export const selectBedBathParams = (state: AppState): BedsBathsParam => {
-  const { bed_min, bath_min } = state.listingSearch.searchParams
+  const { bed_min, bath_min } = state.listingSearch.filterParams
   return { bed_min, bath_min }
 }
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
   const { ex_cs, ex_pend, sqft_min, sqft_max } =
-    state.listingSearch.searchParams
+    state.listingSearch.filterParams
   return { ex_cs, ex_pend, sqft_min, sqft_max }
 }
 
@@ -274,10 +271,10 @@ export const selectPtype = (state: AppState): string | null => {
 }
 
 export const selectSortBy = (state: AppState): SortById =>
-  state.listingSearch.searchParams.sort_by
+  state.listingSearch.filterParams.sort_by
 
 export const selectPagination = (state: AppState): Pagination => {
-  const { startidx, pgsize } = state.listingSearch.searchParams
+  const { startidx, pgsize } = state.listingSearch.filterParams
   const { number_returned, number_found } =
     state.listingSearch.searchListingsResponse
   return {
@@ -308,7 +305,7 @@ export const removeUnecessaryParams = (params: ListingServiceParams) =>
 
 export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
-    ...state.listingSearch.searchParams,
+    ...state.listingSearch.filterParams,
     ptype: selectPtype(state),
     company_uuid: state.environment.company_uuid
   })

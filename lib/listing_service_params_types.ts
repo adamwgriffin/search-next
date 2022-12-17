@@ -29,7 +29,7 @@ export type ListingServiceGeotype =
   | 'NaturalFeature'
 
 // listing service params that are used as filters. also used to maintain filter state in the app
-export interface SearchParams {
+export interface FilterParams {
   startidx: number
   pgsize: number
   pricemin: number | null
@@ -44,10 +44,10 @@ export interface SearchParams {
   sort_by: SortById
 }
 
-export type SearchParamsPartial = Partial<SearchParams>
+export type FilterParamsPartial = Partial<FilterParams>
 
 // listing service params used to do a normal geospatial search
-export interface ListingServiceParams extends SearchParamsPartial {
+export interface ListingServiceParams extends FilterParamsPartial {
   company_uuid?: string
   center_lat?: number
   center_lon?: number
@@ -67,20 +67,20 @@ export type BoundsParams = Pick<
   'bounds_north' | 'bounds_east' | 'bounds_west' | 'bounds_south'
 >
 
-export type PriceRangeParams = Pick<SearchParams, 'pricemin' | 'pricemax'>
+export type PriceRangeParams = Pick<FilterParams, 'pricemin' | 'pricemax'>
 
-export type SquareFeetRangeParams = Pick<SearchParams, 'sqft_min' | 'sqft_max'>
+export type SquareFeetRangeParams = Pick<FilterParams, 'sqft_min' | 'sqft_max'>
 
-export type ExcludeStatusParams = Pick<SearchParams, 'ex_pend' | 'ex_cs'>
+export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
 export type MoreFiltersParams = Pick<
-  SearchParams,
+  FilterParams,
   'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
 
-export type BedsBathsParam = Pick<SearchParams, 'bed_min' | 'bath_min'>
+export type BedsBathsParam = Pick<FilterParams, 'bed_min' | 'bath_min'>
 
 export interface SortByEnum {
   baths_desc: SortById

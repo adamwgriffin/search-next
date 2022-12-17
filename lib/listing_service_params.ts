@@ -28,7 +28,7 @@ export const sortByDistanceValues: Readonly<Array<SortById>> = Object.freeze([
   sortByEnum.distance_from_user_lat_lon_desc
 ])
 
-export const DefaultSearchParams = Object.freeze({
+export const DefaultFilterParams = Object.freeze({
   startidx: 0,
   pgsize: 20,
   pricemin: null,

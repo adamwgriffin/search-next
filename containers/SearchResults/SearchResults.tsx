@@ -10,7 +10,7 @@ import {
   selectListings,
   selectPagination,
   selectListingSearchRunning,
-  setSearchParams,
+  setFilterParams,
   doGeospatialSearch,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
@@ -24,12 +24,12 @@ const SearchResults: NextPage = () => {
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
   const handleSortMenuChange = (sortById: SortById) => {
-    dispatch(setSearchParams({ sort_by: sortById }))
+    dispatch(setFilterParams({ sort_by: sortById }))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handlePaginationButtonClick = (pageIndex: number) => {
-    dispatch(setSearchParams({ startidx: pageIndex }))
+    dispatch(setFilterParams({ startidx: pageIndex }))
     dispatch(doGeospatialSearch())
   }
 
