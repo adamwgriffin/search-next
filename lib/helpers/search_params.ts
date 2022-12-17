@@ -9,29 +9,6 @@ import { sortByDistanceValues } from '../constants/search_param_constants'
 // if params need to be removed we can do so by setting their values to null. if nothing needs to be changed then the
 // function should not return a value.
 export const modifyParam = {
-  // TODO: add actual types for the params argument
-  geotype(state:AppState, params: any) {
-    if (!state.listingMap?.boundaryActive) {
-      // excluding geotype from the service request causes it to not restrict the search to a geospatial boundary but
-      // instead return all the listings that are within the the bounds provided in bounds_north, bounds_east, etc.
-      return { geotype: null }
-    }
-  },
-
-  // no boundary means we're doing a bounds search instead of a geospatial search, which doesn't require center_lat or
-  // center_lon. including them probably doesn't hurt but removing them probably makes things more clear.
-  center_lat(state:AppState, params: any) {
-    if (!state.listingMap?.boundaryActive) {
-      return { center_lat: null }
-    }
-  },
-  
-  center_lon(state:AppState, params: any) {
-    if (!state.listingMap?.boundaryActive) {
-      return { center_lon: null }
-    }
-  },
-
   sort_by(state:AppState, params: ListingServiceParams) {
     // listing service uses user_lat & user_lon as basis for distance sort
     const { lat, lng } = state.places.geocoderResult.location

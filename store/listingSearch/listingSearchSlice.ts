@@ -94,9 +94,12 @@ export const doGeospatialSearch = createAsyncThunk(
   'listingSearch/doGeospatialSearch',
   async (_arg, { getState }) => {
     const state = getState() as AppState
+    const params = state.listingMap.boundaryActive
+      ? selectParamsForGeospatialSearch(state)
+      : selectParamsForBoundsSearch
     const response = await http({
       url: '/api/listing',
-      params: selectParamsForGeospatialSearch(state)
+      params
     })
     return response.data.data
   }
@@ -290,7 +293,7 @@ export const selectPagination = (state: AppState): Pagination => {
 // modify params by adding, removing or changing params based on the values of other params, or the app's state
 export const modifyParams = (
   state: AppState,
-  originalParams: SearchParams
+  originalParams: ListingServiceParams
 ) => {
   return Object.keys(originalParams).reduce((params, paramName) => {
     return {
@@ -323,6 +326,17 @@ export const selectParamsForGeospatialSearch = (
   }
   return modifyParams(state, originalParams)
 }
+
+// if it's not active we just do a bounds search instead. in that case excluding geotype returns all listings within the
+// map's viewport bounds.
+export const selectParamsForBoundsSearch = (
+  state: AppState
+): ListingServiceParams => {
+  const originalParams = {
+    ...selectListingServiceFilters(state),
+    ...selectBoundsParams(state)
+  }
+  return modifyParams(state, originalParams)
 }
 
 // TODO: make this a memoized selector with createSelector
