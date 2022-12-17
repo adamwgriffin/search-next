@@ -146,10 +146,7 @@ export const listingSearchSlice = createSlice({
       state.doListingSearchOnMapIdle = action.payload
     },
 
-    setSearchParams: (
-      state,
-      action: PayloadAction<SearchParamsPartial>
-    ) => {
+    setSearchParams: (state, action: PayloadAction<SearchParamsPartial>) => {
       state.searchParams = { ...state.searchParams, ...action.payload }
     },
 
@@ -236,7 +233,8 @@ export const selectBedBathParams = (state: AppState): BedsBathsParam => {
 }
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
-  const { ex_cs, ex_pend, sqft_min, sqft_max } = state.listingSearch.searchParams
+  const { ex_cs, ex_pend, sqft_min, sqft_max } =
+    state.listingSearch.searchParams
   return { ex_cs, ex_pend, sqft_min, sqft_max }
 }
 
