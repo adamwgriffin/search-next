@@ -6,6 +6,8 @@ import type {
   SearchParams,
   ListingServiceParams,
   SearchParamsPartial,
+  CenterLatLonParams,
+  BoundsParams,
   BedsBathsParam,
   MoreFiltersParams
 } from '../../lib/constants/search_param_constants'
@@ -244,12 +246,14 @@ export const selectDoListingSearchOnMapIdle = (state: AppState) =>
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
 
-export const selectCenterLatLonParams = (state: AppState) => {
+export const selectCenterLatLonParams = (
+  state: AppState
+): CenterLatLonParams => {
   const { lat, lng } = state.places.geocoderResult.location
   return { center_lat: lat, center_lon: lng }
 }
 
-export const selectBoundsParams = (state: AppState) => {
+export const selectBoundsParams = (state: AppState): BoundsParams => {
   const { north, east, south, west } = state.listingMap.mapData.bounds
   return {
     bounds_north: north,

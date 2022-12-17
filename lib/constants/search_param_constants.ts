@@ -63,6 +63,13 @@ export interface ListingServiceParams extends SearchParamsPartial {
   ptype?: string | null
 }
 
+export type CenterLatLonParams = Pick<ListingServiceParams, 'center_lat' | 'center_lon'>
+
+export type BoundsParams = Pick<
+  ListingServiceParams,
+  'bounds_north' | 'bounds_east' | 'bounds_west' | 'bounds_south'
+>
+
 export type PriceRangeParams = Pick<SearchParams, 'pricemin' | 'pricemax'>
 
 export type SquareFeetRangeParams = Pick<SearchParams, 'sqft_min' | 'sqft_max'>
