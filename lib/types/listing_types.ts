@@ -45,3 +45,26 @@ export interface Listing {
   image: ListingImage[]
   property_type_id: PropertyTypeID
 }
+
+export interface ListingDetailListing {
+  pstatus_id: number
+  status_name_for_view: string
+  images: ListingImage[]
+  location: ListingLocation
+  neighborhood: string
+  status: string
+  list_price: number
+  sold_price: number
+  property_type_id: PropertyTypeID
+  property_type: string
+  bedrooms: number
+  bathrooms: number
+  bathroom_details: ListingBathroomDetails
+  sqr_footage: number | null
+  sqr_foot_min: number | null
+  sqr_foot_max: number | null
+  comments: string | null
+  days_on_market: number | null
+  year_build: number
+  mlsnumber: string
+}

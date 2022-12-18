@@ -1,8 +1,12 @@
-import type { Listing, ListingLocation } from '../types/listing_types'
+import type {
+  Listing,
+  ListingDetailListing,
+  ListingLocation
+} from '../types/listing_types'
 import { RentalPropertytypeID } from '../property_types'
 
 export interface FormatPriceOptions {
-  numberFormatOptions?: Intl.NumberFormatOptions,
+  numberFormatOptions?: Intl.NumberFormatOptions
   displayInterval?: boolean
 }
 
@@ -24,20 +28,28 @@ const defaultFormatPriceOptions: FormatPriceOptions = {
 }
 
 export const formatPrice = (
-  { status, sold_price, list_price, property_type_id }: Listing,
+  {
+    status,
+    sold_price,
+    list_price,
+    property_type_id
+  }: Listing | ListingDetailListing,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
   const opts = { defaultFormatPriceOptions, ...options }
   const price = status === 'Sold' ? sold_price : list_price
-  const priceFormatted = Intl.NumberFormat('en-US', opts.numberFormatOptions).format(
-    price
-  )
+  const priceFormatted = Intl.NumberFormat(
+    'en-US',
+    opts.numberFormatOptions
+  ).format(price)
   return opts.displayInterval && property_type_id === RentalPropertytypeID
     ? `${priceFormatted}/mo`
     : priceFormatted
 }
 
-export const getBathrooms = (listing: Listing): number => {
+export const getBathrooms = (
+  listing: Listing | ListingDetailListing
+): number => {
   return (
     listing.bathroom_details.bathrooms_display ||
     listing.bathroom_details.total_bathrooms ||
@@ -52,7 +64,7 @@ export const formatSqft = ({
   sqr_footage,
   sqr_foot_min,
   sqr_foot_max
-}: Listing) => {
+}: Listing | ListingDetailListing) => {
   if (sqr_footage) {
     return f(sqr_footage)
   } else if (sqr_foot_min && sqr_foot_max && sqr_foot_max < 50000) {

@@ -1,6 +1,7 @@
 import type { AppState } from '..'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import http from '../../lib/http'
+import { ListingDetailListing } from '../../lib/types/listing_types'
 
 export interface ListingDetailState {
   searchListingsResponse: any
@@ -46,7 +47,7 @@ export const selectParamsForListingDetailRequest = (state: AppState) => {
   }
 }
 
-export const selectListing = (state: AppState) =>
+export const selectListing = (state: AppState): ListingDetailListing =>
   state.listingDetail.searchListingsResponse.result_list?.[0]
 
 export default listingSearchSlice.reducer
