@@ -64,7 +64,7 @@ export interface ListingDetailListing {
   sqr_foot_min: number | null
   sqr_foot_max: number | null
   comments: string | null
-  days_on_market: number | null
+  days_on_market?: number | null
   year_build: number
   mlsnumber: string
 }

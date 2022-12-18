@@ -88,12 +88,14 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
                   <div className={styles.detailsName}>Property Type</div>
                   <div>{listing.property_type}</div>
                 </li>
-                <li>
-                  <div className={styles.detailsName}>Time on Site</div>
-                  <div>{`${listing.days_on_market.toLocaleString()} ${
-                    listing.days_on_market > 1 ? 'days' : 'day'
-                  }`}</div>
-                </li>
+                {listing.days_on_market && (
+                  <li>
+                    <div className={styles.detailsName}>Time on Site</div>
+                    <div>
+                      {`${listing.days_on_market.toLocaleString()} ${listing.days_on_market > 1 ? 'days' : 'day'}`}
+                    </div>
+                  </li>
+                )}
                 <li>
                   <div className={styles.detailsName}>Year Built</div>
                   <div>{listing.year_build}</div>
