@@ -1,4 +1,5 @@
 import axios from 'axios'
-const instance = axios.create()
 
-export default instance
+const http = axios.create()
+
+export default http
