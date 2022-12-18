@@ -41,7 +41,10 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
     const markerContainer = document.createElement('div')
     createRoot(markerContainer).render(
       <ListingMarkerContent
-        price={formatPrice(listing, ShortCurrencyFormat)}
+        price={formatPrice(listing, {
+          numberFormatOptions: ShortCurrencyFormat,
+          displayInterval: false
+        })}
         link={link}
       />
     )

@@ -1,3 +1,5 @@
+import { PropertyTypeID } from '../property_types'
+
 export interface ListingLocation {
   address: string 
   city: string
@@ -41,4 +43,5 @@ export interface Listing {
   list_price: number
   sold_price: number
   image: ListingImage[]
+  property_type_id: PropertyTypeID
 }

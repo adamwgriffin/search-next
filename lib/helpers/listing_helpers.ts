@@ -1,4 +1,10 @@
 import type { Listing, ListingLocation } from '../types/listing_types'
+import { RentalPropertytypeID } from '../property_types'
+
+export interface FormatPriceOptions {
+  numberFormatOptions?: Intl.NumberFormatOptions,
+  displayInterval?: boolean
+}
 
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
@@ -12,12 +18,23 @@ export const ShortCurrencyFormat: Intl.NumberFormatOptions = {
   notation: 'compact'
 }
 
+const defaultFormatPriceOptions: FormatPriceOptions = {
+  numberFormatOptions: LongCurrencyFormat,
+  displayInterval: true
+}
+
 export const formatPrice = (
-  { status, sold_price, list_price }: Listing,
-  numberFormatOptions: Intl.NumberFormatOptions=LongCurrencyFormat
+  { status, sold_price, list_price, property_type_id }: Listing,
+  options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
+  const opts = { defaultFormatPriceOptions, ...options }
   const price = status === 'Sold' ? sold_price : list_price
-  return Intl.NumberFormat('en-US', numberFormatOptions).format(price)
+  const priceFormatted = Intl.NumberFormat('en-US', opts.numberFormatOptions).format(
+    price
+  )
+  return opts.displayInterval && property_type_id === RentalPropertytypeID
+    ? `${priceFormatted}/mo`
+    : priceFormatted
 }
 
 export const getBathrooms = (listing: Listing): number => {
