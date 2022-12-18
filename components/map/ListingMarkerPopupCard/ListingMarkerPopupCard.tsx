@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import type { Listing } from '../../../lib/types'
+import type { Listing } from '../../../lib/types/listing_types'
 import styles from './ListingMarkerPopupCard.module.css'
 import {
   formatPrice,

@@ -4,7 +4,7 @@ import type {
   ListingImage,
   ListingLocation,
   ListingImageSizes
-} from '../../../lib/types'
+} from '../../../lib/types/listing_types'
 import { SyntheticEvent } from 'react'
 import { ListingImageSizeEnum } from '../../../lib/constants/listing_constants'
 

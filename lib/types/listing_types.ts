@@ -1,9 +1,3 @@
-export interface CountOption {
-  label: string
-  value: number
-  checked: boolean
-}
-
 export interface ListingLocation {
   address: string 
   city: string

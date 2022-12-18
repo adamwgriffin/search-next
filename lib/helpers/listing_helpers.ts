@@ -1,4 +1,4 @@
-import type { Listing, ListingLocation } from '../types'
+import type { Listing, ListingLocation } from '../types/listing_types'
 
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',

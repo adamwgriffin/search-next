@@ -1,5 +1,5 @@
 import type { AppState } from '..'
-import type { Listing } from '../../lib/types'
+import type { Listing } from '../../lib/types/listing_types'
 import type { PriceRangeParams } from '../../lib/listing_service_params_types'
 import type {
   SortById,

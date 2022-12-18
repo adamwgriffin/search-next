@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { Listing } from '../../../lib/types'
+import type { Listing } from '../../../lib/types/listing_types'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config'
