@@ -14,6 +14,7 @@ import {
   cityStateZip
 } from '../../lib/helpers/listing_helpers'
 import styles from './ListingDetail.module.css'
+import ListingStatusIndicator from '../../components/listings/ListingStatusIndicator/ListingStatusIndicator'
 import ListingMainImage from '../../components/listings/ListingMainImage/ListingMainImage'
 
 export interface ListingDetailProps {
@@ -36,8 +37,11 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
         {listing && (
           <div className={styles.listingDetail}>
 
-            <div className={listing.pstatus_id === 1 ? styles.statusActive : styles.status}>
-              {listing.status_name_for_view}
+            <div className={styles.status}>
+              <ListingStatusIndicator
+                propertyStatusID={listing.pstatus_id}
+                name={listing.status_name_for_view}
+              />
             </div>
 
             <div className={styles.gallery}>
@@ -92,7 +96,9 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
                   <li>
                     <div className={styles.detailsName}>Time on Site</div>
                     <div>
-                      {`${listing.days_on_market.toLocaleString()} ${listing.days_on_market > 1 ? 'days' : 'day'}`}
+                      {`${listing.days_on_market.toLocaleString()} ${
+                        listing.days_on_market > 1 ? 'days' : 'day'
+                      }`}
                     </div>
                   </li>
                 )}

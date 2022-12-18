@@ -1,0 +1,19 @@
+.status {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.3rem .4rem;
+  background: #fefefe;
+  border: 1px solid #cccccc;
+}
+
+.statusActive {
+  composes: status;
+  border: 1px solid green;
+  color: green;
+}
+
+.statusSold {
+  composes: status;
+  border: 1px solid red;
+  color: red;
+}
