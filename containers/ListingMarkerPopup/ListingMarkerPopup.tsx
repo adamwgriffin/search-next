@@ -35,7 +35,7 @@ const ListingMarkerPopup: NextPage = () => {
       // triggers Popup.onAdd() method to add the new overlay instance to the map
       popupInstance.setMap(googleMap)
     }
-  }, [listing])
+  }, [googleMap, listing])
 
   return null
 }
