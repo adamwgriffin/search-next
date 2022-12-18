@@ -120,6 +120,7 @@ export const listingSearchSlice = createSlice({
       switch (action.payload) {
         case SearchTypes.Buy:
           state.filterParams.status = 'active'
+          state.propertyTypes = initialState.propertyTypes
           break
         case SearchTypes.Rent:
           state.filterParams.status = 'active'
@@ -127,6 +128,7 @@ export const listingSearchSlice = createSlice({
           state.propertyTypes = [RentalPropertytypeID]
           break
         case SearchTypes.Sold:
+          state.propertyTypes = initialState.propertyTypes
           state.filterParams.status = 'sold'
       }
     },
