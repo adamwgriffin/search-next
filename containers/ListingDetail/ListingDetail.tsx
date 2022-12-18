@@ -61,7 +61,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
 
             <div className={styles.price}>{formatPrice(listing)}</div>
 
-            <div title='Neighborhood' className={styles.neighborhood}>
+            <div className={styles.neighborhood}>
               {listing.neighborhood}
             </div>
 
@@ -80,12 +80,12 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
               <div className={styles.size}>{formatSqft(listing)} sqft</div>
             </div>
 
-            <div className={styles.description}>
+            <div>
               <h4 className={styles.heading}>Description</h4>
-              <p>{listing.comments}</p>
+              <p className={styles.comments}>{listing.comments}</p>
             </div>
 
-            <div className={styles.details}>
+            <div>
               <h4 className={styles.heading}>Property Details</h4>
               <ul className={styles.detailsList}>
                 <li>
