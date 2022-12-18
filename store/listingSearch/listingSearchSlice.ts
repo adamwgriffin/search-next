@@ -50,7 +50,6 @@ export interface ListingSearchState {
 const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
   doListingSearchOnMapIdle: false,
-  // this one actually means that the request to the service is pending
   listingSearchRunning: false,
   location_search_field: '',
   searchListingsResponse: {},
