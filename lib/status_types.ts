@@ -1,5 +1,5 @@
 export interface StatusType {
-  id: number
+  id: 2 | 11
   param: 'ex_pend' | 'ex_cs'
   label: string
 }
