@@ -1,6 +1,10 @@
 import type { SortById, SortByEnum } from './listing_service_params_types'
 import type { AppState } from '../store'
-import type { FilterParams, ListingServiceParams } from './listing_service_params_types'
+import type {
+  FilterParams,
+  ListingServiceParams,
+  OpenHouseScheduleIDEnumInterface
+} from './listing_service_params_types'
 
 export const sortByEnum: SortByEnum = Object.freeze({
   baths_desc: 3,
@@ -43,8 +47,18 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   sort_by: sortByEnum.listing_date_desc,
   lotsize_min: null,
   yearblt_min: null,
-  yearblt_max: null
+  yearblt_max: null,
+  openhouse: null
 })
+
+export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {
+  upcomingWeekend: 2,
+  thisSaturday: 3,
+  thisSunday: 4,
+  todayThroughSunday: 5,
+  today: 6,
+  tomorrow: 7
+}
 
 // the values of certain search params ("sort_by" for instance) may require us to include, exclude or change the values
 // of other search params. this object provides a mapping between param names that may cause us to make these
@@ -53,7 +67,7 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
 // if params need to be removed we can do so by setting their values to null. if nothing needs to be changed then the
 // function should not return a value.
 export const modifyParam = {
-  sort_by(state:AppState, params: ListingServiceParams) {
+  sort_by(state: AppState, params: ListingServiceParams) {
     // listing service uses user_lat & user_lon as basis for distance sort
     const { lat, lng } = state.places.geocoderResult.location
     if (params.sort_by && sortByDistanceValues.includes(params.sort_by)) {
@@ -61,11 +75,11 @@ export const modifyParam = {
     }
   },
 
-  sold_days(state:AppState, params: ListingServiceParams) {
+  sold_days(state: AppState, params: ListingServiceParams) {
     if (params.status === 'active') {
       return { sold_days: null }
     }
   }
 }
- 
+
 export type ModifyParams = keyof typeof modifyParam

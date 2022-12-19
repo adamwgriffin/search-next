@@ -4,7 +4,8 @@ import type {
   MoreFiltersParamsPartial,
   ExcludeStatusParams,
   SquareFeetRangeParams,
-  YearBuiltRangeParams
+  YearBuiltRangeParams,
+  OpenHouseParam
 } from '../../../lib/listing_service_params_types'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
@@ -12,6 +13,7 @@ import ListingStatus from '../ListingStatus/ListingStatus'
 import SquareFeet from '../SquareFeet/SquareFeet'
 import LotSize from '../LotSize/LotSize'
 import YearBuilt from '../YearBuilt/YearBuilt'
+import OpenHouse from '../OpenHouse/OpenHouse'
 
 interface MoreProps {
   params: MoreFiltersParams
@@ -24,6 +26,11 @@ const More: NextPage<MoreProps> = ({
   onUpdateSearch,
   onChangeParams
 }) => {
+  const selectOpenHouseParam = (params: MoreFiltersParams): OpenHouseParam => {
+    const { openhouse } = params
+    return { openhouse }
+  }
+
   const selectStatusParams = (
     params: MoreFiltersParams
   ): ExcludeStatusParams => {
@@ -48,6 +55,10 @@ const More: NextPage<MoreProps> = ({
   return (
     <MenuButton label='More'>
       <div className={styles.more}>
+        <OpenHouse
+          openHouseParam={selectOpenHouseParam(params)}
+          onChange={onUpdateSearch}
+        />
         <ListingStatus
           statusParms={selectStatusParams(params)}
           onChange={onUpdateSearch}

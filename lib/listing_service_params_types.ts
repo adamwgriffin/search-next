@@ -28,6 +28,17 @@ export type ListingServiceGeotype =
   | 'Address'
   | 'NaturalFeature'
 
+export type OpenHouseScheduleID = 2 | 3 | 4 | 5 | 6 | 7 | null
+
+export interface OpenHouseScheduleIDEnumInterface {
+  upcomingWeekend: OpenHouseScheduleID
+  thisSaturday: OpenHouseScheduleID
+  thisSunday: OpenHouseScheduleID
+  todayThroughSunday: OpenHouseScheduleID
+  today: OpenHouseScheduleID
+  tomorrow: OpenHouseScheduleID
+}
+
 // listing service params that are used as filters. also used to maintain filter state in the app
 export interface FilterParams {
   startidx: number
@@ -45,6 +56,7 @@ export interface FilterParams {
   lotsize_min: number | null
   yearblt_min: number | null
   yearblt_max: number | null
+  openhouse: OpenHouseScheduleID
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -84,6 +96,8 @@ export type YearBuiltRangeParams = Pick<FilterParams, 'yearblt_min' | 'yearblt_m
 
 export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
+export type OpenHouseParam = Pick<FilterParams, 'openhouse'>
+
 export type MoreFiltersParams = Pick<
   FilterParams,
   | 'ex_pend'
@@ -93,6 +107,7 @@ export type MoreFiltersParams = Pick<
   | 'lotsize_min'
   | 'yearblt_min'
   | 'yearblt_max'
+  | 'openhouse'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
