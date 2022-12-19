@@ -40,7 +40,8 @@ export const DefaultFilterParams = Object.freeze({
   ex_cs: true,
   sqft_min: null,
   sqft_max: null,
-  sort_by: sortByEnum.listing_date_desc
+  sort_by: sortByEnum.listing_date_desc,
+  lotsize_min: null
 })
 
 // the values of certain search params ("sort_by" for instance) may require us to include, exclude or change the values

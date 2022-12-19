@@ -9,6 +9,7 @@ import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'
 import SquareFeet from '../SquareFeet/SquareFeet'
+import LotSize from '../LotSize/LotSize'
 
 interface MoreProps {
   params: MoreFiltersParams
@@ -16,7 +17,11 @@ interface MoreProps {
   onChangeParams?: (params: MoreFiltersParamsPartial) => void
 }
 
-const More: NextPage<MoreProps> = ({ params, onUpdateSearch, onChangeParams }) => {
+const More: NextPage<MoreProps> = ({
+  params,
+  onUpdateSearch,
+  onChangeParams
+}) => {
   const selectStatusParams = (
     params: MoreFiltersParams
   ): ExcludeStatusParams => {
@@ -43,6 +48,7 @@ const More: NextPage<MoreProps> = ({ params, onUpdateSearch, onChangeParams }) =
           onChange={onChangeParams}
           onBlur={onUpdateSearch}
         />
+        <LotSize lotSizeMin={params.lotsize_min} onChange={onUpdateSearch} />
       </div>
     </MenuButton>
   )

@@ -42,6 +42,7 @@ export interface FilterParams {
   sqft_min: number | null
   sqft_max: number | null
   sort_by: SortById
+  lotsize_min: number | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -72,11 +73,13 @@ export type PriceRangeParams = Pick<FilterParams, 'pricemin' | 'pricemax'>
 
 export type SquareFeetRangeParams = Pick<FilterParams, 'sqft_min' | 'sqft_max'>
 
+export type LotSizeParams = Pick<FilterParams, 'lotsize_min'>
+
 export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
 export type MoreFiltersParams = Pick<
   FilterParams,
-  'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max'
+  'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max' | 'lotsize_min'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>

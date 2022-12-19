@@ -236,9 +236,9 @@ export const selectBedBathParams = (state: AppState): BedsBathsParam => {
 }
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
-  const { ex_cs, ex_pend, sqft_min, sqft_max } =
+  const { ex_cs, ex_pend, sqft_min, sqft_max, lotsize_min } =
     state.listingSearch.filterParams
-  return { ex_cs, ex_pend, sqft_min, sqft_max }
+  return { ex_cs, ex_pend, sqft_min, sqft_max, lotsize_min }
 }
 
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>
