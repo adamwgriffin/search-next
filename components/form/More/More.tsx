@@ -3,13 +3,15 @@ import type {
   MoreFiltersParams,
   MoreFiltersParamsPartial,
   ExcludeStatusParams,
-  SquareFeetRangeParams
+  SquareFeetRangeParams,
+  YearBuiltRangeParams
 } from '../../../lib/listing_service_params_types'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'
 import SquareFeet from '../SquareFeet/SquareFeet'
 import LotSize from '../LotSize/LotSize'
+import YearBuilt from '../YearBuilt/YearBuilt'
 
 interface MoreProps {
   params: MoreFiltersParams
@@ -36,6 +38,13 @@ const More: NextPage<MoreProps> = ({
     return { sqft_min, sqft_max }
   }
 
+  const selectYearBuiltParams = (
+    params: MoreFiltersParams
+  ): YearBuiltRangeParams => {
+    const { yearblt_min, yearblt_max } = params
+    return { yearblt_min, yearblt_max }
+  }
+
   return (
     <MenuButton label='More'>
       <div className={styles.more}>
@@ -49,6 +58,11 @@ const More: NextPage<MoreProps> = ({
           onBlur={onUpdateSearch}
         />
         <LotSize lotSizeMin={params.lotsize_min} onChange={onUpdateSearch} />
+        <YearBuilt
+          yearBuiltRange={selectYearBuiltParams(params)}
+          onChange={onChangeParams}
+          onBlur={onUpdateSearch}
+        />
       </div>
     </MenuButton>
   )

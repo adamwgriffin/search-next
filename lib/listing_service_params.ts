@@ -1,6 +1,6 @@
 import type { SortById, SortByEnum } from './listing_service_params_types'
 import type { AppState } from '../store'
-import type { ListingServiceParams } from './listing_service_params_types'
+import type { FilterParams, ListingServiceParams } from './listing_service_params_types'
 
 export const sortByEnum: SortByEnum = Object.freeze({
   baths_desc: 3,
@@ -28,7 +28,7 @@ export const sortByDistanceValues: Readonly<Array<SortById>> = Object.freeze([
   sortByEnum.distance_from_user_lat_lon_desc
 ])
 
-export const DefaultFilterParams = Object.freeze({
+export const DefaultFilterParams: FilterParams = Object.freeze({
   startidx: 0,
   pgsize: 20,
   pricemin: null,
@@ -41,7 +41,9 @@ export const DefaultFilterParams = Object.freeze({
   sqft_min: null,
   sqft_max: null,
   sort_by: sortByEnum.listing_date_desc,
-  lotsize_min: null
+  lotsize_min: null,
+  yearblt_min: null,
+  yearblt_max: null
 })
 
 // the values of certain search params ("sort_by" for instance) may require us to include, exclude or change the values

@@ -43,6 +43,8 @@ export interface FilterParams {
   sqft_max: number | null
   sort_by: SortById
   lotsize_min: number | null
+  yearblt_min: number | null
+  yearblt_max: number | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -62,7 +64,10 @@ export interface ListingServiceParams extends FilterParamsPartial {
   ptype?: string | null
 }
 
-export type CenterLatLonParams = Pick<ListingServiceParams, 'center_lat' | 'center_lon'>
+export type CenterLatLonParams = Pick<
+  ListingServiceParams,
+  'center_lat' | 'center_lon'
+>
 
 export type BoundsParams = Pick<
   ListingServiceParams,
@@ -75,11 +80,19 @@ export type SquareFeetRangeParams = Pick<FilterParams, 'sqft_min' | 'sqft_max'>
 
 export type LotSizeParams = Pick<FilterParams, 'lotsize_min'>
 
+export type YearBuiltRangeParams = Pick<FilterParams, 'yearblt_min' | 'yearblt_max'>
+
 export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
 export type MoreFiltersParams = Pick<
   FilterParams,
-  'ex_pend' | 'ex_cs' | 'sqft_min' | 'sqft_max' | 'lotsize_min'
+  | 'ex_pend'
+  | 'ex_cs'
+  | 'sqft_min'
+  | 'sqft_max'
+  | 'lotsize_min'
+  | 'yearblt_min'
+  | 'yearblt_max'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
