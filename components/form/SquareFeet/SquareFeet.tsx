@@ -9,11 +9,11 @@ import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 export interface SquareFeetProps {
   squareFeetRange: SquareFeetRangeParams
-  onBlur?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
   onChange?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
+  onBlur?: () => void
 }
 
-const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChange }) => {
+const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onBlur }) => {
   return (
     <Fieldset>
       <Legend>Square Feet</Legend>
@@ -34,7 +34,7 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChan
           className={formStyles.input}
           id='sqft_min'
           autoComplete='off'
-          onBlur={() => onBlur?.({})}
+          onBlur={onBlur}
           inputMode='numeric'
         />
         <InputFromToSeparator />
@@ -54,7 +54,7 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChan
           className={formStyles.input}
           id='sqft_max'
           autoComplete='off'
-          onBlur={() => onBlur?.({})}
+          onBlur={onBlur}
           inputMode='numeric'
         />
       </div>

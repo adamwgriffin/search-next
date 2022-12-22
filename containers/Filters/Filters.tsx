@@ -4,7 +4,7 @@ import type {
   BedsBathsParam,
   MoreFiltersParams,
   MoreFiltersParamsPartial
-} from '../../lib/listing_service_params_types' 
+} from '../../lib/listing_service_params_types'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectSearchType,
@@ -17,7 +17,7 @@ import {
   setPropertyTypes,
   searchWithUpdatedFilters,
   SearchTypes,
-  SearchTypeOption,
+  SearchTypeOption
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import styles from './Filters.module.css'
@@ -34,14 +34,18 @@ const Filters: NextPage = () => {
   const priceRange = useAppSelector(selectPriceRange)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const bedsAndBaths = useAppSelector(selectBedBathParams)
-  const moreFiltersParams = useAppSelector<MoreFiltersParams>(selectMoreFiltersParams)
+  const moreFiltersParams = useAppSelector<MoreFiltersParams>(
+    selectMoreFiltersParams
+  )
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePropertyTypeChange = (updatedPropertyTypes: PropertyTypeIDArray) => {
+  const handlePropertyTypeChange = (
+    updatedPropertyTypes: PropertyTypeIDArray
+  ) => {
     dispatch(setPropertyTypes(updatedPropertyTypes))
     dispatch(searchWithUpdatedFilters())
   }
@@ -55,21 +59,23 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handleMoreChangeParams = (params: MoreFiltersParamsPartial) => {
+  const handleMoreChange = (params: MoreFiltersParamsPartial) => {
     dispatch(setFilterParams(params))
   }
 
-  const handleMoreUpdateSearch = (params: MoreFiltersParamsPartial) => {
+  const handleMoreChangeAndInitiateSearch = (
+    params: MoreFiltersParamsPartial
+  ) => {
     dispatch(setFilterParams(params))
     dispatch(searchWithUpdatedFilters())
   }
-  
+
   const handleSearchInitiated = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
   const handleSaveSearch = () => {
-    alert("TBD")
+    alert('TBD')
   }
 
   return (
@@ -88,15 +94,18 @@ const Filters: NextPage = () => {
         onChange={handleBedsAndBathsChange}
         bedsAndBaths={bedsAndBaths}
       />
-      {searchType !== SearchTypes.Rent && <PropertyType
-        propertyTypes={PropertyTypes}
-        params={selectedPropertyTypes}
-        onChange={handlePropertyTypeChange}
-      />}
+      {searchType !== SearchTypes.Rent && (
+        <PropertyType
+          propertyTypes={PropertyTypes}
+          params={selectedPropertyTypes}
+          onChange={handlePropertyTypeChange}
+        />
+      )}
       <More
         params={moreFiltersParams}
-        onChangeParams={handleMoreChangeParams}
-        onUpdateSearch={handleMoreUpdateSearch}
+        onChange={handleMoreChange}
+        onChangeAndInitiateSearch={handleMoreChangeAndInitiateSearch}
+        onInitiateSearch={handleSearchInitiated}
       />
       <OutlinedButton textColor='MediumPurple' onClick={handleSaveSearch}>
         Save Search

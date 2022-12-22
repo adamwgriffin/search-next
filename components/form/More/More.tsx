@@ -17,14 +17,16 @@ import OpenHouse from '../OpenHouse/OpenHouse'
 
 interface MoreProps {
   params: MoreFiltersParams
-  onUpdateSearch?: (params: MoreFiltersParamsPartial) => void
-  onChangeParams?: (params: MoreFiltersParamsPartial) => void
+  onChange?: (params: MoreFiltersParamsPartial) => void
+  onChangeAndInitiateSearch?: (params: MoreFiltersParamsPartial) => void
+  onInitiateSearch?: () => void
 }
 
 const More: NextPage<MoreProps> = ({
   params,
-  onUpdateSearch,
-  onChangeParams
+  onChange,
+  onChangeAndInitiateSearch,
+  onInitiateSearch
 }) => {
   const selectOpenHouseParam = (params: MoreFiltersParams): OpenHouseParam => {
     const { openhouse } = params
@@ -57,22 +59,25 @@ const More: NextPage<MoreProps> = ({
       <div className={styles.more}>
         <OpenHouse
           openHouseParam={selectOpenHouseParam(params)}
-          onChange={onUpdateSearch}
+          onChange={onChangeAndInitiateSearch}
         />
         <ListingStatus
           statusParms={selectStatusParams(params)}
-          onChange={onUpdateSearch}
+          onChange={onChangeAndInitiateSearch}
         />
         <SquareFeet
           squareFeetRange={selectSquareFeetParams(params)}
-          onChange={onChangeParams}
-          onBlur={onUpdateSearch}
+          onChange={onChange}
+          onBlur={onInitiateSearch}
         />
-        <LotSize lotSizeMin={params.lotsize_min} onChange={onUpdateSearch} />
+        <LotSize
+          lotSizeMin={params.lotsize_min}
+          onChange={onChangeAndInitiateSearch}
+        />
         <YearBuilt
           yearBuiltRange={selectYearBuiltParams(params)}
-          onChange={onChangeParams}
-          onBlur={onUpdateSearch}
+          onChange={onChange}
+          onBlur={onInitiateSearch}
         />
       </div>
     </MenuButton>

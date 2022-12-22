@@ -9,7 +9,7 @@ import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 export interface YearBuiltProps {
   yearBuiltRange: YearBuiltRangeParams
-  onBlur?: (yearBuiltRange: YearBuiltRangeParams) => void
+  onBlur?: () => void
   onChange?: (yearBuiltRange: YearBuiltRangeParams) => void
 }
 
@@ -26,10 +26,6 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
 
   const handleChange = () => {    
     onChange?.(getYearBuiltRange())
-  }
-  
-  const handleBlur = () => {    
-    onBlur?.(getYearBuiltRange())
   }
 
   return (
@@ -51,7 +47,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
           autoComplete='off'
           value={yearBuiltRange.yearblt_min || ''}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlur}
         />
         <InputFromToSeparator />
         <label
@@ -69,7 +65,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
           autoComplete='off'
           value={yearBuiltRange.yearblt_max || ''}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlur}
         />
       </div>
     </Fieldset>
