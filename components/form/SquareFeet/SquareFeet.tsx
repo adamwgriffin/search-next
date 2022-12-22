@@ -1,37 +1,19 @@
 import type { NextPage } from 'next'
 import type { SquareFeetRangeParams } from '../../../lib/listing_service_params_types'
-import { useRef } from 'react'
 import styles from './SquareFeet.module.css'
 import formStyles from '../../../styles/forms.module.css'
+import { NumericFormat } from 'react-number-format'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
 import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
 
 export interface SquareFeetProps {
   squareFeetRange: SquareFeetRangeParams
-  onBlur?: (squareFeetRange: SquareFeetRangeParams) => void
-  onChange?: (squareFeetRange: SquareFeetRangeParams) => void
+  onBlur?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
+  onChange?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
 }
 
 const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChange }) => {
-  const sqftMinRef = useRef<HTMLInputElement>(null)
-  const sqftMaxRef = useRef<HTMLInputElement>(null)
-
-  const getSquareFeetRange = () => {
-    return {
-      sqft_min: Number(sqftMinRef.current?.value) || null,
-      sqft_max: Number(sqftMaxRef.current?.value) || null
-    }
-  }
-
-  const handleChange = () => {    
-    onChange?.(getSquareFeetRange())
-  }
-  
-  const handleBlur = () => {    
-    onBlur?.(getSquareFeetRange())
-  }
-
   return (
     <Fieldset>
       <Legend>Square Feet</Legend>
@@ -42,16 +24,18 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChan
         >
           Min Square Feet
         </label>
-        <input
-          ref={sqftMinRef}
-          type="text"
+        <NumericFormat
+          thousandSeparator=','
+          allowNegative={false}
+          decimalScale={0}
+          value={squareFeetRange.sqft_min}
+          onValueChange={(v) => onChange?.({ sqft_min: v.floatValue })}
           placeholder='Min'
           className={formStyles.input}
-          id="sqft_min"
+          id='sqft_min'
           autoComplete='off'
-          value={squareFeetRange.sqft_min || ''}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={() => onBlur?.({})}
+          inputMode='numeric'
         />
         <InputFromToSeparator />
         <label
@@ -60,16 +44,18 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onBlur, onChan
         >
           Max Square Feet
         </label>
-        <input
-          ref={sqftMaxRef}
-          type="text"
+        <NumericFormat
+          thousandSeparator=','
+          allowNegative={false}
+          decimalScale={0}
+          value={squareFeetRange.sqft_max}
+          onValueChange={(v) => onChange?.({ sqft_max: v.floatValue })}
           placeholder='Max'
           className={formStyles.input}
-          id="sqft_max"
+          id='sqft_max'
           autoComplete='off'
-          value={squareFeetRange.sqft_max || ''}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={() => onBlur?.({})}
+          inputMode='numeric'
         />
       </div>
     </Fieldset>

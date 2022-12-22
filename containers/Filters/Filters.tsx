@@ -46,7 +46,7 @@ const Filters: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePriceChange = (priceRange: PriceRangeParams) => {
+  const handlePriceChange = (priceRange: Partial<PriceRangeParams>) => {
     dispatch(setFilterParams(priceRange))
   }
 
