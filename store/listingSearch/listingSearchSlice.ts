@@ -13,6 +13,7 @@ import type {
 } from '../../lib/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
+import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -225,53 +226,31 @@ export const selectPopupListing = (state: AppState): PopupListing => {
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []
 
-export const selectPriceRange = (state: AppState): PriceRangeParams => {
-  const { pricemin, pricemax } = state.listingSearch.filterParams
-  return { pricemin, pricemax }
-}
+export const selectPriceRange = (state: AppState): PriceRangeParams =>
+  pick(state.listingSearch.filterParams, ['pricemin', 'pricemax'])
 
-export const selectBedBathParams = (state: AppState): BedsBathsParam => {
-  const { bed_min, bath_min } = state.listingSearch.filterParams
-  return { bed_min, bath_min }
-}
+export const selectBedBathParams = (state: AppState): BedsBathsParam =>
+  pick(state.listingSearch.filterParams, ['bed_min', 'bath_min'])
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
-  const {
-    ex_cs,
-    ex_pend,
-    sqft_min,
-    sqft_max,
-    lotsize_min,
-    yearblt_min,
-    yearblt_max,
-    openhouse,
-    water,
-    view,
-    onestory,
-    has_garage,
-    new_const,
-    virtual_tour,
-    has_pool,
-    senior_community
-  } = state.listingSearch.filterParams
-  return {
-    ex_cs,
-    ex_pend,
-    sqft_min,
-    sqft_max,
-    lotsize_min,
-    yearblt_min,
-    yearblt_max,
-    openhouse,
-    water,
-    view,
-    onestory,
-    has_garage,
-    new_const,
-    virtual_tour,
-    has_pool,
-    senior_community
-  }
+  return pick(state.listingSearch.filterParams, [
+    'ex_cs',
+    'ex_pend',
+    'sqft_min',
+    'sqft_max',
+    'lotsize_min',
+    'yearblt_min',
+    'yearblt_max',
+    'openhouse',
+    'water',
+    'view',
+    'onestory',
+    'has_garage',
+    'new_const',
+    'virtual_tour',
+    'has_pool',
+    'senior_community'
+  ])
 }
 
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>

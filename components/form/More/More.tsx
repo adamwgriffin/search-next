@@ -9,6 +9,7 @@ import type {
   FeaturesParams
 } from '../../../lib/listing_service_params_types'
 import styles from './More.module.css'
+import pick from 'lodash/pick'
 import MenuButton from '../MenuButton/MenuButton'
 import ListingStatus from '../ListingStatus/ListingStatus'
 import SquareFeet from '../SquareFeet/SquareFeet'
@@ -30,53 +31,31 @@ const More: NextPage<MoreProps> = ({
   onChangeAndInitiateSearch,
   onInitiateSearch
 }) => {
-  const selectOpenHouseParam = (params: MoreFiltersParams): OpenHouseParam => {
-    const { openhouse } = params
-    return { openhouse }
-  }
+  const selectOpenHouseParam = (params: MoreFiltersParams): OpenHouseParam =>
+    pick(params, ['openhouse'])
 
-  const selectStatusParams = (
-    params: MoreFiltersParams
-  ): ExcludeStatusParams => {
-    const { ex_pend, ex_cs } = params
-    return { ex_pend, ex_cs }
-  }
+  const selectStatusParams = (params: MoreFiltersParams): ExcludeStatusParams =>
+    pick(params, ['ex_pend', 'ex_cs'])
 
   const selectSquareFeetParams = (
     params: MoreFiltersParams
-  ): SquareFeetRangeParams => {
-    const { sqft_min, sqft_max } = params
-    return { sqft_min, sqft_max }
-  }
+  ): SquareFeetRangeParams => pick(params, ['sqft_min', 'sqft_max'])
 
   const selectYearBuiltParams = (
     params: MoreFiltersParams
-  ): YearBuiltRangeParams => {
-    const { yearblt_min, yearblt_max } = params
-    return { yearblt_min, yearblt_max }
-  }
+  ): YearBuiltRangeParams => pick(params, ['yearblt_min', 'yearblt_max'])
 
   const selectFeatureParams = (params: MoreFiltersParams): FeaturesParams => {
-    const {
-      water,
-      view,
-      onestory,
-      has_garage,
-      new_const,
-      virtual_tour,
-      has_pool,
-      senior_community
-    } = params
-    return {
-      water,
-      view,
-      onestory,
-      has_garage,
-      new_const,
-      virtual_tour,
-      has_pool,
-      senior_community
-    }
+    return pick(params, [
+      'water',
+      'view',
+      'onestory',
+      'has_garage',
+      'new_const',
+      'virtual_tour',
+      'has_pool',
+      'senior_community'
+    ])
   }
 
   return (
