@@ -24,7 +24,7 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
     return countArr.map((c) => ({
       label: countFormatted(c),
       value: c,
-      checked: c === bedsAndBaths[param as keyof BedsBathsParam]
+      checked: c === Number(bedsAndBaths[param as keyof BedsBathsParam])
     }))
   }
 
