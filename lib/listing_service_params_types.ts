@@ -57,6 +57,14 @@ export interface FilterParams {
   yearblt_min: number | null
   yearblt_max: number | null
   openhouse: OpenHouseScheduleID
+  water: boolean | null
+  view: boolean | null
+  onestory: boolean | null
+  has_garage: boolean | null
+  new_const: boolean | null
+  virtual_tour: boolean | null
+  has_pool: boolean | null
+  senior_community: boolean | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -98,6 +106,18 @@ export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
 export type OpenHouseParam = Pick<FilterParams, 'openhouse'>
 
+export type FeaturesParams = Pick<
+  FilterParams,
+  | 'water'
+  | 'view'
+  | 'onestory'
+  | 'has_garage'
+  | 'new_const'
+  | 'virtual_tour'
+  | 'has_pool'
+  | 'senior_community'
+>
+
 export type MoreFiltersParams = Pick<
   FilterParams,
   | 'ex_pend'
@@ -108,6 +128,14 @@ export type MoreFiltersParams = Pick<
   | 'yearblt_min'
   | 'yearblt_max'
   | 'openhouse'
+  | 'water'
+  | 'view'
+  | 'onestory'
+  | 'has_garage'
+  | 'new_const'
+  | 'virtual_tour'
+  | 'has_pool'
+  | 'senior_community'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>

@@ -46,3 +46,16 @@ export const LotSizeValues: Array<CountOption> = [
     value: 435600
   }
 ]
+
+export const FeatureLabels = {
+  water: 'Waterfront',
+  view: 'Views',
+  onestory: 'Single-Story Homes',
+  has_garage: 'Garage',
+  new_const: 'New Construction',
+  virtual_tour: 'Virtual Tour',
+  luxury: 'Luxury Properties',
+  destinations: 'Destinations',
+  has_pool: 'Pool',
+  senior_community: 'Senior Community'
+}

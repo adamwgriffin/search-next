@@ -48,7 +48,15 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   lotsize_min: null,
   yearblt_min: null,
   yearblt_max: null,
-  openhouse: null
+  openhouse: null,
+  water: null,
+  view: null,
+  onestory: null,
+  has_garage: null,
+  new_const: null,
+  virtual_tour: null,
+  has_pool: null,
+  senior_community: null
 })
 
 export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {

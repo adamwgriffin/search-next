@@ -244,7 +244,15 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     lotsize_min,
     yearblt_min,
     yearblt_max,
-    openhouse
+    openhouse,
+    water,
+    view,
+    onestory,
+    has_garage,
+    new_const,
+    virtual_tour,
+    has_pool,
+    senior_community
   } = state.listingSearch.filterParams
   return {
     ex_cs,
@@ -254,7 +262,15 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     lotsize_min,
     yearblt_min,
     yearblt_max,
-    openhouse
+    openhouse,
+    water,
+    view,
+    onestory,
+    has_garage,
+    new_const,
+    virtual_tour,
+    has_pool,
+    senior_community
   }
 }
 

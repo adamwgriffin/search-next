@@ -5,7 +5,8 @@ import type {
   ExcludeStatusParams,
   SquareFeetRangeParams,
   YearBuiltRangeParams,
-  OpenHouseParam
+  OpenHouseParam,
+  FeaturesParams
 } from '../../../lib/listing_service_params_types'
 import styles from './More.module.css'
 import MenuButton from '../MenuButton/MenuButton'
@@ -14,6 +15,7 @@ import SquareFeet from '../SquareFeet/SquareFeet'
 import LotSize from '../LotSize/LotSize'
 import YearBuilt from '../YearBuilt/YearBuilt'
 import OpenHouse from '../OpenHouse/OpenHouse'
+import Features from '../Features/Features'
 
 interface MoreProps {
   params: MoreFiltersParams
@@ -54,6 +56,29 @@ const More: NextPage<MoreProps> = ({
     return { yearblt_min, yearblt_max }
   }
 
+  const selectFeatureParams = (params: MoreFiltersParams): FeaturesParams => {
+    const {
+      water,
+      view,
+      onestory,
+      has_garage,
+      new_const,
+      virtual_tour,
+      has_pool,
+      senior_community
+    } = params
+    return {
+      water,
+      view,
+      onestory,
+      has_garage,
+      new_const,
+      virtual_tour,
+      has_pool,
+      senior_community
+    }
+  }
+
   return (
     <MenuButton label='More'>
       <div className={styles.more}>
@@ -78,6 +103,10 @@ const More: NextPage<MoreProps> = ({
           yearBuiltRange={selectYearBuiltParams(params)}
           onChange={onChange}
           onBlur={onInitiateSearch}
+        />
+        <Features
+          featureParams={selectFeatureParams(params)}
+          onChange={onChangeAndInitiateSearch}
         />
       </div>
     </MenuButton>
