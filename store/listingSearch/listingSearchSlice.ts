@@ -9,7 +9,13 @@ import type {
   CenterLatLonParams,
   BoundsParams,
   BedsBathsParam,
-  MoreFiltersParams
+  MoreFiltersParams,
+  ExcludeStatusParams,
+  SquareFeetRangeParams,
+  LotSizeParams,
+  YearBuiltRangeParams,
+  OpenHouseParam,
+  FeaturesParams
 } from '../../lib/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
@@ -242,6 +248,36 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'yearblt_min',
     'yearblt_max',
     'openhouse',
+    'water',
+    'view',
+    'onestory',
+    'has_garage',
+    'new_const',
+    'virtual_tour',
+    'has_pool',
+    'senior_community'
+  ])
+}
+
+export const selectOpenHouseParam = (state: AppState): OpenHouseParam =>
+  pick(state.listingSearch.filterParams, ['openhouse'])
+
+export const selectStatusParams = (state: AppState): ExcludeStatusParams =>
+  pick(state.listingSearch.filterParams, ['ex_pend', 'ex_cs'])
+
+export const selectSquareFeetParams = (
+  state: AppState
+): SquareFeetRangeParams =>
+  pick(state.listingSearch.filterParams, ['sqft_min', 'sqft_max'])
+
+export const selectLotSizeParams = (state: AppState): LotSizeParams =>
+  pick(state.listingSearch.filterParams, ['lotsize_min'])
+
+export const selectYearBuiltParams = (state: AppState): YearBuiltRangeParams =>
+  pick(state.listingSearch.filterParams, ['yearblt_min', 'yearblt_max'])
+
+export const selectFeatureParams = (state: AppState): FeaturesParams => {
+  return pick(state.listingSearch.filterParams, [
     'water',
     'view',
     'onestory',

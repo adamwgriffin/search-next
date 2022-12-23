@@ -1,9 +1,7 @@
 import type { NextPage } from 'next'
 import type {
   PriceRangeParams,
-  BedsBathsParam,
-  MoreFiltersParams,
-  MoreFiltersParamsPartial
+  BedsBathsParam
 } from '../../lib/listing_service_params_types'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
@@ -11,7 +9,6 @@ import {
   selectPriceRange,
   selectPropertyTypes,
   selectBedBathParams,
-  selectMoreFiltersParams,
   setSearchType,
   setFilterParams,
   setPropertyTypes,
@@ -25,7 +22,7 @@ import Price from '../../components/form/Price/Price'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import PropertyType from '../../components/form/PropertyType/PropertyType'
-import More from '../../components/form/More/More'
+import More from '../../containers/More/More'
 import OutlinedButton from '../../components/form/OutlinedButton/OutlinedButton'
 
 const Filters: NextPage = () => {
@@ -34,9 +31,6 @@ const Filters: NextPage = () => {
   const priceRange = useAppSelector(selectPriceRange)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const bedsAndBaths = useAppSelector(selectBedBathParams)
-  const moreFiltersParams = useAppSelector<MoreFiltersParams>(
-    selectMoreFiltersParams
-  )
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
@@ -56,17 +50,6 @@ const Filters: NextPage = () => {
 
   const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
     dispatch(setFilterParams(param))
-    dispatch(searchWithUpdatedFilters())
-  }
-
-  const handleMoreChange = (params: MoreFiltersParamsPartial) => {
-    dispatch(setFilterParams(params))
-  }
-
-  const handleMoreChangeAndInitiateSearch = (
-    params: MoreFiltersParamsPartial
-  ) => {
-    dispatch(setFilterParams(params))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -101,12 +84,7 @@ const Filters: NextPage = () => {
           onChange={handlePropertyTypeChange}
         />
       )}
-      <More
-        params={moreFiltersParams}
-        onChange={handleMoreChange}
-        onChangeAndInitiateSearch={handleMoreChangeAndInitiateSearch}
-        onInitiateSearch={handleSearchInitiated}
-      />
+      <More />
       <OutlinedButton textColor='MediumPurple' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>
