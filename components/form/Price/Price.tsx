@@ -4,7 +4,7 @@ import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
 import MenuButton from '../MenuButton/MenuButton'
-import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
+import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 
 export interface PriceProps {
   priceRange: PriceRangeParams
@@ -39,7 +39,7 @@ const Price: NextPage<PriceProps> = ({
           onBlur={onBlur}
           inputMode='numeric'
         />
-        <InputFromToSeparator />
+        <InputRangeSeparator />
         <label htmlFor='pricemax' className={formStyles.accessibleLabel}>
           Max Price
         </label>

@@ -5,7 +5,7 @@ import styles from './YearBuilt.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
-import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
+import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 
 export interface YearBuiltProps {
   yearBuiltRange: YearBuiltRangeParams
@@ -49,7 +49,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
           onChange={handleChange}
           onBlur={onBlur}
         />
-        <InputFromToSeparator />
+        <InputRangeSeparator />
         <label
           htmlFor="yearblt_max"
           className={formStyles.accessibleLabel}

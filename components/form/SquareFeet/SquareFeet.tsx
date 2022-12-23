@@ -5,7 +5,7 @@ import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
-import InputFromToSeparator from '../InputFromToSeparator/InputFromToSeparator'
+import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 
 export interface SquareFeetProps {
   squareFeetRange: SquareFeetRangeParams
@@ -37,7 +37,7 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onBl
           onBlur={onBlur}
           inputMode='numeric'
         />
-        <InputFromToSeparator />
+        <InputRangeSeparator />
         <label
           htmlFor="sqft_max"
           className={formStyles.accessibleLabel}
