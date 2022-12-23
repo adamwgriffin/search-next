@@ -32,6 +32,7 @@ const ListingStatus: NextPage<ListingStatusProps> = ({
               name={param}
               value={id}
               id={param}
+              className={formStyles.checkbox}
               checked={!statusParms[param]}
               onChange={handleChange}
             />

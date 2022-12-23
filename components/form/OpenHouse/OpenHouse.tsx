@@ -23,6 +23,7 @@ const OpenHouse: NextPage<OpenHouseProps> = ({ openHouseParam, onChange }) => {
         type='checkbox'
         name='openhouse'
         id='openhouse'
+        className={formStyles.checkbox}
         checked={!!openHouseParam.openhouse}
         onChange={handleChange}
       />
