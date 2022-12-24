@@ -5,6 +5,7 @@ import listingSearchReducer from './listingSearch/listingSearchSlice'
 import listingDetailReducer from './listingDetail/listingDetailSlice'
 import listingMapReducer from './listingMap/listingMapSlice'
 import placesReducer from './places/placesSlice'
+import errorReducer from './error/errorSlice'
 
 export function makeStore() {
   return configureStore({
@@ -13,7 +14,8 @@ export function makeStore() {
       listingSearch: listingSearchReducer,
       listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
-      places: placesReducer
+      places: placesReducer,
+      error: errorReducer
     },
   })
 }
