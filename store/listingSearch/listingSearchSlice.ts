@@ -99,7 +99,7 @@ export const doGeospatialSearch = createAsyncThunk(
     const state = getState() as AppState
     const params = state.listingMap.boundaryActive
       ? selectParamsForGeospatialSearch(state)
-      : selectParamsForBoundsSearch
+      : selectParamsForBoundsSearch(state)
     const response = await http({
       url: '/api/listing',
       params
