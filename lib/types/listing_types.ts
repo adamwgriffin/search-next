@@ -1,10 +1,13 @@
 import { PropertyTypeID } from '../property_types'
 
 export interface ListingLocation {
-  address: string 
+  address: string
+  address2: string | null
   city: string
   state: string
   zip: string
+  county: string
+  country_code: string
   latitude: string
   longitude: string
 }
@@ -13,8 +16,8 @@ export interface ListingBathroomDetails {
   bathrooms_display: number 
   full_baths: number
   half_baths: number
-  one_quarter_baths: number
-  partial_baths: number
+  one_quarter_baths: number | null
+  partial_baths: number | null
   three_quarter_baths: number
   total_bathrooms: number
 }
@@ -41,7 +44,7 @@ export interface Listing {
   sqr_foot_max: number | null
   status: string
   list_price: number
-  sold_price: number
+  sold_price: number | null
   image: ListingImage[]
   property_type_id: PropertyTypeID
 }
