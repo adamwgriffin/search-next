@@ -20,8 +20,8 @@ export const DefaultMapOptions: google.maps.MapOptions = {
   // using a mapId is required for using AdvancedMarkerView
   mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID!,
   center: {
-    lat: 37.76022,
-    lng: -122.41415
+    lat: 47.6560479,
+    lng: -122.3603527
   },
   clickableIcons: false,
   zoom: 12,
