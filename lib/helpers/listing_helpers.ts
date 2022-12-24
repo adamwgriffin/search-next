@@ -41,7 +41,7 @@ export const formatPrice = (
   const priceFormatted = Intl.NumberFormat(
     'en-US',
     opts.numberFormatOptions
-  ).format(price)
+  ).format(Number(price))
   return opts.displayInterval && property_type_id === RentalPropertytypeID
     ? `${priceFormatted}/mo`
     : priceFormatted
