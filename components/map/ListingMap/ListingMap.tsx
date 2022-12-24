@@ -18,14 +18,13 @@ import {
 } from '../../../store/listingMap/listingMapSlice'
 import {
   setDoListingSearchOnMapIdle,
-  setPopupListing,
+  setSelectedListing,
   doGeospatialSearch,
   searchWithUpdatedFilters,
   resetStartIndex,
   selectDoListingSearchOnMapIdle,
   selectListings
 } from '../../../store/listingSearch/listingSearchSlice'
-import ListingMarkerPopup from '../../../containers/ListingMarkerPopup/ListingMarkerPopup'
 
 const ListingMap: NextPage = () => {
   const { googleLoaded } = useGoogleMaps()  
@@ -36,12 +35,12 @@ const ListingMap: NextPage = () => {
   const doListingSearchOnMapIdle = useAppSelector(selectDoListingSearchOnMapIdle)
   const listings = useAppSelector(selectListings)
 
-  const handleListingMarkerMouseEnter = (listing:Listing) => {
-    dispatch(setPopupListing(listing))
+  const handleListingMarkerMouseEnter = (listingid: number) => {
+    dispatch(setSelectedListing(listingid))
   }
 
   const handleListingMarkerMouseLeave = () => {
-    dispatch(setPopupListing(null))
+    dispatch(setSelectedListing(null))
   }
 
   const handleBoundaryControlClick = () => {
@@ -81,7 +80,6 @@ const ListingMap: NextPage = () => {
               onMouseLeave={handleListingMarkerMouseLeave}
             />
           ))}
-          <ListingMarkerPopup />
           <MapBoundary
             coordinates={geoLayerCoordinates}
             visible={boundaryActive}

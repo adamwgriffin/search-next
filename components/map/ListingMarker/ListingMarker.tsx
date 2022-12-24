@@ -4,15 +4,11 @@ import { useEffect, memo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
-import {
-  listingLocationToLatLngLiteral,
-  formatPrice,
-  ShortCurrencyFormat
-} from '../../../lib/helpers/listing_helpers'
+import { listingLocationToLatLngLiteral } from '../../../lib/helpers/listing_helpers'
 
 export interface ListingMarkerProps {
   listing: Listing
-  onMouseEnter?: (listing: Listing) => void
+  onMouseEnter?: (listingid: number) => void
   onMouseLeave?: () => void
 }
 
@@ -28,9 +24,9 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
 
     const handleMouseEnter = () => {
       element.style.zIndex = '1'
-      onMouseEnter?.(listing)
+      onMouseEnter?.(listing.listingid)
     }
-  
+
     const handleMouseLeave = () => {
       element.style.zIndex = ''
       onMouseLeave?.()
@@ -40,13 +36,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
 
     const markerContainer = document.createElement('div')
     createRoot(markerContainer).render(
-      <ListingMarkerContent
-        price={formatPrice(listing, {
-          numberFormatOptions: ShortCurrencyFormat,
-          displayInterval: false
-        })}
-        link={link}
-      />
+      <ListingMarkerContent listing={listing} link={link} />
     )
 
     const marker = new google.maps.marker.AdvancedMarkerView({
@@ -67,16 +57,22 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       element.removeEventListener('mouseenter', handleMouseEnter)
       element.removeEventListener('mouseleave', handleMouseLeave)
     }
-
   }, [googleMap, listing, onMouseEnter, onMouseLeave])
 
   return null
 }
 
-const areEqual = (prevProps: Readonly<ListingMarkerProps>, nextProps: Readonly<ListingMarkerProps>) => {
-  return prevProps.listing.listingid === nextProps.listing.listingid &&
-    prevProps.listing.location.latitude === nextProps.listing.location.latitude &&
-    prevProps.listing.location.longitude === nextProps.listing.location.longitude
+const areEqual = (
+  prevProps: Readonly<ListingMarkerProps>,
+  nextProps: Readonly<ListingMarkerProps>
+) => {
+  return (
+    prevProps.listing.listingid === nextProps.listing.listingid &&
+    prevProps.listing.location.latitude ===
+      nextProps.listing.location.latitude &&
+    prevProps.listing.location.longitude ===
+      nextProps.listing.location.longitude
+  )
 }
 
 // use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause all the markers to

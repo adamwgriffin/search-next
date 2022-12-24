@@ -41,7 +41,7 @@ export const SearchTypes = {
 
 export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
 
-export type PopupListing = Listing | null
+export type SelectedListing = number | null
 
 export interface ListingSearchState {
   searchType: SearchTypeOption
@@ -49,7 +49,7 @@ export interface ListingSearchState {
   listingSearchRunning: boolean
   location_search_field: string
   searchListingsResponse: any
-  popupListing: PopupListing
+  selectedListing: SelectedListing
   propertyTypes: PropertyTypeIDArray
   filterParams: FilterParams
 }
@@ -60,7 +60,7 @@ const initialState: ListingSearchState = {
   listingSearchRunning: false,
   location_search_field: '',
   searchListingsResponse: {},
-  popupListing: null,
+  selectedListing: null,
   propertyTypes: DefaultPropertyTypes,
   filterParams: DefaultFilterParams
 }
@@ -144,8 +144,8 @@ export const listingSearchSlice = createSlice({
       state.location_search_field = action.payload
     },
 
-    setPopupListing: (state, action: PayloadAction<PopupListing>) => {
-      state.popupListing = action.payload
+    setSelectedListing: (state, action: PayloadAction<SelectedListing>) => {
+      state.selectedListing = action.payload
     },
 
     resetStartIndex: (state) => {
@@ -208,7 +208,7 @@ export const listingSearchSlice = createSlice({
 export const {
   setSearchType,
   setLocationSearchField,
-  setPopupListing,
+  setSelectedListing,
   resetStartIndex,
   setDoListingSearchOnMapIdle,
   setFilterParams,
@@ -225,8 +225,8 @@ export const selectLocationSearchField = (state: AppState): string => {
   return state.listingSearch.location_search_field
 }
 
-export const selectPopupListing = (state: AppState): PopupListing => {
-  return state.listingSearch.popupListing
+export const selectPopupListing = (state: AppState): SelectedListing => {
+  return state.listingSearch.selectedListing
 }
 
 export const selectListings = (state: AppState): Listing[] =>

@@ -1,17 +1,76 @@
 .listingMarker {
-  padding: .3rem .4rem;
   cursor: pointer;
-  background-color: mediumpurple;
-  color: white;
+  background-color: white;
+  color: inherit;
   border-radius: .8rem;
+  min-width: 3rem;
+  min-height: 1.5rem;
   box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 4px -1px;
-  font-size: .8rem;
-  font-weight: 500;
-  transition: all .2s ease-in-out;
 }
 
-.listingMarker:hover {
-  transform: scale(1.2);
+.icon {
+  opacity: 1;
+  padding: .3rem .4rem;
+  text-align: center;
+  font-size: .8rem;
+  font-weight: 500;
+  transition: all .2s ease-out .2s;
+}
+
+.listingMarker:hover .icon {
+  opacity: 0;
+  padding: 0;
+  font-size: 0;
+  transition: all .2s ease-in;
+}
+
+.popup {
+  border-radius: .8rem;
+  background-color: white;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all .3s ease-out 0s;
+}
+
+.listingMarker:hover .popup {
+  opacity: 1;
+  width: 14rem;
+  height: 14rem;
+  transition: all .3s ease-in;
+}
+
+.details {
+  padding: .5rem;
+  font-size: .9rem;
+}
+
+.price {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.bedBathSqft {
+  display: flex;
+  column-gap: .4rem;
+}
+
+.price,
+.bedBathSqft {
+  margin-bottom: .4rem;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+}
+
+.addressLine1,
+.addressLine2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .link {
@@ -19,7 +78,7 @@
   text-decoration: none;
 }
 
-.link:visited .listingMarker  {
-  background-color: #d1c1f0;
-  color: rebeccapurple;
+.link:visited .listingMarker {
+  background-color: rgb(224, 224, 224);
+  color: rgb(60, 60, 60);
 }
