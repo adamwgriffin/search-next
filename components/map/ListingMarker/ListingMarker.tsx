@@ -75,6 +75,6 @@ const areEqual = (
   )
 }
 
-// use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause all the markers to
-// flicker each time the map is dragged
+// use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause all the markers
+// to flicker each time the map is dragged
 export default memo(ListingMarker, areEqual)
