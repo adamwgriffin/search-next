@@ -1,6 +1,10 @@
 import type { NextPage } from 'next'
-import type { PropertyTypeID, PropertyTypeIDArray, PropertyTypesInterface } from '../../../lib/property_types'
-import { ChangeEvent } from 'react'
+import type {
+  PropertyTypeID,
+  PropertyTypeIDArray,
+  PropertyTypesInterface
+} from '../../../lib/property_types'
+import type { ChangeEvent } from 'react'
 import formStyles from '../../../styles/forms.module.css'
 import MenuButton from '../MenuButton/MenuButton'
 
@@ -10,14 +14,23 @@ interface PropertyTypeProps {
   onChange: (updatedPropertyTypes: PropertyTypeIDArray) => void
 }
 
-const PropertyTypes: NextPage<PropertyTypeProps> = ({ propertyTypes, params, onChange }) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, id: PropertyTypeID) => {
-    const updatedPropertyTypes = e.target.checked ? params.concat(id) : params.filter(t => t !== id)
+const PropertyTypes: NextPage<PropertyTypeProps> = ({
+  propertyTypes,
+  params,
+  onChange
+}) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    id: PropertyTypeID
+  ) => {
+    const updatedPropertyTypes = e.target.checked
+      ? params.concat(id)
+      : params.filter((t) => t !== id)
     onChange(updatedPropertyTypes)
   }
 
   return (
-    <MenuButton label="Home Type">
+    <MenuButton label='Home Type'>
       <ul className={formStyles.inputList}>
         {Object.entries(propertyTypes).map(([name, { label, id }]) => (
           <li key={id} className={formStyles.inputListItem}>
@@ -28,7 +41,7 @@ const PropertyTypes: NextPage<PropertyTypeProps> = ({ propertyTypes, params, onC
               name={name}
               value={id}
               checked={params.includes(id)}
-              onChange={e => handleChange(e, id)}
+              onChange={(e) => handleChange(e, id)}
             />
             <label htmlFor={name} className={formStyles.inputListLabel}>
               {label}
