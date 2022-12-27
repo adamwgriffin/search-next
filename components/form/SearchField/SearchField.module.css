@@ -31,7 +31,7 @@
 .comboboxInputHasFocus {
   composes: comboboxInput;
   padding: 0;
-  border: 2px solid #0773f8;
+  border: 2px solid #d1c1f0;
 }
 
 .locationSearchField {

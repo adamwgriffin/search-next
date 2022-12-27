@@ -23,4 +23,18 @@ body {
 
 *, *:before, *:after {
   box-sizing: border-box;
+  outline-color: #d1c1f0;
+}
+
+::selection {
+  color: RebeccaPurple;
+  background: #d1c1f0;
+}
+
+select:hover {
+  background: #e1d8f1;
+}
+
+input {
+  accent-color: MediumPurple;
 }

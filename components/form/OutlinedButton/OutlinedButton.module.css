@@ -13,10 +13,12 @@
 }
 
 .outlinedButton:hover {
-  background: #f6f6f6;
+  background: #e1d8f1;
+  color: MediumPurple;
+  border-color: MediumPurple;
 }
 
 .outlinedButtonHighlighted {
   composes: outlinedButton;
-  background: rgba(4, 87, 175, 0.24);
+  background: #d1c1f0;
 }
