@@ -7,14 +7,14 @@
   border-radius: 6px;
   height: 40px;
   padding: 0 .8rem;
-  background: MediumPurple;
+  background: var(--primary);
   font-size: inherit;
   font-family: inherit;
-  color: white;
+  color: var(--foreground);
 }
 
 .containedButton:hover {
-  background: RebeccaPurple;
+  background: var(--primary-variant-one);
 }
 
 .containedButton.highlighted {

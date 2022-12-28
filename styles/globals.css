@@ -7,34 +7,46 @@ body,
   height: 100%;
 }
 
+:root {
+  --background: white;
+  --foreground: black;
+  --foreground-disabled: #999;
+  --primary: MediumPurple;
+  --primary-container-foreground: white;
+  --primary-variant-one: RebeccaPurple;
+  --primary-variant-two: #d1c1f0;
+  --primary-variant-three: #e1d8f1;
+  --focus: var(--primary);
+  --outline: #cccccc;
+  --highlight: #f6f6f6;
+  --listing-marker-background: white;
+  --listing-marker-foreground: black;
+  --listing-marker-background-visited: rgb(224, 224, 224);
+  --listing-marker-foreground-visited: rgb(60, 60, 60);
+  --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+[data-theme='dark'] {
+  --background: #1c1b1e;
+  --foreground: white;
+}
+
 body {
-  font-family: -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen-Sans,
-    Ubuntu,
-    Cantarell,
-    "Helvetica Neue",
-    sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--primary-font);
   margin: 0;
   padding: 1rem;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
-  outline-color: #d1c1f0;
-}
-
-::selection {
-  color: RebeccaPurple;
-  background: #d1c1f0;
-}
-
-select:hover {
-  background: #e1d8f1;
+  outline-color: var(--focus);
 }
 
 input {
-  accent-color: MediumPurple;
+  accent-color: var(--primary);
 }

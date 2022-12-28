@@ -1,0 +1,18 @@
+.themeSwitcherDropdown {
+  cursor: pointer;
+  border: 1px solid var(--outline);
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
+
+.themeSwitcherDropdown:hover {
+  background: var(--highlight);
+}
+
+.themeSwitcherDropdownHighlighted {
+  composes: themeSwitcherDropdown;
+  background: rgba(4, 87, 175, 0.24);
+}

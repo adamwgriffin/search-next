@@ -1,13 +1,16 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
+import { ThemeProvider } from 'next-themes'
 import store from '../store'
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <ReduxProvider store={store}>
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ReduxProvider>
   )
 }
 

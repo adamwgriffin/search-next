@@ -1,5 +1,5 @@
 export const MapBoundaryOptions: google.maps.PolygonOptions = {
-  strokeColor: 'MediumPurple',
+  strokeColor: 'darkgray',
   strokeOpacity: 1,
   strokeWeight: 2,
   fillOpacity: 0

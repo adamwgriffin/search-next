@@ -14,6 +14,7 @@ import {
 import styles from './Header.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'
+import ThemeSwitcher from '../../components/header/ThemeSwitcher/ThemeSwitcher'
 import Login from '../../components/header/Login/Login'
 
 const Header: NextPage = () => {
@@ -53,7 +54,7 @@ const Header: NextPage = () => {
     dispatch(setLocationSearchField(details))
 
   return (
-    <header className={styles.Header}>
+    <header className={styles.header}>
       <Logo width='167' height='36' />
       <SearchField
         value={locationSearchField}
@@ -68,7 +69,10 @@ const Header: NextPage = () => {
         onSearchInitiated={handleOnSearchInitiated}
         onOptionSelected={handleOnOptionSelected}
       />
-      <Login />
+      <div className={styles.controls}>
+        <ThemeSwitcher />
+        <Login />
+      </div>
     </header>
   )
 }

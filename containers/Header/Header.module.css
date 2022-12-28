@@ -1,6 +1,14 @@
-.Header {
+.header {
   display: flex;
   column-gap: 2rem;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: .5rem;
+  flex-grow: 1;
 }

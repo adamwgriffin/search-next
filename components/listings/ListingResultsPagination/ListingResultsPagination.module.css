@@ -9,23 +9,23 @@
 .pageButton {
   margin: 0 .3rem;
   cursor: pointer;
-  border: 1px solid #cccccc;;
+  border: 1px solid var(--outline);
   border-radius: 6px;
   padding: .3rem .6rem;
-  background: #fefefe;
+  background: inherit;
   font-size: inherit;
   font-family: inherit;
   color: inherit;
 }
 
 .pageButton:hover {
-  background: #e1d8f1;
+  background: var(--primary-variant-three);
 }
 
 .pageButton:disabled {
-  background: #d1c1f0;
-  color: MediumPurple;
-  border-color: MediumPurple;
+  background: var(--primary-variant-two);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .paginationButton {
@@ -35,19 +35,19 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
   border-radius: 6px;
   padding: .4rem .7rem;
-  background: MediumPurple;
+  background: var(--primary);
   font-size: inherit;
   font-family: inherit;
-  color: white;
+  color: var(--primary-container-foreground);
 }
 
 .paginationButton:hover {
-  background: RebeccaPurple;
+  background: var(--primary-variant-one);
 }
 
 .paginationButton:disabled {
-  background: #d1c1f0;
-  color: #a787e1;
+  background: var(--primary-variant-two);
+  color: var(--primary);
 }
 
 .morePages {
@@ -57,9 +57,9 @@
 
 .morePagesItemSelected {
   composes: morePages;
-  background: #d1c1f0;
-  color: MediumPurple;
-  border-color: MediumPurple;
+  background: var(--primary-variant-two);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .resultTotals {
