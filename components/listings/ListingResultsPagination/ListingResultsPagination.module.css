@@ -19,11 +19,11 @@
 }
 
 .pageButton:hover {
-  background: var(--primary-variant-three);
+  background: var(--primary-light);
 }
 
 .pageButton:disabled {
-  background: var(--primary-variant-two);
+  background: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
 }
@@ -38,15 +38,15 @@
   background: var(--primary);
   font-size: inherit;
   font-family: inherit;
-  color: var(--primary-container-foreground);
+  color: var(--background);
 }
 
 .paginationButton:hover {
-  background: var(--primary-variant-one);
+  background: var(--primary-dark);
 }
 
 .paginationButton:disabled {
-  background: var(--primary-variant-two);
+  background: var(--primary-light);
   color: var(--primary);
 }
 
@@ -57,7 +57,7 @@
 
 .morePagesItemSelected {
   composes: morePages;
-  background: var(--primary-variant-two);
+  background: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
 }

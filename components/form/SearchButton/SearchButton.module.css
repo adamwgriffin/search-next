@@ -10,5 +10,5 @@
 }
 
 .searchButton:hover {
-  background: var(--primary-variant-one);
+  background: var(--primary-dark);
 }

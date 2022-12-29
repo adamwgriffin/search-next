@@ -14,7 +14,7 @@
 }
 
 .containedButton:hover {
-  background: var(--primary-variant-one);
+  background: var(--primary-dark);
 }
 
 .containedButton.highlighted {

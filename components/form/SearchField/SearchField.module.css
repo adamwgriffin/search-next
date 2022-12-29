@@ -71,11 +71,11 @@
 
 .listItemActive {
   composes: listItem;
-  background-color: var(--primary-variant-three);
+  background-color: var(--primary-light);
 }
 
 .listItem:hover {
-  background-color: var(--primary-variant-three);
+  background-color: var(--primary-light);
 }
 
 .locationPinFilledIcon {

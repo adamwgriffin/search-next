@@ -11,5 +11,5 @@
 }
 
 .lotSizeDropdown:hover {
-  background: var(--highlight);
+  background: var(--primary-light);
 }

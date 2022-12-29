@@ -5,7 +5,7 @@
 }
 
 .radioButton:hover {
-  background: var(--primary-variant-three);
+  background: var(--primary-light);
 }
 
 .radioButtonInput {
@@ -15,8 +15,8 @@
 }
 
 .radioButtonInput[type=radio]:checked + label{
-  background: var(--primary-variant-two);
-  color: var(--primary-variant-one);
+  background: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 .radioButtonLabel {

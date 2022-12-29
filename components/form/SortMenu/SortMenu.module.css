@@ -21,7 +21,7 @@
 }
 
 .sortByDropdown:hover {
-  background: var(--primary-variant-three);
+  background: var(--primary-light);
 }
 
 .sortByDropdownHighlighted {

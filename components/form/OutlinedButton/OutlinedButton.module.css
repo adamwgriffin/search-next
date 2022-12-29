@@ -13,12 +13,12 @@
 }
 
 .outlinedButton:hover {
-  background: var(--primary-variant-three);
+  background: var(--primary-light);
   color: var(--primary);
   border-color: var(--primary);
 }
 
 .outlinedButtonHighlighted {
   composes: outlinedButton;
-  background: var(--primary-variant-two);
+  background: var(--primary-light);
 }

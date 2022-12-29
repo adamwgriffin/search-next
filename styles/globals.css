@@ -8,41 +8,37 @@ body,
 }
 
 :root {
+  --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   --background: white;
   --foreground: black;
   --foreground-disabled: #999;
   --primary: MediumPurple;
-  --primary-variant-one: RebeccaPurple;
-  --primary-variant-two: #d1c1f0;
-  --primary-variant-three: #e1d8f1;
-  --primary-container-foreground: white;
+  --primary-dark: RebeccaPurple;
+  --primary-light: #e1d8f1;
   --focus: var(--primary);
   --outline: #cccccc;
-  --highlight: #f6f6f6;
   --listing-marker-background: white;
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
   --listing-marker-foreground-visited: #3c3c3c;
   --logo: black;
   --boundary-control: rgba(255, 255, 255, 0.7);
-  --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
 [data-theme='orange'] {
-  --primary: #fa8100;
-  --primary-variant-one: #db7800;
-  --primary-variant-two: #ffe1c8;
-  --primary-variant-three: peachpuff;
-  --logo: #fa8100;
+  --primary: orange;
+  --primary-dark: #db7800;
+  --primary-light: #ffe1c8;
+  --logo: orange;
 }
 
 [data-theme='dark'] {
   --background: #22272e;
   --foreground: #e0e0e0;
+  --foreground-disabled: #b3b3b3;
   --primary: #b79bf0;
-  --primary-variant-two: MediumPurple;
-  --primary-variant-three: RebeccaPurple;
+  --primary-light: MediumPurple;
   --listing-marker-background: #22272e;
   --listing-marker-foreground: #e0e0e0;
   --listing-marker-background-visited: #5a5a5a;
