@@ -33,6 +33,7 @@ const ThemeSwitcher: NextPage = () => {
           <option value='system'>System</option>
           <option value='dark'>Dark</option>
           <option value='light'>Light</option>
+          <option value='orange'>Orange</option>
         </select>
       </div>
     </Fieldset>

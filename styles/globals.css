@@ -29,6 +29,14 @@ body,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
+[data-theme='orange'] {
+  --primary: #fa8100;
+  --primary-variant-one: #db7800;
+  --primary-variant-two: #ffe1c8;
+  --primary-variant-three: peachpuff;
+  --logo: #fa8100;
+}
+
 [data-theme='dark'] {
   --background: #22272e;
   --foreground: #e0e0e0;
