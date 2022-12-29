@@ -5,11 +5,12 @@
   padding: 0.5rem;
   font-size: inherit;
   font-family: inherit;
+  background: inherit;
   color: inherit;
 }
 
 .themeSwitcherDropdown:hover {
-  background: var(--highlight);
+  background: var(--primary-variant-three);
 }
 
 .themeSwitcherDropdownHighlighted {

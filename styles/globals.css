@@ -12,24 +12,35 @@ body,
   --foreground: black;
   --foreground-disabled: #999;
   --primary: MediumPurple;
-  --primary-container-foreground: white;
   --primary-variant-one: RebeccaPurple;
   --primary-variant-two: #d1c1f0;
   --primary-variant-three: #e1d8f1;
+  --primary-container-foreground: white;
   --focus: var(--primary);
   --outline: #cccccc;
   --highlight: #f6f6f6;
   --listing-marker-background: white;
   --listing-marker-foreground: black;
-  --listing-marker-background-visited: rgb(224, 224, 224);
-  --listing-marker-foreground-visited: rgb(60, 60, 60);
+  --listing-marker-background-visited: #e0e0e0;
+  --listing-marker-foreground-visited: #3c3c3c;
+  --logo: black;
+  --boundary-control: rgba(255, 255, 255, 0.7);
   --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
 [data-theme='dark'] {
-  --background: #1c1b1e;
-  --foreground: white;
+  --background: #22272e;
+  --foreground: #e0e0e0;
+  --primary: #b79bf0;
+  --primary-variant-two: MediumPurple;
+  --primary-variant-three: RebeccaPurple;
+  --listing-marker-background: #22272e;
+  --listing-marker-foreground: #e0e0e0;
+  --listing-marker-background-visited: #5a5a5a;
+  --listing-marker-foreground-visited: #e0e0e0;
+  --logo: white;
+  --boundary-control: rgba(34, 39, 46, 0.7);
 }
 
 body {

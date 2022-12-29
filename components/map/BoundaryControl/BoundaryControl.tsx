@@ -12,7 +12,7 @@ const BoundaryControl: NextPage<BoundaryControlProps> = ({ onClick }) => {
     <div className={styles.boundaryControl}>
       <ContainedButton
         textColor='inherit'
-        backgroundColor='rgba(255, 255, 255, 0.7)'
+        backgroundColor='var(--boundary-control)'
         onClick={onClick}
       >
         Remove Boundary

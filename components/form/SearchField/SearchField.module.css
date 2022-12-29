@@ -8,11 +8,6 @@
   width: 100%;
 }
 
-.comboboxInput,
-.locationSearchField {
-  background: var(--highlight);
-}
-
 .comboboxInput {
   flex-grow: 1;
   display: flex;
@@ -41,7 +36,6 @@
   padding-left: 10px;
   font-size: inherit;
   font-family: inherit;
-  color: inherit;
   height: 36px;
   border-radius: 6px 0 0 6px;
 }

@@ -7,7 +7,7 @@ import store from '../store'
 function App({ Component, pageProps }: AppProps) {
   return (
     <ReduxProvider store={store}>
-      <ThemeProvider>
+      <ThemeProvider disableTransitionOnChange>
         <Component {...pageProps} />
       </ThemeProvider>
     </ReduxProvider>

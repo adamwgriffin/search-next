@@ -5,7 +5,7 @@
 }
 
 .link {
-  color: inherit;
+  color: var(--foreground);
   text-decoration: none;
 }
 

@@ -1,5 +1,5 @@
 .link {
-  color: initial;
+  color: var(--foreground);
   text-decoration: none;
 }
 

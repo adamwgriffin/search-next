@@ -1,3 +1,13 @@
+.link {
+  color: initial;
+  text-decoration: none;
+}
+
+.link:visited .listingMarker {
+  background-color: var(--listing-marker-background-visited);
+  color: var(--listing-marker-foreground-visited);
+}
+
 .listingMarker {
   cursor: pointer;
   background-color: var(--listing-marker-background);
@@ -27,6 +37,7 @@
 .popup {
   border-radius: .8rem;
   background-color: var(--background);
+  color: var(--foreground);
   opacity: 0;
   width: 0;
   height: 0;
@@ -71,14 +82,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.link {
-  color: initial;
-  text-decoration: none;
-}
-
-.link:visited .listingMarker {
-  background-color: var(--listing-marker-background-visited);
-  color: var(--listing-marker-foreground-visited);
 }

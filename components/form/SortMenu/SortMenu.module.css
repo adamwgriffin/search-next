@@ -16,11 +16,12 @@
   padding: 0.3rem;
   font-size: inherit;
   font-family: inherit;
+  background: inherit;
   color: inherit;
 }
 
 .sortByDropdown:hover {
-  background: var(--highlight);
+  background: var(--primary-variant-three);
 }
 
 .sortByDropdownHighlighted {

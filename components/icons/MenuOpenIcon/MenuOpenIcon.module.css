@@ -1,6 +1,7 @@
 .menuOpenIcon {
   user-select: none;
   cursor: pointer;
+  fill: var(--foreground);
 }
 
 .closed {
