@@ -1,15 +1,15 @@
 import type { NextPage } from 'next'
-import OutlinedButton from '../../form/OutlinedButton/OutlinedButton'
+import styles from './Login.module.css'
+import MenuButton from '../../form/MenuButton/MenuButton'
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 
 const Login: NextPage = () => {
-  const handleLogin = () => {
-    alert("TBD")
-  }
-
   return (
-    <OutlinedButton onClick={handleLogin} highlighted={false}>
-      Log in
-    </OutlinedButton>
+    <MenuButton label='Login' alignRight>
+      <div className={styles.login}>
+        <ThemeSwitcher />
+      </div>
+    </MenuButton>
   )
 }
 

@@ -19,17 +19,22 @@ const ThemeSwitcher: NextPage = () => {
 
   return (
     <Fieldset>
-      <select
-        id='themeswitcher'
-        className={styles.themeSwitcherDropdown}
-        name='themeswitcher'
-        value={theme}
-        onChange={(e) => setTheme(e.target.value)}
-      >
-        <option value='system'>Theme: System</option>
-        <option value='dark'>Theme: Dark</option>
-        <option value='light'>Theme: Light</option>
-      </select>
+      <div className={styles.themeSwitcher}>
+        <label htmlFor="themeswitcher" className={styles.label}>
+          Theme:
+        </label>
+        <select
+          id='themeswitcher'
+          className={styles.themeSwitcherDropdown}
+          name='themeswitcher'
+          value={theme}
+          onChange={(e) => setTheme(e.target.value)}
+        >
+          <option value='system'>System</option>
+          <option value='dark'>Dark</option>
+          <option value='light'>Light</option>
+        </select>
+      </div>
     </Fieldset>
   )
 }

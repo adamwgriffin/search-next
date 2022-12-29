@@ -1,8 +1,18 @@
+.themeSwitcher {
+  display: flex;
+  align-items: center;
+  column-gap: .25rem;
+}
+
+.label {
+  font-weight: 500;
+}
+
 .themeSwitcherDropdown {
   cursor: pointer;
   border: 1px solid var(--outline);
   border-radius: 6px;
-  padding: 0.5rem;
+  padding: 0.1rem;
   font-size: inherit;
   font-family: inherit;
   background: inherit;

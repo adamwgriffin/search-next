@@ -14,7 +14,6 @@ import {
 import styles from './Header.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'
-import ThemeSwitcher from '../../components/header/ThemeSwitcher/ThemeSwitcher'
 import Login from '../../components/header/Login/Login'
 
 const Header: NextPage = () => {
@@ -70,7 +69,6 @@ const Header: NextPage = () => {
         onOptionSelected={handleOnOptionSelected}
       />
       <div className={styles.controls}>
-        <ThemeSwitcher />
         <Login />
       </div>
     </header>
