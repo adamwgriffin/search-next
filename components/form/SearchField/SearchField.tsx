@@ -263,7 +263,7 @@ const SearchField: NextPage<SearchFieldProps> = ({
             onClick={() => handleMenuItemClick(option)}
           >
             <LocationPinFilledIcon
-              color={pinIconColor(activeDescendantKey === index)}
+              active={activeDescendantKey === index}
             />
             <PlacePredictionText prediction={option} />
           </li>

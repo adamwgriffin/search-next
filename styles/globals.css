@@ -13,24 +13,39 @@ body,
   --background: white;
   --foreground: black;
   --foreground-disabled: #999;
-  --primary: MediumPurple;
-  --primary-dark: RebeccaPurple;
-  --primary-light: #e1d8f1;
+  --primary: rgb(0, 106, 255);
+  --primary-dark: rgb(13, 69, 153);
+  --primary-light: rgb(242, 250, 255);
+  --secondary: #e96262;
+  --secondary-dark: #cd5a5a;
   --focus: var(--primary);
   --outline: #cccccc;
+  --logo: black;
+  --search-button: var(--secondary);
+  --search-button-hover: var(--secondary-dark);
   --listing-marker-background: white;
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
   --listing-marker-foreground-visited: #3c3c3c;
-  --logo: black;
   --boundary-control: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme='purple'] {
+  --primary: MediumPurple;
+  --primary-dark: RebeccaPurple;
+  --primary-light: #e1d8f1;
+  --logo: var(--primary-dark);
+  --search-button: var(--primary);
+  --search-button-hover: var(--primary-dark);
 }
 
 [data-theme='orange'] {
   --primary: orange;
   --primary-dark: #db7800;
   --primary-light: #ffe1c8;
-  --logo: orange;
+  --logo: var(--primary-dark);
+  --search-button: var(--primary);
+  --search-button-hover: var(--primary-dark);
 }
 
 [data-theme='dark'] {

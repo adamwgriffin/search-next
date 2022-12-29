@@ -31,8 +31,9 @@ const ThemeSwitcher: NextPage = () => {
           onChange={(e) => setTheme(e.target.value)}
         >
           <option value='system'>System</option>
-          <option value='dark'>Dark</option>
           <option value='light'>Light</option>
+          <option value='dark'>Dark</option>
+          <option value='purple'>Purple</option>
           <option value='orange'>Orange</option>
         </select>
       </div>

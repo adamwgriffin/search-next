@@ -1,0 +1,7 @@
+.active {
+  fill: var(--secondary);
+}
+
+.inactive {
+  fill: var(--foreground-disabled);
+}
