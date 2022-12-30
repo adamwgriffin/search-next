@@ -1,7 +1,8 @@
 .radioButton {
-  width: 48px;
-  height: 40px;
-  font-size: 0.875rem;
+  width: 3.7rem;
+  height: 2.5rem;
+  font-size: .8rem;
+  border-radius: 1.25rem;
 }
 
 .radioButton:hover {
@@ -17,6 +18,7 @@
 .radioButtonInput[type=radio]:checked + label{
   background: var(--primary-light);
   color: var(--primary-dark);
+  border-color: var(--primary);
 }
 
 .radioButtonLabel {
@@ -25,6 +27,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 1px solid #e7e7e7;
+  border-radius: 1.25rem;
+  border: .0625rem solid var(--outline);
   cursor: pointer;
 }
