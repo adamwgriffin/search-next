@@ -2,21 +2,23 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--outline);
   border-radius: 6px;
   height: 40px;
   padding: 0 .8rem;
-  background: #fefefe;
+  background: inherit;
   font-size: inherit;
   font-family: inherit;
   color: inherit;
 }
 
 .outlinedButton:hover {
-  background: #f6f6f6;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 .outlinedButtonHighlighted {
   composes: outlinedButton;
-  background: rgba(4, 87, 175, 0.24);
+  background: var(--primary-light);
 }

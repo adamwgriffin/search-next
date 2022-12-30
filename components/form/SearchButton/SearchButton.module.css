@@ -5,10 +5,10 @@
   border: none;
   cursor: pointer;
   padding: 0 8px;
-  background: MediumPurple;
+  background: var(--search-button);
   border-radius: 0 6px 6px 0;
 }
 
 .searchButton:hover {
-  background: RebeccaPurple;
+  background: var(--search-button-hover);
 }

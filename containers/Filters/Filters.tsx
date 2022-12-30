@@ -85,7 +85,7 @@ const Filters: NextPage = () => {
         />
       )}
       <More />
-      <OutlinedButton textColor='MediumPurple' onClick={handleSaveSearch}>
+      <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>
     </div>

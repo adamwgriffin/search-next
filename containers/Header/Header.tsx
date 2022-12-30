@@ -53,7 +53,7 @@ const Header: NextPage = () => {
     dispatch(setLocationSearchField(details))
 
   return (
-    <header className={styles.Header}>
+    <header className={styles.header}>
       <Logo width='167' height='36' />
       <SearchField
         value={locationSearchField}
@@ -68,7 +68,9 @@ const Header: NextPage = () => {
         onSearchInitiated={handleOnSearchInitiated}
         onOptionSelected={handleOnOptionSelected}
       />
-      <Login />
+      <div className={styles.controls}>
+        <Login />
+      </div>
     </header>
   )
 }

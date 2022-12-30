@@ -1,30 +1,29 @@
-.sortMenu {
+.themeSwitcher {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex-grow: 1;
+  column-gap: .25rem;
 }
 
-.sortLabel {
-  margin-right: .3rem;
+.label {
+  font-weight: 500;
 }
 
-.sortByDropdown {
+.themeSwitcherDropdown {
   cursor: pointer;
   border: 1px solid var(--outline);
   border-radius: 6px;
-  padding: 0.3rem;
+  padding: 0.1rem;
   font-size: inherit;
   font-family: inherit;
   background: inherit;
   color: inherit;
 }
 
-.sortByDropdown:hover {
+.themeSwitcherDropdown:hover {
   background: var(--primary-light);
 }
 
-.sortByDropdownHighlighted {
-  composes: sortByDropdown;
+.themeSwitcherDropdownHighlighted {
+  composes: themeSwitcherDropdown;
   background: rgba(4, 87, 175, 0.24);
 }

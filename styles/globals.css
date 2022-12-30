@@ -7,20 +7,76 @@ body,
   height: 100%;
 }
 
+:root {
+  --primary-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  --background: white;
+  --foreground: black;
+  --foreground-disabled: #999;
+  --primary: rgb(0, 106, 255);
+  --primary-dark: rgb(13, 69, 153);
+  --primary-light: rgb(242, 250, 255);
+  --secondary: #e96262;
+  --secondary-dark: #cd5a5a;
+  --focus: var(--primary);
+  --outline: #cccccc;
+  --logo: black;
+  --search-button: var(--secondary);
+  --search-button-hover: var(--secondary-dark);
+  --listing-marker-background: white;
+  --listing-marker-foreground: black;
+  --listing-marker-background-visited: #e0e0e0;
+  --listing-marker-foreground-visited: #3c3c3c;
+  --boundary-control: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme='purple'] {
+  --primary: MediumPurple;
+  --primary-dark: RebeccaPurple;
+  --primary-light: #e1d8f1;
+  --logo: var(--primary-dark);
+  --search-button: var(--primary);
+  --search-button-hover: var(--primary-dark);
+}
+
+[data-theme='orange'] {
+  --primary: orange;
+  --primary-dark: #db7800;
+  --primary-light: #ffe1c8;
+  --logo: var(--primary-dark);
+  --search-button: var(--primary);
+  --search-button-hover: var(--primary-dark);
+}
+
+[data-theme='dark'] {
+  --background: #22272e;
+  --foreground: #e0e0e0;
+  --foreground-disabled: #b3b3b3;
+  --primary: #b79bf0;
+  --primary-light: MediumPurple;
+  --listing-marker-background: #22272e;
+  --listing-marker-foreground: #e0e0e0;
+  --listing-marker-background-visited: #5a5a5a;
+  --listing-marker-foreground-visited: #e0e0e0;
+  --logo: white;
+  --boundary-control: rgba(34, 39, 46, 0.7);
+}
+
 body {
-  font-family: -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen-Sans,
-    Ubuntu,
-    Cantarell,
-    "Helvetica Neue",
-    sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--primary-font);
   margin: 0;
   padding: 1rem;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
+  outline-color: var(--focus);
+}
+
+input {
+  accent-color: var(--primary);
 }

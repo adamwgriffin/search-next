@@ -3,18 +3,18 @@
   align-items: center;
   cursor: pointer;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-  border-radius: 6px;
-  height: 40px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0rem .0625rem .25rem -0.0625rem;
+  border-radius: .375rem;
+  height: 2.5rem;
   padding: 0 .8rem;
-  background: MediumPurple;
+  background: var(--primary);
   font-size: inherit;
   font-family: inherit;
-  color: white;
+  color: var(--foreground);
 }
 
 .containedButton:hover {
-  background: RebeccaPurple;
+  background: var(--primary-dark);
 }
 
 .containedButton.highlighted {

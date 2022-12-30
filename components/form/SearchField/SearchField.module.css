@@ -8,11 +8,6 @@
   width: 100%;
 }
 
-.comboboxInput,
-.locationSearchField {
-  background: #f6f6f6;
-}
-
 .comboboxInput {
   flex-grow: 1;
   display: flex;
@@ -23,15 +18,15 @@
   composes: comboboxInput;
   /* the margin stops content from moving around when focus ring is active */
   padding: 1px;
-  border-top: 1px solid #cccccc;
-  border-left: 1px solid #cccccc; 
-  border-bottom: 1px solid #cccccc;
+  border-top: 1px solid var(--outline);
+  border-left: 1px solid var(--outline);
+  border-bottom: 1px solid var(--outline);
 }
 
 .comboboxInputHasFocus {
   composes: comboboxInput;
   padding: 0;
-  border: 2px solid #0773f8;
+  border: 2px solid var(--focus);
 }
 
 .locationSearchField {
@@ -41,19 +36,20 @@
   padding-left: 10px;
   font-size: inherit;
   font-family: inherit;
-  color: inherit;
   height: 36px;
   border-radius: 6px 0 0 6px;
 }
 
-.locationSearchField:focus { outline: none; }
+.locationSearchField:focus {
+  outline: none;
+}
 
 .listboxMenu {
   position: absolute;
   z-index: 1;
   overflow-x: hidden;
   list-style: none;
-  background-color: white;
+  background-color: var(--background);
   width: 100%;
   max-height: 250px;
   box-shadow: 0px 3px 3px 0 rgba(0, 0, 0, 0.4);
@@ -69,19 +65,19 @@
 .listItem {
   display: flex;
   align-items: flex-start;
-  padding: .6rem;
+  padding: 0.6rem;
   cursor: pointer;
 }
 
 .listItemActive {
   composes: listItem;
-  background-color: #f6f6f6;
+  background-color: var(--primary-light);
 }
 
 .listItem:hover {
-  background-color: #f6f6f6;
+  background-color: var(--primary-light);
 }
 
 .locationPinFilledIcon {
-  margin-right: .3rem;
+  margin-right: 0.3rem;
 }

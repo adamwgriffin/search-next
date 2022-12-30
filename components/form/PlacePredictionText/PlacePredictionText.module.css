@@ -1,5 +1,5 @@
 .matched {
-  color: black;
+  color: var(--foreground);
   font-weight: 700;
 }
 
@@ -8,5 +8,5 @@
 }
 
 .secondaryText {
-  color: #999;
+  color: var(--foreground-disabled);
 }

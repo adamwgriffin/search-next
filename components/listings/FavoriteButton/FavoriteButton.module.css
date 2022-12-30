@@ -3,9 +3,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0;
-  border-radius: 100%;
-  outline: none;
+  padding: .0625rem;
   border: none;
   transition: 0.2s;
   background: none;
@@ -41,7 +39,7 @@
 	}
 	100% {
 		transform: scale(1);
-		fill: #ff385c;
+		fill: var(--secondary);
 	}
 }
 
