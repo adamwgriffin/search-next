@@ -7,7 +7,7 @@
   position: absolute;
   transform: none;
   z-index: 1;
-  min-width: 8rem;
+  min-width: 6rem;
   border-radius: 6px;
   margin-top: 3px;
   box-shadow: 0px 9px 12px rgba(0, 0, 0, 0.06),

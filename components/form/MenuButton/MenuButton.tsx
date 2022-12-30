@@ -10,6 +10,8 @@ interface MenuButtonProps {
   label: string
   children: ReactNode
   alignRight?: boolean
+  alignBottom?: boolean
+  condensed?: boolean
   onOpen?: () => void
   onClose?: () => void
 }
@@ -18,6 +20,8 @@ const MenuButton: NextPage<MenuButtonProps> = ({
   label,
   children,
   alignRight,
+  alignBottom,
+  condensed,
   onOpen,
   onClose
 }) => {
@@ -40,11 +44,18 @@ const MenuButton: NextPage<MenuButtonProps> = ({
   useClickAway(ref, closeMenu)
 
   const menuClass = open ? styles.open : styles.closed
-  const menuStyle = { right: alignRight ? '0' : 'none' }
+  const menuStyle = {
+    right: alignRight ? '0' : 'none',
+    bottom: alignBottom ? '100%' : 'none'
+  }
 
   return (
     <div ref={ref} className={styles.menuButton}>
-      <OutlinedButton highlighted={open} onClick={toggleMenu}>
+      <OutlinedButton
+        highlighted={open}
+        onClick={toggleMenu}
+        condensed={condensed}
+      >
         <span className={styles.label}>{label}</span>
         <MenuOpenIcon open={open} />
       </OutlinedButton>
