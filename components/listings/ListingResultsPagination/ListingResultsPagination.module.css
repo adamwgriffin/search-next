@@ -1,23 +1,22 @@
 .listingResultsPagination {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 .paginationButtons {
   display: flex;
   justify-content: center;
-  column-gap: .5rem;
+  column-gap: .2rem;
 }
 
 .pageButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 .4rem;
   cursor: pointer;
   min-width: 30px;
   height: 30px;
-  border: 1px solid var(--outline);
-  border-radius: 6px;
+  border-radius: 50%;
+  border: none ;
   background: inherit;
   font-size: inherit;
   font-family: inherit;
@@ -35,20 +34,19 @@
 }
 
 .paginationButton {
-  margin: 0 .3rem;
+  background-color: inherit;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
-  border-radius: 6px;
-  padding: .4rem .7rem;
-  background: var(--primary);
+  border-radius: 50%;
   font-size: inherit;
   font-family: inherit;
-  color: var(--background);
+  color: var(--foregound);
 }
 
 .paginationButton:hover {
-  background: var(--primary-dark);
+  background-color: var(--primary-light);
 }
 
 .paginationButton:disabled {
@@ -58,7 +56,7 @@
 
 .morePages {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14%, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10%, 1fr));
   gap: .5rem;
   min-width: 9rem;
   max-width: 20rem;
