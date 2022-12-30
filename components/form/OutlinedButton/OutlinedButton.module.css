@@ -21,4 +21,5 @@
 .outlinedButtonHighlighted {
   composes: outlinedButton;
   background: var(--primary-light);
+  border-color: var(--primary);
 }

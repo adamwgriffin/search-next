@@ -3,15 +3,21 @@
 }
 
 .paginationButtons {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  column-gap: .5rem;
 }
 
 .pageButton {
-  margin: 0 .3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 .4rem;
   cursor: pointer;
+  min-width: 30px;
+  height: 30px;
   border: 1px solid var(--outline);
   border-radius: 6px;
-  padding: .3rem .6rem;
   background: inherit;
   font-size: inherit;
   font-family: inherit;
@@ -51,8 +57,14 @@
 }
 
 .morePages {
-  composes: pageButton;
-  padding: .3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14%, 1fr));
+  gap: .5rem;
+  min-width: 9rem;
+  max-width: 20rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
 .morePagesItemSelected {

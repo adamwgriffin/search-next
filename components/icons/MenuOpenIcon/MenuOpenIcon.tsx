@@ -1,12 +1,18 @@
 import type { NextPage } from 'next'
 import styles from './MenuOpenIcon.module.css'
 
-const MenuOpenIcon: NextPage<{ open: boolean }> = (props) => {
+export interface MenuOpenIconProps {
+  open: boolean
+  textColor?: string
+} 
+
+const MenuOpenIcon: NextPage<MenuOpenIconProps> = ({ open, textColor='var(--foreground)' }) => {
   return (
     <svg
       role='button'
-      aria-pressed={props.open}
-      className={props.open ? styles.open : styles.closed}
+      aria-pressed={open}
+      className={open ? styles.open : styles.closed}
+      style={{ fill: textColor }}
       xmlns='http://www.w3.org/2000/svg'
       width='12'
       height='8'

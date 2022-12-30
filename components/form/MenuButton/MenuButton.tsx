@@ -12,6 +12,7 @@ interface MenuButtonProps {
   alignRight?: boolean
   alignBottom?: boolean
   condensed?: boolean
+  highlighted?: boolean
   onOpen?: () => void
   onClose?: () => void
 }
@@ -22,6 +23,7 @@ const MenuButton: NextPage<MenuButtonProps> = ({
   alignRight,
   alignBottom,
   condensed,
+  highlighted,
   onOpen,
   onClose
 }) => {
@@ -48,16 +50,21 @@ const MenuButton: NextPage<MenuButtonProps> = ({
     right: alignRight ? '0' : 'none',
     bottom: alignBottom ? '100%' : 'none'
   }
+  const textColor = highlighted ? ' var(--primary)' : 'var(--foreground)'
 
   return (
     <div ref={ref} className={styles.menuButton}>
       <OutlinedButton
-        highlighted={open}
+        highlighted={highlighted || open}
+        textColor={textColor}
         onClick={toggleMenu}
         condensed={condensed}
       >
         <span className={styles.label}>{label}</span>
-        <MenuOpenIcon open={open} />
+        <MenuOpenIcon
+          open={open}
+          textColor={textColor}
+        />
       </OutlinedButton>
       <div className={menuClass} style={menuStyle}>
         {children}
