@@ -21,7 +21,7 @@ const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({
     <div className={styles.listingResultsHeader}>
       {!listingSearchRunning && totalListings > 0 && (
         <div>
-          {totalListings} {totalListings === 1 ? 'Home' : 'Homes'}
+          {totalListings.toLocaleString()} {totalListings === 1 ? 'Home' : 'Homes'}
         </div>
       )}
       {listingSearchRunning && (
