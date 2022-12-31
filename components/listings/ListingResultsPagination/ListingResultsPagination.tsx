@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import styles from './ListingResultsPagination.module.css'
 import MenuButton from '../../form/MenuButton/MenuButton'
+import PaginationButton from '../PaginationButton/PaginationButton'
 import ArrowRight from '../../icons/ArrorRight/ArrowRight'
 import ArrowLeft from '../../icons/ArrowLeft/ArrowLeft'
 import PageButton from '../PageButton/PageButton'
@@ -52,15 +53,13 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
     <div className={styles.listingResultsPagination}>
       {pages.length > 1 && (
         <div className={styles.paginationButtons}>
-          <button
-            className={styles.paginationButton}
+          <PaginationButton
             title='Previous Page'
-            aria-label='Previous Page'
             onClick={handlePreviousPageClick}
             disabled={currentPage === pages[0]}
           >
             <ArrowLeft />
-          </button>
+          </PaginationButton>
           {visiblePages.map((page, i) => (
             <PageButton
               key={page.toString()}
@@ -89,15 +88,13 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
               </div>
             </MenuButton>
           )}
-          <button
-            className={styles.paginationButton}
+          <PaginationButton
             title='Next Page'
-            aria-label='Next Page'
             onClick={handleNextPageClick}
             disabled={currentPage === lastPage}
           >
             <ArrowRight />
-          </button>
+          </PaginationButton>
         </div>
       )}
       <p className={styles.resultTotals}>

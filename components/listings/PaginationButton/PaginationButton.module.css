@@ -1,0 +1,20 @@
+.paginationButton {
+  background-color: inherit;
+  width: 1.875rem;
+  height: 1.875rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--foregound);
+}
+
+.paginationButton:hover:enabled {
+  background-color: var(--primary-light);
+}
+
+.paginationButton:disabled {
+  cursor: not-allowed;
+  color: var(--foreground-disabled);
+}
