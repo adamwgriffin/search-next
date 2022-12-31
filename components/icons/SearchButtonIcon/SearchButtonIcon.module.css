@@ -1,0 +1,5 @@
+.searchButtonIcon {
+  height: 1.625rem;
+  width: 1.625rem;
+  fill: var(--search-button-foreground);
+}

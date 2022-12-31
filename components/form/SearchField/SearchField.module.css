@@ -11,7 +11,7 @@
 .comboboxInput {
   flex-grow: 1;
   display: flex;
-  border-radius: 6px 0 0 6px;
+  border-radius: 1.25rem 0 0 1.25rem;
 }
 
 .comboboxInputNoFocus {
@@ -37,7 +37,7 @@
   font-size: inherit;
   font-family: inherit;
   height: 36px;
-  border-radius: 6px 0 0 6px;
+  border-radius: 1.25rem 0 0 1.25rem;
 }
 
 .locationSearchField:focus {

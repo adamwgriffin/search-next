@@ -1,13 +1,12 @@
 import type { NextPage } from 'next'
-import noop from 'lodash/noop'
-import SearchButtonIcon from '../../icons/SearchButtonIcon'
+import SearchButtonIcon from '../../icons/SearchButtonIcon/SearchButtonIcon'
 import styles from './SearchButton.module.css'
 
 export interface SearchButtonProps {
   onClick?: () => void
 }
 
-const SearchButton: NextPage<SearchButtonProps> = ({ onClick = noop }) => {
+const SearchButton: NextPage<SearchButtonProps> = ({ onClick }) => {
   return (
     <button
       className={styles.searchButton}

@@ -21,8 +21,9 @@ body,
   --focus: var(--primary);
   --outline: #cccccc;
   --logo: black;
-  --search-button: var(--secondary);
-  --search-button-hover: var(--secondary-dark);
+  --search-button-background: var(--secondary);
+  --search-button-background-hover: var(--secondary-dark);
+  --search-button-foreground: white;
   --listing-marker-background: white;
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
@@ -35,8 +36,8 @@ body,
   --primary-dark: RebeccaPurple;
   --primary-light: #e1d8f1;
   --logo: var(--primary-dark);
-  --search-button: var(--primary);
-  --search-button-hover: var(--primary-dark);
+  --search-button-background: var(--primary);
+  --search-button-background-hover: var(--primary-dark);
 }
 
 [data-theme='orange'] {
@@ -44,8 +45,8 @@ body,
   --primary-dark: #db7800;
   --primary-light: #ffe1c8;
   --logo: var(--primary-dark);
-  --search-button: var(--primary);
-  --search-button-hover: var(--primary-dark);
+  --search-button-background: var(--primary);
+  --search-button-background-hover: var(--primary-dark);
 }
 
 [data-theme='dark'] {
