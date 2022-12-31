@@ -47,8 +47,8 @@ const MenuButton: NextPage<MenuButtonProps> = ({
 
   const menuClass = open ? styles.open : styles.closed
   const menuStyle = {
-    right: alignRight ? '0' : 'none',
-    bottom: alignBottom ? '100%' : 'none'
+    right: alignRight ? '0' : 'auto',
+    bottom: alignBottom ? '100%' : 'auto'
   }
   const textColor = highlighted ? ' var(--primary)' : 'var(--foreground)'
 
