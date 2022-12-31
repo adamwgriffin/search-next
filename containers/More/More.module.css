@@ -1,7 +1,6 @@
 .more {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
+  display: grid;
+  gap: 1rem;
   min-width: 16rem;
   padding: 1rem;
 }
