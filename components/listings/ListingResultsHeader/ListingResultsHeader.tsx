@@ -25,8 +25,8 @@ const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({
         </div>
       )}
       {listingSearchRunning && (
-        <ContentLoader width={'7.4rem'} height={'1.2rem'}>
-          <rect x='0' y='0' rx='0.375rem' width='7.4rem' height='1.2rem' />
+        <ContentLoader width={'118px'} height={'19px'}>
+          <rect x='0' y='0' rx='6px' width='118px' height='19px' />
         </ContentLoader>
       )}
       <SortMenu sortBy={sortBy} onChange={onSortMenuChange} />
