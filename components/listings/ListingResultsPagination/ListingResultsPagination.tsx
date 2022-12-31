@@ -3,6 +3,7 @@ import styles from './ListingResultsPagination.module.css'
 import MenuButton from '../../form/MenuButton/MenuButton'
 import ArrowRight from '../../icons/ArrorRight/ArrowRight'
 import ArrowLeft from '../../icons/ArrowLeft/ArrowLeft'
+import PageButton from '../PageButton/PageButton'
 
 export interface Pagination {
   start: number
@@ -61,16 +62,12 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
             <ArrowLeft />
           </button>
           {visiblePages.map((page, i) => (
-            <button
+            <PageButton
               key={page.toString()}
-              className={styles.pageButton}
-              title={`Page ${i + 1}`}
-              aria-label={`Page ${i + 1}`}
+              pageNumber={i + 1}
               disabled={page === currentPage}
               onClick={() => onClick(page)}
-            >
-              {i + 1}
-            </button>
+            />
           ))}
           {morePages.length > 0 && (
             <MenuButton
@@ -82,16 +79,12 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
             >
               <div className={styles.morePages}>
                 {morePages.map((page, i) => (
-                  <button
+                  <PageButton
                     key={page.toString()}
-                    className={styles.pageButton}
-                    title={`Page ${visiblePages.length + i + 1}`}
-                    aria-label={`Page ${visiblePages.length + i + 1}`}
+                    pageNumber={visiblePages.length + i + 1}
                     disabled={page === currentPage}
                     onClick={() => onClick(page)}
-                  >
-                    {visiblePages.length + i + 1}
-                  </button>
+                  />
                 ))}
               </div>
             </MenuButton>

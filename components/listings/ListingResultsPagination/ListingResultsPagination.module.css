@@ -8,31 +8,6 @@
   column-gap: .2rem;
 }
 
-.pageButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  min-width: 1.875rem;
-  height: 1.875rem;
-  border-radius: 50%;
-  border: none ;
-  background: inherit;
-  font-size: inherit;
-  font-family: inherit;
-  color: inherit;
-}
-
-.pageButton:hover {
-  background: var(--primary-light);
-}
-
-.pageButton:disabled {
-  background: var(--primary-light);
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
 .paginationButton {
   background-color: inherit;
   width: 1.875rem;
