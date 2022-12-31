@@ -1,0 +1,9 @@
+.arrow {
+  display: block;
+  fill: none;
+  height: 1rem;
+  width: 1rem;
+  stroke: currentcolor;
+  stroke-width: 3;
+  overflow: visible;
+}

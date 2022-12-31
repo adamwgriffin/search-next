@@ -13,8 +13,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  min-width: 30px;
-  height: 30px;
+  min-width: 1.875rem;
+  height: 1.875rem;
   border-radius: 50%;
   border: none ;
   background: inherit;
@@ -35,8 +35,8 @@
 
 .paginationButton {
   background-color: inherit;
-  width: 30px;
-  height: 30px;
+  width: 1.875rem;
+  height: 1.875rem;
   cursor: pointer;
   border: none;
   border-radius: 50%;
@@ -45,13 +45,13 @@
   color: var(--foregound);
 }
 
-.paginationButton:hover {
+.paginationButton:hover:enabled {
   background-color: var(--primary-light);
 }
 
 .paginationButton:disabled {
-  background: var(--primary-light);
-  color: var(--primary);
+  cursor: not-allowed;
+  color: var(--foreground-disabled);
 }
 
 .morePages {

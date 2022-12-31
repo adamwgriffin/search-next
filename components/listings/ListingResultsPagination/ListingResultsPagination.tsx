@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import styles from './ListingResultsPagination.module.css'
 import MenuButton from '../../form/MenuButton/MenuButton'
+import ArrowRight from '../../icons/ArrorRight/ArrowRight'
+import ArrowLeft from '../../icons/ArrowLeft/ArrowLeft'
 
 export interface Pagination {
   start: number
@@ -49,16 +51,15 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
     <div className={styles.listingResultsPagination}>
       {pages.length > 1 && (
         <div className={styles.paginationButtons}>
-          {currentPage !== pages[0] && (
-            <button
-              className={styles.paginationButton}
-              title='Previous Page'
-              aria-label='Previous Page'
-              onClick={handlePreviousPageClick}
-            >
-              &lt;
-            </button>
-          )}
+          <button
+            className={styles.paginationButton}
+            title='Previous Page'
+            aria-label='Previous Page'
+            onClick={handlePreviousPageClick}
+            disabled={currentPage === pages[0]}
+          >
+            <ArrowLeft />
+          </button>
           {visiblePages.map((page, i) => (
             <button
               key={page.toString()}
@@ -95,16 +96,15 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
               </div>
             </MenuButton>
           )}
-          {currentPage !== lastPage && (
-            <button
-              className={styles.paginationButton}
-              title='Next Page'
-              aria-label='Next Page'
-              onClick={handleNextPageClick}
-            >
-              &gt;
-            </button>
-          )}
+          <button
+            className={styles.paginationButton}
+            title='Next Page'
+            aria-label='Next Page'
+            onClick={handleNextPageClick}
+            disabled={currentPage === lastPage}
+          >
+            <ArrowRight />
+          </button>
         </div>
       )}
       <p className={styles.resultTotals}>
