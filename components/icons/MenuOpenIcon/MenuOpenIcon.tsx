@@ -3,16 +3,14 @@ import styles from './MenuOpenIcon.module.css'
 
 export interface MenuOpenIconProps {
   open: boolean
-  textColor?: string
 } 
 
-const MenuOpenIcon: NextPage<MenuOpenIconProps> = ({ open, textColor='var(--foreground)' }) => {
+const MenuOpenIcon: NextPage<MenuOpenIconProps> = ({ open }) => {
   return (
     <svg
       role='button'
       aria-pressed={open}
       className={open ? styles.open : styles.closed}
-      style={{ fill: textColor }}
       xmlns='http://www.w3.org/2000/svg'
       width='12'
       height='8'
