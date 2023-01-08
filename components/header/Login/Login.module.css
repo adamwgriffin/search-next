@@ -1,3 +1,24 @@
-.login {
+.loginButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: inherit;
+  border: none;
+  padding: 0;
+  font-size: 2rem;
+  font-family: inherit;
+  color: inherit;
+}
+
+.loginMenu {
+  display: grid;
+  row-gap: .8rem;
   padding: 1rem;
+}
+
+.user {
+  font-size: 1.2rem;
+  margin: 0;
+  text-align: center;
 }

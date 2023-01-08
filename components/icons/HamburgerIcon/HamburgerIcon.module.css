@@ -1,0 +1,54 @@
+.hamburgerIcon {
+  cursor: pointer;
+  transition: transform 400ms;
+  user-select: none;
+  height: 50px;
+}
+
+.hamburgerIconActive {
+  composes: hamburgerIcon;
+  transform: rotate(45deg);
+}
+
+.line {
+  fill: none;
+  transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+  stroke: var(--foreground);
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+
+.hamburgerIconActive .line {
+  stroke: var(--primary);
+}
+
+.top {
+  composes: line;
+  stroke-dasharray: 40 160;
+}
+
+.middle {
+  composes: line;
+  stroke-dasharray: 40 142;
+  transform-origin: 50%;
+  transition: transform 400ms;
+}
+
+.bottom {
+  composes: line;
+  stroke-dasharray: 40 85;
+  transform-origin: 50%;
+  transition: transform 400ms, stroke-dashoffset 400ms;
+}
+
+.hamburgerIconActive .top {
+  stroke-dashoffset: -64px;
+}
+
+.hamburgerIconActive .middle {
+  transform: rotate(90deg);
+}
+
+.hamburgerIconActive .bottom {
+  stroke-dashoffset: -64px;
+}
