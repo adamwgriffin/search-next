@@ -5,21 +5,18 @@ import type {
 } from '../../lib/listing_service_params_types'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
-  selectSearchType,
   selectPriceRange,
   selectPropertyTypes,
   selectBedBathParams,
-  setSearchType,
   setFilterParams,
   setPropertyTypes,
   searchWithUpdatedFilters,
   SearchTypes,
-  SearchTypeOption
+  selectSearchType
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import styles from './Filters.module.css'
 import Price from '../../components/form/Price/Price'
-import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import PropertyType from '../../components/form/PropertyType/PropertyType'
 import More from '../../containers/More/More'
@@ -31,11 +28,6 @@ const Filters: NextPage = () => {
   const priceRange = useAppSelector(selectPriceRange)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const bedsAndBaths = useAppSelector(selectBedBathParams)
-
-  const handleSearchTypeChange = (searchType: SearchTypeOption) => {
-    dispatch(setSearchType(searchType))
-    dispatch(searchWithUpdatedFilters())
-  }
 
   const handlePropertyTypeChange = (
     updatedPropertyTypes: PropertyTypeIDArray
@@ -63,10 +55,6 @@ const Filters: NextPage = () => {
 
   return (
     <div className={styles.filters}>
-      <SearchTypeSelector
-        searchType={searchType}
-        onChange={handleSearchTypeChange}
-      />
       <Price
         priceRange={priceRange}
         onChange={handlePriceChange}
