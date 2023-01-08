@@ -5,6 +5,7 @@ import styles from './More.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   selectOpenHouseParam,
+  selectPropertyTypes,
   selectStatusParams,
   selectSquareFeetParams,
   selectLotSizeParams,
@@ -13,12 +14,15 @@ import {
   selectSearchType,
   SearchTypes,
   setSearchType,
+  setPropertyTypes,
   setFilterParams,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
+import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import MenuButton from '../../components/form/MenuButton/MenuButton'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import ListingStatus from '../../components/form/ListingStatus/ListingStatus'
+import PropertyType from '../../components/form/PropertyType/PropertyType'
 import SquareFeet from '../../components/form/SquareFeet/SquareFeet'
 import LotSize from '../../components/form/LotSize/LotSize'
 import YearBuilt from '../../components/form/YearBuilt/YearBuilt'
@@ -29,6 +33,7 @@ const More: NextPage = () => {
   const dispatch = useAppDispatch()
   const searchType = useAppSelector(selectSearchType)
   const openHouseParam = useAppSelector(selectOpenHouseParam)
+  const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const statusParams = useAppSelector(selectStatusParams)
   const squareFeetRange = useAppSelector(selectSquareFeetParams)
   const lotSizeParams = useAppSelector(selectLotSizeParams)
@@ -37,6 +42,13 @@ const More: NextPage = () => {
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
+    dispatch(searchWithUpdatedFilters())
+  }
+
+  const handlePropertyTypeChange = (
+    updatedPropertyTypes: PropertyTypeIDArray
+  ) => {
+    dispatch(setPropertyTypes(updatedPropertyTypes))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -68,6 +80,13 @@ const More: NextPage = () => {
           statusParms={statusParams}
           onChange={handleChangeAndInitiateSearch}
         />
+        {searchType !== SearchTypes.Rent && (
+          <PropertyType
+            propertyTypes={PropertyTypes}
+            params={selectedPropertyTypes}
+            onChange={handlePropertyTypeChange}
+          />
+        )}
         <SquareFeet
           squareFeetRange={squareFeetRange}
           onChange={handleChange}
