@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { Fragment } from 'react'
 import {
   SearchTypeOption,
   SearchTypes
@@ -27,9 +28,8 @@ const SearchTypeSelector: NextPage<SearchTypeProps> = ({
       <div className={styles.container}>
         {Object.values(SearchTypes).map((value) => {
           return (
-            <>
+            <Fragment key={`search-type-${value}`}>
               <input
-                key={`search-type-input-${value}`}
                 type='radio'
                 name={`search-type-${value}`}
                 id={`search-type-${value}`}
@@ -38,14 +38,10 @@ const SearchTypeSelector: NextPage<SearchTypeProps> = ({
                 value={value}
                 onChange={() => onChange?.(value)}
               />
-              <label
-                key={`search-type-label-${value}`}
-                htmlFor={`search-type-${value}`}
-                className={styles.label}
-              >
+              <label htmlFor={`search-type-${value}`} className={styles.label}>
                 {SearchTypeLabels[value]}
               </label>
-            </>
+            </Fragment>
           )
         })}
       </div>

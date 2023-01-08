@@ -5,6 +5,7 @@ import type {
   PropertyTypesInterface
 } from '../../../lib/property_types'
 import type { ChangeEvent } from 'react'
+import { Fragment } from 'react'
 import styles from './PropertyTypes.module.css'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
@@ -35,9 +36,8 @@ const PropertyTypes: NextPage<PropertyTypeProps> = ({
       <Legend>Home Type</Legend>
       <div className={styles.propertyType}>
         {Object.entries(propertyTypes).map(([name, { label, id }]) => (
-          <>
+          <Fragment key={`property-type-${label}-${id}`}>
             <input
-              key={`property-type-checkbox-${id}`}
               type='checkbox'
               id={name}
               className={styles.checkbox}
@@ -46,10 +46,10 @@ const PropertyTypes: NextPage<PropertyTypeProps> = ({
               checked={params.includes(id)}
               onChange={(e) => handleChange(e, id)}
             />
-            <label key={`property-type-label-${id}`} htmlFor={name} className={styles.label}>
+            <label htmlFor={name} className={styles.label}>
               {label}
             </label>
-          </>
+          </Fragment>
         ))}
       </div>
     </Fieldset>
