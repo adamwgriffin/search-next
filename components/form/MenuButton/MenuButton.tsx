@@ -38,9 +38,7 @@ const MenuButton: NextPage<MenuButtonProps> = ({
         condensed={condensed}
       >
         <span className={styles.label}>{label}</span>
-        <MenuOpenIcon
-          open={open}
-        />
+        <MenuOpenIcon open={open} />
       </OutlinedButton>
       <MenuDropdown
         open={open}
