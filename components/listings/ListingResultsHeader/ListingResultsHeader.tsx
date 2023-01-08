@@ -17,18 +17,21 @@ const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({
   sortBy,
   onSortMenuChange
 }) => {
+  const totalListingsMessage = () =>
+    `${totalListings.toLocaleString()} ${
+      totalListings === 1 ? 'Home' : 'Homes'
+    }`
+
   return (
     <div className={styles.listingResultsHeader}>
-      {!listingSearchRunning && totalListings > 0 && (
-        <div>
-          {totalListings.toLocaleString()} {totalListings === 1 ? 'Home' : 'Homes'}
-        </div>
-      )}
-      {listingSearchRunning && (
-        <ContentLoader width={'118px'} height={'19px'}>
-          <rect x='0' y='0' rx='6px' width='118px' height='19px' />
-        </ContentLoader>
-      )}
+      <div>
+        {!listingSearchRunning && totalListings > 0 && totalListingsMessage()}
+        {listingSearchRunning && (
+          <ContentLoader width={'118px'} height={'19px'}>
+            <rect x='0' y='0' rx='6px' width='118px' height='19px' />
+          </ContentLoader>
+        )}
+      </div>
       <SortMenu sortBy={sortBy} onChange={onSortMenuChange} />
     </div>
   )
