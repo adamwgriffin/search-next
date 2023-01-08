@@ -1,10 +1,11 @@
 .search {
   display: grid;
   /* 1fr means it will fill the remaining space for each of these. auto grows as large as it's content */
-  grid-template-columns: 50% 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 55% 1fr;
+  grid-template-rows: auto 1fr;
   /* requires all parent elements to also be height: 100% in order to work */
   height: 100%;
+  row-gap: 1rem;
 }
 
 .header,

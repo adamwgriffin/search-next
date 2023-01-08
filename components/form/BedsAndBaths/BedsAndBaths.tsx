@@ -29,7 +29,7 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
   }
 
   return (
-    <MenuButton label='Beds & Baths'>
+    <MenuButton label='Beds & Baths' alignRight>
       <div className={styles.bedsAndBaths}>
         <RadioButtonGroup
           name='bed_min'

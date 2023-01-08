@@ -27,7 +27,7 @@ export interface SearchFieldProps {
 
 const SearchField: NextPage<SearchFieldProps> = ({
   value,
-  placeholder = 'Search for City, Neighborhood, Zip, County',
+  placeholder = 'Address, Neighborhood or Zip',
   options,
   onInput,
   onClearPlaceAutocompletePredictions,

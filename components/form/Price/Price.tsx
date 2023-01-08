@@ -20,7 +20,7 @@ const Price: NextPage<PriceProps> = ({
   onChange
 }) => {
   return (
-    <MenuButton label='Price' onClose={() => onClose?.()}>
+    <MenuButton label='Price' alignRight onClose={() => onClose?.()}>
       <div className={styles.price}>
         <label htmlFor='pricemin' className={formStyles.accessibleLabel}>
           Min Price

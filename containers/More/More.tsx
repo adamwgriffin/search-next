@@ -66,7 +66,7 @@ const More: NextPage = () => {
   }
 
   return (
-    <MenuButton label='More'>
+    <MenuButton label='More' alignRight>
       <div className={styles.more}>
         <SearchTypeSelector
           searchType={searchType}
