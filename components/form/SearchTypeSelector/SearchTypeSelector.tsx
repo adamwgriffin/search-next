@@ -3,8 +3,7 @@ import {
   SearchTypeOption,
   SearchTypes
 } from '../../../store/listingSearch/listingSearchSlice'
-import formStyles from '../../../styles/forms.module.css'
-import MenuButton from '../MenuButton/MenuButton'
+import styles from './SearchTypeSelector.module.css'
 import Fieldset from '../Fieldset/Fieldset'
 
 export interface SearchTypeProps {
@@ -23,35 +22,34 @@ const SearchTypeSelector: NextPage<SearchTypeProps> = ({
   onChange
 }) => {
   return (
-    <MenuButton label={SearchTypeLabels[searchType]}>
-      <Fieldset>
-        <ul className={formStyles.inputList}>
-          {Object.values(SearchTypes).map((value) => {
-            return (
-              <li
-                key={`search-type-${value}`}
-                className={formStyles.inputListItem}
+    <Fieldset>
+      <legend className={styles.title}>Search Type</legend>
+      <div className={styles.container}>
+        {Object.values(SearchTypes).map((value) => {
+          return (
+            <>
+              <input
+                key={`search-type-input-${value}`}
+                type='radio'
+                name={`search-type-${value}`}
+                id={`search-type-${value}`}
+                className={styles.input}
+                checked={value === searchType}
+                value={value}
+                onChange={() => onChange?.(value)}
+              />
+              <label
+                key={`search-type-label-${value}`}
+                htmlFor={`search-type-${value}`}
+                className={styles.label}
               >
-                <input
-                  type='radio'
-                  name={`search-type-${value}`}
-                  id={`search-type-${value}`}
-                  checked={value === searchType}
-                  value={value}
-                  onChange={() => onChange?.(value)}
-                />
-                <label
-                  htmlFor={`search-type-${value}`}
-                  className={formStyles.inputListLabel}
-                >
-                  {SearchTypeLabels[value]}
-                </label>
-              </li>
-            )
-          })}
-        </ul>
-      </Fieldset>
-    </MenuButton>
+                {SearchTypeLabels[value]}
+              </label>
+            </>
+          )
+        })}
+      </div>
+    </Fieldset>
   )
 }
 
