@@ -24,7 +24,7 @@ export const RentalPropertytypeID:PropertyTypeID = 6
 export const PropertyTypes: PropertyTypesInterface = Object.seal({
   residential: {
     id: 1,
-    label: 'Single-Family'
+    label: 'House'
   },
   condo: {
     id: 2,

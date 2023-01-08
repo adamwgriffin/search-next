@@ -5,8 +5,9 @@ import type {
   PropertyTypesInterface
 } from '../../../lib/property_types'
 import type { ChangeEvent } from 'react'
-import formStyles from '../../../styles/forms.module.css'
-import MenuButton from '../MenuButton/MenuButton'
+import styles from './PropertyTypes.module.css'
+import Fieldset from '../Fieldset/Fieldset'
+import Legend from '../Legend/Legend'
 
 interface PropertyTypeProps {
   propertyTypes: Readonly<PropertyTypesInterface>
@@ -30,26 +31,28 @@ const PropertyTypes: NextPage<PropertyTypeProps> = ({
   }
 
   return (
-    <MenuButton label='Home Type'>
-      <ul className={formStyles.inputList}>
+    <Fieldset>
+      <Legend>Home Type</Legend>
+      <div className={styles.propertyType}>
         {Object.entries(propertyTypes).map(([name, { label, id }]) => (
-          <li key={id} className={formStyles.inputListItem}>
+          <>
             <input
+              key={`property-type-checkbox-${id}`}
               type='checkbox'
               id={name}
-              className={formStyles.checkbox}
+              className={styles.checkbox}
               name={name}
               value={id}
               checked={params.includes(id)}
               onChange={(e) => handleChange(e, id)}
             />
-            <label htmlFor={name} className={formStyles.inputListLabel}>
+            <label key={`property-type-label-${id}`} htmlFor={name} className={styles.label}>
               {label}
             </label>
-          </li>
+          </>
         ))}
-      </ul>
-    </MenuButton>
+      </div>
+    </Fieldset>
   )
 }
 

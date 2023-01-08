@@ -49,7 +49,7 @@
   outline-color: var(--primary-dark);
 }
 
-.input[type='radio']:checked + .label {
+.input[type=radio]:checked + .label {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--background);

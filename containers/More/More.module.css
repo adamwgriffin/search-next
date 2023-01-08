@@ -1,6 +1,7 @@
 .more {
   display: grid;
   gap: 1rem;
-  min-width: 16rem;
+  min-width: 26rem;
+  overflow-y: auto;
   padding: 1rem;
 }

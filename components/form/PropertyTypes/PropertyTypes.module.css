@@ -1,0 +1,48 @@
+.propertyType {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  gap: .5rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1rem 0;
+  border: solid 1px var(--outline);
+  border-radius: 0.375rem;
+  font-size: .8rem;
+}
+
+.label:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  margin: 0;
+}
+
+.checkbox[type=checkbox]:hover + .label:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.checkbox[type=checkbox]:focus + .label {
+  outline: solid 2px var(--focus);
+  outline-offset: 1px;
+}
+
+.checkbox[type=checkbox]:checked:focus + .label {
+  outline-color: var(--primary-dark);
+}
+
+.checkbox[type=checkbox]:checked + .label {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--background);
+}
