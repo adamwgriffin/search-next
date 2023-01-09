@@ -8,6 +8,7 @@ import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 
 export interface PriceProps {
   priceRange: PriceRangeParams
+  onFocus?: () => void
   onBlur?: () => void
   onClose?: () => void
   onChange?: (priceRange: Partial<PriceRangeParams>) => void
@@ -15,6 +16,7 @@ export interface PriceProps {
 
 const Price: NextPage<PriceProps> = ({
   priceRange,
+  onFocus,
   onBlur,
   onClose,
   onChange
@@ -36,6 +38,7 @@ const Price: NextPage<PriceProps> = ({
           className={formStyles.input}
           id='pricemin'
           autoComplete='off'
+          onFocus={onFocus}
           onBlur={onBlur}
           inputMode='numeric'
         />
@@ -54,6 +57,7 @@ const Price: NextPage<PriceProps> = ({
           className={formStyles.input}
           id='pricemax'
           autoComplete='off'
+          onFocus={onFocus}
           onBlur={onBlur}
           inputMode='numeric'
         />
