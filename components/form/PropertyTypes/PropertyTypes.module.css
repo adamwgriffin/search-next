@@ -29,7 +29,6 @@
 .checkbox[type=checkbox]:hover + .label:hover {
   background: var(--primary-light);
   border-color: var(--primary);
-  color: var(--primary);
 }
 
 .checkbox[type=checkbox]:focus + .label {
