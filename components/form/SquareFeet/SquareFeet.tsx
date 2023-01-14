@@ -10,10 +10,11 @@ import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 export interface SquareFeetProps {
   squareFeetRange: SquareFeetRangeParams
   onChange?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
+  onFocus?: () => void
   onBlur?: () => void
 }
 
-const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onBlur }) => {
+const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onFocus, onBlur }) => {
   return (
     <Fieldset>
       <Legend>Square Feet</Legend>
@@ -34,6 +35,7 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onBl
           className={formStyles.input}
           id='sqft_min'
           autoComplete='off'
+          onFocus={onFocus}
           onBlur={onBlur}
           inputMode='numeric'
         />
@@ -54,6 +56,7 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onBl
           className={formStyles.input}
           id='sqft_max'
           autoComplete='off'
+          onFocus={onFocus}
           onBlur={onBlur}
           inputMode='numeric'
         />

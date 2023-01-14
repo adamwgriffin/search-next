@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { MoreFiltersParamsPartial, YearBuiltRangeParams } from '../../lib/listing_service_params_types'
+import type { MoreFiltersParamsPartial, SquareFeetRangeParams, YearBuiltRangeParams } from '../../lib/listing_service_params_types'
 import { useState } from 'react'
 import isEqual from 'lodash/isEqual'
 import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
@@ -42,6 +42,7 @@ const More: NextPage = () => {
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
   const featureParams = useAppSelector(selectFeatureParams)
   const [previousYearBuiltRange, setPreviousYearBuiltRange] = useState<YearBuiltRangeParams>()
+  const [previousSquareFeetRange, setPreviousSquareFeetRange] = useState<SquareFeetRangeParams>()
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
@@ -78,6 +79,16 @@ const More: NextPage = () => {
     }
   }
 
+  const handleSquareFeetFocus = () => {
+    setPreviousSquareFeetRange({ ...squareFeetRange })
+  }
+
+  const handleSquareFeetBlur = () => {
+    if (!isEqual(previousSquareFeetRange, squareFeetRange)) {
+      dispatch(searchWithUpdatedFilters())
+    }
+  }
+
   return (
     <MenuButton label='More' alignRight>
       <div className={styles.more}>
@@ -103,7 +114,8 @@ const More: NextPage = () => {
         <SquareFeet
           squareFeetRange={squareFeetRange}
           onChange={handleChange}
-          onBlur={initiateSearch}
+          onFocus={handleSquareFeetFocus}
+          onBlur={handleSquareFeetBlur}
         />
         <LotSize
           lotSizeMin={lotSizeParams.lotsize_min}
