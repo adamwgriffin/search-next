@@ -1,5 +1,7 @@
 import type { NextPage } from 'next'
-import type { MoreFiltersParamsPartial } from '../../lib/listing_service_params_types'
+import type { MoreFiltersParamsPartial, YearBuiltRangeParams } from '../../lib/listing_service_params_types'
+import { useState } from 'react'
+import isEqual from 'lodash/isEqual'
 import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
 import styles from './More.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks'
@@ -39,6 +41,7 @@ const More: NextPage = () => {
   const lotSizeParams = useAppSelector(selectLotSizeParams)
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
   const featureParams = useAppSelector(selectFeatureParams)
+  const [previousYearBuiltRange, setPreviousYearBuiltRange] = useState<YearBuiltRangeParams>()
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
@@ -63,6 +66,16 @@ const More: NextPage = () => {
 
   const initiateSearch = () => {
     dispatch(searchWithUpdatedFilters())
+  }
+
+  const handleYearBuiltFocus = () => {
+    setPreviousYearBuiltRange({ ...yearBuiltRange })
+  }
+
+  const handleYearBuiltBlur = () => {
+    if (!isEqual(previousYearBuiltRange, yearBuiltRange)) {
+      dispatch(searchWithUpdatedFilters())
+    }
   }
 
   return (
@@ -99,7 +112,8 @@ const More: NextPage = () => {
         <YearBuilt
           yearBuiltRange={yearBuiltRange}
           onChange={handleChange}
-          onBlur={initiateSearch}
+          onFocus={handleYearBuiltFocus}
+          onBlur={handleYearBuiltBlur}
         />
         <Features
           featureParams={featureParams}

@@ -9,11 +9,12 @@ import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
 
 export interface YearBuiltProps {
   yearBuiltRange: YearBuiltRangeParams
+  onFocus?: () => void
   onBlur?: () => void
   onChange?: (yearBuiltRange: YearBuiltRangeParams) => void
 }
 
-const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange }) => {
+const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, onChange }) => {
   const yearBuiltMinRef = useRef<HTMLInputElement>(null)
   const yearBuiltMaxRef = useRef<HTMLInputElement>(null)
 
@@ -47,6 +48,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
           autoComplete='off'
           value={yearBuiltRange.yearblt_min || ''}
           onChange={handleChange}
+          onFocus={onFocus}
           onBlur={onBlur}
         />
         <InputRangeSeparator />
@@ -65,6 +67,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onBlur, onChange 
           autoComplete='off'
           value={yearBuiltRange.yearblt_max || ''}
           onChange={handleChange}
+          onFocus={onFocus}
           onBlur={onBlur}
         />
       </div>
