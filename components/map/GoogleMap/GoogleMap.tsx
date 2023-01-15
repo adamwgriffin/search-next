@@ -9,7 +9,7 @@ export interface GoogleMapProps {
   bounds?: google.maps.LatLngBoundsLiteral | null
   onDragStart?: (currentMapState: GoogleMapState) => void
   onDragEnd?: (currentMapState: GoogleMapState) => void
-  onUserChangedZoom?: (currentMapState: GoogleMapState) => void
+  onZoomChanged?: (currentMapState: GoogleMapState) => void
   onIdle?: (currentMapState: GoogleMapState) => void
   children: ReactNode
 }
@@ -21,13 +21,6 @@ export interface GoogleMapState {
 }
 
 const eventListeners: google.maps.MapsEventListener[] = []
-// a side effect of calling fitBounds() inside the useEffect function for bounds is that it will trigger a
-// "zoom_changed" event. we only want to call the onUserChangedZoom() event callback if the user actually took some
-// action to trigger "zoom_changed", like clicking the zoom button on the map. the recommended way of handling this is
-// to set a flag to indicate this, hence zoomChangedProgrammatically. it's just a normal variable because making it
-// state with useState wasn't working correctly and isn't really necessary. it's outside the component because it was
-// getting reset to false every time the componenet re-rendered.
-let zoomChangedProgrammatically = false
 
 const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const {
@@ -36,7 +29,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
     children,
     onDragStart,
     onDragEnd,
-    onUserChangedZoom,
+    onZoomChanged,
     onIdle
   } = props
   const mapEl = useRef(null)
@@ -72,17 +65,6 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
     }
   }
 
-  const handleZoomChanged = () => {
-    // only call onUserChangedZoom() if the user took some action to trigger the "zoom_changed" event
-    if (!zoomChangedProgrammatically) {
-      typeof onUserChangedZoom === 'function' &&
-        onUserChangedZoom(getCurrentMapState())
-    } else {
-      // reset the flag after handling the event
-      zoomChangedProgrammatically = false
-    }
-  }
-
   // a generic handler for event props that just returns data about the map state if the event prop was defined
   const eventHandlerFactoryFunc = (fn: Function|undefined): Function|undefined => {
     if(fn) return () => fn(getCurrentMapState())
@@ -91,7 +73,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const eventListenerMapping = {
     dragstart: eventHandlerFactoryFunc(onDragStart),
     dragend: eventHandlerFactoryFunc(onDragEnd),
-    zoom_changed: handleZoomChanged,
+    zoom_changed: eventHandlerFactoryFunc(onZoomChanged),
     idle: eventHandlerFactoryFunc(onIdle)
   }
 
@@ -123,10 +105,6 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
 
   useEffect(() => {
     if (bounds && googleMap) {
-      // calling fitBounds() below will trigger a "zoom_changed" event, which we want to ignore in our
-      // handleZoomChanged() event handler so set this flag
-      zoomChangedProgrammatically = true
-      // sets the viewport to contain the given bounds
       googleMap.fitBounds(bounds)
     }
   }, [bounds, googleMap])
@@ -137,7 +115,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
     }
     return destroyEventListeners
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [googleMap, onDragStart, onDragEnd, onUserChangedZoom, onIdle])
+  }, [googleMap, onDragStart, onDragEnd, onZoomChanged, onIdle])
 
   return (
     <div ref={mapEl} id={styles.googleMap}>

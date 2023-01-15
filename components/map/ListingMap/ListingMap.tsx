@@ -70,7 +70,7 @@ const ListingMap: NextPage = () => {
           bounds={geoLayerBounds}
           onIdle={handleIdle}
           onDragEnd={handleUserAdjustedMap}
-          onUserChangedZoom={handleUserAdjustedMap}
+          onZoomChanged={handleUserAdjustedMap}
         >
           {listings.map((l) => (
             <ListingMarker
