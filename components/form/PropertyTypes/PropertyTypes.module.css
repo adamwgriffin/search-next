@@ -26,21 +26,21 @@
   margin: 0;
 }
 
-.checkbox[type=checkbox]:hover + .label:hover {
+.checkbox:hover + .label:hover {
   background: var(--primary-light);
   border-color: var(--primary);
 }
 
-.checkbox[type=checkbox]:focus + .label {
+.checkbox:focus + .label {
   outline: solid 2px var(--focus);
   outline-offset: 1px;
 }
 
-.checkbox[type=checkbox]:checked:focus + .label {
+.checkbox:checked:focus + .label {
   outline-color: var(--primary-dark);
 }
 
-.checkbox[type=checkbox]:checked + .label {
+.checkbox:checked + .label {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--background);
