@@ -3,9 +3,7 @@ import type {
   PriceRangeParams,
   BedsBathsParam
 } from '../../lib/listing_service_params_types'
-import { useState } from 'react'
-import isEqual from 'lodash/isEqual'
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import { useAppSelector, useAppDispatch, useRunCallbackIfChanged } from '../../hooks'
 import {
   selectPriceRange,
   selectBedBathParams,
@@ -21,8 +19,10 @@ import OutlinedButton from '../../components/form/OutlinedButton/OutlinedButton'
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
   const priceRange = useAppSelector(selectPriceRange)
-  const [previousPriceRange, setPreviousPriceRange] =
-    useState<PriceRangeParams>()
+  const [setPreviousPriceRange, runSearchIfPriceRangeChanged] = useRunCallbackIfChanged(
+    priceRange,
+    () => dispatch(searchWithUpdatedFilters())
+  )
   const bedsAndBaths = useAppSelector(selectBedBathParams)
 
   const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
@@ -34,16 +34,6 @@ const Filters: NextPage = () => {
     dispatch(setFilterParams(priceRange))
   }
 
-  const handlePriceFocus = () => {
-    setPreviousPriceRange({ ...priceRange })
-  }
-
-  const handlePriceBlur = () => {
-    if (!isEqual(priceRange, previousPriceRange)) {
-      dispatch(searchWithUpdatedFilters())
-    }
-  }
-
   const handleSaveSearch = () => {
     alert('TBD')
   }
@@ -53,8 +43,8 @@ const Filters: NextPage = () => {
       <Price
         priceRange={priceRange}
         onChange={handlePriceChange}
-        onFocus={handlePriceFocus}
-        onBlur={handlePriceBlur}
+        onFocus={setPreviousPriceRange}
+        onBlur={runSearchIfPriceRangeChanged}
       />
       <BedsAndBaths
         countArr={[0, 1, 2, 3, 4, 5]}

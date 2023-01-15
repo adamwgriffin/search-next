@@ -1,10 +1,16 @@
 import type { NextPage } from 'next'
-import type { MoreFiltersParamsPartial, SquareFeetRangeParams, YearBuiltRangeParams } from '../../lib/listing_service_params_types'
-import { useState } from 'react'
-import isEqual from 'lodash/isEqual'
+import type {
+  MoreFiltersParamsPartial,
+  SquareFeetRangeParams,
+  YearBuiltRangeParams
+} from '../../lib/listing_service_params_types'
 import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
 import styles from './More.module.css'
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import {
+  useAppSelector,
+  useAppDispatch,
+  useRunCallbackIfChanged
+} from '../../hooks'
 import {
   selectOpenHouseParam,
   selectPropertyTypes,
@@ -41,8 +47,14 @@ const More: NextPage = () => {
   const lotSizeParams = useAppSelector(selectLotSizeParams)
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
   const featureParams = useAppSelector(selectFeatureParams)
-  const [previousYearBuiltRange, setPreviousYearBuiltRange] = useState<YearBuiltRangeParams>()
-  const [previousSquareFeetRange, setPreviousSquareFeetRange] = useState<SquareFeetRangeParams>()
+  const [setPreviousYearBuilt, runSearchIfYearBuiltChanged] =
+    useRunCallbackIfChanged<YearBuiltRangeParams>(yearBuiltRange, () =>
+      dispatch(searchWithUpdatedFilters())
+    )
+  const [setPreviousSquareFeetRange, runSearchIfSquareFeetChanged] =
+    useRunCallbackIfChanged<SquareFeetRangeParams>(squareFeetRange, () =>
+      dispatch(searchWithUpdatedFilters())
+    )
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
@@ -63,30 +75,6 @@ const More: NextPage = () => {
   const handleChangeAndInitiateSearch = (params: MoreFiltersParamsPartial) => {
     dispatch(setFilterParams(params))
     dispatch(searchWithUpdatedFilters())
-  }
-
-  const initiateSearch = () => {
-    dispatch(searchWithUpdatedFilters())
-  }
-
-  const handleYearBuiltFocus = () => {
-    setPreviousYearBuiltRange({ ...yearBuiltRange })
-  }
-
-  const handleYearBuiltBlur = () => {
-    if (!isEqual(previousYearBuiltRange, yearBuiltRange)) {
-      dispatch(searchWithUpdatedFilters())
-    }
-  }
-
-  const handleSquareFeetFocus = () => {
-    setPreviousSquareFeetRange({ ...squareFeetRange })
-  }
-
-  const handleSquareFeetBlur = () => {
-    if (!isEqual(previousSquareFeetRange, squareFeetRange)) {
-      dispatch(searchWithUpdatedFilters())
-    }
   }
 
   return (
@@ -114,8 +102,8 @@ const More: NextPage = () => {
         <SquareFeet
           squareFeetRange={squareFeetRange}
           onChange={handleChange}
-          onFocus={handleSquareFeetFocus}
-          onBlur={handleSquareFeetBlur}
+          onFocus={setPreviousSquareFeetRange}
+          onBlur={runSearchIfSquareFeetChanged}
         />
         <LotSize
           lotSizeMin={lotSizeParams.lotsize_min}
@@ -124,8 +112,8 @@ const More: NextPage = () => {
         <YearBuilt
           yearBuiltRange={yearBuiltRange}
           onChange={handleChange}
-          onFocus={handleYearBuiltFocus}
-          onBlur={handleYearBuiltBlur}
+          onFocus={setPreviousYearBuilt}
+          onBlur={runSearchIfYearBuiltChanged}
         />
         <Features
           featureParams={featureParams}
