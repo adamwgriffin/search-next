@@ -33,7 +33,7 @@ const SearchTypeSelector: NextPage<SearchTypeProps> = ({
                 type='radio'
                 name={`search-type-${value}`}
                 id={`search-type-${value}`}
-                className={styles.input}
+                className={styles.radio}
                 checked={value === searchType}
                 value={value}
                 onChange={() => onChange?.(value)}
