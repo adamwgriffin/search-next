@@ -26,11 +26,6 @@
   margin: 0;
 }
 
-.checkbox:hover + .label:hover {
-  background: var(--primary-light);
-  border-color: var(--primary);
-}
-
 .checkbox:focus + .label {
   outline: solid 2px var(--focus);
   outline-offset: 1px;
