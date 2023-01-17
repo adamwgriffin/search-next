@@ -13,6 +13,7 @@ export interface ListingMainImageProps {
   location: ListingLocation
   size?: ListingImageSizes
   style?: CSSProperties
+  className?: string
   alt?: string
 }
 
@@ -21,6 +22,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
   location,
   size = 'small',
   style = {},
+  className = '',
   alt = 'Listing image'
 }) => {
   // if there are no images available for the listing in the listing service response, we can try and get a static image
@@ -49,7 +51,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
   // handle it by setting a default placeholder image instead. this is useful for when we are trying to use a google
   // streetview image but none exists for the location we specified. in that case it will return a 400 error and we will
   // fallback to using our default image instead.
-  const handleImageOnError = (
+  const handleError = (
     event: SyntheticEvent<HTMLImageElement, Event>
   ) => {
     event.currentTarget.src = `/default_listing_image/default_listing_image_${size}.jpg`
@@ -60,7 +62,8 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
       src={getMainListingImage()}
       alt={alt}
       style={style}
-      onError={handleImageOnError}
+      className={className}
+      onError={handleError}
     ></img>
   )
 }
