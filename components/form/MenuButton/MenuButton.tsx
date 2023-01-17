@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
 import { useToggle } from 'react-use'
-import styles from './MenuButton.module.css'
+import css from 'styled-jsx/css'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import OutlinedButton from '../OutlinedButton/OutlinedButton'
@@ -37,7 +37,7 @@ const MenuButton: NextPage<MenuButtonProps> = ({
         onClick={toggleMenu}
         condensed={condensed}
       >
-        <span className={styles.label}>{label}</span>
+        <span className='label'>{label}</span>
         <MenuOpenIcon open={open} />
       </OutlinedButton>
       <MenuDropdown
@@ -49,8 +49,15 @@ const MenuButton: NextPage<MenuButtonProps> = ({
       >
         {children}
       </MenuDropdown>
+      <style jsx>{styles}</style>
     </MenuContainter>
   )
 }
+
+const styles = css`
+  .label {
+    margin-right: 0.5rem;
+  }
+`
 
 export default MenuButton
