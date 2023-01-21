@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { CountOption } from '../../../lib/types'
 import type { BedsBathsParam } from '../../../lib/listing_service_params_types'
-import styles from './BedsAndBaths.module.css'
+import css from 'styled-jsx/css'
 import MenuButton from '../MenuButton/MenuButton'
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
 
@@ -16,36 +16,48 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
   bedsAndBaths,
   onChange
 }) => {
-  const countFormatted = (n: number) => {
-    return n ? `${n}+` : 'Any'
-  }
-
-  const countOptions = (param: string, countArr: number[]): CountOption[] => {
-    return countArr.map((c) => ({
-      label: countFormatted(c),
-      value: c,
-      checked: c === Number(bedsAndBaths[param as keyof BedsBathsParam])
-    }))
-  }
-
   return (
     <MenuButton label='Beds & Baths' alignRight>
-      <div className={styles.bedsAndBaths}>
-        <RadioButtonGroup
-          name='bed_min'
-          label='Beds'
-          options={countOptions('bed_min', countArr)}
-          onChange={(value) => onChange?.({ bed_min: value || null })}
-        />
-        <RadioButtonGroup
-          name='bath_min'
-          label='Baths'
-          options={countOptions('bath_min', countArr)}
-          onChange={(value) => onChange?.({ bath_min: value || null })}
-        />
+      <div className='bedsAndBaths'>
+        {RadioButtonGroups.map(({ param, label }) => (
+          <RadioButtonGroup
+            key={param}
+            name={param}
+            label={label}
+            options={countOptions(param, countArr, bedsAndBaths)}
+            onChange={(value) => onChange?.({ [param]: value || null })}
+          />
+        ))}
       </div>
+      <style jsx>{styles}</style>
     </MenuButton>
   )
 }
+
+export const RadioButtonGroups = [
+  { param: 'bed_min', label: 'Beds' },
+  { param: 'bath_min', label: 'Baths' }
+]
+
+export const countOptions = (
+  param: string,
+  countArr: number[],
+  bedsAndBaths: BedsBathsParam
+): CountOption[] => {
+  return countArr.map((c) => ({
+    label: c ? `${c}+` : 'Any',
+    value: c,
+    checked: c === Number(bedsAndBaths[param as keyof BedsBathsParam])
+  }))
+}
+
+const styles = css`
+  .bedsAndBaths {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 12rem;
+  }
+`
 
 export default BedsAndBaths
