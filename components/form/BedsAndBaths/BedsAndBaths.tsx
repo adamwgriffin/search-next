@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
-import type { CountOption } from '../../../lib/types'
 import type { BedsBathsParam } from '../../../lib/listing_service_params_types'
 import css from 'styled-jsx/css'
 import MenuButton from '../MenuButton/MenuButton'
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
+import { countOptions, RadioButtonGroups } from '../../../lib/beds_and_baths'
 
 export interface BedsAndBathsProps {
   countArr: number[]
@@ -32,23 +32,6 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
       <style jsx>{styles}</style>
     </MenuButton>
   )
-}
-
-export const RadioButtonGroups = [
-  { param: 'bed_min', label: 'Beds' },
-  { param: 'bath_min', label: 'Baths' }
-]
-
-export const countOptions = (
-  param: string,
-  countArr: number[],
-  bedsAndBaths: BedsBathsParam
-): CountOption[] => {
-  return countArr.map((c) => ({
-    label: c ? `${c}+` : 'Any',
-    value: c,
-    checked: c === Number(bedsAndBaths[param as keyof BedsBathsParam])
-  }))
 }
 
 const styles = css`

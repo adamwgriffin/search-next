@@ -15,6 +15,7 @@ import Price from '../../components/form/Price/Price'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import More from '../../containers/More/More'
 import OutlinedButton from '../../components/form/OutlinedButton/OutlinedButton'
+import { countArr } from '../../lib/beds_and_baths'
 
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -47,7 +48,7 @@ const Filters: NextPage = () => {
         onBlur={runSearchIfPriceRangeChanged}
       />
       <BedsAndBaths
-        countArr={[0, 1, 2, 3, 4, 5]}
+        countArr={countArr}
         onChange={handleBedsAndBathsChange}
         bedsAndBaths={bedsAndBaths}
       />
