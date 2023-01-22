@@ -15,6 +15,7 @@ export interface ListingMainImageProps {
   style?: CSSProperties
   className?: string
   alt?: string
+  onClick?: () => void
 }
 
 const ListingMainImage: NextPage<ListingMainImageProps> = ({
@@ -23,7 +24,8 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
   size = 'small',
   style = {},
   className = '',
-  alt = 'Listing image'
+  alt = 'Listing image',
+  onClick = () => {}
 }) => {
   // if there are no images available for the listing in the listing service response, we can try and get a static image
   // of the location using the google maps street view api, so that the user will at least have one image of the house
@@ -63,6 +65,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
       alt={alt}
       style={style}
       className={className}
+      onClick={onClick}
       onError={handleError}
     ></img>
   )

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   getListingDetail,
   selectListing
@@ -16,6 +16,7 @@ import {
 import styles from './ListingDetail.module.css'
 import ListingStatusIndicator from '../../components/listings/ListingStatusIndicator/ListingStatusIndicator'
 import ListingMainImage from '../../components/listings/ListingMainImage/ListingMainImage'
+import PhotoGallery from '../../components/listings/PhotoGallery/PhotoGallery'
 
 export interface ListingDetailProps {
   // listing_id is type string | string[] because of catch all routes
@@ -25,6 +26,7 @@ export interface ListingDetailProps {
 const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
   const dispatch = useAppDispatch()
   const listing = useAppSelector(selectListing)
+  const [photoGalleryOpen, setPhotoGalleryOpen] = useState(false)
 
   useEffect(() => {
     listingID && dispatch(getListingDetail(listingID))
@@ -36,7 +38,6 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
         {/* <header className={styles.header}>Header</header> */}
         {listing && (
           <div className={styles.listingDetail}>
-
             <div className={styles.status}>
               <ListingStatusIndicator
                 propertyStatusID={listing.pstatus_id}
@@ -56,14 +57,13 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
                   height: '30rem',
                   borderRadius: '0.5rem'
                 }}
+                onClick={() => setPhotoGalleryOpen(true)}
               />
             </div>
 
             <div className={styles.price}>{formatPrice(listing)}</div>
 
-            <div className={styles.neighborhood}>
-              {listing.neighborhood}
-            </div>
+            <div className={styles.neighborhood}>{listing.neighborhood}</div>
 
             <address className={styles.address}>
               <div className={styles.addressLine1}>
@@ -112,6 +112,12 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
                 </li>
               </ul>
             </div>
+
+            <PhotoGallery
+              open={photoGalleryOpen}
+              onClose={() => setPhotoGalleryOpen(false)}
+              images={listing.images}
+            />
           </div>
         )}
       </div>
