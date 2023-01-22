@@ -12,6 +12,13 @@ describe('BedsAndBaths', () => {
       expect(screen.getByText(label)).toBeInTheDocument()
     })
   })
+
+  it('Returns a partial BedsBathsParam when a radio button is clicked', () => {
+    const onChange = jest.fn()
+    render(<BedsAndBaths countArr={countArr} bedsAndBaths={bedsAndBaths} onChange={onChange} />)
+    screen.getAllByText('1+')[0].click()
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith({bed_min: 1})
   })
 
 })
