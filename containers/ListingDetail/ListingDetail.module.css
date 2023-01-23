@@ -13,29 +13,9 @@
   padding: 1rem 0 2rem 0;
 }
 
-.gallery {
-  height: 30rem;
-}
-
-.galleryImage {
-  cursor: pointer;
-  border-radius: 0.5rem;
-  object-fit: cover;
-  width: 100%;
-  height: 30rem;
-}
-
 .price {
   font-size: 2rem;
   font-weight: 600;
-}
-
-.address {
-  font-style: normal;
-}
-
-.addressLine1 {
-  font-size: 1.5rem;
 }
 
 .neighborhood {
@@ -44,34 +24,6 @@
   margin-top: .3rem;
 }
 
-.stats {
-  display: flex;
-  column-gap: .5rem;
-}
-
-.heading {
-  margin-top: 0;
-}
-
 .comments {
   margin: 0;
-}
-
-.detailsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.detailsList > li {
-  display: grid;
-  grid-template-columns: minmax(100px, 34%) auto;
-  grid-template-rows: auto auto;
-}
-
-.detailsName {
-  color: #767676;
 }

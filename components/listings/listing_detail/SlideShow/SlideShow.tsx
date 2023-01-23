@@ -1,16 +1,16 @@
 import type { NextPage } from 'next'
-import type { ListingImage } from '../../../lib/types/listing_types'
+import type { ListingImage } from '../../../../lib/types/listing_types'
 import { useState, useCallback } from 'react'
 import css from 'styled-jsx/css'
-import Overlay from '../../shared/Overlay/Overlay'
+import Overlay from '../../../shared/Overlay/Overlay'
 
-export interface PhotoGalleryProps {
+export interface SlideShowProps {
   images: ListingImage[]
   open: boolean
   onClose?: () => void
 }
 
-const PhotoGallery: NextPage<PhotoGalleryProps> = ({
+const SlideShow: NextPage<SlideShowProps> = ({
   images,
   open,
   onClose
@@ -33,7 +33,7 @@ const PhotoGallery: NextPage<PhotoGalleryProps> = ({
     <>
       {open && (
         <Overlay>
-          <div className='photoGallery'>
+          <div className='slideShow'>
             <div className='header'>
               <button className='close' onClick={onClose}>
                 X Close
@@ -74,7 +74,7 @@ const PhotoGallery: NextPage<PhotoGalleryProps> = ({
 }
 
 const styles = css`
-  .photoGallery {
+  .slideShow {
     height: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
@@ -85,10 +85,6 @@ const styles = css`
     display: grid;
     grid-template-columns: auto 1fr auto;
     place-items: center;
-  }
-
-  .carouselButtonConatiner {
-    /* background: rgba(245, 40, 145, 0.5); */
   }
 
   .listingImage {
@@ -147,4 +143,4 @@ const styles = css`
   }
 `
 
-export default PhotoGallery
+export default SlideShow

@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
+import css from 'styled-jsx/css'
 import {
   getListingDetail,
   selectListing
@@ -7,16 +8,14 @@ import {
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
-import {
-  formatPrice,
-  getBathrooms,
-  formatSqft,
-  cityStateZip
-} from '../../lib/helpers/listing_helpers'
-import styles from './ListingDetail.module.css'
+import { formatPrice } from '../../lib/helpers/listing_helpers'
 import ListingStatusIndicator from '../../components/listings/ListingStatusIndicator/ListingStatusIndicator'
-import ListingMainImage from '../../components/listings/ListingMainImage/ListingMainImage'
-import PhotoGallery from '../../components/listings/PhotoGallery/PhotoGallery'
+import ListingDetailImage from '../../components/listings/listing_detail/ListingDetailImage/ListingDetailImage'
+import ListingDetailAddress from '../../components/listings/listing_detail/ListingDetailAddress/ListingDetailAddress'
+import ListingDetailBedsBathsSQFT from '../../components/listings/listing_detail/ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
+import Description from '../../components/listings/listing_detail/Description/Description'
+import PropertyDetails from '../../components/listings/listing_detail/PropertyDetails/PropertyDetails'
+import SlideShow from '../../components/listings/listing_detail/SlideShow/SlideShow'
 
 export interface ListingDetailProps {
   // listing_id is type string | string[] because of catch all routes
@@ -26,7 +25,7 @@ export interface ListingDetailProps {
 const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
   const dispatch = useAppDispatch()
   const listing = useAppSelector(selectListing)
-  const [photoGalleryOpen, setPhotoGalleryOpen] = useState(false)
+  const [slideShowOpen, setSlideShowOpen] = useState(false)
 
   useEffect(() => {
     listingID && dispatch(getListingDetail(listingID))
@@ -37,92 +36,63 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
       <div>
         {/* <header className={styles.header}>Header</header> */}
         {listing && (
-          <div className={styles.listingDetail}>
-            <div className={styles.status}>
+          <div className='listingDetail'>
+            <div className='status'>
               <ListingStatusIndicator
                 propertyStatusID={listing.pstatus_id}
                 name={listing.status_name_for_view}
               />
             </div>
-
-            <div className={styles.gallery}>
-              <ListingMainImage
-                image={listing.images[0]}
-                location={listing.location}
-                size='full'
-                style={{
-                  objectFit: 'cover',
-                  cursor: 'pointer',
-                  width: '100%',
-                  height: '30rem',
-                  borderRadius: '0.5rem'
-                }}
-                onClick={() => setPhotoGalleryOpen(true)}
-              />
-            </div>
-
-            <div className={styles.price}>{formatPrice(listing)}</div>
-
-            <div className={styles.neighborhood}>{listing.neighborhood}</div>
-
-            <address className={styles.address}>
-              <div className={styles.addressLine1}>
-                {listing.location.address}
-              </div>
-              <div className={styles.addressLine2}>
-                {cityStateZip(listing.location)}
-              </div>
-            </address>
-
-            <div className={styles.stats}>
-              <div className={styles.beds}>{listing.bedrooms} Bed</div>
-              <div className={styles.baths}>{getBathrooms(listing)} Bath</div>
-              <div className={styles.size}>{formatSqft(listing)} sqft</div>
-            </div>
-
-            <div>
-              <h4 className={styles.heading}>Description</h4>
-              <p className={styles.comments}>{listing.comments}</p>
-            </div>
-
-            <div>
-              <h4 className={styles.heading}>Property Details</h4>
-              <ul className={styles.detailsList}>
-                <li>
-                  <div className={styles.detailsName}>Property Type</div>
-                  <div>{listing.property_type}</div>
-                </li>
-                {listing.days_on_market && (
-                  <li>
-                    <div className={styles.detailsName}>Time on Site</div>
-                    <div>
-                      {`${listing.days_on_market.toLocaleString()} ${
-                        listing.days_on_market > 1 ? 'days' : 'day'
-                      }`}
-                    </div>
-                  </li>
-                )}
-                <li>
-                  <div className={styles.detailsName}>Year Built</div>
-                  <div>{listing.year_build}</div>
-                </li>
-                <li>
-                  <div className={styles.detailsName}>MLS Number</div>
-                  <div>{listing.mlsnumber}</div>
-                </li>
-              </ul>
-            </div>
-
-            <PhotoGallery
-              open={photoGalleryOpen}
-              onClose={() => setPhotoGalleryOpen(false)}
+            <ListingDetailImage
+              images={listing.images}
+              location={listing.location}
+              onClick={() => setSlideShowOpen(true)}
+            />
+            <div className='price'>{formatPrice(listing)}</div>
+            <div className='neighborhood'>{listing.neighborhood}</div>
+            <ListingDetailAddress location={listing.location} />
+            <ListingDetailBedsBathsSQFT listing={listing} />
+            <Description comments={listing.comments} />
+            <PropertyDetails listing={listing} />
+            <SlideShow
+              open={slideShowOpen}
+              onClose={() => setSlideShowOpen(false)}
               images={listing.images}
             />
           </div>
         )}
+        <style jsx>{styles}</style>
       </div>
     </GoogleMapsProvider>
   )
 }
+
+const styles = css`
+  .header {
+    height: 3rem;
+    padding-top: 0.5rem;
+    border-bottom: 1px solid #cccccc;
+  }
+
+  .listingDetail {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin: 0 auto;
+    width: 50rem;
+    padding: 1rem 0 2rem 0;
+  }
+
+  .price {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .neighborhood {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+`
 
 export default ListingDetail
