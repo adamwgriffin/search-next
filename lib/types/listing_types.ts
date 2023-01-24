@@ -33,6 +33,18 @@ export interface ListingImage {
 
 export type ListingImageSizes = 'raw' | 'gallery' | 'full' | 'small' | 'thumb'
 
+export interface SubFeature {
+  subfeature_name: string
+  subfeatureid: number
+}
+
+export interface Feature {
+  subfeatures: SubFeature[]
+  feature_name: string
+  feature_description: string
+  featureid: number
+}
+
 export interface Listing {
   listingid: number
   location: ListingLocation
@@ -63,6 +75,8 @@ export interface ListingDetailListing {
   bedrooms: number
   bathrooms: number
   bathroom_details: ListingBathroomDetails
+  feature_count: number
+  features: Feature[]
   sqr_footage: number | null
   sqr_foot_min: number | null
   sqr_foot_max: number | null

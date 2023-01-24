@@ -14,6 +14,7 @@ import ListingDetailImage from '../../components/listings/listing_detail/Listing
 import ListingDetailAddress from '../../components/listings/listing_detail/ListingDetailAddress/ListingDetailAddress'
 import ListingDetailBedsBathsSQFT from '../../components/listings/listing_detail/ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
 import Description from '../../components/listings/listing_detail/Description/Description'
+import HomeHighlights from '../../components/listings/listing_detail/Highlights/HomeHighlights'
 import PropertyDetails from '../../components/listings/listing_detail/PropertyDetails/PropertyDetails'
 import SlideShow from '../../components/listings/listing_detail/SlideShow/SlideShow'
 
@@ -53,7 +54,8 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listingID }) => {
             <ListingDetailAddress location={listing.location} />
             <ListingDetailBedsBathsSQFT listing={listing} />
             <Description comments={listing.comments} />
-            <PropertyDetails listing={listing} />
+            <HomeHighlights listing={listing} />
+            <PropertyDetails features={listing.features} />
             <SlideShow
               open={slideShowOpen}
               onClose={() => setSlideShowOpen(false)}
