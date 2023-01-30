@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import type { Feature } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
+import ShowMore from '../../../shared/ShowMore'
 
 export interface PropertyDetailsProps {
   features: Feature[]
@@ -9,7 +10,7 @@ export interface PropertyDetailsProps {
 const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
   return (
     <>
-      <div>
+      <ShowMore>
         <h4 className='heading'>Property Details</h4>
         {features.map(({ feature_description, featureid, subfeatures }) => (
           <>
@@ -25,7 +26,7 @@ const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
             </ul>
           </>
         ))}
-      </div>
+      </ShowMore>
       <style jsx>{styles}</style>
     </>
   )
