@@ -1,3 +1,4 @@
+@value smallAndUp: only screen and (min-width: 576px);
 @value mediumAndUp: only screen and (min-width: 768px);
-@value largeAndUp: only screen and (min-width: 960px);
+@value largeAndUp: only screen and (min-width: 992px);
 @value extraLargeAndUp: only screen and (min-width: 1200px);

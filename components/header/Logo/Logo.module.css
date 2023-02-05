@@ -1,4 +1,16 @@
+@value smallAndUp from '../../../styles/breakpoints.css';
+
 .logo {
+  display: none;
+  width: 10.4375rem;
+  height: 2.25rem;
   fill: var(--logo);
   stroke: none;
+}
+
+@media smallAndUp {
+  .logo {
+    display: block;
+  }
+
 }

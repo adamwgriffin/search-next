@@ -3,7 +3,7 @@ import type {
   ListingLocation,
   ListingImage
 } from '../../../../lib/types/listing_types'
-import css from 'styled-jsx/css'
+import styles from './ListingDetailImage.module.css'
 import ListingMainImage from '../../ListingMainImage/ListingMainImage'
 
 export interface ListingDetailImageProps {
@@ -18,31 +18,22 @@ const ListingDetailImage: NextPage<ListingDetailImageProps> = ({
   onClick
 }) => {
   return (
-    <>
-      <div className='listingDetailImage'>
-        <ListingMainImage
-          image={images[0]}
-          location={location}
-          size='full'
-          style={{
-            objectFit: 'cover',
-            cursor: 'pointer',
-            width: '100%',
-            height: '100%',
-            borderRadius: '0.5rem'
-          }}
-          onClick={onClick}
-        />
-      </div>
-      <style jsx>{styles}</style>
-    </>
+    <div className={styles.listingDetailImage}>
+      <ListingMainImage
+        image={images[0]}
+        location={location}
+        size='full'
+        style={{
+          objectFit: 'cover',
+          cursor: 'pointer',
+          width: '100%',
+          height: '100%',
+          borderRadius: '0.5rem'
+        }}
+        onClick={onClick}
+      />
+    </div>
   )
 }
-
-const styles = css`
-  .listingDetailImage {
-    height: 30rem;
-  }
-`
 
 export default ListingDetailImage

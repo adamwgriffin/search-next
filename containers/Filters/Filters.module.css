@@ -1,4 +1,16 @@
+@value smallAndUp from '../../styles/breakpoints.css';
+
 .filters {
   display: flex;
   column-gap: .6rem;
+}
+
+.filters > *:nth-child(-n+2) {
+  display: none;
+}
+
+@media smallAndUp {
+  .filters > *:nth-child(-n+2) {
+    display: block;
+  }
 }

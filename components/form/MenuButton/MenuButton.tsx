@@ -13,6 +13,7 @@ interface MenuButtonProps {
   alignBottom?: boolean
   highlighted?: boolean
   condensed?: boolean
+  className?: string
   children: ReactNode
   onOpen?: () => void
   onClose?: () => void
@@ -24,6 +25,7 @@ const MenuButton: NextPage<MenuButtonProps> = ({
   alignBottom = false,
   highlighted = false,
   condensed = false,
+  className,
   children,
   onOpen,
   onClose
@@ -44,6 +46,7 @@ const MenuButton: NextPage<MenuButtonProps> = ({
         open={open}
         alignRight={alignRight}
         alignBottom={alignBottom}
+        className={className}
         onOpen={onOpen}
         onClose={onClose}
       >

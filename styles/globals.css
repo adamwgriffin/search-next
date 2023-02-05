@@ -69,7 +69,6 @@ body {
   color: var(--foreground);
   font-family: var(--primary-font);
   margin: 0;
-  padding: 1rem;
 }
 
 *,

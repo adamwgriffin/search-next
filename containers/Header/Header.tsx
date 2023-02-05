@@ -55,7 +55,7 @@ const Header: NextPage = () => {
 
   return (
     <header className={styles.header}>
-      <Logo width='167' height='36' />
+      <Logo />
       <SearchField
         value={locationSearchField}
         options={options}
@@ -69,9 +69,11 @@ const Header: NextPage = () => {
         onSearchInitiated={handleOnSearchInitiated}
         onOptionSelected={handleOnOptionSelected}
       />
-      <Filters />
       <div className={styles.controls}>
         <Login />
+      </div>
+      <div className={styles.filters}>
+        <Filters />
       </div>
     </header>
   )

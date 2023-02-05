@@ -1,20 +1,10 @@
 import { NextPage } from 'next'
 import styles from './Logo.module.css'
 
-export interface LogoProps {
-  width?: string
-  height?: string
-}
-
-const Logo: NextPage<LogoProps> = ({
-  width = '530',
-  height = '114'
-}) => {
+const Logo: NextPage = () => {
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 530 114`}
+      viewBox='0 0 530 114'
       className={styles.logo}
       xmlns='http://www.w3.org/2000/svg'
     >

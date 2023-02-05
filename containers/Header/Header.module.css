@@ -1,13 +1,43 @@
+@value smallAndUp, largeAndUp from '../../styles/breakpoints.css';
+
 .header {
-  display: flex;
-  column-gap: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
+  padding: 1rem .2rem 0 1rem;
 }
 
 .controls {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  column-gap: .5rem;
-  flex-grow: 1;
+}
+
+.filters {
+  grid-column: 1 / span 2;
+  padding: 1rem 0;
+}
+
+@media smallAndUp {
+  .header {
+    grid-template-columns: auto 1fr auto;
+    column-gap: 1rem;
+  }
+}
+
+@media largeAndUp {
+
+  .header {
+    grid-template-columns: min-content 30% 1fr min-content;
+    padding: 1rem .2rem 1rem 1rem;
+  }
+
+  /* moves Login from 3 position to the last column */
+  .controls {
+    order: 4;
+  }
+
+  .filters {
+    grid-column: auto;
+    padding: 0;
+  }
+
 }

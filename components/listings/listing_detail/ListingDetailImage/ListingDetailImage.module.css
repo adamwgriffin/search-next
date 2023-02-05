@@ -1,0 +1,11 @@
+@value smallAndUp from '../../../../styles/breakpoints.css';
+
+.listingDetailImage {
+  height: 20rem;
+}
+
+@media smallAndUp {
+  .listingDetailImage {
+    height: 30rem;
+  }
+}

@@ -81,8 +81,8 @@ const styles = css`
     flex-direction: column;
     row-gap: 1rem;
     margin: 0 auto;
-    width: 50rem;
-    padding: 1rem 0 2rem 0;
+    max-width: 50rem;
+    padding: 1rem 1rem 2rem 1rem;
   }
 
   .price {

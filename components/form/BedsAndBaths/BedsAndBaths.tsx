@@ -17,20 +17,23 @@ const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
   onChange
 }) => {
   return (
-    <MenuButton label='Beds & Baths' alignRight>
-      <div className='bedsAndBaths'>
-        {RadioButtonGroups.map(({ param, label }) => (
-          <RadioButtonGroup
-            key={param}
-            name={param}
-            label={label}
-            options={countOptions(param, countArr, bedsAndBaths)}
-            onChange={(value) => onChange?.({ [param]: value || null })}
-          />
-        ))}
-      </div>
+    <>
+      <MenuButton label='Beds & Baths' className={className}>
+        <div className='bedsAndBaths'>
+          {RadioButtonGroups.map(({ param, label }) => (
+            <RadioButtonGroup
+              key={param}
+              name={param}
+              label={label}
+              options={countOptions(param, countArr, bedsAndBaths)}
+              onChange={(value) => onChange?.({ [param]: value || null })}
+            />
+          ))}
+        </div>
+      </MenuButton>
       <style jsx>{styles}</style>
-    </MenuButton>
+      {menuButtonStyles}
+    </>
   )
 }
 
@@ -40,6 +43,18 @@ const styles = css`
     gap: 1rem;
     padding: 1rem;
     min-height: 12rem;
+  }
+`
+
+const { className, styles: menuButtonStyles } = css.resolve`
+  .menu {
+    right: auto;
+  }
+
+  @media only screen and (min-width: 992px) {
+    .menu {
+      right: 0;
+    }
   }
 `
 
