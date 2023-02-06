@@ -19,10 +19,11 @@ import type {
 } from '../../lib/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
+import type { PayloadAction } from '@reduxjs/toolkit'
 import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
   PropertyTypeIDArray,

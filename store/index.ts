@@ -1,5 +1,5 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
-
+import type { ThunkAction, Action } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import environmentReducer from './environment/environmentSlice'
 import listingSearchReducer from './listingSearch/listingSearchSlice'
 import listingDetailReducer from './listingDetail/listingDetailSlice'
