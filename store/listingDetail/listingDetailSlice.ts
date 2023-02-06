@@ -23,7 +23,7 @@ export const getListingDetail = createAsyncThunk(
   }
 )
 
-export const listingSearchSlice = createSlice({
+export const listingDetailSlice = createSlice({
   name: 'listingDetail',
 
   initialState,
@@ -38,7 +38,7 @@ export const listingSearchSlice = createSlice({
 })
 
 // add any reducers that we want to export as actions here
-export const {} = listingSearchSlice.actions
+export const {} = listingDetailSlice.actions
 
 export const selectParamsForListingDetailRequest = (state: AppState) => {
   return {
@@ -50,4 +50,4 @@ export const selectParamsForListingDetailRequest = (state: AppState) => {
 export const selectListing = (state: AppState): ListingDetailListing =>
   state.listingDetail.searchListingsResponse.result_list?.[0]
 
-export default listingSearchSlice.reducer
+export default listingDetailSlice.reducer
