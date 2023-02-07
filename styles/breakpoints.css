@@ -1,3 +1,5 @@
+/* smallAndUp is for larger handheld devices. we don't have extra small for normal phone sizes because those are
+considered the default for mobile-first design */
 @value smallAndUp: only screen and (min-width: 576px);
 @value mediumAndUp: only screen and (min-width: 768px);
 @value largeAndUp: only screen and (min-width: 992px);
