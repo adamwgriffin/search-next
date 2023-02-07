@@ -47,7 +47,7 @@ const styles = css`
   .menu {
     position: absolute;
     transform: none;
-    z-index: 1;
+    z-index: 3;
     min-width: 6rem;
     border-radius: 6px;
     margin-top: 3px;

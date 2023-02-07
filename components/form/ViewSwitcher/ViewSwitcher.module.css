@@ -1,0 +1,20 @@
+@value smallAndUp from '../../../styles/breakpoints.css';
+
+.viewSwitcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--outline);
+  border-radius: 0.5rem;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  background: var(--background);
+}
+
+@media smallAndUp {
+  .viewSwitcher {
+    display: none;
+  }
+}

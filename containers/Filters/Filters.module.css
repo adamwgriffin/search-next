@@ -3,6 +3,8 @@
 .filters {
   display: flex;
   column-gap: .6rem;
+  justify-content: space-between;
+  padding: 0 1rem 0 0;
 }
 
 .filters > *:nth-child(-n+2) {
@@ -10,6 +12,11 @@
 }
 
 @media smallAndUp {
+  .filters {
+    justify-content: start;
+    padding: 0;
+  }
+
   .filters > *:nth-child(-n+2) {
     display: block;
   }

@@ -46,7 +46,7 @@
 
 .listboxMenu {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   overflow-x: hidden;
   list-style: none;
   background-color: var(--background);
