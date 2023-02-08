@@ -28,7 +28,7 @@ body,
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
   --listing-marker-foreground-visited: #3c3c3c;
-  --boundary-control: rgba(255, 255, 255, 0.7);
+  --map-control: rgba(255, 255, 255, 0.8);
 }
 
 [data-theme='purple'] {
@@ -61,7 +61,7 @@ body,
   --listing-marker-background-visited: #5a5a5a;
   --listing-marker-foreground-visited: #e0e0e0;
   --logo: white;
-  --boundary-control: rgba(34, 39, 46, 0.7);
+  --map-control: rgba(34, 39, 46, 0.8);
 }
 
 body {

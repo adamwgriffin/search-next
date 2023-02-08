@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import type { MouseEventHandler } from 'react'
-import ContainedButton from '../../form/ContainedButton/ContainedButton'
 import styles from './BoundaryControl.module.css'
 
 export interface BoundaryControlProps {
@@ -9,15 +8,9 @@ export interface BoundaryControlProps {
 
 const BoundaryControl: NextPage<BoundaryControlProps> = ({ onClick }) => {
   return (
-    <div className={styles.boundaryControl}>
-      <ContainedButton
-        textColor='inherit'
-        backgroundColor='var(--boundary-control)'
-        onClick={onClick}
-      >
-        Remove Boundary
-      </ContainedButton>
-    </div>
+    <button className={styles.boundaryControl} onClick={onClick}>
+      Remove Boundary
+    </button>
   )
 }
 

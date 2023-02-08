@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import type { Listing } from '../../../lib/types/listing_types'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config'
@@ -7,7 +6,7 @@ import styles from './ListingMap.module.css'
 import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
 import ListingMarker from '../ListingMarker/ListingMarker'
 import MapBoundary from '../MapBoundary/MapBoundary'
-import BoundaryControl from '../BoundaryControl/BoundaryControl'
+import MapControl from '../MapControl/MapControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
   setBoundaryActive,
@@ -23,17 +22,21 @@ import {
   searchWithUpdatedFilters,
   resetStartIndex,
   selectDoListingSearchOnMapIdle,
-  selectListings
+  selectListings,
+  selectListingSearchRunning
 } from '../../../store/listingSearch/listingSearchSlice'
 
 const ListingMap: NextPage = () => {
-  const { googleLoaded } = useGoogleMaps()  
+  const { googleLoaded } = useGoogleMaps()
   const dispatch = useAppDispatch()
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
   const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
-  const doListingSearchOnMapIdle = useAppSelector(selectDoListingSearchOnMapIdle)
+  const doListingSearchOnMapIdle = useAppSelector(
+    selectDoListingSearchOnMapIdle
+  )
   const listings = useAppSelector(selectListings)
+  const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
   const handleListingMarkerMouseEnter = (listingid: number) => {
     dispatch(setSelectedListing(listingid))
@@ -86,9 +89,11 @@ const ListingMap: NextPage = () => {
             options={MapBoundaryOptions}
           />
         </GoogleMap>
-        {boundaryActive && (
-          <BoundaryControl onClick={handleBoundaryControlClick} />
-        )}
+        <MapControl
+          boundaryActive={boundaryActive}
+          listingSearchRunning={listingSearchRunning}
+          onBoundaryControlClick={handleBoundaryControlClick}
+        />
       </div>
     )
   }
