@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import styles from './MapControl.module.css'
 import BoundaryControl from '../BoundaryControl/BoundaryControl'
-import DotIndicator from '../../shared/DotIndicator/DotIndicator'
+import LoadingDots from '../../design_system/LoadingDots/LoadingDots'
 
 export interface MapControlProps {
   boundaryActive: boolean
@@ -20,7 +20,7 @@ const MapControl: NextPage<MapControlProps> = ({
         {!listingSearchRunning && boundaryActive && (
           <BoundaryControl onClick={onBoundaryControlClick} />
         )}
-        {listingSearchRunning && <DotIndicator />}
+        {listingSearchRunning && <LoadingDots />}
       </div>
     )
   } else {

@@ -1,4 +1,4 @@
-.dotIndicator {
+.loadingDots {
   position: relative;
   width: 10px;
   height: 10px;
@@ -9,14 +9,14 @@
   animation-delay: .5s;
 }
 
-.dotIndicator::before, .dotIndicator::after {
+.loadingDots::before, .loadingDots::after {
   content: '';
   display: inline-block;
   position: absolute;
   top: 0;
 }
 
-.dotIndicator::before {
+.loadingDots::before {
   left: -15px;
   width: 10px;
   height: 10px;
@@ -27,7 +27,7 @@
   animation-delay: 0s;
 }
 
-.dotIndicator::after {
+.loadingDots::after {
   left: 15px;
   width: 10px;
   height: 10px;

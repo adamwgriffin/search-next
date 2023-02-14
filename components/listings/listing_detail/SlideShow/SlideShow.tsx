@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type { ListingImage } from '../../../../lib/types/listing_types'
 import { useState, useCallback } from 'react'
 import css from 'styled-jsx/css'
-import Overlay from '../../../shared/Overlay/Overlay'
+import Overlay from '../../../design_system/Overlay/Overlay'
 
 export interface SlideShowProps {
   images: ListingImage[]

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { Feature } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
-import ShowMore from '../../../shared/ShowMore'
+import ShowMore from '../../../design_system/ShowMore'
 
 export interface PropertyDetailsProps {
   features: Feature[]
