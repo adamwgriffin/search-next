@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import type { FeaturesParams } from '../../../lib/types/listing_service_params_types'
 import type { ChangeEvent } from 'react'
-import styles from './Features.module.css'
-import formStyles from '../../../styles/forms.module.css'
+import { featureList } from './Features.module.css'
+import { checkbox, inputListLabel } from '../../../styles/forms.module.css'
 import { FeatureLabels } from '../../../lib/filter'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
 import Legend from '../../design_system/Legend/Legend'
@@ -13,7 +13,7 @@ export interface FeaturesProps {
 }
 
 const Features: NextPage<FeaturesProps> = ({ featureParams, onChange }) => {
-  // we're using  checked || null  here because setting the param to false will exclude listings that have that feature
+  // we're using checked || null here because setting the param to false will exclude listings that have that feature
   // but we want to always include them.
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange?.({ [e.target.name]: e.target.checked || null })
@@ -22,18 +22,18 @@ const Features: NextPage<FeaturesProps> = ({ featureParams, onChange }) => {
   return (
     <Fieldset>
       <Legend>Home Features</Legend>
-      <ul className={styles.featureList}>
+      <ul className={featureList}>
         {Object.entries(featureParams).map(([name, value]) => (
           <li key={name}>
             <input
               type='checkbox'
               id={name}
-              className={formStyles.checkbox}
+              className={checkbox}
               name={name}
               checked={!!value}
               onChange={handleChange}
             />
-            <label htmlFor={name} className={formStyles.inputListLabel}>
+            <label htmlFor={name} className={inputListLabel}>
               {FeatureLabels[name as keyof typeof FeatureLabels]}
             </label>
           </li>
