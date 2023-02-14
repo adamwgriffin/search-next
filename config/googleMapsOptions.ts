@@ -37,3 +37,10 @@ export const DefaultAutocompleteOptions = {
   fields: ['place_id', 'address_components', 'geometry', 'icon', 'name'],
   componentRestrictions: { country: ['us', 'ca', 'mx'] }
 }
+
+export const MapBoundaryOptions: google.maps.PolygonOptions = {
+  strokeColor: 'darkgray',
+  strokeOpacity: 1,
+  strokeWeight: 2,
+  fillOpacity: 0
+}

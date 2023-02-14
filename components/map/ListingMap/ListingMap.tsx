@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
-import { MapBoundaryOptions } from '../../../config'
+import { MapBoundaryOptions } from '../../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
 import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
 import ListingMarker from '../ListingMarker/ListingMarker'
