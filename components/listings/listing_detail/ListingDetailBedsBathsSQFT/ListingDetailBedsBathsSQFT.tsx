@@ -4,7 +4,7 @@ import css from 'styled-jsx/css'
 import {
   getBathrooms,
   formatSqft
-} from '../../../../lib/helpers/listing_helpers'
+} from '../../../../lib/listing_helpers'
 
 export interface ListingDetailBedsBathsSQFTProps {
   listing: ListingDetailListing

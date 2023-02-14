@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import type { FeaturesParams } from '../../../lib/listing_service_params_types'
+import type { FeaturesParams } from '../../../lib/types/listing_service_params_types'
 import type { ChangeEvent } from 'react'
 import styles from './Features.module.css'
 import formStyles from '../../../styles/forms.module.css'
-import { FeatureLabels } from '../../../lib/constants/filter_constants'
-import Fieldset from '../Fieldset/Fieldset'
-import Legend from '../Legend/Legend'
+import { FeatureLabels } from '../../../lib/filter'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
+import Legend from '../../design_system/Legend/Legend'
 
 export interface FeaturesProps {
   featureParams: FeaturesParams

@@ -3,7 +3,7 @@ import type {
   MoreFiltersParamsPartial,
   SquareFeetRangeParams,
   YearBuiltRangeParams
-} from '../../lib/listing_service_params_types'
+} from '../../lib/types/listing_service_params_types'
 import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
 import css from 'styled-jsx/css'
 import styles from './More.module.css'
@@ -28,7 +28,7 @@ import {
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
-import MenuButton from '../../components/form/MenuButton/MenuButton'
+import MenuButton from '../../components/design_system/MenuButton/MenuButton'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import ListingStatus from '../../components/form/ListingStatus/ListingStatus'
 import PropertyType from '../../components/form/PropertyTypes/PropertyTypes'

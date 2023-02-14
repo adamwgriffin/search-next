@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import SearchButtonIcon from '../../icons/SearchButtonIcon/SearchButtonIcon'
+import SearchButtonIcon from '../../design_system/icons/SearchButtonIcon/SearchButtonIcon'
 import styles from './SearchButton.module.css'
 
 export interface SearchButtonProps {

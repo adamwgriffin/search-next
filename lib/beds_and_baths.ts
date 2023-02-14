@@ -1,4 +1,4 @@
-import { BedsBathsParam } from './listing_service_params_types'
+import { BedsBathsParam } from './types/listing_service_params_types'
 import { CountOption } from './types'
 
 export const countArr = [0, 1, 2, 3, 4, 5]

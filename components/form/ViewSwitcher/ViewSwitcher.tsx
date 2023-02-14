@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import type { ViewType } from '../../../store/application/applicationSlice'
 import styles from './ViewSwitcher.module.css'
-import ListIcon from '../../icons/ListIcon/ListIcon'
-import MapIcon from '../../icons/MapIcon/MapIcon'
+import ListIcon from '../../design_system/icons/ListIcon/ListIcon'
+import MapIcon from '../../design_system/icons/MapIcon/MapIcon'
 
 export interface ViewSwitcherProps {
   viewType: ViewType

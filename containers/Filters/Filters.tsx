@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type {
   PriceRangeParams,
   BedsBathsParam
-} from '../../lib/listing_service_params_types'
+} from '../../lib/types/listing_service_params_types'
 import {
   useAppSelector,
   useAppDispatch,
@@ -23,7 +23,7 @@ import Price from '../../components/form/Price/Price'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import More from '../../containers/More/More'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
-import OutlinedButton from '../../components/form/OutlinedButton/OutlinedButton'
+import OutlinedButton from '../../components/design_system/OutlinedButton/OutlinedButton'
 import { countArr } from '../../lib/beds_and_baths'
 
 const Filters: NextPage = () => {

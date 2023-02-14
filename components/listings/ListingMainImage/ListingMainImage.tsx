@@ -6,7 +6,7 @@ import type {
   ListingImageSizes
 } from '../../../lib/types/listing_types'
 import { SyntheticEvent } from 'react'
-import { ListingImageSizeEnum } from '../../../lib/constants/listing_constants'
+import { ListingImageSizeEnum } from '../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
   image: ListingImage

@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
-import type { OpenHouseParam } from '../../../lib/listing_service_params_types'
+import type { OpenHouseParam } from '../../../lib/types/listing_service_params_types'
 import { OpenHouseScheduleIDEnum } from '../../../lib/listing_service_params'
 import formStyles from '../../../styles/forms.module.css'
-import Fieldset from '../Fieldset/Fieldset'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
 
 interface OpenHouseProps {
   openHouseParam: OpenHouseParam

@@ -1,10 +1,10 @@
-import type { SortById, SortByEnum } from './listing_service_params_types'
+import type { SortById, SortByEnum } from './types/listing_service_params_types'
 import type { AppState } from '../store'
 import type {
   FilterParams,
   ListingServiceParams,
   OpenHouseScheduleIDEnumInterface
-} from './listing_service_params_types'
+} from './types/listing_service_params_types'
 
 export const sortByEnum: SortByEnum = Object.freeze({
   baths_desc: 3,

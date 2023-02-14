@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { ListingLocation } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
-import { cityStateZip } from '../../../../lib/helpers/listing_helpers'
+import { cityStateZip } from '../../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
   location: ListingLocation

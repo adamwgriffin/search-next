@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParams } from '../../../lib/listing_service_params_types'
+import type { PriceRangeParams } from '../../../lib/types/listing_service_params_types'
 import css from 'styled-jsx/css'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
-import MenuButton from '../MenuButton/MenuButton'
-import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
+import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
 export interface PriceProps {
   priceRange: PriceRangeParams

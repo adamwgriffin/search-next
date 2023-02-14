@@ -7,7 +7,7 @@ import {
   getBathrooms,
   formatSqft,
   cityStateZip
-} from '../../../lib/helpers/listing_helpers'
+} from '../../../lib/listing_helpers'
 import styles from './ListingMarkerContent.module.css'
 import Link from 'next/link'
 import ListingMainImage from '../../listings/ListingMainImage/ListingMainImage'

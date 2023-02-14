@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import type { BedsBathsParam } from '../../../lib/listing_service_params_types'
+import type { BedsBathsParam } from '../../../lib/types/listing_service_params_types'
 import css from 'styled-jsx/css'
-import MenuButton from '../MenuButton/MenuButton'
-import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
+import RadioButtonGroup from '../../design_system/RadioButtonGroup/RadioButtonGroup'
 import { countOptions, RadioButtonGroups } from '../../../lib/beds_and_baths'
 
 export interface BedsAndBathsProps {

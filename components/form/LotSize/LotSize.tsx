@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
-import type { LotSizeParams } from '../../../lib/listing_service_params_types'
-import { LotSizeValues } from '../../../lib/constants/filter_constants'
+import type { LotSizeParams } from '../../../lib/types/listing_service_params_types'
+import { LotSizeValues } from '../../../lib/filter'
 import styles from './LotSize.module.css'
-import Fieldset from '../Fieldset/Fieldset'
-import Legend from '../Legend/Legend'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
+import Legend from '../../design_system/Legend/Legend'
 
 export interface LotSizeProps {
   lotSizeMin: number | null

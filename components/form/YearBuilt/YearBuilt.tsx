@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import type { YearBuiltRangeParams } from '../../../lib/listing_service_params_types'
+import type { YearBuiltRangeParams } from '../../../lib/types/listing_service_params_types'
 import { useRef } from 'react'
 import styles from './YearBuilt.module.css'
 import formStyles from '../../../styles/forms.module.css'
-import Fieldset from '../Fieldset/Fieldset'
-import Legend from '../Legend/Legend'
-import InputRangeSeparator from '../InputRangeSeparator/InputRangeSeparator'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
+import Legend from '../../design_system/Legend/Legend'
+import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
 export interface YearBuiltProps {
   yearBuiltRange: YearBuiltRangeParams

@@ -4,7 +4,7 @@ import { useEffect, memo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
-import { listingLocationToLatLngLiteral } from '../../../lib/helpers/listing_helpers'
+import { listingLocationToLatLngLiteral } from '../../../lib/listing_helpers'
 
 export interface ListingMarkerProps {
   listing: Listing

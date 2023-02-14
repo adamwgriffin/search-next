@@ -5,7 +5,7 @@ import {
   SearchTypes
 } from '../../../store/listingSearch/listingSearchSlice'
 import styles from './SearchTypeSelector.module.css'
-import Fieldset from '../Fieldset/Fieldset'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
 
 export interface SearchTypeProps {
   searchType: SearchTypeOption

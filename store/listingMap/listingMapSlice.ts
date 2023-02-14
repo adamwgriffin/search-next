@@ -7,7 +7,7 @@ import type { AppState } from '..'
 import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
-} from '../../lib/helpers/polygon'
+} from '../../lib/polygon'
 import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 

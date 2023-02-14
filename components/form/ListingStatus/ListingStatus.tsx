@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
-import type { ExcludeStatusParams } from '../../../lib/listing_service_params_types'
+import type { ExcludeStatusParams } from '../../../lib/types/listing_service_params_types'
 import type { StatusType } from '../../../lib/status_types'
 import { StatusTypes } from '../../../lib/status_types'
-import Fieldset from '../Fieldset/Fieldset'
-import Legend from '../Legend/Legend'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
+import Legend from '../../design_system/Legend/Legend'
 import styles from './ListingStatus.module.css'
 import formStyles from '../../../styles/forms.module.css'
 

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { PropertyStatusTypeEnum } from '../../../lib/constants/listing_constants'
+import { PropertyStatusTypeEnum } from '../../../lib/listing_helpers'
 import styles from './ListingStatusIndicator.module.css'
 
 export interface ListingStatusIndicatorProps {

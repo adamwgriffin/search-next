@@ -7,7 +7,7 @@ import {
   getBathrooms,
   formatSqft,
   cityStateZip
-} from '../../../lib/helpers/listing_helpers'
+} from '../../../lib/listing_helpers'
 import ListingCardImage from '../ListingCardImage/ListingCardImage'
 
 export interface ListingCardProps {

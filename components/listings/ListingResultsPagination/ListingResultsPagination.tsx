@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import styles from './ListingResultsPagination.module.css'
-import MenuButton from '../../form/MenuButton/MenuButton'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
 import PaginationButton from '../PaginationButton/PaginationButton'
-import ArrowRight from '../../icons/ArrorRight/ArrowRight'
-import ArrowLeft from '../../icons/ArrowLeft/ArrowLeft'
+import ArrowRight from '../../design_system/icons/ArrorRight/ArrowRight'
+import ArrowLeft from '../../design_system/icons/ArrowLeft/ArrowLeft'
 import PageButton from '../PageButton/PageButton'
 
 export interface Pagination {

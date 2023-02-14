@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import type { SortById } from '../../../lib/listing_service_params_types'
+import type { SortById } from '../../../lib/types/listing_service_params_types'
 import { useToggle } from 'react-use'
 import styles from './SortMenu.module.css'
 import { sortByEnum } from '../../../lib/listing_service_params'
-import Dropdown from '../Dropdown/Dropdown'
-import CheckIcon from '../../icons/CheckIcon/CheckIcon'
+import Dropdown from '../../design_system/Dropdown/Dropdown'
+import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
 
 export interface SortMenuProps {
   sortBy: SortById

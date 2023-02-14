@@ -1,6 +1,6 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types/listing_types'
-import type { PriceRangeParams } from '../../lib/listing_service_params_types'
+import type { PriceRangeParams } from '../../lib/types/listing_service_params_types'
 import type {
   SortById,
   FilterParams,
@@ -16,7 +16,7 @@ import type {
   YearBuiltRangeParams,
   OpenHouseParam,
   FeaturesParams
-} from '../../lib/listing_service_params_types'
+} from '../../lib/types/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import type { PayloadAction } from '@reduxjs/toolkit'

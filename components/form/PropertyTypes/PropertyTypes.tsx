@@ -7,8 +7,8 @@ import type {
 import type { ChangeEvent } from 'react'
 import { Fragment } from 'react'
 import styles from './PropertyTypes.module.css'
-import Fieldset from '../Fieldset/Fieldset'
-import Legend from '../Legend/Legend'
+import Fieldset from '../../design_system/Fieldset/Fieldset'
+import Legend from '../../design_system/Legend/Legend'
 
 interface PropertyTypeProps {
   propertyTypes: Readonly<PropertyTypesInterface>

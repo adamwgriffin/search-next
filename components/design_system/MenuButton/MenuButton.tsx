@@ -5,7 +5,7 @@ import css from 'styled-jsx/css'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import OutlinedButton from '../OutlinedButton/OutlinedButton'
-import MenuOpenIcon from '../../icons/MenuOpenIcon/MenuOpenIcon'
+import MenuOpenIcon from '../icons/MenuOpenIcon/MenuOpenIcon'
 
 interface MenuButtonProps {
   label: string

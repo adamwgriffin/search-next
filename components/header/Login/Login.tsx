@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import { useToggle } from 'react-use'
 import styles from './Login.module.css'
-import MenuContainter from '../../form/MenuContainter/MenuContainter'
-import MenuDropdown from '../../form/MenuDropdown/MenuDropdown'
-import HamburgerIcon from '../../icons/HamburgerIcon/HamburgerIcon'
+import MenuContainter from '../../design_system/MenuContainter/MenuContainter'
+import MenuDropdown from '../../design_system/MenuDropdown/MenuDropdown'
+import HamburgerIcon from '../../design_system/icons/HamburgerIcon/HamburgerIcon'
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 
 const Login: NextPage = () => {

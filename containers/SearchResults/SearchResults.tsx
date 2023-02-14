@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SortById } from '../../lib/listing_service_params_types'
+import type { SortById } from '../../lib/types/listing_service_params_types'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingCard from '../../components/listings/ListingCard/ListingCard'

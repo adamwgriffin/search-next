@@ -8,7 +8,7 @@ import {
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
-import { formatPrice } from '../../lib/helpers/listing_helpers'
+import { formatPrice } from '../../lib/listing_helpers'
 import ListingStatusIndicator from '../../components/listings/ListingStatusIndicator/ListingStatusIndicator'
 import ListingDetailImage from '../../components/listings/listing_detail/ListingDetailImage/ListingDetailImage'
 import ListingDetailAddress from '../../components/listings/listing_detail/ListingDetailAddress/ListingDetailAddress'
