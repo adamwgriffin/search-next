@@ -5,6 +5,7 @@ import type {
   ListingServiceParams,
   OpenHouseScheduleIDEnumInterface
 } from './types/listing_service_params_types'
+import { SearchTypes } from '../store/listingSearch/listingSearchSlice'
 
 export const sortByEnum: SortByEnum = Object.freeze({
   baths_desc: 3,
@@ -56,7 +57,8 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   new_const: null,
   virtual_tour: null,
   has_pool: null,
-  senior_community: null
+  senior_community: null,
+  sold_days: 730
 })
 
 export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {
@@ -84,7 +86,7 @@ export const modifyParam = {
   },
 
   sold_days(state: AppState, params: ListingServiceParams) {
-    if (params.status === 'active') {
+    if (state.listingSearch.searchType !== SearchTypes.Sold) {
       return { sold_days: null }
     }
   }

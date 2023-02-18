@@ -21,6 +21,7 @@ import {
   selectYearBuiltParams,
   selectFeatureParams,
   selectSearchType,
+  selectSoldDaysParam,
   SearchTypes,
   setSearchType,
   setPropertyTypes,
@@ -37,6 +38,7 @@ import LotSize from '../../components/form/LotSize/LotSize'
 import YearBuilt from '../../components/form/YearBuilt/YearBuilt'
 import OpenHouse from '../../components/form/OpenHouse/OpenHouse'
 import Features from '../../components/form/Features/Features'
+import SoldDays from '../../components/form/SoldDays/SoldDays'
 
 const More: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -48,6 +50,7 @@ const More: NextPage = () => {
   const lotSizeParams = useAppSelector(selectLotSizeParams)
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
   const featureParams = useAppSelector(selectFeatureParams)
+  const soldDays = useAppSelector(selectSoldDaysParam)
   const [setPreviousYearBuilt, runSearchIfYearBuiltChanged] =
     useRunCallbackIfChanged<YearBuiltRangeParams>(yearBuiltRange, () =>
       dispatch(searchWithUpdatedFilters())
@@ -103,6 +106,12 @@ const More: NextPage = () => {
               propertyTypes={PropertyTypes}
               params={selectedPropertyTypes}
               onChange={handlePropertyTypeChange}
+            />
+          )}
+          {searchType === SearchTypes.Sold && (
+            <SoldDays
+              soldDays={soldDays}
+              onChange={handleChangeAndInitiateSearch}
             />
           )}
           <SquareFeet

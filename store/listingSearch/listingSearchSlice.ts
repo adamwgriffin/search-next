@@ -15,7 +15,8 @@ import type {
   LotSizeParams,
   YearBuiltRangeParams,
   OpenHouseParam,
-  FeaturesParams
+  FeaturesParams,
+  SoldDaysParam
 } from '../../lib/types/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
@@ -256,7 +257,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'new_const',
     'virtual_tour',
     'has_pool',
-    'senior_community'
+    'senior_community',
+    'sold_days'
   ])
 }
 
@@ -289,6 +291,9 @@ export const selectFeatureParams = (state: AppState): FeaturesParams => {
     'senior_community'
   ])
 }
+
+export const selectSoldDaysParam = (state: AppState): SoldDaysParam =>
+  pick(state.listingSearch.filterParams, ['sold_days'])
 
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>
   state.listingSearch.doListingSearchOnMapIdle

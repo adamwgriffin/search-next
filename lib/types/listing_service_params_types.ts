@@ -65,6 +65,7 @@ export interface FilterParams {
   virtual_tour: boolean | null
   has_pool: boolean | null
   senior_community: boolean | null
+  sold_days: number | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -106,6 +107,8 @@ export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
 export type OpenHouseParam = Pick<FilterParams, 'openhouse'>
 
+export type SoldDaysParam = Pick<FilterParams, 'sold_days'>
+
 export type FeaturesParams = Pick<
   FilterParams,
   | 'water'
@@ -136,6 +139,7 @@ export type MoreFiltersParams = Pick<
   | 'virtual_tour'
   | 'has_pool'
   | 'senior_community'
+  | 'sold_days'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
