@@ -59,7 +59,7 @@ const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
   doListingSearchOnMapIdle: false,
   listingSearchRunning: false,
-  locationSearchField: '',
+  locationSearchField: 'Fremont, Seattle, WA, USA',
   searchListingsResponse: {},
   selectedListing: null,
   propertyTypes: DefaultPropertyTypes,

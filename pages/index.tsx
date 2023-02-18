@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Search from '../components/Search/Search'
+import Search from '../containers/Search/Search'
 
 const SearchPage: NextPage = () => {
   return (
