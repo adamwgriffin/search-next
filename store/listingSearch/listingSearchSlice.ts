@@ -48,7 +48,7 @@ export interface ListingSearchState {
   searchType: SearchTypeOption
   doListingSearchOnMapIdle: boolean
   listingSearchRunning: boolean
-  location_search_field: string
+  locationSearchField: string
   searchListingsResponse: any
   selectedListing: SelectedListing
   propertyTypes: PropertyTypeIDArray
@@ -59,7 +59,7 @@ const initialState: ListingSearchState = {
   searchType: SearchTypes.Buy,
   doListingSearchOnMapIdle: false,
   listingSearchRunning: false,
-  location_search_field: '',
+  locationSearchField: '',
   searchListingsResponse: {},
   selectedListing: null,
   propertyTypes: DefaultPropertyTypes,
@@ -142,7 +142,7 @@ export const listingSearchSlice = createSlice({
     },
 
     setLocationSearchField: (state, action: PayloadAction<string>) => {
-      state.location_search_field = action.payload
+      state.locationSearchField = action.payload
     },
 
     setSelectedListing: (state, action: PayloadAction<SelectedListing>) => {
@@ -223,7 +223,7 @@ export const selectSearchType = (state: AppState) =>
 // inline where they're used instead of in the slice file. For example: `useSelector((state: RootState) =>
 // state.counter.value)`
 export const selectLocationSearchField = (state: AppState): string => {
-  return state.listingSearch.location_search_field
+  return state.listingSearch.locationSearchField
 }
 
 export const selectPopupListing = (state: AppState): SelectedListing => {
@@ -393,7 +393,7 @@ export const selectParamsForGeospatialGeocodeSearch = (
 ): ListingServiceParams => {
   const originalParams = {
     ...selectListingServiceFilters(state),
-    street: state.listingSearch.location_search_field
+    street: state.listingSearch.locationSearchField
   }
   return modifyParams(state, originalParams)
 }
