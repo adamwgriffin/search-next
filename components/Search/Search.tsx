@@ -16,7 +16,7 @@ const Search: NextPage = () => {
   return (
     <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
       <div className={styles.search}>
-        <div className={styles.header}>
+        <div>
           <Header />
         </div>
         <div className={resultsClassName}>
