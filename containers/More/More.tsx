@@ -86,14 +86,18 @@ const More: NextPage = () => {
             searchType={searchType}
             onChange={handleSearchTypeChange}
           />
-          <OpenHouse
-            openHouseParam={openHouseParam}
-            onChange={handleChangeAndInitiateSearch}
-          />
-          <ListingStatus
-            statusParms={statusParams}
-            onChange={handleChangeAndInitiateSearch}
-          />
+          {searchType === SearchTypes.Buy && (
+            <>
+              <OpenHouse
+                openHouseParam={openHouseParam}
+                onChange={handleChangeAndInitiateSearch}
+              />
+              <ListingStatus
+                statusParms={statusParams}
+                onChange={handleChangeAndInitiateSearch}
+              />
+            </>
+          )}
           {searchType !== SearchTypes.Rent && (
             <PropertyType
               propertyTypes={PropertyTypes}
