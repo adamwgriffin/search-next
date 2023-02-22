@@ -1,0 +1,16 @@
+.textButton {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  height: 2.5rem;
+  padding: 0 .8rem;
+  border-radius: .375rem;
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.textButton:hover {
+  background-color: var(--primary-light);
+}
