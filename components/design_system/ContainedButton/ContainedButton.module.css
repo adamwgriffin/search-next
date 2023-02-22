@@ -10,7 +10,7 @@
   background: var(--primary);
   font-size: inherit;
   font-family: inherit;
-  color: var(--foreground);
+  color: var(--background);
 }
 
 .containedButton:hover {
