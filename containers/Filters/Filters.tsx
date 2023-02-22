@@ -14,6 +14,7 @@ import {
   setFilterParams,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
+import { openModal } from '../../store/application/applicationSlice'
 import {
   selectViewType,
   setViewType
@@ -46,7 +47,12 @@ const Filters: NextPage = () => {
   }
 
   const handleSaveSearch = () => {
-    alert('TBD')
+    dispatch(
+      openModal({
+        modalType: 'saveSearch',
+        modalProps: { modalOpen: true, title: 'Save Search' }
+      })
+    )
   }
 
   const handleViewSwitcherClick = () => {
