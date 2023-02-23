@@ -26,6 +26,7 @@ import BedsAndBathsMenuButton from '../../components/form/BedsAndBathsMenuButton
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import MoreMenuButton from '../../components/form/MoreMenuButton/MoreMenuButton'
 import More from '../../containers/More/More'
+import FiltersButton from '../../components/form/FiltersButton/FiltersButton'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
 import OutlinedButton from '../../components/design_system/OutlinedButton/OutlinedButton'
 import { countArr } from '../../lib/beds_and_baths'
@@ -47,6 +48,10 @@ const Filters: NextPage = () => {
 
   const handlePriceChange = (priceRange: Partial<PriceRangeParams>) => {
     dispatch(setFilterParams(priceRange))
+  }
+
+  const handleFiltersButtonClick = () => {
+    
   }
 
   const handleSaveSearch = () => {
@@ -82,6 +87,7 @@ const Filters: NextPage = () => {
       <MoreMenuButton>
         <More />
       </MoreMenuButton>
+      <FiltersButton onClick={handleFiltersButtonClick} />
       <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>

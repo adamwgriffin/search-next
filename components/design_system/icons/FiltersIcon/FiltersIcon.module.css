@@ -1,0 +1,6 @@
+.filtersIcon {
+  display: block;
+  height: 14px;
+  width: 14px;
+  fill: var(--foreground);
+}

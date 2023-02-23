@@ -7,7 +7,7 @@
   padding: 0 1rem 0 0;
 }
 
-.filters > *:nth-child(-n+2) {
+.filters > *:nth-child(-n+3) {
   display: none;
 }
 
@@ -17,7 +17,7 @@
     padding: 0;
   }
 
-  .filters > *:nth-child(-n+2) {
+  .filters > *:nth-child(-n+3) {
     display: block;
   }
 }
