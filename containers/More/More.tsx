@@ -5,7 +5,6 @@ import type {
   YearBuiltRangeParams
 } from '../../lib/types/listing_service_params_types'
 import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
-import css from 'styled-jsx/css'
 import styles from './More.module.css'
 import {
   useAppSelector,
@@ -29,7 +28,6 @@ import {
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
-import MenuButton from '../../components/design_system/MenuButton/MenuButton'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import ListingStatus from '../../components/form/ListingStatus/ListingStatus'
 import PropertyType from '../../components/form/PropertyTypes/PropertyTypes'
@@ -82,86 +80,58 @@ const More: NextPage = () => {
   }
 
   return (
-    <>
-      <MenuButton label='More' className={className}>
-        <div className={styles.more}>
-          <SearchTypeSelector
-            searchType={searchType}
-            onChange={handleSearchTypeChange}
-          />
-          {searchType === SearchTypes.Buy && (
-            <>
-              <OpenHouse
-                openHouseParam={openHouseParam}
-                onChange={handleChangeAndInitiateSearch}
-              />
-              <ListingStatus
-                statusParms={statusParams}
-                onChange={handleChangeAndInitiateSearch}
-              />
-            </>
-          )}
-          {searchType !== SearchTypes.Rent && (
-            <PropertyType
-              propertyTypes={PropertyTypes}
-              params={selectedPropertyTypes}
-              onChange={handlePropertyTypeChange}
-            />
-          )}
-          {searchType === SearchTypes.Sold && (
-            <SoldDays
-              soldDays={soldDays}
-              onChange={handleChangeAndInitiateSearch}
-            />
-          )}
-          <SquareFeet
-            squareFeetRange={squareFeetRange}
-            onChange={handleChange}
-            onFocus={setPreviousSquareFeetRange}
-            onBlur={runSearchIfSquareFeetChanged}
-          />
-          <LotSize
-            lotSizeMin={lotSizeParams.lotsize_min}
+    <div className={styles.more}>
+      <SearchTypeSelector
+        searchType={searchType}
+        onChange={handleSearchTypeChange}
+      />
+      {searchType === SearchTypes.Buy && (
+        <>
+          <OpenHouse
+            openHouseParam={openHouseParam}
             onChange={handleChangeAndInitiateSearch}
           />
-          <YearBuilt
-            yearBuiltRange={yearBuiltRange}
-            onChange={handleChange}
-            onFocus={setPreviousYearBuilt}
-            onBlur={runSearchIfYearBuiltChanged}
-          />
-          <Features
-            featureParams={featureParams}
+          <ListingStatus
+            statusParms={statusParams}
             onChange={handleChangeAndInitiateSearch}
           />
-        </div>
-      </MenuButton>
-      {menuButtonStyles}
-    </>
+        </>
+      )}
+      {searchType !== SearchTypes.Rent && (
+        <PropertyType
+          propertyTypes={PropertyTypes}
+          params={selectedPropertyTypes}
+          onChange={handlePropertyTypeChange}
+        />
+      )}
+      {searchType === SearchTypes.Sold && (
+        <SoldDays
+          soldDays={soldDays}
+          onChange={handleChangeAndInitiateSearch}
+        />
+      )}
+      <SquareFeet
+        squareFeetRange={squareFeetRange}
+        onChange={handleChange}
+        onFocus={setPreviousSquareFeetRange}
+        onBlur={runSearchIfSquareFeetChanged}
+      />
+      <LotSize
+        lotSizeMin={lotSizeParams.lotsize_min}
+        onChange={handleChangeAndInitiateSearch}
+      />
+      <YearBuilt
+        yearBuiltRange={yearBuiltRange}
+        onChange={handleChange}
+        onFocus={setPreviousYearBuilt}
+        onBlur={runSearchIfYearBuiltChanged}
+      />
+      <Features
+        featureParams={featureParams}
+        onChange={handleChangeAndInitiateSearch}
+      />
+    </div>
   )
 }
-
-const { className, styles: menuButtonStyles } = css.resolve`
-  .menu {
-    left: auto;
-    right: auto;
-  }
-
-  @media only screen and (min-width: 576px) {
-    .menu {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-    }
-  }
-
-  @media only screen and (min-width: 992px) {
-    .menu {
-      left: auto;
-      right: 0;
-      transform: none;
-    }
-  }
-`
 
 export default More

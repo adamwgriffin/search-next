@@ -24,6 +24,7 @@ import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButt
 import Price from '../../components/form/Price/Price'
 import BedsAndBathsMenuButton from '../../components/form/BedsAndBathsMenuButton/BedsAndBathsMenuButton'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
+import MoreMenuButton from '../../components/form/MoreMenuButton/MoreMenuButton'
 import More from '../../containers/More/More'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
 import OutlinedButton from '../../components/design_system/OutlinedButton/OutlinedButton'
@@ -78,7 +79,9 @@ const Filters: NextPage = () => {
           bedsAndBaths={bedsAndBaths}
         />
       </BedsAndBathsMenuButton>
-      <More />
+      <MoreMenuButton>
+        <More />
+      </MoreMenuButton>
       <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>
