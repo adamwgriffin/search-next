@@ -20,6 +20,7 @@ import {
   setViewType
 } from '../../store/application/applicationSlice'
 import styles from './Filters.module.css'
+import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButton'
 import Price from '../../components/form/Price/Price'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import More from '../../containers/More/More'
@@ -61,12 +62,14 @@ const Filters: NextPage = () => {
 
   return (
     <div className={styles.filters}>
-      <Price
-        priceRange={priceRange}
-        onChange={handlePriceChange}
-        onFocus={setPreviousPriceRange}
-        onBlur={runSearchIfPriceRangeChanged}
-      />
+      <PriceMenuButton>
+        <Price
+          priceRange={priceRange}
+          onChange={handlePriceChange}
+          onFocus={setPreviousPriceRange}
+          onBlur={runSearchIfPriceRangeChanged}
+        />
+      </PriceMenuButton>
       <BedsAndBaths
         countArr={countArr}
         onChange={handleBedsAndBathsChange}
