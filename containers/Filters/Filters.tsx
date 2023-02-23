@@ -50,7 +50,7 @@ const Filters: NextPage = () => {
     dispatch(
       openModal({
         modalType: 'saveSearch',
-        modalProps: { modalOpen: true, title: 'Save Search' }
+        modalProps: { title: 'Save Search' }
       })
     )
   }

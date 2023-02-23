@@ -2,23 +2,28 @@ import type { NextPage } from 'next'
 import styles from './SaveSearchModal.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import ReactModal from 'react-modal'
-import TextButton from '../../design_system/TextButton/TextButton'
-import ContainedButton from '../../design_system/ContainedButton/ContainedButton'
-import CloseIcon from '../../design_system/icons/CloseIcon/CloseIcon'
+import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { selectModalOpen, closeModal } from '../../../store/application/applicationSlice'
+import TextButton from '../../../components/design_system/TextButton/TextButton'
+import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
+import CloseIcon from '../../../components/design_system/icons/CloseIcon/CloseIcon'
 
 export interface SaveSearchModalProps {
-  modalOpen: boolean
   title: string
-  onClose: () => void
 }
 
 ReactModal.setAppElement('#__next')
 
 const SaveSearchModal: NextPage<SaveSearchModalProps> = ({
-  modalOpen,
   title,
-  onClose
 }) => {
+  const dispatch = useAppDispatch()
+  const modalOpen = useAppSelector(selectModalOpen)
+
+  const handleClose = () => {
+    dispatch(closeModal())
+  }
+
   return (
     <ReactModal
       isOpen={modalOpen}
@@ -33,11 +38,11 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({
         afterOpen: styles.modalContentAfterOpen,
         beforeClose: styles.modalContentBeforeClose
       }}
-      onRequestClose={onClose}
+      onRequestClose={handleClose}
       closeTimeoutMS={500}
     >
       <header className={styles.header}>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button className={styles.closeButton} onClick={handleClose}>
           <CloseIcon />
         </button>
         <h1 className={styles.title}>{title}</h1>
@@ -61,8 +66,8 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({
         </div>
       </div>
       <footer className={styles.footer}>
-        <TextButton onClick={onClose}>Cancel</TextButton>
-        <ContainedButton onClick={onClose}>Save</ContainedButton>
+        <TextButton onClick={handleClose}>Cancel</TextButton>
+        <ContainedButton onClick={handleClose}>Save</ContainedButton>
       </footer>
     </ReactModal>
   )

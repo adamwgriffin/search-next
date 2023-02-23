@@ -1,11 +1,10 @@
 import type { NextPage } from 'next'
 
 export interface ErrorModalProps {
-  modalOpen: boolean
   message: string
 }
 
-const ErrorModal: NextPage<ErrorModalProps> = ({ message, modalOpen }) => {
+const ErrorModal: NextPage<ErrorModalProps> = ({ message }) => {
   return <div>{ message }</div>
 }
 

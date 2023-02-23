@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider as ReduxProvider } from 'react-redux'
 import { ThemeProvider } from 'next-themes'
-import Modal from '../containers/Modal/Modal'
+import ModalRoot from '../containers/modals/ModalRoot/ModalRoot'
 import store from '../store'
 
 function App({ Component, pageProps }: AppProps) {
@@ -11,7 +11,7 @@ function App({ Component, pageProps }: AppProps) {
       <ThemeProvider disableTransitionOnChange>
         <>
           <Component {...pageProps} />
-          <Modal />
+          <ModalRoot />
         </>
       </ThemeProvider>
     </ReduxProvider>
