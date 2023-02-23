@@ -22,6 +22,7 @@ import {
 import styles from './Filters.module.css'
 import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButton'
 import Price from '../../components/form/Price/Price'
+import BedsAndBathsMenuButton from '../../components/form/BedsAndBathsMenuButton/BedsAndBathsMenuButton'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import More from '../../containers/More/More'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
@@ -70,11 +71,13 @@ const Filters: NextPage = () => {
           onBlur={runSearchIfPriceRangeChanged}
         />
       </PriceMenuButton>
-      <BedsAndBaths
-        countArr={countArr}
-        onChange={handleBedsAndBathsChange}
-        bedsAndBaths={bedsAndBaths}
-      />
+      <BedsAndBathsMenuButton>
+        <BedsAndBaths
+          countArr={countArr}
+          onChange={handleBedsAndBathsChange}
+          bedsAndBaths={bedsAndBaths}
+        />
+      </BedsAndBathsMenuButton>
       <More />
       <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
