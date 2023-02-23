@@ -50,6 +50,7 @@
     the window height. we only want .searchResults to scroll, not the entire window */
     min-height: 0;
     min-width: 0;
+    padding-bottom: 1rem;
   }
 
   .searchResults {
@@ -58,7 +59,7 @@
   }
 
   .listingMap {
-    padding: 0 1rem 1rem 0;
+    padding: 0 1rem 0 0;
   }
 
   .resultsListView .searchResults {
