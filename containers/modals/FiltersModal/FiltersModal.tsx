@@ -2,7 +2,11 @@ import type { NextPage } from 'next'
 import styles from './FiltersModal.module.css'
 import ReactModal from 'react-modal'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
-import { selectModalOpen, closeModal } from '../../../store/application/applicationSlice'
+import {
+  selectModalOpen,
+  closeModal
+} from '../../../store/application/applicationSlice'
+import { selectTotalListings } from '../../../store/listingSearch/listingSearchSlice'
 import More from '../../More/More'
 import CloseIcon from '../../../components/design_system/icons/CloseIcon/CloseIcon'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
@@ -14,9 +18,15 @@ export interface FiltersModalProps {
 
 ReactModal.setAppElement('#__next')
 
-const FiltersModal: NextPage<FiltersModalProps> = ({ title }) => {
+const showListingsMessage = (n: number) =>
+  `Show ${n.toLocaleString()} ${n === 1 ? 'Home' : 'Homes'}`
+
+const FiltersModal: NextPage<FiltersModalProps> = ({
+  title
+}) => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectModalOpen)
+  const totalListings = useAppSelector(selectTotalListings)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -50,7 +60,9 @@ const FiltersModal: NextPage<FiltersModalProps> = ({ title }) => {
       </div>
       <footer className={styles.footer}>
         <TextButton onClick={handleClose}>Clear All</TextButton>
-        <ContainedButton onClick={handleClose}>Show Homes</ContainedButton>
+        <ContainedButton onClick={handleClose}>
+          {showListingsMessage(totalListings)}
+        </ContainedButton>
       </footer>
     </ReactModal>
   )

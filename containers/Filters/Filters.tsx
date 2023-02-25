@@ -53,7 +53,7 @@ const Filters: NextPage = () => {
     dispatch(
       openModal({
         modalType: 'filters',
-        modalProps: { title: 'Filters' }
+        modalProps: { title: 'Filters'}
       })
     )
   }

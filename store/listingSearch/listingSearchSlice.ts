@@ -24,7 +24,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
   PropertyTypeIDArray,
@@ -327,6 +327,9 @@ export const selectPtype = (state: AppState): string | null => {
 
 export const selectSortBy = (state: AppState): SortById =>
   state.listingSearch.filterParams.sort_by
+
+export const selectTotalListings = (state: AppState): number =>
+  state.listingSearch.searchListingsResponse.number_found ?? 0
 
 export const selectPagination = (state: AppState): Pagination => {
   const { startidx, pgsize } = state.listingSearch.filterParams
