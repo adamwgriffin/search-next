@@ -1,14 +1,14 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type { AppState } from '..'
+import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import {
   createSlice,
-  createSelector,
-  PayloadAction
+  createSelector
 } from '@reduxjs/toolkit'
-import type { AppState } from '..'
 import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
 } from '../../lib/polygon'
-import { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 
 export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
