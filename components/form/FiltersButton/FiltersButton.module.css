@@ -1,4 +1,4 @@
-@value smallAndUp from '../../../styles/breakpoints.css';
+@value smallAndUp from '../../../styles/breakpoints.module.css';
 
 .filtersButton {
   display: flex;
