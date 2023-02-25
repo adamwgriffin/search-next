@@ -19,7 +19,8 @@ const Price: NextPage<PriceProps> = ({
   onChange
 }) => {
   return (
-    <div className={styles.price}>
+    <fieldset className={styles.price}>
+      <legend className={styles.legend}>Price Range</legend>
       <label htmlFor='pricemin' className={formStyles.accessibleLabel}>
         Min Price
       </label>
@@ -57,7 +58,7 @@ const Price: NextPage<PriceProps> = ({
         onBlur={onBlur}
         inputMode='numeric'
       />
-    </div>
+    </fieldset>
   )
 }
 

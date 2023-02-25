@@ -1,7 +1,13 @@
-.more {
+@value smallAndUp from '../../styles/breakpoints.module.css';
+
+.more,
+.mobileFilters {
   display: grid;
   gap: 1rem;
-  min-width: 26rem;
-  overflow-y: auto;
-  padding: 1rem;
+}
+
+@media smallAndUp {
+  .mobileFilters {
+    display: none;
+  }
 }

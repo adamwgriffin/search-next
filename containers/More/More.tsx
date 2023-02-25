@@ -1,5 +1,7 @@
 import type { NextPage } from 'next'
 import type {
+  PriceRangeParams,
+  BedsBathsParam,
   MoreFiltersParamsPartial,
   SquareFeetRangeParams,
   YearBuiltRangeParams
@@ -12,6 +14,8 @@ import {
   useRunCallbackIfChanged
 } from '../../hooks'
 import {
+  selectPriceRange,
+  selectBedBathParams,
   selectOpenHouseParam,
   selectPropertyTypes,
   selectStatusParams,
@@ -29,6 +33,8 @@ import {
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
+import Price from '../../components/form/Price/Price'
+import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
 import ListingStatus from '../../components/form/ListingStatus/ListingStatus'
 import PropertyType from '../../components/form/PropertyTypes/PropertyTypes'
 import SquareFeet from '../../components/form/SquareFeet/SquareFeet'
@@ -41,6 +47,8 @@ import SoldDays from '../../components/form/SoldDays/SoldDays'
 const More: NextPage = () => {
   const dispatch = useAppDispatch()
   const searchType = useAppSelector(selectSearchType)
+  const priceRange = useAppSelector(selectPriceRange)
+  const bedsAndBaths = useAppSelector(selectBedBathParams)
   const openHouseParam = useAppSelector(selectOpenHouseParam)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const statusParams = useAppSelector(selectStatusParams)
@@ -49,6 +57,10 @@ const More: NextPage = () => {
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
   const featureParams = useAppSelector(selectFeatureParams)
   const soldDays = useAppSelector(selectSoldDaysParam)
+  const [setPreviousPriceRange, runSearchIfPriceRangeChanged] =
+    useRunCallbackIfChanged(priceRange, () =>
+      dispatch(searchWithUpdatedFilters())
+    )
   const [setPreviousYearBuilt, runSearchIfYearBuiltChanged] =
     useRunCallbackIfChanged<YearBuiltRangeParams>(yearBuiltRange, () =>
       dispatch(searchWithUpdatedFilters())
@@ -60,6 +72,15 @@ const More: NextPage = () => {
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
+    dispatch(searchWithUpdatedFilters())
+  }
+
+  const handlePriceChange = (priceRange: Partial<PriceRangeParams>) => {
+    dispatch(setFilterParams(priceRange))
+  }
+
+  const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
+    dispatch(setFilterParams(param))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -85,6 +106,18 @@ const More: NextPage = () => {
         searchType={searchType}
         onChange={handleSearchTypeChange}
       />
+      <div className={styles.mobileFilters}>
+        <Price
+          priceRange={priceRange}
+          onChange={handlePriceChange}
+          onFocus={setPreviousPriceRange}
+          onBlur={runSearchIfPriceRangeChanged}
+        />
+        <BedsAndBaths
+          onChange={handleBedsAndBathsChange}
+          bedsAndBaths={bedsAndBaths}
+        />
+      </div>
       {searchType === SearchTypes.Buy && (
         <>
           <OpenHouse

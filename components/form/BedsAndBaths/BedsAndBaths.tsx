@@ -1,45 +1,41 @@
 import type { NextPage } from 'next'
 import type { BedsBathsParam } from '../../../lib/types/listing_service_params_types'
-import css from 'styled-jsx/css'
+import { useId } from 'react'
+import styles from './BedsAndBaths.module.css'
 import RadioButtonGroup from '../../design_system/RadioButtonGroup/RadioButtonGroup'
-import { countOptions, RadioButtonGroups } from '../../../lib/beds_and_baths'
+import {
+  DefaultBedBathCount,
+  countOptions,
+  RadioButtonGroups
+} from '../../../lib/beds_and_baths'
 
 export interface BedsAndBathsProps {
-  countArr: number[]
+  countArr?: number[]
   bedsAndBaths: BedsBathsParam
   onChange?: (param: Partial<BedsBathsParam>) => void
 }
 
 const BedsAndBaths: NextPage<BedsAndBathsProps> = ({
-  countArr,
+  countArr = DefaultBedBathCount,
   bedsAndBaths,
   onChange
 }) => {
+  const id = useId()
+
   return (
-    <>
-      <div className='bedsAndBaths'>
-        {RadioButtonGroups.map(({ param, label }) => (
-          <RadioButtonGroup
-            key={param}
-            name={param}
-            label={label}
-            options={countOptions(param, countArr, bedsAndBaths)}
-            onChange={(value) => onChange?.({ [param]: value || null })}
-          />
-        ))}
-      </div>
-      <style jsx>{styles}</style>
-    </>
+    <fieldset className={styles.bedsAndBaths}>
+      {RadioButtonGroups.map(({ param, label }) => (
+        <RadioButtonGroup
+          key={param}
+          // name needs to be unique because this component is in two places & it won't work right otherwise
+          name={`${param}_${id}`}
+          label={label}
+          options={countOptions(param, countArr, bedsAndBaths)}
+          onChange={(value) => onChange?.({ [param]: value || null })}
+        />
+      ))}
+    </fieldset>
   )
 }
-
-const styles = css`
-  .bedsAndBaths {
-    display: grid;
-    gap: 1rem;
-    padding: 1rem;
-    min-height: 12rem;
-  }
-`
 
 export default BedsAndBaths

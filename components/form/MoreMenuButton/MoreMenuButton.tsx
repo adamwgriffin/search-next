@@ -28,14 +28,20 @@ const { className, styles } = css.resolve`
     right: auto;
   }
 
+  /* smallAndUp */
   @media only screen and (min-width: 576px) {
     .menu {
       left: 50%;
       right: auto;
       transform: translateX(-50%);
+      padding: 1rem;
+      overflow-y: auto;
+      width: 28rem;
+      max-height: 80vh;
     }
   }
 
+  /* largeAndUp */
   @media only screen and (min-width: 992px) {
     .menu {
       left: auto;

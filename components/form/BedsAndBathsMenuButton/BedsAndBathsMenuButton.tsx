@@ -27,6 +27,15 @@ const { className, styles } = css.resolve`
     right: auto;
   }
 
+  /* smallAndUp */
+  @media only screen and (min-width: 576px) {
+    .menu {
+      min-width: 440px;
+      padding: 1rem;
+    }
+  }
+
+  /* largeAndUp */
   @media only screen and (min-width: 992px) {
     .menu {
       right: 0;

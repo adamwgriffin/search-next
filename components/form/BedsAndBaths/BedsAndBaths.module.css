@@ -6,9 +6,9 @@
   font-weight: 600;
 }
 
-.price {
-  display: flex;
-  align-items: center;
+.bedsAndBaths {
+  display: grid;
+  gap: 1rem;
   border: none;
   margin: 0;
   padding: 0;

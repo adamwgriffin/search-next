@@ -29,7 +29,6 @@ import More from '../../containers/More/More'
 import FiltersButton from '../../components/form/FiltersButton/FiltersButton'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
 import OutlinedButton from '../../components/design_system/OutlinedButton/OutlinedButton'
-import { countArr } from '../../lib/beds_and_baths'
 
 const Filters: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -51,7 +50,12 @@ const Filters: NextPage = () => {
   }
 
   const handleFiltersButtonClick = () => {
-    
+    dispatch(
+      openModal({
+        modalType: 'filters',
+        modalProps: { title: 'Filters' }
+      })
+    )
   }
 
   const handleSaveSearch = () => {
@@ -79,7 +83,6 @@ const Filters: NextPage = () => {
       </PriceMenuButton>
       <BedsAndBathsMenuButton>
         <BedsAndBaths
-          countArr={countArr}
           onChange={handleBedsAndBathsChange}
           bedsAndBaths={bedsAndBaths}
         />

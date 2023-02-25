@@ -1,8 +1,9 @@
+@value smallAndUp from '../../../styles/breakpoints.module.css';
+
 .radioButton {
-  width: 3.7rem;
-  height: 2.5rem;
-  font-size: .8rem;
-  border-radius: 1.25rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 0.8rem;
 }
 
 .radioButton:hover {
@@ -15,7 +16,7 @@
   margin: 0;
 }
 
-.radioButtonInput[type=radio]:checked + label{
+.radioButtonInput[type='radio']:checked + label {
   background: var(--primary-light);
   color: var(--primary-dark);
   border-color: var(--primary);
@@ -27,7 +28,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 1.25rem;
-  border: .0625rem solid var(--outline);
+  border: 0.0625rem solid var(--outline);
   cursor: pointer;
+}
+
+.radioButton,
+.radioButtonLabel {
+  border-radius: 50%;
+}
+
+@media smallAndUp {
+  .radioButton {
+    width: 3.7rem;
+    height: 2.5rem;
+  }
+
+  .radioButton,
+  .radioButtonLabel {
+    border-radius: 1.25rem;
+  }
 }

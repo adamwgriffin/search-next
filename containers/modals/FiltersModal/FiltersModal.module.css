@@ -1,4 +1,7 @@
-.Overlay {
+@value smallAndUp from '../../../styles/breakpoints.module.css';
+
+.modalOverlay {
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
@@ -8,54 +11,95 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  
-  /* opacity: 0; */
-  opacity: 1;
-
+  opacity: 0;
   transition: opacity 500ms ease-in-out;
 }
 
-.Overlay.ReactModal__Overlay--after-open {
+.modalOverlayAfterOpen {
   opacity: 1;
 }
 
-.Overlay.ReactModal__Overlay--before-close {
+.modalOverlayBeforeClose {
   opacity: 0;
 }
 
-.Content {
+.modalContent {
   display: flex;
   flex-direction: column;
-  width: 45rem;
-  height: 30rem;
-  padding: 2rem;
-  font-size: 2rem;
+  max-height: 100%;
   border: 1px solid rgba(255, 255, 255, 0.19);
-  border-radius: .8rem;
-  box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 4px -1px;;
+  border-radius: 0.8rem;
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 4px -1px;
   background-color: var(--background);
-
-  /* opacity: 0; */
-  opacity: 1;
-  
+  opacity: 0;
   transform: scale(0.7);
   transition: all 0.3s;
 }
 
-.Content.ReactModal__Content--after-open {
+.modalContentAfterOpen {
   opacity: 1;
   transform: scale(1);
 }
 
-.Content.ReactModal__Content--before-close {
+.modalContentBeforeClose {
   opacity: 0;
   transform: scale(0.7);
 }
 
+.header {
+  display: flex;
+  border-bottom: 1px solid rgb(235, 235, 235);
+  padding: 1rem;
+}
 
 .title {
-  font-size: 4rem;
-  font-weight: 500;
-  margin-top: 0;
-  margin-bottom: 1rem;
+  flex-grow: 1;
+  margin: 0;
+  font-size: inherit;
+  text-align: center;
+}
+
+.closeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
+  border: none;
+  border-radius: 50%;
+  height: 1.5rem;
+  width: 1.5rem;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: var(--primary-light);
+}
+
+.body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 1rem;
+  border-top: 1px solid rgb(235, 235, 235);
+  padding: 1rem;
+}
+
+@media smallAndUp {
+  .modalOverlay {
+    z-index: auto;
+  }
+
+  .modalContent {
+    min-width: 25rem;
+    min-height: 16rem;
+  }
 }
