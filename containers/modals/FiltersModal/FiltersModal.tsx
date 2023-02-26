@@ -1,14 +1,15 @@
 import type { NextPage } from 'next'
-import styles from './FiltersModal.module.css'
-import ReactModal from 'react-modal'
 import { useAppDispatch, useAppSelector } from '../../../hooks'
 import {
   selectModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
 import { selectTotalListings } from '../../../store/listingSearch/listingSearchSlice'
+import Modal from '../../../components/design_system/modal/Modal/Modal'
+import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
+import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
+import ModalFooter from '../../../components/design_system/modal/ModalFooter/ModalFooter'
 import More from '../../More/More'
-import CloseIcon from '../../../components/design_system/icons/CloseIcon/CloseIcon'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
 
@@ -16,7 +17,6 @@ export interface FiltersModalProps {
   title: string
 }
 
-ReactModal.setAppElement('#__next')
 
 const showListingsMessage = (n: number) =>
   `Show ${n.toLocaleString()} ${n === 1 ? 'Home' : 'Homes'}`
@@ -28,43 +28,26 @@ const FiltersModal: NextPage<FiltersModalProps> = ({
   const modalOpen = useAppSelector(selectModalOpen)
   const totalListings = useAppSelector(selectTotalListings)
 
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
+  const handleClose = () => dispatch(closeModal())
 
   return (
-    <ReactModal
+    <Modal
       isOpen={modalOpen}
       contentLabel='Filters'
-      overlayClassName={{
-        base: styles.modalOverlay,
-        afterOpen: styles.modalOverlayAfterOpen,
-        beforeClose: styles.modalOverlayBeforeClose
-      }}
-      className={{
-        base: styles.modalContent,
-        afterOpen: styles.modalContentAfterOpen,
-        beforeClose: styles.modalContentBeforeClose
-      }}
+      fullScreenOnMobile={true}
       onRequestClose={handleClose}
-      closeTimeoutMS={500}
     >
-      <header className={styles.header}>
-        <button className={styles.closeButton} onClick={handleClose}>
-          <CloseIcon />
-        </button>
-        <h1 className={styles.title}>{title}</h1>
-      </header>
-      <div className={styles.body}>
+      <ModalHeader title={title} onClose={handleClose} />
+      <ModalBody>
         <More />
-      </div>
-      <footer className={styles.footer}>
+      </ModalBody>
+      <ModalFooter>
         <TextButton onClick={handleClose}>Clear All</TextButton>
         <ContainedButton onClick={handleClose}>
           {showListingsMessage(totalListings)}
         </ContainedButton>
-      </footer>
-    </ReactModal>
+      </ModalFooter>
+    </Modal>
   )
 }
 

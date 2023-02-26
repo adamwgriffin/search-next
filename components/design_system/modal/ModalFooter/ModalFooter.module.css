@@ -1,0 +1,8 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 1rem;
+  border-top: 1px solid rgb(235, 235, 235);
+  padding: 1rem;
+}
