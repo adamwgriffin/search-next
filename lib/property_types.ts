@@ -1,4 +1,4 @@
-export type PropertyTypeID = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+export type PropertyTypeID = 1 | 2 | 3 | 4 | 6 | 7 | 8 | 9
 
 export type PropertyTypeIDArray = Array<PropertyTypeID>
 
@@ -9,7 +9,6 @@ export type PropertyTypeName =
   | 'townhouse'
   | 'manufactured'
   | 'land'
-  | 'farm_and_ranch'
   | 'multi_family'
 
 export interface PropertyTypeConfig {
@@ -45,10 +44,6 @@ export const PropertyTypes: PropertyTypesInterface = Object.seal({
   land: {
     id: 3,
     label: 'Land'
-  },
-  farm_and_ranch: {
-    id: 5,
-    label: 'Farm & Ranch'
   },
   multi_family: {
     id: 7,
