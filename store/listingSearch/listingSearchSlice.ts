@@ -31,7 +31,6 @@ import {
   PropertyTypes,
   AllPropertyTypeIds,
   RentalPropertytypeID,
-  DefaultPropertyTypes,
   CoOpPropertytypeID
 } from '../../lib/property_types'
 import { modifyParam } from '../../lib/listing_service_params'
@@ -66,7 +65,7 @@ const initialState: ListingSearchState = {
   locationSearchField: 'Fremont, Seattle, WA, USA',
   searchListingsResponse: {},
   selectedListing: null,
-  propertyTypes: DefaultPropertyTypes,
+  propertyTypes: [],
   filterParams: DefaultFilterParams
 }
 
