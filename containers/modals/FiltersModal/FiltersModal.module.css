@@ -31,19 +31,32 @@
   border-radius: 0.8rem;
   box-shadow: rgba(0, 0, 0, 0.8) 0px 1px 4px -1px;
   background-color: var(--background);
-  opacity: 0;
-  transform: scale(0.7);
-  transition: all 0.3s;
 }
 
 .modalContentAfterOpen {
-  opacity: 1;
-  transform: scale(1);
+  animation: slideUp 0.3s ease-out forwards;
 }
 
 .modalContentBeforeClose {
-  opacity: 0;
-  transform: scale(0.7);
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }
 
 .header {
