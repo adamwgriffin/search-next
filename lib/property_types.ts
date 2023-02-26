@@ -51,10 +51,12 @@ export const PropertyTypes: PropertyTypesInterface = Object.seal({
   }
 })
 
-export const DefaultPropertyTypes = [
-  'residential',
-  'condo',
-  'townhouse'
-].map(
+export const AllPropertyTypeIds: PropertyTypeIDArray = Object.values(
+  PropertyTypes
+)
+  .map((t) => t.id)
+  .concat([CoOpPropertytypeID])
+
+export const DefaultPropertyTypes = ['residential', 'condo', 'townhouse'].map(
   (t) => PropertyTypes[t as keyof typeof PropertyTypes].id as PropertyTypeID
 )

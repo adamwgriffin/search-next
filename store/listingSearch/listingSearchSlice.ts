@@ -21,6 +21,7 @@ import type {
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import type { PropertyTypeIDArray } from '../../lib/property_types'
 import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
@@ -28,10 +29,10 @@ import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
   PropertyTypes,
-  PropertyTypeIDArray,
+  AllPropertyTypeIds,
   RentalPropertytypeID,
-  CoOpPropertytypeID,
-  DefaultPropertyTypes
+  DefaultPropertyTypes,
+  CoOpPropertytypeID
 } from '../../lib/property_types'
 import { modifyParam } from '../../lib/listing_service_params'
 import { selectGeoType } from '../places/placesSlice'
@@ -324,15 +325,18 @@ export const selectPropertyTypes = (state: AppState): PropertyTypeIDArray =>
   state.listingSearch.propertyTypes
 
 export const selectPtype = (state: AppState): string | null => {
+  const { propertyTypes } = state.listingSearch
+  // the serve will return property types that we don't want to use, like rental, if we don't send a ptype param. so
+  // we're sending only the property types we support in the app if the user hasn't selected any.
+  if (!propertyTypes || propertyTypes.length === 0)
+    return AllPropertyTypeIds.join(',')
   // condo and co-op are sent as separate property types to the listing service but they are only displayed as "Condo"
   // in the UI, so we need to combine them here.
-  const propertyTypeIds = state.listingSearch.propertyTypes.includes(
-    PropertyTypes.condo.id
-  )
-    ? state.listingSearch.propertyTypes.concat([CoOpPropertytypeID])
-    : state.listingSearch.propertyTypes
+  const propertyTypeIds = propertyTypes.includes(PropertyTypes.condo.id)
+    ? propertyTypes.concat([CoOpPropertytypeID])
+    : propertyTypes
   // the service expects a comma-separated string of property type ids. it will return an error if we send an array
-  return propertyTypeIds.join(',') || null
+  return propertyTypeIds.join(',')
 }
 
 export const selectSortBy = (state: AppState): SortById =>
