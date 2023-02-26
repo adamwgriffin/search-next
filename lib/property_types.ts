@@ -5,7 +5,6 @@ export type PropertyTypeIDArray = Array<PropertyTypeID>
 export type PropertyTypeName =
   | 'residential'
   | 'condo'
-  | 'co_op'
   | 'townhouse'
   | 'manufactured'
   | 'land'
@@ -16,9 +15,14 @@ export interface PropertyTypeConfig {
   label: string
 }
 
-export type PropertyTypesInterface = Record<PropertyTypeName, PropertyTypeConfig>
+export type PropertyTypesInterface = Record<
+  PropertyTypeName,
+  PropertyTypeConfig
+>
 
-export const RentalPropertytypeID:PropertyTypeID = 6
+export const RentalPropertytypeID: PropertyTypeID = 6
+
+export const CoOpPropertytypeID: PropertyTypeID = 8
 
 export const PropertyTypes: PropertyTypesInterface = Object.seal({
   residential: {
@@ -28,10 +32,6 @@ export const PropertyTypes: PropertyTypesInterface = Object.seal({
   condo: {
     id: 2,
     label: 'Condo'
-  },
-  co_op: {
-    id: 8,
-    label: 'Co-Op'
   },
   townhouse: {
     id: 9,
@@ -51,6 +51,10 @@ export const PropertyTypes: PropertyTypesInterface = Object.seal({
   }
 })
 
-export const DefaultPropertyTypes = ['residential', 'condo', 'co_op', 'townhouse'].map(
+export const DefaultPropertyTypes = [
+  'residential',
+  'condo',
+  'townhouse'
+].map(
   (t) => PropertyTypes[t as keyof typeof PropertyTypes].id as PropertyTypeID
 )

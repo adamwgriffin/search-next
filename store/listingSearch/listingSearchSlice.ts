@@ -27,8 +27,10 @@ import range from 'lodash/range'
 import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
+  PropertyTypes,
   PropertyTypeIDArray,
   RentalPropertytypeID,
+  CoOpPropertytypeID,
   DefaultPropertyTypes
 } from '../../lib/property_types'
 import { modifyParam } from '../../lib/listing_service_params'
@@ -322,7 +324,15 @@ export const selectPropertyTypes = (state: AppState): PropertyTypeIDArray =>
   state.listingSearch.propertyTypes
 
 export const selectPtype = (state: AppState): string | null => {
-  return state.listingSearch.propertyTypes.join(',') || null
+  // condo and co-op are sent as separate property types to the listing service but they are only displayed as "Condo"
+  // in the UI, so we need to combine them here.
+  const propertyTypeIds = state.listingSearch.propertyTypes.includes(
+    PropertyTypes.condo.id
+  )
+    ? state.listingSearch.propertyTypes.concat([CoOpPropertytypeID])
+    : state.listingSearch.propertyTypes
+  // the service expects a comma-separated string of property type ids. it will return an error if we send an array
+  return propertyTypeIds.join(',') || null
 }
 
 export const selectSortBy = (state: AppState): SortById =>
