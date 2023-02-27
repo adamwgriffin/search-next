@@ -166,6 +166,11 @@ export const listingSearchSlice = createSlice({
 
     setPropertyTypes: (state, action: PayloadAction<PropertyTypeIDArray>) => {
       state.propertyTypes = action.payload
+    },
+
+    clearFilters: (state) => {
+      state.filterParams = DefaultFilterParams
+      state.propertyTypes = []
     }
   },
 
@@ -216,7 +221,8 @@ export const {
   resetStartIndex,
   setDoListingSearchOnMapIdle,
   setFilterParams,
-  setPropertyTypes
+  setPropertyTypes,
+  clearFilters
 } = listingSearchSlice.actions
 
 export const selectSearchType = (state: AppState) =>

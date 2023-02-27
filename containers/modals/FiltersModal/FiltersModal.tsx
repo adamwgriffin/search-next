@@ -4,7 +4,11 @@ import {
   selectModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
-import { selectTotalListings } from '../../../store/listingSearch/listingSearchSlice'
+import {
+  selectTotalListings,
+  clearFilters,
+  searchWithUpdatedFilters
+} from '../../../store/listingSearch/listingSearchSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
@@ -17,18 +21,20 @@ export interface FiltersModalProps {
   title: string
 }
 
-
 const showListingsMessage = (n: number) =>
   `Show ${n.toLocaleString()} ${n === 1 ? 'Home' : 'Homes'}`
 
-const FiltersModal: NextPage<FiltersModalProps> = ({
-  title
-}) => {
+const FiltersModal: NextPage<FiltersModalProps> = ({ title }) => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectModalOpen)
   const totalListings = useAppSelector(selectTotalListings)
 
   const handleClose = () => dispatch(closeModal())
+
+  const handleClearAll = () => {
+    dispatch(clearFilters())
+    dispatch(searchWithUpdatedFilters())
+  }
 
   return (
     <Modal
@@ -42,7 +48,7 @@ const FiltersModal: NextPage<FiltersModalProps> = ({
         <More />
       </ModalBody>
       <ModalFooter>
-        <TextButton onClick={handleClose}>Clear All</TextButton>
+        <TextButton onClick={handleClearAll}>Clear All</TextButton>
         <ContainedButton onClick={handleClose}>
           {showListingsMessage(totalListings)}
         </ContainedButton>
