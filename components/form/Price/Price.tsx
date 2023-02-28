@@ -12,6 +12,9 @@ export interface PriceProps {
   onChange?: (priceRange: Partial<PriceRangeParams>) => void
 }
 
+// passing null to NumericFormat.value does not clear the input but "" does for some reason
+const normalizePrice = (price: number | null) => (price === null ? '' : price)
+
 const Price: NextPage<PriceProps> = ({
   priceRange,
   onFocus,
@@ -29,7 +32,7 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={priceRange.pricemin}
+        value={normalizePrice(priceRange.pricemin)}
         onValueChange={(v) => onChange?.({ pricemin: v.floatValue })}
         placeholder='Min'
         className={formStyles.input}
@@ -48,7 +51,7 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={priceRange.pricemax}
+        value={normalizePrice(priceRange.pricemax)}
         onValueChange={(v) => onChange?.({ pricemax: v.floatValue })}
         placeholder='Max'
         className={formStyles.input}
