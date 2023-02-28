@@ -169,8 +169,8 @@ export const listingSearchSlice = createSlice({
     },
 
     clearFilters: (state) => {
-      state.filterParams = DefaultFilterParams
-      state.propertyTypes = []
+      state.filterParams = initialState.filterParams
+      state.propertyTypes = initialState.propertyTypes
     }
   },
 
