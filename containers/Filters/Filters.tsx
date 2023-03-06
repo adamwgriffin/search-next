@@ -14,10 +14,10 @@ import {
   setFilterParams,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
-import { openModal } from '../../store/application/applicationSlice'
 import {
   selectViewType,
-  setViewType
+  setViewType,
+  openModal
 } from '../../store/application/applicationSlice'
 import styles from './Filters.module.css'
 import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButton'
