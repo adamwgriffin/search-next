@@ -1,7 +1,7 @@
 import type { AppState } from '..'
+import type { ListingDetailListing } from '../../lib/types/listing_types'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import http from '../../lib/http'
-import { ListingDetailListing } from '../../lib/types/listing_types'
 
 export interface ListingDetailState {
   searchListingsResponse: any
