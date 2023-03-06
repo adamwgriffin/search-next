@@ -25,15 +25,15 @@ const ListingCard: NextPage<ListingCardProps> = ({ listing }) => {
       <div className={styles.details}>
         <div className={styles.price}>{formatPrice(listing)}</div>
         <div className={styles.bedBathSqft}>
-          <div className={styles.beds}>{listing.bedrooms}bd</div>
-          <div className={styles.baths}>{getBathrooms(listing)}ba</div>
-          <div className={styles.sqft}>{formatSqft(listing)} sqft</div>
+          <div>{listing.bedrooms}bd</div>
+          <div>{getBathrooms(listing)}ba</div>
+          <div>{formatSqft(listing)} sqft</div>
         </div>
-        <div className={styles.address}>
-          <div className={styles.addressLine1}>
+        <div>
+          <div>
             {listing.location.address}
           </div>
-          <div className={styles.addressLine2}>
+          <div>
             {cityStateZip(listing.location)}
           </div>
         </div>
