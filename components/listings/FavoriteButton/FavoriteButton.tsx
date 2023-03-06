@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
-import { useState, MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
+import { useState } from 'react'
 import styles from './FavoriteButton.module.css'
 import HeartIcon from '../../design_system/icons/HeartIcon/HeartIcon'
 
