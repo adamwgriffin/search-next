@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import type { Feature } from '../../../../lib/types/listing_types'
+import { Fragment } from 'react'
 import css from 'styled-jsx/css'
 import ShowMore from '../../../design_system/ShowMore'
 
@@ -13,8 +14,8 @@ const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
       <ShowMore>
         <h4 className='heading'>Property Details</h4>
         {features.map(({ feature_description, featureid, subfeatures }) => (
-          <>
-            <h5 className='feature' key={featureid.toString()}>
+          <Fragment key={featureid.toString()}>
+            <h5 className='feature'>
               {feature_description}
             </h5>
             <ul className='subfeatures'>
@@ -24,7 +25,7 @@ const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
                 </li>
               ))}
             </ul>
-          </>
+          </Fragment>
         ))}
       </ShowMore>
       <style jsx>{styles}</style>
