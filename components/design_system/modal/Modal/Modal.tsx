@@ -10,6 +10,7 @@ export interface ModalProps {
   fullScreenOnMobile?: boolean
   children: ReactNode
   onRequestClose?: () => void
+  onAfterClose?: () => void
 }
 
 ReactModal.setAppElement('#__next')
@@ -20,7 +21,8 @@ const Modal: NextPage<ModalProps> = ({
   closeTimeoutMS = 500,
   fullScreenOnMobile = false,
   children,
-  onRequestClose
+  onRequestClose,
+  onAfterClose
 }) => {
   const modalContentClassNameBase = fullScreenOnMobile
     ? styles.modalContentFullScreenOnMobile
@@ -44,6 +46,7 @@ const Modal: NextPage<ModalProps> = ({
         beforeClose: styles.modalContentBeforeClose
       }}
       onRequestClose={onRequestClose}
+      onAfterClose={onAfterClose}
       closeTimeoutMS={closeTimeoutMS}
     >
       {children}
