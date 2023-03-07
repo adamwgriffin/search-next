@@ -16,6 +16,7 @@ import {
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { openModal } from '../../store/application/applicationSlice'
+import { addUrlToBrowserHistory } from '../../lib/util'
 import ListingCardLoader from '../../components/listings/ListingCardLoader/ListingCardLoader'
 
 const SearchResults: NextPage = () => {
@@ -46,6 +47,7 @@ const SearchResults: NextPage = () => {
           modalProps: { listingId }
         })
       )
+      addUrlToBrowserHistory(url)
     }
   }
 

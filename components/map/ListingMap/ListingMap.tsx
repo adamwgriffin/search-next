@@ -27,6 +27,7 @@ import {
   selectListingSearchRunning
 } from '../../../store/listingSearch/listingSearchSlice'
 import { openModal } from '../../../store/application/applicationSlice'
+import { addUrlToBrowserHistory } from '../../../lib/util'
 
 const ListingMap: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -50,8 +51,9 @@ const ListingMap: NextPage = () => {
   }
 
   const handleListingMarkerMouseClick = (listingId: number) => {
+    const url = `/listing/${listingId}`
     if (isSmallAndUp) {
-      window.open(`/listing/${listingId}`, '_blank')
+      window.open(url, '_blank')
     } else {
       dispatch(
         openModal({
@@ -59,6 +61,7 @@ const ListingMap: NextPage = () => {
           modalProps: { listingId }
         })
       )
+      addUrlToBrowserHistory(url)
     }
   }
 
