@@ -53,11 +53,16 @@ export const applicationSlice = createSlice({
 
     closeModal(state) {
       state.modalOpen = false
+    },
+
+    resetModal(state) {
+      state.modalType = initialState.modalType
+      state.modalProps = initialState.modalProps
     }
   }
 })
 
-export const { setViewType, openModal, closeModal } = applicationSlice.actions
+export const { setViewType, openModal, closeModal, resetModal } = applicationSlice.actions
 
 export const selectViewType = (state: AppState) => state.application.viewType
 
