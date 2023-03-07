@@ -28,7 +28,11 @@ export const listingDetailSlice = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    resetListingDetail(state) {
+      state.searchListingsResponse = {}
+    }
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getListingDetail.fulfilled, (state, action) => {
@@ -38,7 +42,7 @@ export const listingDetailSlice = createSlice({
 })
 
 // add any reducers that we want to export as actions here
-export const {} = listingDetailSlice.actions
+export const { resetListingDetail } = listingDetailSlice.actions
 
 export const selectParamsForListingDetailRequest = (state: AppState) => {
   return {
