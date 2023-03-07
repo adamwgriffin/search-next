@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import type { Feature } from '../../../../lib/types/listing_types'
 import { Fragment } from 'react'
-import css from 'styled-jsx/css'
+import styles from './PropertyDetails.module.css'
 import ShowMore from '../../../design_system/ShowMore'
 
 export interface PropertyDetailsProps {
@@ -10,53 +10,22 @@ export interface PropertyDetailsProps {
 
 const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
   return (
-    <>
-      <ShowMore>
-        <h4 className='heading'>Property Details</h4>
-        {features.map(({ feature_description, featureid, subfeatures }) => (
-          <Fragment key={featureid.toString()}>
-            <h5 className='feature'>
-              {feature_description}
-            </h5>
-            <ul className='subfeatures'>
-              {subfeatures.map(({ subfeature_name, subfeatureid }) => (
-                <li key={subfeatureid.toString()}>
-                  <div className='subfeatureName'>{subfeature_name}</div>
-                </li>
-              ))}
-            </ul>
-          </Fragment>
-        ))}
-      </ShowMore>
-      <style jsx>{styles}</style>
-    </>
+    <ShowMore>
+      <h4>Property Details</h4>
+      {features.map(({ feature_description, featureid, subfeatures }) => (
+        <Fragment key={featureid.toString()}>
+          <h5 className={styles.feature}>{feature_description}</h5>
+          <ul className={styles.subfeatures}>
+            {subfeatures.map(({ subfeature_name, subfeatureid }) => (
+              <li key={subfeatureid.toString()}>
+                <div className={styles.subfeatureName}>{subfeature_name}</div>
+              </li>
+            ))}
+          </ul>
+        </Fragment>
+      ))}
+    </ShowMore>
   )
 }
-
-const styles = css`
-  .feature {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .subfeatures {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1rem;
-    margin: 0;
-    padding: 0 1rem
-  }
-
-  .subfeatures > li {
-    display: grid;
-    grid-template-columns: minmax(6.25rem, auto);
-  }
-
-  .subfeatureName {
-    font-size: 0.875rem;
-    color: #767676;
-  }
-`
 
 export default PropertyDetails
