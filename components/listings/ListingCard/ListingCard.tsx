@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import type { MouseEvent } from 'react'
 import type { Listing } from '../../../lib/types/listing_types'
 import Link from 'next/link'
 import styles from './ListingCard.module.css'
@@ -12,14 +13,21 @@ import ListingCardImage from '../ListingCardImage/ListingCardImage'
 
 export interface ListingCardProps {
   listing: Listing
+  url: string
+  onClick?: () => void
 }
 
-const ListingCard: NextPage<ListingCardProps> = ({ listing }) => {
+const ListingCard: NextPage<ListingCardProps> = ({ listing, url, onClick }) => {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    onClick?.()
+  }
+
   return (
     <Link
-      href={`/listing/${listing.listingid}`}
-      target='_blank'
+      href={url}
       className={styles.link}
+      onClick={handleClick}
     >
       <ListingCardImage listing={listing} />
       <div className={styles.details}>

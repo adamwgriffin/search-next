@@ -3,16 +3,18 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { FiltersModalProps } from '../../containers/modals/FiltersModal/FiltersModal'
 import type { SaveSearchModalProps } from '../../containers/modals/SaveSearchModal/SaveSearchModal'
 import type { ErrorModalProps } from '../../containers/modals/ErrorModal/ErrorModal'
+import type { ListingDetailModalProps } from '../../containers/modals/ListingDetailModal/ListingDetailModal'
 import { createSlice } from '@reduxjs/toolkit'
 
 export type ViewType = 'list' | 'map'
 
-export type ModalType = 'filters' | 'saveSearch' | 'error'
+export type ModalType = 'filters' | 'saveSearch' | 'error' | 'listingDetail'
 
 export type ModalPropsTypes =
   | FiltersModalProps
   | SaveSearchModalProps
   | ErrorModalProps
+  | ListingDetailModalProps
   | null
 
 export interface ApplicationState {

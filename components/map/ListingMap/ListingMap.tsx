@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { useMedia } from 'react-use'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config/googleMapsOptions'
@@ -25,10 +26,12 @@ import {
   selectListings,
   selectListingSearchRunning
 } from '../../../store/listingSearch/listingSearchSlice'
+import { openModal } from '../../../store/application/applicationSlice'
 
 const ListingMap: NextPage = () => {
-  const { googleLoaded } = useGoogleMaps()
   const dispatch = useAppDispatch()
+  const { googleLoaded } = useGoogleMaps()
+  const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
   const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
@@ -39,11 +42,24 @@ const ListingMap: NextPage = () => {
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
   const handleListingMarkerMouseEnter = (listingid: number) => {
-    dispatch(setSelectedListing(listingid))
+    isSmallAndUp && dispatch(setSelectedListing(listingid))
   }
 
   const handleListingMarkerMouseLeave = () => {
-    dispatch(setSelectedListing(null))
+    isSmallAndUp && dispatch(setSelectedListing(null))
+  }
+
+  const handleListingMarkerMouseClick = (listingId: number) => {
+    if (isSmallAndUp) {
+      window.open(`/listing/${listingId}`, '_blank')
+    } else {
+      dispatch(
+        openModal({
+          modalType: 'listingDetail',
+          modalProps: { listingId }
+        })
+      )
+    }
   }
 
   const handleBoundaryControlClick = () => {
@@ -81,6 +97,7 @@ const ListingMap: NextPage = () => {
               listing={l}
               onMouseEnter={handleListingMarkerMouseEnter}
               onMouseLeave={handleListingMarkerMouseLeave}
+              onClick={handleListingMarkerMouseClick}
             />
           ))}
           <MapBoundary

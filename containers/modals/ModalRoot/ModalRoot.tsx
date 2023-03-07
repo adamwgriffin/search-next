@@ -5,13 +5,15 @@ import { useAppSelector } from '../../../hooks'
 import FiltersModal from '../FiltersModal/FiltersModal'
 import SaveSearchModal from '../SaveSearchModal/SaveSearchModal'
 import ErrorModal from '../ErrorModal/ErrorModal'
+import ListingDetailModal from '../ListingDetailModal/ListingDetailModal'
 
 export type ModalComponentTypes = Record<ModalType, NextPage<any>>
 
 const ModalComponents: ModalComponentTypes = {
   filters: FiltersModal,
   saveSearch: SaveSearchModal,
-  error: ErrorModal
+  error: ErrorModal,
+  listingDetail: ListingDetailModal
 }
 
 const ModalRoot: NextPage= () => {

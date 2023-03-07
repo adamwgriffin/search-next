@@ -10,12 +10,14 @@ export interface ListingMarkerProps {
   listing: Listing
   onMouseEnter?: (listingid: number) => void
   onMouseLeave?: () => void
+  onClick?: (listingid: number) => void
 }
 
 const ListingMarker: NextPage<ListingMarkerProps> = ({
   listing,
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
+  onClick
 }) => {
   const { googleMap } = useGoogleMaps()
 
@@ -45,7 +47,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       content: markerContainer
     })
 
-    marker.addListener('click', () => window.open(link, '_blank'))
+    marker.addListener('click', () => onClick?.(listing.listingid))
     // there are only a few events that AdvancedMarkerView supports, so we have to attach events to the element for
     // others.
     const element = marker.element as HTMLElement
@@ -57,7 +59,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       element.removeEventListener('mouseenter', handleMouseEnter)
       element.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [googleMap, listing, onMouseEnter, onMouseLeave])
+  }, [googleMap, listing, onMouseEnter, onMouseLeave, onClick])
 
   return null
 }
