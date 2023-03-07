@@ -5,6 +5,7 @@ import {
   selectModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
+import { selectLocationSearchField } from '../../../store/listingSearch/listingSearchSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
@@ -19,6 +20,7 @@ export interface SaveSearchModalProps {
 const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectModalOpen)
+  const locationSearchField = useAppSelector(selectLocationSearchField)
 
   const handleClose = () => dispatch(closeModal())
 
@@ -34,7 +36,7 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
           <label htmlFor='searchName' className={formStyles.label}>
             Name
           </label>
-          <input id='searchName' type='text' className={formStyles.input} />
+          <input id='searchName' type='text' className={formStyles.input} defaultValue={locationSearchField} />
         </div>
         <div className={formStyles.inputGroup}>
           <label htmlFor='emailMe' className={formStyles.label}>
