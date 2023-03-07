@@ -1,0 +1,31 @@
+@value smallAndUp from '../../../../styles/breakpoints.module.css';
+
+
+.heading {
+  margin-top: 0;
+}
+
+.detailsList {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.detailsList > li {
+  display: grid;
+  grid-template-columns: minmax(100px, 34%) auto;
+  grid-template-rows: auto auto;
+}
+
+.detailsName {
+  color: #767676;
+}
+
+@media smallAndUp {
+  .detailsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
