@@ -9,6 +9,7 @@ const FavoriteButton: NextPage = () => {
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+    event.stopPropagation()
     setIsFavorite(!isFavorite)
   }
 
