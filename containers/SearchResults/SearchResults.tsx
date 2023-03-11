@@ -1,9 +1,7 @@
 import type { NextPage } from 'next'
 import type { SortById } from '../../lib/types/listing_service_params_types'
 import { useMedia } from 'react-use'
-import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
-import ListingCard from '../../components/listings/ListingCard/ListingCard'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
@@ -17,7 +15,8 @@ import {
 } from '../../store/listingSearch/listingSearchSlice'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/util'
-import ListingCardLoader from '../../components/listings/ListingCardLoader/ListingCardLoader'
+import ListingCards from '../../components/listings/ListingCards/ListingCards'
+import NoResults from '../../components/listings/NoResults/NoResults'
 
 const SearchResults: NextPage = () => {
   const dispatch = useAppDispatch()
@@ -59,36 +58,20 @@ const SearchResults: NextPage = () => {
         sortBy={sortBy}
         onSortMenuChange={handleSortMenuChange}
       />
-      <ul className={styles.searchResultsList}>
-        {!listingSearchRunning &&
-          listings.map((listing) => (
-            <li key={listing.listingid.toString()}>
-              <ListingCard
-                listing={listing}
-                url={`listing/${listing.listingid}`}
-                onClick={() =>
-                  handleListingCardClick(
-                    `listing/${listing.listingid}`,
-                    listing.listingid
-                  )
-                }
-              />
-            </li>
-          ))}
-
-        {listingSearchRunning &&
-          [...Array(6)].map((_, i) => (
-            <li key={i}>
-              <ListingCardLoader />
-            </li>
-          ))}
-      </ul>
+      <ListingCards
+        listings={listings}
+        listingSearchRunning={listingSearchRunning}
+        handleListingCardClick={handleListingCardClick}
+      />
       {listings.length > 0 && (
         <ListingResultsPagination
           {...pagination}
           onClick={handlePaginationButtonClick}
         />
       )}
+      {/* {listings.length === 0 && (
+        <NoResults  />
+      )} */}
     </div>
   )
 }
