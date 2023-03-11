@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import type { SortById } from '../../lib/types/listing_service_params_types'
 import { useMedia } from 'react-use'
+import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import { useAppSelector, useAppDispatch } from '../../hooks'
@@ -11,7 +12,8 @@ import {
   selectListingSearchRunning,
   setFilterParams,
   doGeospatialSearch,
-  searchWithUpdatedFilters
+  searchWithUpdatedFilters,
+  clearFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/util'
@@ -50,28 +52,35 @@ const SearchResults: NextPage = () => {
     }
   }
 
+  const handleClearAll = () => {
+    dispatch(clearFilters())
+    dispatch(searchWithUpdatedFilters())
+  }
+
   return (
-    <div>
+    <div className={styles.searchResults}>
       <ListingResultsHeader
         totalListings={pagination.total}
         listingSearchRunning={listingSearchRunning}
         sortBy={sortBy}
         onSortMenuChange={handleSortMenuChange}
       />
-      <ListingCards
-        listings={listings}
-        listingSearchRunning={listingSearchRunning}
-        handleListingCardClick={handleListingCardClick}
-      />
+      {(listings.length > 0 || listingSearchRunning) && (
+        <ListingCards
+          listings={listings}
+          listingSearchRunning={listingSearchRunning}
+          handleListingCardClick={handleListingCardClick}
+        />
+      )}
+      {listings.length === 0 && !listingSearchRunning && (
+        <NoResults onClearFiltersClick={handleClearAll} />
+      )}
       {listings.length > 0 && (
         <ListingResultsPagination
           {...pagination}
           onClick={handlePaginationButtonClick}
         />
       )}
-      {/* {listings.length === 0 && (
-        <NoResults  />
-      )} */}
     </div>
   )
 }

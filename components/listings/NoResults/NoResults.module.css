@@ -1,0 +1,30 @@
+@value smallAndUp from '../../../styles/breakpoints.module.css';
+
+.noResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+.emoji {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.message {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+@media smallAndUp {
+  .noResults {
+    padding: 3rem 20%;
+  }
+  
+  .message {
+    font-size: 2rem;
+  }
+}

@@ -11,8 +11,8 @@ export interface ContainedButtonProps {
 
 const ContainedButton: NextPage<ContainedButtonProps> = ({
   children,
-  textColor = '',
-  backgroundColor = '',
+  textColor,
+  backgroundColor,
   onClick
 }) => {
   return (
