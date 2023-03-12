@@ -25,7 +25,7 @@ export const DefaultMapOptions: google.maps.MapOptions = {
   },
   clickableIcons: false,
   zoom: 12,
-  zoomControl: true,
+  zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
   streetViewControl: false,

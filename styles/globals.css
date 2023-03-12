@@ -28,7 +28,7 @@ body,
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
   --listing-marker-foreground-visited: #3c3c3c;
-  --map-control: rgba(255, 255, 255, 0.8);
+  --map-control: var(--background);
 }
 
 [data-theme='purple'] {

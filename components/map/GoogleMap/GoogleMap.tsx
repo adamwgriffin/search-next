@@ -7,6 +7,7 @@ import styles from './GoogleMap.module.css'
 export interface GoogleMapProps {
   options: google.maps.MapOptions
   bounds?: google.maps.LatLngBoundsLiteral | null
+  zoom?: number
   onDragStart?: (currentMapState: GoogleMapState) => void
   onDragEnd?: (currentMapState: GoogleMapState) => void
   onZoomChanged?: (currentMapState: GoogleMapState) => void
@@ -26,6 +27,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   const {
     options,
     bounds,
+    zoom = 12,
     children,
     onDragStart,
     onDragEnd,
@@ -108,6 +110,12 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
       googleMap.fitBounds(bounds)
     }
   }, [bounds, googleMap])
+  
+  useEffect(() => {
+    if (googleMap && googleMap.getZoom() !== zoom) {
+      googleMap.setZoom(zoom)
+    }
+  }, [zoom, googleMap])
 
   useEffect(() => {
     if (googleMap) {

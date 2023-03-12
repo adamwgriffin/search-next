@@ -8,12 +8,14 @@ import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
 import ListingMarker from '../ListingMarker/ListingMarker'
 import MapBoundary from '../MapBoundary/MapBoundary'
 import MapControl from '../MapControl/MapControl'
+import ZoomControl from '../ZoomControl/ZoomControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
   setBoundaryActive,
   setMapData,
   selectBoundaryActive,
   selectGeoLayerBounds,
+  selectZoom,
   selectGeoLayerCoordinates
 } from '../../../store/listingMap/listingMapSlice'
 import {
@@ -35,6 +37,7 @@ const ListingMap: NextPage = () => {
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const boundaryActive = useAppSelector(selectBoundaryActive)
   const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
+  const zoom = useAppSelector(selectZoom)
   const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
   const doListingSearchOnMapIdle = useAppSelector(
     selectDoListingSearchOnMapIdle
@@ -70,10 +73,20 @@ const ListingMap: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handleUserAdjustedMap = async (currentMapState: GoogleMapState) => {
+  const handleUserAdjustedMap = async (
+    currentMapState: Partial<GoogleMapState>
+  ) => {
     await dispatch(setMapData(currentMapState))
     dispatch(resetStartIndex())
     dispatch(setDoListingSearchOnMapIdle(true))
+  }
+
+  const handleZoomIn = () => {
+    handleUserAdjustedMap({ zoom: zoom + 1 })
+  }
+
+  const handleZoomOut = () => {
+    handleUserAdjustedMap({ zoom: zoom - 1 })
   }
 
   const handleIdle = (currentMapState: GoogleMapState) => {
@@ -90,6 +103,7 @@ const ListingMap: NextPage = () => {
         <GoogleMap
           options={DefaultMapOptions}
           bounds={geoLayerBounds}
+          zoom={zoom}
           onIdle={handleIdle}
           onDragEnd={handleUserAdjustedMap}
           onZoomChanged={handleUserAdjustedMap}
@@ -114,6 +128,7 @@ const ListingMap: NextPage = () => {
           listingSearchRunning={listingSearchRunning}
           onBoundaryControlClick={handleBoundaryControlClick}
         />
+        <ZoomControl onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
       </div>
     )
   }

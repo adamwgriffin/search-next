@@ -1,10 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
 import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
-import {
-  createSlice,
-  createSelector
-} from '@reduxjs/toolkit'
+import { createSlice, createSelector } from '@reduxjs/toolkit'
 import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
@@ -48,7 +45,7 @@ export const listingMapSlice = createSlice({
   initialState,
 
   reducers: {
-    setMapData: (state, action: PayloadAction<GoogleMapState>) => {
+    setMapData: (state, action: PayloadAction<Partial<GoogleMapState>>) => {
       state.mapData = { ...state.mapData, ...action.payload }
     },
 
@@ -65,7 +62,9 @@ export const listingMapSlice = createSlice({
         )
         state.boundaryActive = true
       } else {
-        console.debug('In doGeospatialGeocodeSearch.fulfilled, nothing in payload.result_geo.')
+        console.debug(
+          'In doGeospatialGeocodeSearch.fulfilled, nothing in payload.result_geo.'
+        )
       }
     })
   }
@@ -75,6 +74,8 @@ export const { setMapData, setBoundaryActive } = listingMapSlice.actions
 
 export const selectBoundaryActive = (state: AppState) =>
   state.listingMap.boundaryActive
+
+export const selectZoom = (state: AppState) => state.listingMap.mapData.zoom
 
 export const selectGeoLayerCoordinates = (state: AppState) =>
   state.listingMap.geoLayerCoordinates
@@ -91,9 +92,9 @@ export const selectGeoLayerCoordinates = (state: AppState) =>
 export const selectGeoLayerBounds = createSelector(
   [selectGeoLayerCoordinates],
   (geoLayerCoordinates) => {
-    return geoLayerCoordinates.length ?
-      getGeoLayerBounds(geoLayerCoordinates) :
-      null
+    return geoLayerCoordinates.length
+      ? getGeoLayerBounds(geoLayerCoordinates)
+      : null
   }
 )
 

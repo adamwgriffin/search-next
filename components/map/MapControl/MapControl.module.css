@@ -12,4 +12,9 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0rem .0625rem .25rem -0.0625rem;
   border-radius: .375rem;
   padding: .8rem;
+  cursor: pointer;
+}
+
+.mapControl:hover {
+  background-color: var(--primary-light);
 }
