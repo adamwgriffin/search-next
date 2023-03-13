@@ -7,13 +7,13 @@ import ListingCardLoader from '../ListingCardLoader/ListingCardLoader'
 export interface ListingCardProps {
   listings: Listing[]
   listingSearchRunning: boolean
-  handleListingCardClick: (url: string, listingId: number) => void
+  onListingCardClick: (url: string, listingId: number) => void
 }
 
 const ListingCards: NextPage<ListingCardProps> = ({
   listings,
   listingSearchRunning,
-  handleListingCardClick
+  onListingCardClick
 }) => {
   return (
     <ul className={styles.listingCards}>
@@ -24,7 +24,7 @@ const ListingCards: NextPage<ListingCardProps> = ({
               listing={listing}
               url={`listing/${listing.listingid}`}
               onClick={() =>
-                handleListingCardClick(
+                onListingCardClick(
                   `listing/${listing.listingid}`,
                   listing.listingid
                 )

@@ -69,7 +69,7 @@ const SearchResults: NextPage = () => {
         <ListingCards
           listings={listings}
           listingSearchRunning={listingSearchRunning}
-          handleListingCardClick={handleListingCardClick}
+          onListingCardClick={handleListingCardClick}
         />
       )}
       {listings.length === 0 && !listingSearchRunning && (
