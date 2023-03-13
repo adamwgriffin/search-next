@@ -44,7 +44,7 @@
   .resultsListView,
   .resultsMapView {
     display: grid;
-     /* 1fr means it will fill the remaining space for each of these. auto grows as large as it's content */
+    /* 1fr means it will fill the remaining space for each of these. auto grows as large as it's content */
     grid-template-columns: 50% 1fr;
     /* these prevent the results container from overlowing off the screen when the content of .searchResults overflows
     the window height. we only want .searchResults to scroll, not the entire window */
@@ -65,11 +65,10 @@
   .resultsListView .searchResults {
     z-index: auto;
   }
-  
+
   .resultsMapView .listingMap {
     z-index: auto;
   }
-
 }
 
 @media largeAndUp {
