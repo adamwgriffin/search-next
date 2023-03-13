@@ -16,7 +16,7 @@ const ListingCards: NextPage<ListingCardProps> = ({
   handleListingCardClick
 }) => {
   return (
-    <ul className={styles.searchResultsList}>
+    <ul className={styles.listingCards}>
       {!listingSearchRunning &&
         listings.map((listing) => (
           <li key={listing.listingid.toString()}>
