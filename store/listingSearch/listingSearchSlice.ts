@@ -25,7 +25,7 @@ import type { PropertyTypeIDArray } from '../../lib/property_types'
 import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
-import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import {
   PropertyTypes,
