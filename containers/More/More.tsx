@@ -119,7 +119,7 @@ const More: NextPage = () => {
         />
       </div>
       {searchType === SearchTypes.Buy && (
-        <>
+        <div className={styles.buyFilters}>
           <OpenHouse
             openHouseParam={openHouseParam}
             onChange={handleChangeAndInitiateSearch}
@@ -128,7 +128,7 @@ const More: NextPage = () => {
             statusParms={statusParams}
             onChange={handleChangeAndInitiateSearch}
           />
-        </>
+        </div>
       )}
       {searchType !== SearchTypes.Rent && (
         <PropertyType

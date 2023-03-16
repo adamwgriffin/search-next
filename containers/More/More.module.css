@@ -6,6 +6,10 @@
   gap: 1rem;
 }
 
+.buyFilters> *:nth-child(1){
+  margin-bottom: .5rem;
+}
+
 @media smallAndUp {
   .mobileFilters {
     display: none;

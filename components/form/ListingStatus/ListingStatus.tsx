@@ -4,7 +4,6 @@ import type { ExcludeStatusParams } from '../../../lib/types/listing_service_par
 import type { StatusType } from '../../../lib/status_types'
 import { StatusTypes } from '../../../lib/status_types'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
-import Legend from '../../design_system/Legend/Legend'
 import styles from './ListingStatus.module.css'
 import formStyles from '../../../styles/forms.module.css'
 
@@ -23,7 +22,6 @@ const ListingStatus: NextPage<ListingStatusProps> = ({
 
   return (
     <Fieldset>
-      <Legend>Status</Legend>
       <ul className={styles.listingStatusList}>
         {StatusTypes.map(({ param, id, label }: StatusType) => (
           <li key={id} className={formStyles.inputListItem}>
