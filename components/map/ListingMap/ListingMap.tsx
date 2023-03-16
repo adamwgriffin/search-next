@@ -26,7 +26,8 @@ import {
   resetStartIndex,
   selectDoListingSearchOnMapIdle,
   selectListings,
-  selectListingSearchRunning
+  selectListingSearchRunning,
+  selectHighlightedMarker
 } from '../../../store/listingSearch/listingSearchSlice'
 import { openModal } from '../../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../../lib/util'
@@ -44,6 +45,7 @@ const ListingMap: NextPage = () => {
   )
   const listings = useAppSelector(selectListings)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
+  const highlightedMarker = useAppSelector(selectHighlightedMarker)
 
   const handleListingMarkerMouseEnter = (listingid: number) => {
     isSmallAndUp && dispatch(setSelectedListing(listingid))
@@ -108,13 +110,15 @@ const ListingMap: NextPage = () => {
           onDragEnd={handleUserAdjustedMap}
           onZoomChanged={handleUserAdjustedMap}
         >
-          {listings.map((l) => (
+          {listings.map((l, i) => (
             <ListingMarker
               key={l.listingid.toString()}
               listing={l}
               onMouseEnter={handleListingMarkerMouseEnter}
               onMouseLeave={handleListingMarkerMouseLeave}
               onClick={handleListingMarkerMouseClick}
+              highlighted={highlightedMarker === l.listingid}
+              zIndex={i}
             />
           ))}
           <MapBoundary

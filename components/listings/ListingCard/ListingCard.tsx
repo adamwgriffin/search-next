@@ -15,9 +15,17 @@ export interface ListingCardProps {
   listing: Listing
   url: string
   onClick?: () => void
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }
 
-const ListingCard: NextPage<ListingCardProps> = ({ listing, url, onClick }) => {
+const ListingCard: NextPage<ListingCardProps> = ({
+  listing,
+  url,
+  onClick,
+  onMouseEnter,
+  onMouseLeave
+}) => {
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     onClick?.()
@@ -28,6 +36,8 @@ const ListingCard: NextPage<ListingCardProps> = ({ listing, url, onClick }) => {
       href={url}
       className={styles.link}
       onClick={handleClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <ListingCardImage listing={listing} />
       <div className={styles.details}>
@@ -38,12 +48,8 @@ const ListingCard: NextPage<ListingCardProps> = ({ listing, url, onClick }) => {
           <div>{formatSqft(listing)} sqft</div>
         </div>
         <div>
-          <div>
-            {listing.location.address}
-          </div>
-          <div>
-            {cityStateZip(listing.location)}
-          </div>
+          <div>{listing.location.address}</div>
+          <div>{cityStateZip(listing.location)}</div>
         </div>
       </div>
     </Link>

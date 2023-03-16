@@ -37,6 +37,16 @@
 
 @media smallAndUp {
 
+  .listingMarkerHighlighted {
+    composes: listingMarker;
+  }
+
+  .listingMarkerHighlighted,
+  .link:visited .listingMarkerHighlighted {
+    background-color: var(--listing-marker-background-highlighted);
+    color: var(--listing-marker-foreground-highlighted);
+  }
+
   .icon {
     transition: all .2s ease-out .2s;
   }

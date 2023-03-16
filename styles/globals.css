@@ -28,6 +28,8 @@ body,
   --listing-marker-foreground: black;
   --listing-marker-background-visited: #e0e0e0;
   --listing-marker-foreground-visited: #3c3c3c;
+  --listing-marker-background-highlighted: var(--primary);
+  --listing-marker-foreground-highlighted: white;
   --map-control: var(--background);
 }
 

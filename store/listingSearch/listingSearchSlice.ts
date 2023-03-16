@@ -47,6 +47,8 @@ export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
 
 export type SelectedListing = number | null
 
+export type HighlightedMarker = number | null
+
 export interface ListingSearchState {
   searchType: SearchTypeOption
   doListingSearchOnMapIdle: boolean
@@ -54,6 +56,7 @@ export interface ListingSearchState {
   locationSearchField: string
   searchListingsResponse: any
   selectedListing: SelectedListing
+  highlightedMarker: HighlightedMarker
   propertyTypes: PropertyTypeIDArray
   filterParams: FilterParams
 }
@@ -65,6 +68,7 @@ const initialState: ListingSearchState = {
   locationSearchField: 'Fremont, Seattle, WA, USA',
   searchListingsResponse: {},
   selectedListing: null,
+  highlightedMarker: null,
   propertyTypes: [],
   filterParams: DefaultFilterParams
 }
@@ -152,6 +156,10 @@ export const listingSearchSlice = createSlice({
       state.selectedListing = action.payload
     },
 
+    setHighlightedMarker: (state, action: PayloadAction<HighlightedMarker>) => {
+      state.highlightedMarker = action.payload
+    },
+
     resetStartIndex: (state) => {
       state.filterParams.startidx = initialState.filterParams.startidx
     },
@@ -218,6 +226,7 @@ export const {
   setSearchType,
   setLocationSearchField,
   setSelectedListing,
+  setHighlightedMarker,
   resetStartIndex,
   setDoListingSearchOnMapIdle,
   setFilterParams,
@@ -238,6 +247,9 @@ export const selectLocationSearchField = (state: AppState): string => {
 export const selectPopupListing = (state: AppState): SelectedListing => {
   return state.listingSearch.selectedListing
 }
+
+export const selectHighlightedMarker = (state: AppState): HighlightedMarker =>
+  state.listingSearch.highlightedMarker
 
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.searchListingsResponse?.result_list ?? []

@@ -8,12 +8,16 @@ export interface ListingCardProps {
   listings: Listing[]
   listingSearchRunning: boolean
   onListingCardClick: (url: string, listingId: number) => void
+  onListingCardMouseEnter?: (listingId: number) => void
+  onListingCardMouseLeave?: (listingId: number) => void
 }
 
 const ListingCards: NextPage<ListingCardProps> = ({
   listings,
   listingSearchRunning,
-  onListingCardClick
+  onListingCardClick,
+  onListingCardMouseEnter,
+  onListingCardMouseLeave
 }) => {
   return (
     <ul className={styles.listingCards}>
@@ -29,6 +33,8 @@ const ListingCards: NextPage<ListingCardProps> = ({
                   listing.listingid
                 )
               }
+              onMouseEnter={() => onListingCardMouseEnter?.(listing.listingid)}
+              onMouseLeave={() => onListingCardMouseLeave?.(listing.listingid)}
             />
           </li>
         ))}

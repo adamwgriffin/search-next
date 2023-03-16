@@ -15,6 +15,7 @@ import ListingMainImage from '../../listings/ListingMainImage/ListingMainImage'
 export interface ListingMarkerContentProps {
   listing: Listing
   link: string
+  highlighted?: boolean
 }
 
 const listingMainImageStyles: CSSProperties = {
@@ -27,16 +28,20 @@ const listingMainImageStyles: CSSProperties = {
 
 const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
   listing,
-  link
+  link,
+  highlighted = false
 }) => {
   const priceAbbreviated = formatPrice(listing, {
     numberFormatOptions: ShortCurrencyFormat,
     displayInterval: false
   })
+  const listingMarkerClassName = highlighted
+    ? styles.listingMarkerHighlighted
+    : styles.listingMarker
 
   return (
     <Link href={link} className={styles.link}>
-      <div className={styles.listingMarker}>
+      <div className={listingMarkerClassName}>
         <div className={styles.icon}>{priceAbbreviated}</div>
         <div className={styles.popup}>
           <ListingMainImage

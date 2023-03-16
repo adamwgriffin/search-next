@@ -11,6 +11,7 @@ import {
   selectPagination,
   selectListingSearchRunning,
   setFilterParams,
+  setHighlightedMarker,
   doGeospatialSearch,
   searchWithUpdatedFilters,
   clearFilters
@@ -52,6 +53,14 @@ const SearchResults: NextPage = () => {
     }
   }
 
+  const handleListingCardMouseEnter = (listingId: number) => {
+    dispatch(setHighlightedMarker(listingId))
+  }
+
+  const handleListingCardMouseLeave = () => {
+    dispatch(setHighlightedMarker(null))
+  }
+
   const handleClearAll = () => {
     dispatch(clearFilters())
     dispatch(searchWithUpdatedFilters())
@@ -70,6 +79,8 @@ const SearchResults: NextPage = () => {
           listings={listings}
           listingSearchRunning={listingSearchRunning}
           onListingCardClick={handleListingCardClick}
+          onListingCardMouseEnter={handleListingCardMouseEnter}
+          onListingCardMouseLeave={handleListingCardMouseLeave}
         />
       )}
       {listings.length === 0 && !listingSearchRunning && (
