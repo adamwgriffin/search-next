@@ -80,39 +80,43 @@ const initialState: ListingSearchState = {
 // using the lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which
 // have coordinates that are inside that boundary layer. the resulting response from the service includes the listings
 // and the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
-// requests for the current location using the center_lat, center_lon & geotype that were provided by the geocoder.
+// requests for the current location using the center_lat, lng & geotype that were provided by the geocoder.
 export const doGeospatialGeocodeSearch = createAsyncThunk(
   'listingSearch/doGeospatialGeocodeSearch',
   async (_arg, { getState }) => {
     // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
     const state = getState() as AppState
     const response = await http({
-      url: '/api/listing',
+      url: '/api/listing/search/geocode',
       params: selectParamsForGeospatialGeocodeSearch(state)
     })
     // The value we return becomes the `fulfilled` action payload in extraReducers below
-    return response.data.data
+    return response.data
   }
 )
 
-// performs a geospatial search by passing the center_lat, center_lon & all bounds params. we would want to use this
-// request if the place that was entered in the search field has already been geocoded. usually, we would perform the
-// initial search using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it
-// in the response. then we would use this for requests, such as if the user dragged the map or changes the filters.
-// since we have the geocoder response data stored from the previous request we can just pass it directly to the service
-// instead of having the service geocode the place for us again.
+// performs a geospatial search by passing the lat, lng & all bounds params. we would want to use this request if the
+// place that was entered in the search field has already been geocoded. usually, we would perform the initial search
+// using the doGeospatialGeocodeSearch() action, which has the service geocode the location and return it in the
+// response. then we would use this for requests, such as if the user dragged the map or changes the filters. since we
+// have the geocoder response data stored from the previous request we can just pass it directly to the service instead
+// of having the service geocode the place for us again.
 export const doGeospatialSearch = createAsyncThunk(
   'listingSearch/doGeospatialSearch',
   async (_arg, { getState }) => {
     const state = getState() as AppState
+
     const params = state.listingMap.boundaryActive
       ? selectParamsForGeospatialSearch(state)
       : selectParamsForBoundsSearch(state)
-    const response = await http({
-      url: '/api/listing',
-      params
-    })
-    return response.data.data
+
+    const url = state.listingMap.boundaryActive
+      ? `/api/listing/search/boundary/${state.listingSearch.searchListingsResponse.boundary._id}`
+      : `api/listing/search/bounds`
+    
+    const response = await http({ url, params })
+    
+    return response.data
   }
 )
 
@@ -191,11 +195,6 @@ export const listingSearchSlice = createSlice({
     builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
       state.searchListingsResponse = action.payload
       state.listingSearchRunning = false
-      if (action.payload.number_returned === 0) {
-        console.debug(
-          'In doGeospatialGeocodeSearch.fulfilled, payload.number_returned is 0.'
-        )
-      }
     })
 
     builder.addCase(doGeospatialGeocodeSearch.rejected, (state) => {
@@ -208,12 +207,7 @@ export const listingSearchSlice = createSlice({
 
     builder.addCase(doGeospatialSearch.fulfilled, (state, action) => {
       state.listingSearchRunning = false
-      state.searchListingsResponse = action.payload
-      if (action.payload.number_returned === 0) {
-        console.debug(
-          'In doGeospatialSearch.fulfilled, payload.number_returned is 0.'
-        )
-      }
+      state.searchListingsResponse = { ...state.searchListingsResponse, listings: action.payload }
     })
 
     builder.addCase(doGeospatialSearch.rejected, (state) => {
@@ -252,13 +246,13 @@ export const selectHighlightedMarker = (state: AppState): HighlightedMarker =>
   state.listingSearch.highlightedMarker
 
 export const selectListings = (state: AppState): Listing[] =>
-  state.listingSearch.searchListingsResponse?.result_list ?? []
+  state.listingSearch.searchListingsResponse?.listings ?? []
 
 export const selectPriceRange = (state: AppState): PriceRangeParams =>
-  pick(state.listingSearch.filterParams, ['pricemin', 'pricemax'])
+  pick(state.listingSearch.filterParams, ['price_min', 'price_max'])
 
 export const selectBedBathParams = (state: AppState): BedsBathsParam =>
-  pick(state.listingSearch.filterParams, ['bed_min', 'bath_min'])
+  pick(state.listingSearch.filterParams, ['beds_min', 'baths_min'])
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
   return pick(state.listingSearch.filterParams, [
@@ -325,7 +319,7 @@ export const selectCenterLatLonParams = (
   state: AppState
 ): CenterLatLonParams => {
   const { lat, lng } = state.places.geocoderResult.location
-  return { center_lat: lat, center_lon: lng }
+  return { lat, lng }
 }
 
 export const selectBoundsParams = (state: AppState): BoundsParams => {
@@ -364,8 +358,9 @@ export const selectTotalListings = (state: AppState): number =>
 
 export const selectPagination = (state: AppState): Pagination => {
   const { startidx, pgsize } = state.listingSearch.filterParams
-  const { number_returned, number_found } =
-    state.listingSearch.searchListingsResponse
+  const number_returned = state.listingSearch.searchListingsResponse?.listings?.length || 0
+  // TODO: currently there's no pagination in the service. we will eventually need to add number_found to the response
+  const number_found = number_returned
   return {
     start: startidx + 1,
     end: startidx + number_returned ?? 0,
@@ -432,7 +427,7 @@ export const selectParamsForGeospatialGeocodeSearch = (
 ): ListingServiceParams => {
   const originalParams = {
     ...selectListingServiceFilters(state),
-    street: state.listingSearch.locationSearchField
+    address: state.listingSearch.locationSearchField
   }
   return modifyParams(state, originalParams)
 }

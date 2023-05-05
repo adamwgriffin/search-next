@@ -43,10 +43,10 @@ export interface OpenHouseScheduleIDEnumInterface {
 export interface FilterParams {
   startidx: number
   pgsize: number
-  pricemin: number | null
-  pricemax: number | null
-  bed_min: number | null
-  bath_min: number | null
+  price_min: number | null
+  price_max: number | null
+  beds_min: number | null
+  baths_min: number | null
   status: 'active' | 'sold'
   ex_pend: boolean | null
   ex_cs: boolean | null
@@ -74,8 +74,8 @@ export type FilterParamsPartial = Partial<FilterParams>
 // the app state much.
 export interface ListingServiceParams extends FilterParamsPartial {
   company_uuid?: string
-  center_lat?: number
-  center_lon?: number
+  lat?: number
+  lng?: number
   bounds_north?: number
   bounds_east?: number
   bounds_south?: number
@@ -87,7 +87,7 @@ export interface ListingServiceParams extends FilterParamsPartial {
 
 export type CenterLatLonParams = Pick<
   ListingServiceParams,
-  'center_lat' | 'center_lon'
+  'lat' | 'lng'
 >
 
 export type BoundsParams = Pick<
@@ -95,7 +95,7 @@ export type BoundsParams = Pick<
   'bounds_north' | 'bounds_east' | 'bounds_west' | 'bounds_south'
 >
 
-export type PriceRangeParams = Pick<FilterParams, 'pricemin' | 'pricemax'>
+export type PriceRangeParams = Pick<FilterParams, 'price_min' | 'price_max'>
 
 export type SquareFeetRangeParams = Pick<FilterParams, 'sqft_min' | 'sqft_max'>
 
@@ -144,7 +144,7 @@ export type MoreFiltersParams = Pick<
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
 
-export type BedsBathsParam = Pick<FilterParams, 'bed_min' | 'bath_min'>
+export type BedsBathsParam = Pick<FilterParams, 'beds_min' | 'baths_min'>
 
 export interface SortByEnum {
   baths_desc: SortById

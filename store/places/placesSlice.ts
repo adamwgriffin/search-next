@@ -62,15 +62,15 @@ export const placesSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
-      if (action.payload.result_geocode.results.length) {
-        const { geometry, types } = action.payload.result_geocode.results[0]
+      if (action.payload.geocoderResult.length) {
+        const { geometry, types } = action.payload.geocoderResult[0]
         state.geocoderResult = {
           type: types[0],
           location: geometry.location,
           viewport: geometry.viewport
         }
       } else {
-        console.debug('In doGeospatialGeocodeSearch.fulfilled, nothing in payload.result_geocode.results.')
+        console.debug('In doGeospatialGeocodeSearch.fulfilled, nothing in payload.geocoderResult.')
       }
     })
 

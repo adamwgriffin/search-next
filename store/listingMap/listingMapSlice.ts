@@ -56,9 +56,9 @@ export const listingMapSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
-      if (action.payload.result_geo) {
+      if (action.payload.boundary) {
         state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
-          action.payload.result_geo[0].geojson.coordinates
+          action.payload.boundary.geometry.coordinates
         )
         state.boundaryActive = true
       } else {

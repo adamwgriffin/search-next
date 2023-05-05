@@ -16,7 +16,7 @@ const ListingDetailBedsBathsSQFT: NextPage<ListingDetailBedsBathsSQFTProps> = ({
   return (
     <>
       <div className='listingDetailBedsBathsSqft'>
-        <div>{listing.bedrooms} Bed</div>
+        <div>{listing.beds} Bed</div>
         <div>{getBathrooms(listing)} Bath</div>
         <div>{formatSqft(listing)} sqft</div>
       </div>

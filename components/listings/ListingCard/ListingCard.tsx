@@ -43,13 +43,13 @@ const ListingCard: NextPage<ListingCardProps> = ({
       <div className={styles.details}>
         <div className={styles.price}>{formatPrice(listing)}</div>
         <div className={styles.bedBathSqft}>
-          <div>{listing.bedrooms}bd</div>
+          <div>{listing.beds}bd</div>
           <div>{getBathrooms(listing)}ba</div>
           <div>{formatSqft(listing)} sqft</div>
         </div>
         <div>
-          <div>{listing.location.address}</div>
-          <div>{cityStateZip(listing.location)}</div>
+          <div>{listing.address.line1}</div>
+          <div>{cityStateZip(listing.address)}</div>
         </div>
       </div>
     </Link>

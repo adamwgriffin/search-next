@@ -9,7 +9,7 @@ const options = [
 describe('RadioButtonGroup', () => {
 
   beforeEach(() => {
-    render(<RadioButtonGroup name="bed_min" label="Beds" options={options} />)
+    render(<RadioButtonGroup name="beds_min" label="Beds" options={options} />)
   })
 
   it('Displays a heading for the group using the label prop', () => {

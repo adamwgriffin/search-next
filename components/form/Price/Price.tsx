@@ -24,7 +24,7 @@ const Price: NextPage<PriceProps> = ({
   return (
     <fieldset className={styles.price}>
       <legend className={styles.legend}>Price Range</legend>
-      <label htmlFor='pricemin' className={formStyles.accessibleLabel}>
+      <label htmlFor='price_min' className={formStyles.accessibleLabel}>
         Min Price
       </label>
       <NumericFormat
@@ -32,18 +32,18 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={normalizePrice(priceRange.pricemin)}
-        onValueChange={(v) => onChange?.({ pricemin: v.floatValue })}
+        value={normalizePrice(priceRange.price_min)}
+        onValueChange={(v) => onChange?.({ price_min: v.floatValue })}
         placeholder='Min'
         className={formStyles.input}
-        id='pricemin'
+        id='price_min'
         autoComplete='off'
         onFocus={onFocus}
         onBlur={onBlur}
         inputMode='numeric'
       />
       <InputRangeSeparator />
-      <label htmlFor='pricemax' className={formStyles.accessibleLabel}>
+      <label htmlFor='price_max' className={formStyles.accessibleLabel}>
         Max Price
       </label>
       <NumericFormat
@@ -51,11 +51,11 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={normalizePrice(priceRange.pricemax)}
-        onValueChange={(v) => onChange?.({ pricemax: v.floatValue })}
+        value={normalizePrice(priceRange.price_max)}
+        onValueChange={(v) => onChange?.({ price_max: v.floatValue })}
         placeholder='Max'
         className={formStyles.input}
-        id='pricemax'
+        id='price_max'
         autoComplete='off'
         onFocus={onFocus}
         onBlur={onBlur}

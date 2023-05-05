@@ -30,14 +30,14 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
         </div>
         <ListingDetailImage
           images={listing.images}
-          location={listing.location}
+          location={listing.address}
           onClick={() => setSlideShowOpen(true)}
         />
         <div className='price'>{formatPrice(listing)}</div>
         <div className='neighborhood'>{listing.neighborhood}</div>
-        <ListingDetailAddress location={listing.location} />
+        <ListingDetailAddress location={listing.address} />
         <ListingDetailBedsBathsSQFT listing={listing} />
-        <Description comments={listing.comments} />
+        <Description comments={listing.description} />
         <HomeHighlights listing={listing} />
         <PropertyDetails features={listing.features} />
         <SlideShow

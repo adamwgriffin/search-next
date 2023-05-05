@@ -30,7 +30,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
 
     const handleMouseEnter = () => {
       element.style.zIndex = '10000'
-      onMouseEnter?.(listing.listingid)
+      onMouseEnter?.(listing._id)
     }
 
     const handleMouseLeave = () => {
@@ -38,7 +38,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       onMouseLeave?.()
     }
 
-    const link = `/listing/${listing.listingid}`
+    const link = `/listing/${listing._id}`
 
     const markerContainer = document.createElement('div')
     createRoot(markerContainer).render(
@@ -51,11 +51,11 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
 
     const marker = new google.maps.marker.AdvancedMarkerView({
       map: googleMap,
-      position: listingLocationToLatLngLiteral(listing.location),
+      position: listingLocationToLatLngLiteral(listing),
       content: markerContainer
     })
 
-    marker.addListener('click', () => onClick?.(listing.listingid))
+    marker.addListener('gmp-click', () => onClick?.(listing._id))
     // there are only a few events that AdvancedMarkerView supports, so we have to attach events to the element for
     // others.
     const element = marker.element as HTMLElement
@@ -78,11 +78,11 @@ const areEqual = (
   nextProps: Readonly<ListingMarkerProps>
 ) => {
   return (
-    prevProps.listing.listingid === nextProps.listing.listingid &&
-    prevProps.listing.location.latitude ===
-      nextProps.listing.location.latitude &&
-    prevProps.listing.location.longitude ===
-      nextProps.listing.location.longitude &&
+    prevProps.listing._id === nextProps.listing._id &&
+    prevProps.listing.latitude ===
+      nextProps.listing.latitude &&
+    prevProps.listing.longitude ===
+      nextProps.listing.longitude &&
     prevProps.highlighted === nextProps.highlighted
   )
 }
@@ -90,4 +90,3 @@ const areEqual = (
 // use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause all the markers
 // to flicker each time the map is dragged
 export default memo(ListingMarker, areEqual)
-// export default ListingMarker

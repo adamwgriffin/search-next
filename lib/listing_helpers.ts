@@ -1,7 +1,7 @@
 import type {
   Listing,
   ListingDetailListing,
-  ListingLocation
+  ListingAddress
 } from './types/listing_types'
 import { RentalPropertytypeID } from './property_types'
 
@@ -53,13 +53,13 @@ export const formatPrice = (
   {
     status,
     sold_price,
-    list_price,
+    listPrice,
     property_type_id
   }: Listing | ListingDetailListing,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
   const opts = { defaultFormatPriceOptions, ...options }
-  const price = status === 'Sold' ? sold_price : list_price
+  const price = status === 'Sold' ? sold_price : listPrice
   const priceFormatted = Intl.NumberFormat(
     'en-US',
     opts.numberFormatOptions
@@ -72,40 +72,22 @@ export const formatPrice = (
 export const getBathrooms = (
   listing: Listing | ListingDetailListing
 ): number => {
-  return (
-    listing.bathroom_details.bathrooms_display ||
-    listing.bathroom_details.total_bathrooms ||
-    listing.bathrooms ||
-    0
-  )
+  return listing.baths || 0
 }
 
-const f = (n: number) => n.toLocaleString()
+export const formatSqft = ({ sqft }: Listing | ListingDetailListing) =>
+  sqft?.toLocaleString()
 
-export const formatSqft = ({
-  sqr_footage,
-  sqr_foot_min,
-  sqr_foot_max
-}: Listing | ListingDetailListing) => {
-  if (sqr_footage) {
-    return f(sqr_footage)
-  } else if (sqr_foot_min && sqr_foot_max && sqr_foot_max < 50000) {
-    return `${f(sqr_foot_min)} - ${f(sqr_foot_max)}`
-  } else if (sqr_foot_min && sqr_foot_max && sqr_foot_max >= 50000) {
-    return `${f(sqr_foot_min)}+`
-  }
-}
-
-export const cityStateZip = (location: ListingLocation) => {
+export const cityStateZip = (location: ListingAddress) => {
   const { city, state, zip } = location
   return [city.trim(), `${state} ${zip}`.trim()].filter((a) => a).join(', ')
 }
 
 export const listingLocationToLatLngLiteral = (
-  location: ListingLocation
+  listing: Listing
 ): google.maps.LatLngLiteral => {
   return {
-    lat: +location?.latitude,
-    lng: +location?.longitude
+    lat: listing?.latitude,
+    lng: listing?.longitude
   }
 }

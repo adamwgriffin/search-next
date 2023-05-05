@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { countArr, RadioButtonGroups } from '../../../lib/beds_and_baths'
 import BedsAndBaths from './BedsAndBaths'
 
-const bedsAndBaths = {bed_min: 0, bath_min: 0}
+const bedsAndBaths = {beds_min: 0, baths_min: 0}
 
 describe('BedsAndBaths', () => {
   
@@ -18,7 +18,7 @@ describe('BedsAndBaths', () => {
     render(<BedsAndBaths countArr={countArr} bedsAndBaths={bedsAndBaths} onChange={onChange} />)
     screen.getAllByText('1+')[0].click()
     expect(onChange).toHaveBeenCalledTimes(1)
-    expect(onChange).toHaveBeenCalledWith({bed_min: 1})
+    expect(onChange).toHaveBeenCalledWith({beds_min: 1})
   })
 
 })

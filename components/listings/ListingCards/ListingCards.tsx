@@ -23,18 +23,18 @@ const ListingCards: NextPage<ListingCardProps> = ({
     <ul className={styles.listingCards}>
       {!listingSearchRunning &&
         listings.map((listing) => (
-          <li key={listing.listingid.toString()}>
+          <li key={listing._id.toString()}>
             <ListingCard
               listing={listing}
-              url={`listing/${listing.listingid}`}
+              url={`listing/${listing._id}`}
               onClick={() =>
                 onListingCardClick(
-                  `listing/${listing.listingid}`,
-                  listing.listingid
+                  `listing/${listing._id}`,
+                  listing._id
                 )
               }
-              onMouseEnter={() => onListingCardMouseEnter?.(listing.listingid)}
-              onMouseLeave={() => onListingCardMouseLeave?.(listing.listingid)}
+              onMouseEnter={() => onListingCardMouseEnter?.(listing._id)}
+              onMouseLeave={() => onListingCardMouseLeave?.(listing._id)}
             />
           </li>
         ))}

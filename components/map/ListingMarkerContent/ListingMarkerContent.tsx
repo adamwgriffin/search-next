@@ -45,24 +45,32 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
         <div className={styles.icon}>{priceAbbreviated}</div>
         <div className={styles.popup}>
           <ListingMainImage
-            image={listing.image[0]}
-            location={listing.location}
+            image={{
+              raw_url: '',
+              gallery_url: '',
+              full_url: '',
+              small_url: '',
+              thumb_url: '',
+              title: 'NOIMAGE'
+            }}
+            latitude={listing.latitude}
+            longitude={listing.longitude}
             size='small'
             style={listingMainImageStyles}
           />
           <div className={styles.details}>
             <div className={styles.price}>{formatPrice(listing)}</div>
             <div className={styles.bedBathSqft}>
-              <div>{listing.bedrooms}bd</div>
+              <div>{listing.beds}bd</div>
               <div>{getBathrooms(listing)}ba</div>
               <div>{formatSqft(listing)} sqft</div>
             </div>
             <div className={styles.address}>
               <div className={styles.addressLine1}>
-                {listing.location.address}
+                {listing.address.line1}
               </div>
               <div className={styles.addressLine2}>
-                {cityStateZip(listing.location)}
+                {cityStateZip(listing.address)}
               </div>
             </div>
           </div>

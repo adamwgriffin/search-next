@@ -1,15 +1,13 @@
 import { PropertyTypeID } from '../property_types'
 
-export interface ListingLocation {
-  address: string
-  address2: string | null
+export interface ListingAddress {
+  line1: string
+  line2: string | null
   city: string
   state: string
   zip: string
   county: string
   country_code: string
-  latitude: string
-  longitude: string
 }
 
 export interface ListingBathroomDetails {
@@ -46,41 +44,39 @@ export interface Feature {
 }
 
 export interface Listing {
-  listingid: number
-  location: ListingLocation
-  bedrooms: number
-  bathrooms: number
+  _id: number
+  address: ListingAddress
+  beds: number
+  baths: number
   bathroom_details: ListingBathroomDetails
-  sqr_footage: number | null
-  sqr_foot_min: number | null
-  sqr_foot_max: number | null
+  sqft: number | null
   status: string
-  list_price: number
+  listPrice: number
   sold_price: number | null
   image: ListingImage[]
   property_type_id: PropertyTypeID
+  latitude: number
+  longitude: number
 }
 
 export interface ListingDetailListing {
   pstatus_id: number
   status_name_for_view: string
   images: ListingImage[]
-  location: ListingLocation
+  address: ListingAddress
   neighborhood: string
   status: string
-  list_price: number
+  listPrice: number
   sold_price: number
   property_type_id: PropertyTypeID
   property_type: string
-  bedrooms: number
-  bathrooms: number
+  beds: number
+  baths: number
   bathroom_details: ListingBathroomDetails
   feature_count: number
   features: Feature[]
-  sqr_footage: number | null
-  sqr_foot_min: number | null
-  sqr_foot_max: number | null
-  comments: string | null
+  sqft: number | null
+  description: string | null
   days_on_market?: number | null
   year_build: number
   mlsnumber: string

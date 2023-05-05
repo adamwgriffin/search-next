@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import type { CSSProperties } from 'react'
 import type {
   ListingImage,
-  ListingLocation,
   ListingImageSizes
 } from '../../../lib/types/listing_types'
 import { SyntheticEvent } from 'react'
@@ -10,7 +9,8 @@ import { ListingImageSizeEnum } from '../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
   image: ListingImage
-  location: ListingLocation
+  latitude: number
+  longitude: number
   size?: ListingImageSizes
   style?: CSSProperties
   className?: string
@@ -20,7 +20,8 @@ export interface ListingMainImageProps {
 
 const ListingMainImage: NextPage<ListingMainImageProps> = ({
   image,
-  location,
+  latitude,
+  longitude,
   size = 'small',
   style = {},
   className = '',
@@ -34,7 +35,7 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
     const url = new URL('https://maps.googleapis.com/maps/api/streetview')
     const { width, height } = ListingImageSizeEnum[size]
     url.search = new URLSearchParams({
-      location: `${location.latitude},${location.longitude}`,
+      location: `${latitude},${longitude}`,
       size: `${width+20}x${height}`,
       // this causes the request to request to return an http error status code if there is no image for the location
       return_error_code: 'true',

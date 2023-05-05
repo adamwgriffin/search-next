@@ -4,8 +4,8 @@ import { CountOption } from './types'
 export const DefaultBedBathCount = [0, 1, 2, 3, 4, 5]
 
 export const RadioButtonGroups = [
-  { param: 'bed_min', label: 'Beds' },
-  { param: 'bath_min', label: 'Baths' }
+  { param: 'beds_min', label: 'Beds' },
+  { param: 'baths_min', label: 'Baths' }
 ]
 
 export const countOptions = (
