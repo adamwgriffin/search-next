@@ -47,7 +47,7 @@ const ListingMap: NextPage = () => {
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const highlightedMarker = useAppSelector(selectHighlightedMarker)
 
-  const handleListingMarkerMouseEnter = (listingid: number) => {
+  const handleListingMarkerMouseEnter = (listingid: string) => {
     isSmallAndUp && dispatch(setSelectedListing(listingid))
   }
 
@@ -55,7 +55,7 @@ const ListingMap: NextPage = () => {
     isSmallAndUp && dispatch(setSelectedListing(null))
   }
 
-  const handleListingMarkerMouseClick = (listingId: number) => {
+  const handleListingMarkerMouseClick = (listingId: string) => {
     const url = `/listing/${listingId}`
     if (isSmallAndUp) {
       window.open(url, '_blank')

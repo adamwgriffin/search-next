@@ -10,9 +10,9 @@ export interface ListingMarkerProps {
   listing: Listing
   highlighted?: boolean
   zIndex: number
-  onMouseEnter?: (listingid: number) => void
+  onMouseEnter?: (listingid: string) => void
   onMouseLeave?: () => void
-  onClick?: (listingid: number) => void
+  onClick?: (listingid: string) => void
 }
 
 const ListingMarker: NextPage<ListingMarkerProps> = ({

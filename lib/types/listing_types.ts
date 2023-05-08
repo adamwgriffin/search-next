@@ -44,7 +44,7 @@ export interface Feature {
 }
 
 export interface Listing {
-  _id: number
+  _id: string
   address: ListingAddress
   beds: number
   baths: number

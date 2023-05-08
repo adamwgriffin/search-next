@@ -17,7 +17,7 @@ import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBo
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
 
 export interface ListingDetailModalProps {
-  listingId: number
+  listingId: string
 }
 
 const ListingDetailModal: NextPage<ListingDetailModalProps> = ({

@@ -7,9 +7,9 @@ import ListingCardLoader from '../ListingCardLoader/ListingCardLoader'
 export interface ListingCardProps {
   listings: Listing[]
   listingSearchRunning: boolean
-  onListingCardClick: (url: string, listingId: number) => void
-  onListingCardMouseEnter?: (listingId: number) => void
-  onListingCardMouseLeave?: (listingId: number) => void
+  onListingCardClick: (url: string, listingId: string) => void
+  onListingCardMouseEnter?: (listingId: string) => void
+  onListingCardMouseLeave?: (listingId: string) => void
 }
 
 const ListingCards: NextPage<ListingCardProps> = ({

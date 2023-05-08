@@ -45,9 +45,9 @@ export const SearchTypes = {
 
 export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
 
-export type SelectedListing = number | null
+export type SelectedListing = string | null
 
-export type HighlightedMarker = number | null
+export type HighlightedMarker = string | null
 
 export interface ListingSearchState {
   searchType: SearchTypeOption

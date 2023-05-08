@@ -39,7 +39,7 @@ const SearchResults: NextPage = () => {
     dispatch(doGeospatialSearch())
   }
 
-  const handleListingCardClick = (url: string, listingId: number) => {
+  const handleListingCardClick = (url: string, listingId: string) => {
     if (isSmallAndUp) {
       window.open(url, '_blank')
     } else {
@@ -53,7 +53,7 @@ const SearchResults: NextPage = () => {
     }
   }
 
-  const handleListingCardMouseEnter = (listingId: number) => {
+  const handleListingCardMouseEnter = (listingId: string) => {
     dispatch(setHighlightedMarker(listingId))
   }
 
