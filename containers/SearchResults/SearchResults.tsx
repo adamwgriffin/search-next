@@ -35,7 +35,7 @@ const SearchResults: NextPage = () => {
   }
 
   const handlePaginationButtonClick = (pageIndex: number) => {
-    dispatch(setFilterParams({ startidx: pageIndex }))
+    dispatch(setFilterParams({ page_index: pageIndex }))
     dispatch(doGeospatialSearch())
   }
 

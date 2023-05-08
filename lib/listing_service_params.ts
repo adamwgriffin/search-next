@@ -34,8 +34,8 @@ export const sortByDistanceValues: Readonly<Array<SortById>> = Object.freeze([
 ])
 
 export const DefaultFilterParams: FilterParams = Object.freeze({
-  startidx: 0,
-  pgsize: 20,
+  page_index: 0,
+  page_size: 20,
   price_min: null,
   price_max: null,
   beds_min: 0,

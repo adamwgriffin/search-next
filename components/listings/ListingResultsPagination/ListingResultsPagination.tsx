@@ -12,7 +12,6 @@ export interface Pagination {
   total: number
   pages: Array<number>
   currentPage: number
-  pageSize: number
 }
 
 export interface ListingResultsPaginationProps extends Pagination {
@@ -26,7 +25,6 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
   total,
   pages,
   currentPage,
-  pageSize,
   visiblePageAmount = 6,
   onClick
 }) => {
@@ -39,13 +37,13 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
 
   const handlePreviousPageClick = () => {
     if (currentPage !== pages[0]) {
-      onClick(currentPage - pageSize)
+      onClick(currentPage - 1)
     }
   }
 
   const handleNextPageClick = () => {
     if (currentPage !== lastPage) {
-      onClick(currentPage + pageSize)
+      onClick(currentPage + 1)
     }
   }
 

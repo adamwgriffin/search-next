@@ -165,7 +165,7 @@ export const listingSearchSlice = createSlice({
     },
 
     resetStartIndex: (state) => {
-      state.filterParams.startidx = initialState.filterParams.startidx
+      state.filterParams.page_index = initialState.filterParams.page_index
     },
 
     setDoListingSearchOnMapIdle: (state, action: PayloadAction<boolean>) => {
@@ -188,7 +188,7 @@ export const listingSearchSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(doGeospatialGeocodeSearch.pending, (state) => {
-      state.filterParams.startidx = initialState.filterParams.startidx
+      state.filterParams.page_index = initialState.filterParams.page_index
       state.listingSearchRunning = true
     })
 
@@ -207,7 +207,10 @@ export const listingSearchSlice = createSlice({
 
     builder.addCase(doGeospatialSearch.fulfilled, (state, action) => {
       state.listingSearchRunning = false
-      state.searchListingsResponse = { ...state.searchListingsResponse, listings: action.payload }
+      // just update the parts that would change with this type of search. the initial search would have set boundary
+      // and geocoderResult attributes that we don't want to overwite
+      state.searchListingsResponse.listings = action.payload.listings
+      state.searchListingsResponse.pagination = action.payload.pagination
     })
 
     builder.addCase(doGeospatialSearch.rejected, (state) => {
@@ -357,17 +360,16 @@ export const selectTotalListings = (state: AppState): number =>
   state.listingSearch.searchListingsResponse.number_found ?? 0
 
 export const selectPagination = (state: AppState): Pagination => {
-  const { startidx, pgsize } = state.listingSearch.filterParams
-  const number_returned = state.listingSearch.searchListingsResponse?.listings?.length || 0
-  // TODO: currently there's no pagination in the service. we will eventually need to add number_found to the response
-  const number_found = number_returned
+  const { page_index, page_size } = state.listingSearch.filterParams
+  const numberReturned = state.listingSearch.searchListingsResponse?.listings?.length || 0
+  const numberAvailable = state.listingSearch.searchListingsResponse?.pagination?.numberAvailable || 0
+  const numberOfPages = Math.ceil(numberAvailable / page_size)
   return {
-    start: startidx + 1,
-    end: startidx + number_returned ?? 0,
-    total: number_found ?? 0,
-    pages: range(0, number_found, pgsize),
-    currentPage: startidx,
-    pageSize: pgsize
+    start: (page_index * page_size) + 1,
+    end: (page_index * page_size) + numberReturned,
+    total: numberAvailable,
+    pages: range(0, numberOfPages),
+    currentPage: page_index
   }
 }
 

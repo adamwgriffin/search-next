@@ -41,8 +41,8 @@ export interface OpenHouseScheduleIDEnumInterface {
 
 // listing service params that are used as filters. also used to maintain filter state in the app
 export interface FilterParams {
-  startidx: number
-  pgsize: number
+  page_index: number
+  page_size: number
   price_min: number | null
   price_max: number | null
   beds_min: number | null
