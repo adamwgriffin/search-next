@@ -1,22 +1,6 @@
-export type SortById =
-  | 1
-  | 2
-  | 3
-  | 4
-  | 5
-  | 6
-  | 7
-  | 8
-  | 9
-  | 10
-  | 11
-  | 12
-  | 13
-  | 14
-  | 15
-  | 16
-  | 17
-  | 18
+export type SortType = 'listedDate' | 'listPrice' | 'beds' | 'baths' | 'sqft'
+
+export type SortDirection = 'asc' | 'desc'
 
 export type ListingServiceGeotype =
   | 'AdminDivision1'
@@ -52,7 +36,8 @@ export interface FilterParams {
   ex_cs: boolean | null
   sqft_min: number | null
   sqft_max: number | null
-  sort_by: SortById
+  sort_by: SortType
+  sort_direction: SortDirection
   lotsize_min: number | null
   yearblt_min: number | null
   yearblt_max: number | null
@@ -146,23 +131,4 @@ export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>
 
 export type BedsBathsParam = Pick<FilterParams, 'beds_min' | 'baths_min'>
 
-export interface SortByEnum {
-  baths_desc: SortById
-  baths_asc: SortById
-  beds_desc: SortById
-  beds_asc: SortById
-  distance_from_user_lat_lon_asc: SortById
-  distance_from_user_lat_lon_desc: SortById
-  listing_date_asc: SortById
-  listing_date_desc: SortById
-  price_desc: SortById
-  price_asc: SortById
-  status_category_asc: SortById
-  status_category_desc: SortById
-  total_square_footage_desc: SortById
-  total_square_footage_asc: SortById
-  total_lot_square_footage_desc: SortById
-  total_lot_square_footage_asc: SortById
-  sold_date_desc: SortById
-  sold_date_asc: SortById
-}
+export type SortParams = Pick<FilterParams, 'sort_by' | 'sort_direction'>

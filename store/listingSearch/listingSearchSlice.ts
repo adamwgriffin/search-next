@@ -1,8 +1,7 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types/listing_types'
-import type { PriceRangeParams } from '../../lib/types/listing_service_params_types'
+import type { PriceRangeParams, SortParams } from '../../lib/types/listing_service_params_types'
 import type {
-  SortById,
   FilterParams,
   ListingServiceParams,
   FilterParamsPartial,
@@ -353,8 +352,8 @@ export const selectPtype = (state: AppState): string | null => {
   return propertyTypeIds.join(',')
 }
 
-export const selectSortBy = (state: AppState): SortById =>
-  state.listingSearch.filterParams.sort_by
+export const selectSortBy = (state: AppState): SortParams =>
+  pick(state.listingSearch.filterParams, ['sort_by', 'sort_direction'])
 
 export const selectTotalListings = (state: AppState): number =>
   state.listingSearch.searchListingsResponse.number_found ?? 0

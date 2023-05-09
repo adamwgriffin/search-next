@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SortById } from '../../lib/types/listing_service_params_types'
+import type { SortParams } from '../../lib/types/listing_service_params_types'
 import { useMedia } from 'react-use'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
@@ -29,8 +29,8 @@ const SearchResults: NextPage = () => {
   const pagination = useAppSelector(selectPagination)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
-  const handleSortMenuChange = (sortById: SortById) => {
-    dispatch(setFilterParams({ sort_by: sortById }))
+  const handleSortMenuChange = (sortParams: SortParams) => {
+    dispatch(setFilterParams(sortParams))
     dispatch(searchWithUpdatedFilters())
   }
 

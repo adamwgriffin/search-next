@@ -1,53 +1,98 @@
 import type { NextPage } from 'next'
-import type { SortById } from '../../../lib/types/listing_service_params_types'
+import type {
+  SortType,
+  SortDirection,
+  SortParams
+} from '../../../lib/types/listing_service_params_types'
 import { useToggle } from 'react-use'
 import styles from './SortMenu.module.css'
-import { sortByEnum } from '../../../lib/listing_service_params'
 import Dropdown from '../../design_system/Dropdown/Dropdown'
 import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
 
 export interface SortMenuProps {
-  sortBy: SortById
-  onChange?: (sortById: SortById) => void
+  sortBy: SortParams
+  onChange?: (sortParams: SortParams) => void
 }
 
-const SortByIdLabels: Partial<Record<SortById, string>> = {
-  [sortByEnum.listing_date_desc]: 'Newest',
-  [sortByEnum.price_asc]: 'Price (Lo-Hi)',
-  [sortByEnum.price_desc]: 'Price (Hi-Lo)',
-  [sortByEnum.beds_desc]: 'Beds',
-  [sortByEnum.baths_desc]: 'Baths',
-  [sortByEnum.total_square_footage_desc]: 'Square Feet'
+export interface SortTypeLabels {
+  label: string
+  type: SortType
+  direction: SortDirection
+}
+
+const SortTypeLabels: SortTypeLabels[] = [
+  {
+    label: 'Newest',
+    type: 'listedDate',
+    direction: 'desc'
+  },
+  {
+    label: 'Price (Lo-Hi)',
+    type: 'listPrice',
+    direction: 'asc'
+  },
+  {
+    label: 'Price (Hi-Lo)',
+    type: 'listPrice',
+    direction: 'desc'
+  },
+  {
+    label: 'Beds',
+    type: 'beds',
+    direction: 'desc'
+  },
+  {
+    label: 'Baths',
+    type: 'baths',
+    direction: 'desc'
+  },
+  {
+    label: 'Square Feet',
+    type: 'sqft',
+    direction: 'desc'
+  }
+]
+
+const getCurrentSortLabel = (sortParams: SortParams) => {
+  return SortTypeLabels.find(
+    ({ type, direction }) =>
+      type === sortParams.sort_by && direction === sortParams.sort_direction
+  )?.label
 }
 
 const SortMenu: NextPage<SortMenuProps> = ({
-  sortBy = sortByEnum.listing_date_desc,
+  sortBy = { sort_by: 'listedDate', sort_direction: 'desc' },
   onChange
 }) => {
   const [open, toggleMenu] = useToggle(false)
 
-  const handleClick = (sortById: SortById) => {
+  const handleClick = (sortParams: SortParams) => {
     toggleMenu(false)
-    onChange?.(sortById)
+    onChange?.(sortParams)
   }
 
   return (
     <Dropdown
       open={open}
-      label={`Sort: ${SortByIdLabels[sortBy]}`}
+      label={`Sort: ${getCurrentSortLabel(sortBy)}`}
       condensed
       alignRight
       onClick={toggleMenu}
       onClickAway={() => toggleMenu(false)}
     >
       <ul className={styles.menu}>
-        {Object.entries(SortByIdLabels).map(([id, label]) => (
+        {SortTypeLabels.map(({ type, label, direction }) => (
           <li
-            key={id}
-            onClick={() => handleClick(Number(id) as SortById)}
+            key={`${type}-${direction}`}
+            onClick={() =>
+              handleClick({ sort_by: type, sort_direction: direction })
+            }
             className={styles.menuItem}
           >
-            <div>{sortBy === Number(id) && <CheckIcon />}</div>
+            <div>
+              {sortBy.sort_by === type &&
+                sortBy.sort_direction == direction && <CheckIcon />}
+            </div>
             <div>{label}</div>
           </li>
         ))}
