@@ -81,7 +81,7 @@ export interface ListingServiceParams extends FilterParamsPartial {
   bounds_south?: number
   bounds_west?: number
   geotype?: ListingServiceGeotype
-  street?: string
+  address?: string
   ptype?: string | null
 }
 
