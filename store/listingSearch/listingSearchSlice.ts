@@ -262,9 +262,9 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'ex_pend',
     'sqft_min',
     'sqft_max',
-    'lotsize_min',
-    'yearblt_min',
-    'yearblt_max',
+    'lot_size_min',
+    'year_built_min',
+    'year_built_max',
     'openhouse',
     'water',
     'view',
@@ -290,10 +290,10 @@ export const selectSquareFeetParams = (
   pick(state.listingSearch.filterParams, ['sqft_min', 'sqft_max'])
 
 export const selectLotSizeParams = (state: AppState): LotSizeParams =>
-  pick(state.listingSearch.filterParams, ['lotsize_min'])
+  pick(state.listingSearch.filterParams, ['lot_size_min'])
 
 export const selectYearBuiltParams = (state: AppState): YearBuiltRangeParams =>
-  pick(state.listingSearch.filterParams, ['yearblt_min', 'yearblt_max'])
+  pick(state.listingSearch.filterParams, ['year_built_min', 'year_built_max'])
 
 export const selectFeatureParams = (state: AppState): FeaturesParams => {
   return pick(state.listingSearch.filterParams, [

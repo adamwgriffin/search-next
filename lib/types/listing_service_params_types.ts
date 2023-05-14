@@ -38,9 +38,9 @@ export interface FilterParams {
   sqft_max: number | null
   sort_by: SortType
   sort_direction: SortDirection
-  lotsize_min: number | null
-  yearblt_min: number | null
-  yearblt_max: number | null
+  lot_size_min: number | null
+  year_built_min: number | null
+  year_built_max: number | null
   openhouse: OpenHouseScheduleID
   water: boolean | null
   view: boolean | null
@@ -84,9 +84,9 @@ export type PriceRangeParams = Pick<FilterParams, 'price_min' | 'price_max'>
 
 export type SquareFeetRangeParams = Pick<FilterParams, 'sqft_min' | 'sqft_max'>
 
-export type LotSizeParams = Pick<FilterParams, 'lotsize_min'>
+export type LotSizeParams = Pick<FilterParams, 'lot_size_min'>
 
-export type YearBuiltRangeParams = Pick<FilterParams, 'yearblt_min' | 'yearblt_max'>
+export type YearBuiltRangeParams = Pick<FilterParams, 'year_built_min' | 'year_built_max'>
 
 export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
 
@@ -112,9 +112,9 @@ export type MoreFiltersParams = Pick<
   | 'ex_cs'
   | 'sqft_min'
   | 'sqft_max'
-  | 'lotsize_min'
-  | 'yearblt_min'
-  | 'yearblt_max'
+  | 'lot_size_min'
+  | 'year_built_min'
+  | 'year_built_max'
   | 'openhouse'
   | 'water'
   | 'view'

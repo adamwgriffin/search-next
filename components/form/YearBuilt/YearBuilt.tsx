@@ -20,8 +20,8 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
 
   const getYearBuiltRange = (): YearBuiltRangeParams => {
     return {
-      yearblt_min: Number(yearBuiltMinRef.current?.value) || null,
-      yearblt_max: Number(yearBuiltMaxRef.current?.value) || null
+      year_built_min: Number(yearBuiltMinRef.current?.value) || null,
+      year_built_max: Number(yearBuiltMaxRef.current?.value) || null
     }
   }
 
@@ -34,7 +34,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
       <Legend>Year Built</Legend>
       <div className={styles.yearBuilt}>
       <label
-          htmlFor="yearblt_min"
+          htmlFor="year_built_min"
           className={formStyles.accessibleLabel}
         >
           Min Year Built
@@ -44,16 +44,16 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
           type="text"
           placeholder='Min Year'
           className={formStyles.input}
-          id="yearblt_min"
+          id="year_built_min"
           autoComplete='off'
-          value={yearBuiltRange.yearblt_min || ''}
+          value={yearBuiltRange.year_built_min || ''}
           onChange={handleChange}
           onFocus={onFocus}
           onBlur={onBlur}
         />
         <InputRangeSeparator />
         <label
-          htmlFor="yearblt_max"
+          htmlFor="year_built_max"
           className={formStyles.accessibleLabel}
         >
           Max Year Built
@@ -63,9 +63,9 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
           type="text"
           placeholder='Max Year'
           className={formStyles.input}
-          id="yearblt_max"
+          id="year_built_max"
           autoComplete='off'
-          value={yearBuiltRange.yearblt_max || ''}
+          value={yearBuiltRange.year_built_max || ''}
           onChange={handleChange}
           onFocus={onFocus}
           onBlur={onBlur}

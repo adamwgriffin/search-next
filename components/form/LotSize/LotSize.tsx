@@ -18,7 +18,7 @@ const LotSize: NextPage<LotSizeProps> = ({ lotSizeMin, onChange }) => {
       <select
         className={formStyles.select}
         value={Number(lotSizeMin)}
-        onChange={(e) => onChange?.({ lotsize_min: +e.target.value })}
+        onChange={(e) => onChange?.({ lot_size_min: +e.target.value })}
       >
         {LotSizeValues.map(({ label, value }) => (
           <option key={value.toString()} value={value}>

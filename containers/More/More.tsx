@@ -150,7 +150,7 @@ const More: NextPage = () => {
         onBlur={runSearchIfSquareFeetChanged}
       />
       <LotSize
-        lotSizeMin={lotSizeParams.lotsize_min}
+        lotSizeMin={lotSizeParams.lot_size_min}
         onChange={handleChangeAndInitiateSearch}
       />
       <YearBuilt
