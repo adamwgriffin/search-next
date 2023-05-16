@@ -2,15 +2,17 @@
 
 .logo {
   display: none;
-  width: 10.4375rem;
-  height: 2.25rem;
-  fill: var(--logo);
-  stroke: none;
 }
 
 @media smallAndUp {
   .logo {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--logo);
   }
 
 }
