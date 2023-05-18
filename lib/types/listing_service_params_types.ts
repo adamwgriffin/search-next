@@ -51,6 +51,7 @@ export interface FilterParams {
   has_pool: boolean | null
   senior_community: boolean | null
   sold_days: number | null
+  property_type: string | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -67,7 +68,6 @@ export interface ListingServiceParams extends FilterParamsPartial {
   bounds_west?: number
   geotype?: ListingServiceGeotype
   address?: string
-  ptype?: string | null
 }
 
 export type CenterLatLonParams = Pick<

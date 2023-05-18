@@ -20,18 +20,12 @@ import type {
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { PropertyTypeIDArray } from '../../lib/property_types'
+import type { PropertyType } from '../../lib/property_types'
 import pick from 'lodash/pick'
 import omitBy from 'lodash/omitBy'
 import range from 'lodash/range'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
-import {
-  PropertyTypes,
-  AllPropertyTypeIds,
-  RentalPropertytypeID,
-  CoOpPropertytypeID
-} from '../../lib/property_types'
 import { modifyParam } from '../../lib/listing_service_params'
 import { selectGeoType } from '../places/placesSlice'
 import http from '../../lib/http'
@@ -56,7 +50,7 @@ export interface ListingSearchState {
   searchListingsResponse: any
   selectedListing: SelectedListing
   highlightedMarker: HighlightedMarker
-  propertyTypes: PropertyTypeIDArray
+  propertyTypes: PropertyType[]
   filterParams: FilterParams
 }
 
@@ -138,15 +132,14 @@ export const listingSearchSlice = createSlice({
       switch (action.payload) {
         case SearchTypes.Buy:
           state.filterParams.status = 'active'
-          state.propertyTypes = initialState.propertyTypes
+          state.filterParams.property_type = initialState.filterParams.property_type
           break
         case SearchTypes.Rent:
           state.filterParams.status = 'active'
-          // for some reason rental is considered a property type in our system
-          state.propertyTypes = [RentalPropertytypeID]
+          // TBD
           break
         case SearchTypes.Sold:
-          state.propertyTypes = initialState.propertyTypes
+          state.filterParams.property_type = initialState.filterParams.property_type
           state.filterParams.status = 'sold'
       }
     },
@@ -175,7 +168,7 @@ export const listingSearchSlice = createSlice({
       state.filterParams = { ...state.filterParams, ...action.payload }
     },
 
-    setPropertyTypes: (state, action: PayloadAction<PropertyTypeIDArray>) => {
+    setPropertyTypes: (state, action: PayloadAction<PropertyType[]>) => {
       state.propertyTypes = action.payload
     },
 
@@ -334,23 +327,8 @@ export const selectBoundsParams = (state: AppState): BoundsParams => {
   }
 }
 
-export const selectPropertyTypes = (state: AppState): PropertyTypeIDArray =>
+export const selectPropertyTypes = (state: AppState): PropertyType[] =>
   state.listingSearch.propertyTypes
-
-export const selectPtype = (state: AppState): string | null => {
-  const { propertyTypes } = state.listingSearch
-  // the serve will return property types that we don't want to use, like rental, if we don't send a ptype param. so
-  // we're sending only the property types we support in the app if the user hasn't selected any.
-  if (!propertyTypes || propertyTypes.length === 0)
-    return AllPropertyTypeIds.join(',')
-  // condo and co-op are sent as separate property types to the listing service but they are only displayed as "Condo"
-  // in the UI, so we need to combine them here.
-  const propertyTypeIds = propertyTypes.includes(PropertyTypes.condo.id)
-    ? propertyTypes.concat([CoOpPropertytypeID])
-    : propertyTypes
-  // the service expects a comma-separated string of property type ids. it will return an error if we send an array
-  return propertyTypeIds.join(',')
-}
 
 export const selectSortBy = (state: AppState): SortParams =>
   pick(state.listingSearch.filterParams, ['sort_by', 'sort_direction'])
@@ -391,7 +369,7 @@ export const removeUnecessaryParams = (params: ListingServiceParams) =>
 export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
     ...state.listingSearch.filterParams,
-    ptype: selectPtype(state),
+    property_type: state.listingSearch.propertyTypes.join(',') || null,
     company_uuid: state.environment.company_uuid
   })
 }

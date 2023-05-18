@@ -32,7 +32,8 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   virtual_tour: null,
   has_pool: null,
   senior_community: null,
-  sold_days: 730
+  sold_days: 730,
+  property_type: null
 })
 
 export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {

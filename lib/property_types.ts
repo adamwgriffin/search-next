@@ -1,58 +1,45 @@
-export type PropertyTypeID = 1 | 2 | 3 | 4 | 6 | 7 | 8 | 9
-
-export type PropertyTypeIDArray = Array<PropertyTypeID>
-
-export type PropertyTypeName =
-  | 'residential'
+export type PropertyType =
+  | 'single-family'
   | 'condo'
   | 'townhouse'
   | 'manufactured'
   | 'land'
-  | 'multi_family'
+  | 'multi-family'
+
+export type PropertyTypeIDArray = Array<PropertyType>
+
 
 export interface PropertyTypeConfig {
-  id: PropertyTypeID
+  id: PropertyType
   label: string
 }
 
-export type PropertyTypesInterface = Record<
-  PropertyTypeName,
-  PropertyTypeConfig
->
+// TODO: this is no longer going to be a property type
+export const RentalPropertytypeID = 6
 
-export const RentalPropertytypeID: PropertyTypeID = 6
-
-export const CoOpPropertytypeID: PropertyTypeID = 8
-
-export const PropertyTypes: PropertyTypesInterface = Object.seal({
-  residential: {
-    id: 1,
+export const PropertyTypes: PropertyTypeConfig[] = Object.seal([
+  {
+    id: 'single-family',
     label: 'House'
   },
-  condo: {
-    id: 2,
+  {
+    id: 'condo',
     label: 'Condo'
   },
-  townhouse: {
-    id: 9,
+  {
+    id: 'townhouse',
     label: 'Townhouse'
   },
-  manufactured: {
-    id: 4,
+  {
+    id: 'manufactured',
     label: 'Manufactured'
   },
-  land: {
-    id: 3,
+  {
+    id: 'land',
     label: 'Land'
   },
-  multi_family: {
-    id: 7,
+  {
+    id: 'multi-family',
     label: 'Multi-Family'
   }
-})
-
-export const AllPropertyTypeIds: PropertyTypeIDArray = Object.values(
-  PropertyTypes
-)
-  .map((t) => t.id)
-  .concat([CoOpPropertytypeID])
+])
