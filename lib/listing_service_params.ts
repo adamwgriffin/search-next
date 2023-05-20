@@ -14,8 +14,6 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   beds_min: 0,
   baths_min: 0,
   status: 'active',
-  ex_pend: true,
-  ex_cs: true,
   sqft_min: null,
   sqft_max: null,
   sort_by: 'listedDate',

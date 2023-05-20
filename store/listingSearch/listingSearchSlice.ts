@@ -9,13 +9,13 @@ import type {
   BoundsParams,
   BedsBathsParam,
   MoreFiltersParams,
-  ExcludeStatusParams,
   SquareFeetRangeParams,
   LotSizeParams,
   YearBuiltRangeParams,
   OpenHouseParam,
   FeaturesParams,
-  SoldDaysParam
+  SoldDaysParam,
+  PropertyStatus
 } from '../../lib/types/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
@@ -51,6 +51,7 @@ export interface ListingSearchState {
   selectedListing: SelectedListing
   highlightedMarker: HighlightedMarker
   propertyTypes: PropertyType[]
+  includePending: boolean
   filterParams: FilterParams
 }
 
@@ -63,6 +64,7 @@ const initialState: ListingSearchState = {
   selectedListing: null,
   highlightedMarker: null,
   propertyTypes: [],
+  includePending: false,
   filterParams: DefaultFilterParams
 }
 
@@ -131,16 +133,13 @@ export const listingSearchSlice = createSlice({
       state.searchType = action.payload
       switch (action.payload) {
         case SearchTypes.Buy:
-          state.filterParams.status = 'active'
           state.filterParams.property_type = initialState.filterParams.property_type
           break
         case SearchTypes.Rent:
-          state.filterParams.status = 'active'
           // TBD
           break
         case SearchTypes.Sold:
           state.filterParams.property_type = initialState.filterParams.property_type
-          state.filterParams.status = 'sold'
       }
     },
 
@@ -172,9 +171,14 @@ export const listingSearchSlice = createSlice({
       state.propertyTypes = action.payload
     },
 
+    setIncludePending: (state, action: PayloadAction<boolean>) => {
+      state.includePending = action.payload
+    },
+
     clearFilters: (state) => {
       state.filterParams = initialState.filterParams
       state.propertyTypes = initialState.propertyTypes
+      state.includePending = initialState.includePending
     }
   },
 
@@ -220,6 +224,7 @@ export const {
   setDoListingSearchOnMapIdle,
   setFilterParams,
   setPropertyTypes,
+  setIncludePending,
   clearFilters
 } = listingSearchSlice.actions
 
@@ -251,8 +256,6 @@ export const selectBedBathParams = (state: AppState): BedsBathsParam =>
 
 export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
   return pick(state.listingSearch.filterParams, [
-    'ex_cs',
-    'ex_pend',
     'sqft_min',
     'sqft_max',
     'lot_size_min',
@@ -274,8 +277,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
 export const selectOpenHouseParam = (state: AppState): OpenHouseParam =>
   pick(state.listingSearch.filterParams, ['openhouse'])
 
-export const selectStatusParams = (state: AppState): ExcludeStatusParams =>
-  pick(state.listingSearch.filterParams, ['ex_pend', 'ex_cs'])
+export const selectIncludePending = (state: AppState): boolean =>
+  state.listingSearch.includePending
 
 export const selectSquareFeetParams = (
   state: AppState
@@ -330,6 +333,17 @@ export const selectBoundsParams = (state: AppState): BoundsParams => {
 export const selectPropertyTypes = (state: AppState): PropertyType[] =>
   state.listingSearch.propertyTypes
 
+export const selectStatus = (state: AppState): string | null => {
+  switch (state.listingSearch.searchType ) {
+    case SearchTypes.Buy:
+      return state.listingSearch.includePending ? 'active,pending' : null
+    case SearchTypes.Rent:
+      return null
+    case SearchTypes.Sold:
+      return 'sold'
+  }
+}
+
 export const selectSortBy = (state: AppState): SortParams =>
   pick(state.listingSearch.filterParams, ['sort_by', 'sort_direction'])
 
@@ -370,6 +384,7 @@ export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
     ...state.listingSearch.filterParams,
     property_type: state.listingSearch.propertyTypes.join(',') || null,
+    status: selectStatus(state),
     company_uuid: state.environment.company_uuid
   })
 }

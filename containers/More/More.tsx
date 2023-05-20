@@ -18,7 +18,7 @@ import {
   selectBedBathParams,
   selectOpenHouseParam,
   selectPropertyTypes,
-  selectStatusParams,
+  selectIncludePending,
   selectSquareFeetParams,
   selectLotSizeParams,
   selectYearBuiltParams,
@@ -29,13 +29,14 @@ import {
   setSearchType,
   setPropertyTypes,
   setFilterParams,
+  setIncludePending,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import Price from '../../components/form/Price/Price'
 import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
-import ListingStatus from '../../components/form/ListingStatus/ListingStatus'
+import IncludePending from '../../components/form/IncludePending/IncludePending'
 import PropertyType from '../../components/form/PropertyTypes/PropertyTypes'
 import SquareFeet from '../../components/form/SquareFeet/SquareFeet'
 import LotSize from '../../components/form/LotSize/LotSize'
@@ -51,7 +52,7 @@ const More: NextPage = () => {
   const bedsAndBaths = useAppSelector(selectBedBathParams)
   const openHouseParam = useAppSelector(selectOpenHouseParam)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
-  const statusParams = useAppSelector(selectStatusParams)
+  const includePending = useAppSelector(selectIncludePending)
   const squareFeetRange = useAppSelector(selectSquareFeetParams)
   const lotSizeParams = useAppSelector(selectLotSizeParams)
   const yearBuiltRange = useAppSelector(selectYearBuiltParams)
@@ -91,6 +92,11 @@ const More: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
+  const handleIncludePendingChange = (includePending: boolean) => {
+    dispatch(setIncludePending(includePending))
+    dispatch(searchWithUpdatedFilters())
+  }
+
   const handleChange = (params: MoreFiltersParamsPartial) => {
     dispatch(setFilterParams(params))
   }
@@ -124,9 +130,9 @@ const More: NextPage = () => {
             openHouseParam={openHouseParam}
             onChange={handleChangeAndInitiateSearch}
           />
-          <ListingStatus
-            statusParms={statusParams}
-            onChange={handleChangeAndInitiateSearch}
+          <IncludePending
+            includePending={includePending}
+            onChange={handleIncludePendingChange}
           />
         </div>
       )}

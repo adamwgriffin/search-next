@@ -12,6 +12,8 @@ export type ListingServiceGeotype =
   | 'Address'
   | 'NaturalFeature'
 
+export type PropertyStatus = 'active' | 'pending' | 'sold'
+
 export type OpenHouseScheduleID = 2 | 3 | 4 | 5 | 6 | 7 | null
 
 export interface OpenHouseScheduleIDEnumInterface {
@@ -31,9 +33,6 @@ export interface FilterParams {
   price_max: number | null
   beds_min: number | null
   baths_min: number | null
-  status: 'active' | 'sold'
-  ex_pend: boolean | null
-  ex_cs: boolean | null
   sqft_min: number | null
   sqft_max: number | null
   sort_by: SortType
@@ -52,6 +51,7 @@ export interface FilterParams {
   senior_community: boolean | null
   sold_days: number | null
   property_type: string | null
+  status: string | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -88,8 +88,6 @@ export type LotSizeParams = Pick<FilterParams, 'lot_size_min'>
 
 export type YearBuiltRangeParams = Pick<FilterParams, 'year_built_min' | 'year_built_max'>
 
-export type ExcludeStatusParams = Pick<FilterParams, 'ex_pend' | 'ex_cs'>
-
 export type OpenHouseParam = Pick<FilterParams, 'openhouse'>
 
 export type SoldDaysParam = Pick<FilterParams, 'sold_days'>
@@ -108,8 +106,6 @@ export type FeaturesParams = Pick<
 
 export type MoreFiltersParams = Pick<
   FilterParams,
-  | 'ex_pend'
-  | 'ex_cs'
   | 'sqft_min'
   | 'sqft_max'
   | 'lot_size_min'
