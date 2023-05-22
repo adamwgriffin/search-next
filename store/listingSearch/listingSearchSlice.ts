@@ -14,8 +14,7 @@ import type {
   YearBuiltRangeParams,
   OpenHouseParam,
   FeaturesParams,
-  SoldDaysParam,
-  PropertyStatus
+  SoldDaysParam
 } from '../../lib/types/listing_service_params_types'
 import type { ModifyParams } from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
@@ -262,14 +261,14 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'year_built_min',
     'year_built_max',
     'openhouse',
-    'water',
+    'waterfront',
     'view',
-    'onestory',
-    'has_garage',
-    'new_const',
-    'virtual_tour',
-    'has_pool',
-    'senior_community',
+    'fireplace',
+    'basement',
+    'garage',
+    'new_construction',
+    'pool',
+    'air_conditioning',
     'sold_days'
   ])
 }
@@ -293,14 +292,14 @@ export const selectYearBuiltParams = (state: AppState): YearBuiltRangeParams =>
 
 export const selectFeatureParams = (state: AppState): FeaturesParams => {
   return pick(state.listingSearch.filterParams, [
-    'water',
+    'waterfront',
     'view',
-    'onestory',
-    'has_garage',
-    'new_const',
-    'virtual_tour',
-    'has_pool',
-    'senior_community'
+    'fireplace',
+    'basement',
+    'garage',
+    'new_construction',
+    'pool',
+    'air_conditioning'
   ])
 }
 

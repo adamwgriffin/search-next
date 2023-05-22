@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import type { FeaturesParams } from '../../../lib/types/listing_service_params_types'
 import type { ChangeEvent } from 'react'
-import { featureList } from './Features.module.css'
-import { checkbox, inputListLabel } from '../../../styles/forms.module.css'
+import styles from './Features.module.css'
+import formStyles from '../../../styles/forms.module.css'
 import { FeatureLabels } from '../../../lib/filter'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
 import Legend from '../../design_system/Legend/Legend'
@@ -22,18 +22,18 @@ const Features: NextPage<FeaturesProps> = ({ featureParams, onChange }) => {
   return (
     <Fieldset>
       <Legend>Home Features</Legend>
-      <ul className={featureList}>
+      <ul className={styles.featureList}>
         {Object.entries(featureParams).map(([name, value]) => (
           <li key={name}>
             <input
               type='checkbox'
               id={name}
-              className={checkbox}
+              className={formStyles.checkbox}
               name={name}
               checked={!!value}
               onChange={handleChange}
             />
-            <label htmlFor={name} className={inputListLabel}>
+            <label htmlFor={name} className={formStyles.inputListLabel}>
               {FeatureLabels[name as keyof typeof FeatureLabels]}
             </label>
           </li>

@@ -1,4 +1,5 @@
 import type { CountOption } from './types'
+import type { FeaturesParams } from './types/listing_service_params_types'
 
 export const LotSizeValues: Array<CountOption> = [
   {
@@ -47,15 +48,17 @@ export const LotSizeValues: Array<CountOption> = [
   }
 ]
 
-export const FeatureLabels = {
-  water: 'Waterfront',
+type FeatureLabels = {
+  [key in keyof FeaturesParams]: string
+}
+
+export const FeatureLabels: FeatureLabels = {
+  waterfront: 'Waterfront',
   view: 'Views',
-  onestory: 'Single-Story Homes',
-  has_garage: 'Garage',
-  new_const: 'New Construction',
-  virtual_tour: 'Virtual Tour',
-  luxury: 'Luxury Properties',
-  destinations: 'Destinations',
-  has_pool: 'Pool',
-  senior_community: 'Senior Community'
+  fireplace: 'Fireplace',
+  basement: 'Basement',
+  garage: 'Garage',
+  new_construction: 'New Construction',
+  pool: 'Pool',
+  air_conditioning: 'Air Conditioning'
 }

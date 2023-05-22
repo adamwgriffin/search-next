@@ -41,17 +41,17 @@ export interface FilterParams {
   year_built_min: number | null
   year_built_max: number | null
   openhouse: OpenHouseScheduleID
-  water: boolean | null
-  view: boolean | null
-  onestory: boolean | null
-  has_garage: boolean | null
-  new_const: boolean | null
-  virtual_tour: boolean | null
-  has_pool: boolean | null
-  senior_community: boolean | null
   sold_days: number | null
   property_type: string | null
   status: string | null
+  waterfront: boolean | null
+  view: boolean | null
+  fireplace: boolean | null
+  basement: boolean | null
+  garage: boolean | null
+  new_construction: boolean | null
+  pool: boolean | null
+  air_conditioning: boolean | null
 }
 
 export type FilterParamsPartial = Partial<FilterParams>
@@ -94,14 +94,14 @@ export type SoldDaysParam = Pick<FilterParams, 'sold_days'>
 
 export type FeaturesParams = Pick<
   FilterParams,
-  | 'water'
+  | 'waterfront'
   | 'view'
-  | 'onestory'
-  | 'has_garage'
-  | 'new_const'
-  | 'virtual_tour'
-  | 'has_pool'
-  | 'senior_community'
+  | 'fireplace'
+  | 'basement'
+  | 'garage'
+  | 'new_construction'
+  | 'pool'
+  | 'air_conditioning'
 >
 
 export type MoreFiltersParams = Pick<
@@ -112,14 +112,14 @@ export type MoreFiltersParams = Pick<
   | 'year_built_min'
   | 'year_built_max'
   | 'openhouse'
-  | 'water'
+  | 'waterfront'
   | 'view'
-  | 'onestory'
-  | 'has_garage'
-  | 'new_const'
-  | 'virtual_tour'
-  | 'has_pool'
-  | 'senior_community'
+  | 'fireplace'
+  | 'basement'
+  | 'garage'
+  | 'new_construction'
+  | 'pool'
+  | 'air_conditioning'
   | 'sold_days'
 >
 
