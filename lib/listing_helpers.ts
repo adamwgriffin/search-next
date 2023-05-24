@@ -54,7 +54,6 @@ export const formatPrice = (
     status,
     sold_price,
     listPrice,
-    property_type_id
   }: Listing | ListingDetailListing,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
@@ -64,9 +63,11 @@ export const formatPrice = (
     'en-US',
     opts.numberFormatOptions
   ).format(Number(price))
-  return opts.displayInterval && property_type_id === RentalPropertytypeID
-    ? `${priceFormatted}/mo`
-    : priceFormatted
+  // TODO: add rental back when that's finished in the service
+  // return opts.displayInterval && property_type_id === RentalPropertytypeID
+  //   ? `${priceFormatted}/mo`
+  //   : priceFormatted
+  return priceFormatted
 }
 
 export const getBathrooms = (
