@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface EnvironmentState {
-  company_uuid: string
   locale: string
 }
 
 const initialState: EnvironmentState = {
-  company_uuid: process.env.NEXT_PUBLIC_COMPANY_UUID!,
   locale: process.env.NEXT_PUBLIC_LOCALE!
 }
 

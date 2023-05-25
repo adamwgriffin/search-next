@@ -59,7 +59,6 @@ export type FilterParamsPartial = Partial<FilterParams>
 // listing service params that are mostly only sent when composing a listing service request. these names aren't used in
 // the app state much.
 export interface ListingServiceParams extends FilterParamsPartial {
-  company_uuid?: string
   lat?: number
   lng?: number
   bounds_north?: number
