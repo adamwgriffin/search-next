@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
-import type { ListingDetailListing } from '../../../../lib/types/listing_types'
+import type { IListingDetail } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
 import { formatPrice } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
@@ -9,41 +9,61 @@ import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
 import ListingDetailBedsBathsSQFT from '../ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
 import Description from '../Description/Description'
 import HomeHighlights from '../Highlights/HomeHighlights'
-import PropertyDetails from '../PropertyDetails/PropertyDetails'
+// import PropertyDetails from '../PropertyDetails/PropertyDetails'
 import SlideShow from '../SlideShow/SlideShow'
 
 export interface ListingDetailProps {
-  listing: ListingDetailListing
+  listing: IListingDetail
 }
+
+// TODO: replace this with real images once that work is done
+const PlaceholderListingImages = [
+  {
+    title: 'NOIMAGE',
+    raw_url: '',
+    gallery_url: '',
+    full_url: 'https://picsum.photos/id/693/5000/2327',
+    small_url: '',
+    thumb_url: ''
+  }
+]
 
 const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
   const [slideShowOpen, setSlideShowOpen] = useState(false)
+
+  // TODO: replace this with some ContentLoader components
+  if (!listing)
+    return (
+      <>
+        <div className='listingDetail'>Loading...</div>
+        <style jsx>{styles}</style>
+      </>
+    )
 
   return (
     <>
       <div className='listingDetail'>
         <div className='status'>
-          <ListingStatusIndicator
-            propertyStatusID={listing.pstatus_id}
-            name={listing.status_name_for_view}
-          />
+          <ListingStatusIndicator status={listing.status} />
         </div>
         <ListingDetailImage
-          images={listing.images}
-          location={listing.address}
+          images={PlaceholderListingImages}
+          latitude={listing.latitude}
+          longitude={listing.longitude}
           onClick={() => setSlideShowOpen(true)}
         />
         <div className='price'>{formatPrice(listing)}</div>
         <div className='neighborhood'>{listing.neighborhood}</div>
-        <ListingDetailAddress location={listing.address} />
+        <ListingDetailAddress address={listing.address} />
         <ListingDetailBedsBathsSQFT listing={listing} />
-        <Description comments={listing.description} />
+        <Description description={listing.description} />
         <HomeHighlights listing={listing} />
-        <PropertyDetails features={listing.features} />
+        {/* TODO: add property details once they are done in the service */}
+        {/* <PropertyDetails features={listing.features} /> */}
         <SlideShow
           open={slideShowOpen}
           onClose={() => setSlideShowOpen(false)}
-          images={listing.images}
+          images={PlaceholderListingImages}
         />
       </div>
       <style jsx>{styles}</style>

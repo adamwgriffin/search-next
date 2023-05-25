@@ -1,27 +1,28 @@
 import type { NextPage } from 'next'
-import type {
-  ListingLocation,
-  ListingImage
-} from '../../../../lib/types/listing_types'
+import type { Point } from '@turf/turf'
+import type { ListingImage } from '../../../../lib/types/listing_types'
 import styles from './ListingDetailImage.module.css'
 import ListingMainImage from '../../ListingMainImage/ListingMainImage'
 
 export interface ListingDetailImageProps {
   images: ListingImage[]
-  location: ListingLocation
+  latitude: number
+  longitude: number
   onClick?: () => void
 }
 
 const ListingDetailImage: NextPage<ListingDetailImageProps> = ({
   images,
-  location,
+  latitude,
+  longitude,
   onClick
 }) => {
   return (
     <div className={styles.listingDetailImage}>
       <ListingMainImage
         image={images[0]}
-        location={location}
+        latitude={latitude}
+        longitude={longitude}
         size='full'
         style={{
           objectFit: 'cover',

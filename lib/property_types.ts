@@ -14,9 +14,6 @@ export interface PropertyTypeConfig {
   label: string
 }
 
-// TODO: this is no longer going to be a property type
-export const RentalPropertytypeID = 6
-
 export const PropertyTypes: PropertyTypeConfig[] = Object.seal([
   {
     id: 'single-family',
@@ -43,3 +40,7 @@ export const PropertyTypes: PropertyTypeConfig[] = Object.seal([
     label: 'Multi-Family'
   }
 ])
+
+export const getPropertyTypeLabel = (propertyType: PropertyType) => {
+  return PropertyTypes.find(p => p.id === propertyType)?.label
+}

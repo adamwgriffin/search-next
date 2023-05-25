@@ -383,7 +383,7 @@ export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({
     ...state.listingSearch.filterParams,
     property_type: state.listingSearch.propertyTypes.join(',') || null,
-    status: selectStatus(state),
+    status: selectStatus(state)
   })
 }
 

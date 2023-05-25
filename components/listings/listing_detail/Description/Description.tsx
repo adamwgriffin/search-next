@@ -2,21 +2,21 @@ import type { NextPage } from 'next'
 import css from 'styled-jsx/css'
 
 export interface DescriptionProps {
-  comments: string | null
+  description: string | null
 }
 
-const Description: NextPage<DescriptionProps> = ({ comments }) => {
+const Description: NextPage<DescriptionProps> = ({ description }) => {
   return (
     <div>
       <h4 className='heading'>Description</h4>
-      <p className='comments'>{comments}</p>
+      <p className='description'>{description}</p>
       <style jsx>{styles}</style>
     </div>
   )
 }
 
 const styles = css`
-  .comments {
+  .description {
     margin: 0;
   }
 `

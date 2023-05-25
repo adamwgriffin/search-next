@@ -1,21 +1,25 @@
 import type { NextPage } from 'next'
-import { PropertyStatusTypeEnum } from '../../../lib/listing_helpers'
+import type { PropertyStatus } from '../../../lib/types/listing_types'
 import styles from './ListingStatusIndicator.module.css'
 
 export interface ListingStatusIndicatorProps {
-  propertyStatusID: number
-  name: string
+  status: PropertyStatus
+}
+
+export const StatusLabels = {
+  active: 'Active',
+  pending: 'Pending',
+  sold: 'Sold'
 }
 
 const ListingStatusIndicator: NextPage<ListingStatusIndicatorProps> = ({
-  propertyStatusID,
-  name
+  status,
 }) => {
   const statusClass = () => {
-    switch (propertyStatusID) {
-      case PropertyStatusTypeEnum.active:
+    switch (status) {
+      case 'active':
         return styles.statusActive
-      case PropertyStatusTypeEnum.sold:
+      case 'sold':
         return styles.statusSold
       default:
         return styles.status
@@ -26,7 +30,7 @@ const ListingStatusIndicator: NextPage<ListingStatusIndicatorProps> = ({
     <div
       className={statusClass()}
     >
-      {name}
+      {StatusLabels[status]}
     </div>
   )
 }

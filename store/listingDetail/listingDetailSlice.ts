@@ -1,14 +1,14 @@
 import type { AppState } from '..'
-import type { ListingDetailListing } from '../../lib/types/listing_types'
+import type { IListingDetail } from '../../lib/types/listing_types'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import http from '../../lib/http'
 
 export interface ListingDetailState {
-  searchListingsResponse: any
+  searchListingsResponse: IListingDetail | null
 }
 
 const initialState: ListingDetailState = {
-  searchListingsResponse: {}
+  searchListingsResponse: null
 }
 
 export const getListingDetail = createAsyncThunk(
@@ -16,10 +16,9 @@ export const getListingDetail = createAsyncThunk(
   async (listingID: string | string[] | undefined, { getState }) => {
     const state = getState() as AppState
     const response = await http({
-      url: `/api/listing_detail/${listingID}`,
-      params: selectParamsForListingDetailRequest(state)
+      url: `/api/listing_detail/${listingID}`
     })
-    return response.data.data
+    return response.data
   }
 )
 
@@ -30,7 +29,7 @@ export const listingDetailSlice = createSlice({
 
   reducers: {
     resetListingDetail(state) {
-      state.searchListingsResponse = {}
+      state.searchListingsResponse = initialState.searchListingsResponse
     }
   },
 
@@ -44,14 +43,7 @@ export const listingDetailSlice = createSlice({
 // add any reducers that we want to export as actions here
 export const { resetListingDetail } = listingDetailSlice.actions
 
-export const selectParamsForListingDetailRequest = (state: AppState) => {
-  return {
-    company_uuid: state.environment.company_uuid,
-    include_non_image: true
-  }
-}
-
-export const selectListing = (state: AppState): ListingDetailListing =>
-  state.listingDetail.searchListingsResponse.result_list?.[0]
+export const selectListing = (state: AppState): IListingDetail | null =>
+  state.listingDetail.searchListingsResponse
 
 export default listingDetailSlice.reducer

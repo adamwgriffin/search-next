@@ -12,8 +12,6 @@ export type ListingServiceGeotype =
   | 'Address'
   | 'NaturalFeature'
 
-export type PropertyStatus = 'active' | 'pending' | 'sold'
-
 export type OpenHouseScheduleID = 2 | 3 | 4 | 5 | 6 | 7 | null
 
 export interface OpenHouseScheduleIDEnumInterface {

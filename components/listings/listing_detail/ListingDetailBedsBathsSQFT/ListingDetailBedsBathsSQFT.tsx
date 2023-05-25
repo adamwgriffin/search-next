@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { ListingDetailListing } from '../../../../lib/types/listing_types'
+import type { IListingDetail } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
 import {
   getBathrooms,
@@ -7,7 +7,7 @@ import {
 } from '../../../../lib/listing_helpers'
 
 export interface ListingDetailBedsBathsSQFTProps {
-  listing: ListingDetailListing
+  listing: IListingDetail
 }
 
 const ListingDetailBedsBathsSQFT: NextPage<ListingDetailBedsBathsSQFTProps> = ({

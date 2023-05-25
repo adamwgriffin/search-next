@@ -1,17 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { IListingDetail } from '../../../lib/types/listing_types'
 import http from '../../../lib/http'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<IListingDetail>
 ) {
-  const { listing_id, ...params } = req.query
+  const { listing_id } = req.query
   const response = await http({
-    url: `${process.env.SERVICE_BASE}/service/v1/listing/${listing_id}`,
-    params
+    url: `${process.env.SERVICE_BASE}/listing/${listing_id}`
   })
-  // the response will often return 200 even if it was not successful. checking this status field seems to be more
-  // reliable
-  const status = response.data.status === 'success' ? 200 : 500
-  res.status(status).json(response.data)
+  res.status(200).json(response.data)
 }

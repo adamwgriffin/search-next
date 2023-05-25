@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
-import type { ListingDetailListing } from '../../../../lib/types/listing_types'
+import type { IListingDetail } from '../../../../lib/types/listing_types'
 import styles from './HomeHighlights.module.css'
+import { getPropertyTypeLabel } from '../../../../lib/property_types'
 
 export interface HomeHighlightsProps {
-  listing: ListingDetailListing
+  listing: IListingDetail
 }
 
 const HomeHighlights: NextPage<HomeHighlightsProps> = ({
@@ -15,25 +16,21 @@ const HomeHighlights: NextPage<HomeHighlightsProps> = ({
         <ul className={styles.detailsList}>
           <li>
             <div className={styles.detailsName}>Property Type</div>
-            <div>{listing.property_type}</div>
+            <div>{getPropertyTypeLabel(listing.propertyType)}</div>
           </li>
-          {listing.days_on_market && (
+          {listing.daysOnMarket && (
             <li>
               <div className={styles.detailsName}>Time on Site</div>
               <div>
-                {`${listing.days_on_market.toLocaleString()} ${
-                  listing.days_on_market > 1 ? 'days' : 'day'
+                {`${listing.daysOnMarket.toLocaleString()} ${
+                  listing.daysOnMarket > 1 ? 'days' : 'day'
                 }`}
               </div>
             </li>
           )}
           <li>
             <div className={styles.detailsName}>Year Built</div>
-            <div>{listing.year_build}</div>
-          </li>
-          <li>
-            <div className={styles.detailsName}>MLS Number</div>
-            <div>{listing.mlsnumber}</div>
+            <div>{listing.yearBuilt}</div>
           </li>
         </ul>
       </div>

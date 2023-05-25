@@ -1,4 +1,7 @@
-import { PropertyTypeID } from '../property_types'
+import type { PropertyType } from '../property_types'
+import type { Point } from '@turf/turf'
+
+export type PropertyStatus = 'active' | 'pending' | 'sold'
 
 export interface ListingAddress {
   line1: string
@@ -48,36 +51,20 @@ export interface Listing {
   address: ListingAddress
   beds: number
   baths: number
-  bathroom_details: ListingBathroomDetails
   sqft: number | null
-  status: string
+  status: PropertyStatus
   listPrice: number
-  sold_price: number | null
-  image: ListingImage[]
-  property_type_id: PropertyTypeID
+  soldPrice: number | null
+  propertyType: PropertyType
   latitude: number
   longitude: number
 }
 
-export interface ListingDetailListing {
-  pstatus_id: number
-  status_name_for_view: string
-  images: ListingImage[]
-  address: ListingAddress
+export interface IListingDetail extends Listing {
+  listedDate: Date
   neighborhood: string
-  status: string
-  listPrice: number
-  sold_price: number
-  property_type_id: PropertyTypeID
-  property_type: string
-  beds: number
-  baths: number
-  bathroom_details: ListingBathroomDetails
-  feature_count: number
-  features: Feature[]
-  sqft: number | null
   description: string | null
-  days_on_market?: number | null
-  year_build: number
-  mlsnumber: string
+  lotSize: number
+  yearBuilt: number
+  daysOnMarket: number
 }

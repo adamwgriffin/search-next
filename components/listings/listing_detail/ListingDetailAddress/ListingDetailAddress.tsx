@@ -1,21 +1,21 @@
 import type { NextPage } from 'next'
-import type { ListingLocation } from '../../../../lib/types/listing_types'
+import type { ListingAddress } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
 import { cityStateZip } from '../../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
-  location: ListingLocation
+  address: ListingAddress
 }
 
-const ListingMainImage: NextPage<ListingMainImageProps> = ({ location }) => {
+const ListingMainImage: NextPage<ListingMainImageProps> = ({ address }) => {
   return (
     <>
       <address className='address'>
         <div className='addressLine1'>
-          {location.address}
+          {address.line1}
         </div>
         <div className='addressLine2'>
-          {cityStateZip(location)}
+          {cityStateZip(address)}
         </div>
       </address>
       <style jsx>{styles}</style>

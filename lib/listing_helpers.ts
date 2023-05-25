@@ -1,28 +1,13 @@
 import type {
   Listing,
-  ListingDetailListing,
+  IListingDetail,
   ListingAddress
 } from './types/listing_types'
-import { RentalPropertytypeID } from './property_types'
 
 export interface FormatPriceOptions {
   numberFormatOptions?: Intl.NumberFormatOptions
   displayInterval?: boolean
 }
-
-export const PropertyStatusTypeEnum = Object.freeze({
-  active: 1,
-  pending: 2,
-  coming_soon: 11,
-  temp_off_market: 8,
-  contingent: 3,
-  expired: 5,
-  sale_fail: 6,
-  canceled: 4,
-  other: 10,
-  short_sale: 7,
-  sold: 9
-})
 
 export const ListingImageSizeEnum = Object.freeze({
   raw: { width: 1600, height: 1600 },
@@ -52,13 +37,13 @@ const defaultFormatPriceOptions: FormatPriceOptions = {
 export const formatPrice = (
   {
     status,
-    sold_price,
+    soldPrice,
     listPrice,
-  }: Listing | ListingDetailListing,
+  }: Listing | IListingDetail,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
   const opts = { defaultFormatPriceOptions, ...options }
-  const price = status === 'Sold' ? sold_price : listPrice
+  const price = status === 'sold' ? soldPrice : listPrice
   const priceFormatted = Intl.NumberFormat(
     'en-US',
     opts.numberFormatOptions
@@ -71,12 +56,12 @@ export const formatPrice = (
 }
 
 export const getBathrooms = (
-  listing: Listing | ListingDetailListing
+  listing: Listing | IListingDetail
 ): number => {
   return listing.baths || 0
 }
 
-export const formatSqft = ({ sqft }: Listing | ListingDetailListing) =>
+export const formatSqft = ({ sqft }: Listing | IListingDetail) =>
   sqft?.toLocaleString()
 
 export const cityStateZip = (location: ListingAddress) => {
