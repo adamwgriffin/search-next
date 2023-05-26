@@ -1,6 +1,9 @@
 import type { AppState } from '..'
 import type { Listing } from '../../lib/types/listing_types'
-import type { PriceRangeParams, SortParams } from '../../lib/types/listing_service_params_types'
+import type {
+  PriceRangeParams,
+  SortParams
+} from '../../lib/types/listing_service_params_types'
 import type {
   FilterParams,
   ListingServiceParams,
@@ -35,7 +38,7 @@ export const SearchTypes = {
   Sold: 3
 } as const
 
-export type SearchTypeOption = typeof SearchTypes[keyof typeof SearchTypes]
+export type SearchTypeOption = (typeof SearchTypes)[keyof typeof SearchTypes]
 
 export type SelectedListing = string | null
 
@@ -107,9 +110,9 @@ export const doGeospatialSearch = createAsyncThunk(
     const url = state.listingMap.boundaryActive
       ? `/api/listing/search/boundary/${state.listingSearch.searchListingsResponse.boundary._id}`
       : `api/listing/search/bounds`
-    
+
     const response = await http({ url, params })
-    
+
     return response.data
   }
 )
@@ -132,13 +135,15 @@ export const listingSearchSlice = createSlice({
       state.searchType = action.payload
       switch (action.payload) {
         case SearchTypes.Buy:
-          state.filterParams.property_type = initialState.filterParams.property_type
+          state.filterParams.property_type =
+            initialState.filterParams.property_type
           break
         case SearchTypes.Rent:
           // TBD
           break
         case SearchTypes.Sold:
-          state.filterParams.property_type = initialState.filterParams.property_type
+          state.filterParams.property_type =
+            initialState.filterParams.property_type
       }
     },
 
@@ -333,7 +338,7 @@ export const selectPropertyTypes = (state: AppState): PropertyType[] =>
   state.listingSearch.propertyTypes
 
 export const selectStatus = (state: AppState): string | null => {
-  switch (state.listingSearch.searchType ) {
+  switch (state.listingSearch.searchType) {
     case SearchTypes.Buy:
       return state.listingSearch.includePending ? 'active,pending' : null
     case SearchTypes.Rent:
@@ -351,12 +356,14 @@ export const selectTotalListings = (state: AppState): number =>
 
 export const selectPagination = (state: AppState): Pagination => {
   const { page_index, page_size } = state.listingSearch.filterParams
-  const numberReturned = state.listingSearch.searchListingsResponse?.listings?.length || 0
-  const numberAvailable = state.listingSearch.searchListingsResponse?.pagination?.numberAvailable || 0
+  const numberReturned =
+    state.listingSearch.searchListingsResponse?.listings?.length || 0
+  const numberAvailable =
+    state.listingSearch.searchListingsResponse?.pagination?.numberAvailable || 0
   const numberOfPages = Math.ceil(numberAvailable / page_size)
   return {
-    start: (page_index * page_size) + 1,
-    end: (page_index * page_size) + numberReturned,
+    start: page_index * page_size + 1,
+    end: page_index * page_size + numberReturned,
     total: numberAvailable,
     pages: range(0, numberOfPages),
     currentPage: page_index
