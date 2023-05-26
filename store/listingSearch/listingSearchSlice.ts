@@ -277,7 +277,7 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'new_construction',
     'pool',
     'air_conditioning',
-    'sold_days'
+    'sold_in_last'
   ])
 }
 
@@ -312,7 +312,7 @@ export const selectFeatureParams = (state: AppState): FeaturesParams => {
 }
 
 export const selectSoldDaysParam = (state: AppState): SoldDaysParam =>
-  pick(state.listingSearch.filterParams, ['sold_days'])
+  pick(state.listingSearch.filterParams, ['sold_in_last'])
 
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>
   state.listingSearch.doListingSearchOnMapIdle

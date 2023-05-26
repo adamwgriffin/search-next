@@ -39,7 +39,7 @@ export interface FilterParams {
   year_built_min: number | null
   year_built_max: number | null
   openhouse: OpenHouseScheduleID
-  sold_days: number | null
+  sold_in_last: number | null
   property_type: string | null
   status: string | null
   waterfront: boolean | null
@@ -89,7 +89,7 @@ export type YearBuiltRangeParams = Pick<FilterParams, 'year_built_min' | 'year_b
 
 export type OpenHouseParam = Pick<FilterParams, 'openhouse'>
 
-export type SoldDaysParam = Pick<FilterParams, 'sold_days'>
+export type SoldDaysParam = Pick<FilterParams, 'sold_in_last'>
 
 export type FeaturesParams = Pick<
   FilterParams,
@@ -119,7 +119,7 @@ export type MoreFiltersParams = Pick<
   | 'new_construction'
   | 'pool'
   | 'air_conditioning'
-  | 'sold_days'
+  | 'sold_in_last'
 >
 
 export type MoreFiltersParamsPartial = Partial<MoreFiltersParams>

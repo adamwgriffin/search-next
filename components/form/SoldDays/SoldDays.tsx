@@ -15,8 +15,8 @@ const SoldDays: NextPage<SoldDaysProps> = ({ soldDays, onChange }) => {
       <Legend>Sold In Last</Legend>
       <select
         className={formStyles.select}
-        value={soldDays.sold_days || undefined}
-        onChange={(e) => onChange?.({ sold_days: +e.target.value })}
+        value={soldDays.sold_in_last || undefined}
+        onChange={(e) => onChange?.({ sold_in_last: +e.target.value })}
       >
         <option value='7'>Week</option>
         <option value='30'>Month</option>

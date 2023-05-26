@@ -43,7 +43,7 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   virtual_tour: null,
   pool: null,
   air_conditioning: null,
-  sold_days: 730,
+  sold_in_last: 730,
   property_type: null
 })
 
@@ -63,9 +63,9 @@ export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {
 // can do so by setting their values to null. if nothing needs to be changed then the function should not return a
 // value.
 export const modifyParam = {
-  sold_days(state: AppState, params: ListingServiceParams) {
+  sold_in_last(state: AppState, params: ListingServiceParams) {
     if (state.listingSearch.searchType !== SearchTypes.Sold) {
-      return { sold_days: null }
+      return { sold_in_last: null }
     }
   }
 }
