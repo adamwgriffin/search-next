@@ -6,6 +6,18 @@ import type {
 } from './types/listing_service_params_types'
 import { SearchTypes } from '../store/listingSearch/listingSearchSlice'
 
+// keep track of a subset of listing param defaults so that we can avoid sending them in the request if the service
+// would behave this way be default anyway
+export const DefaultListingServiceParams: Partial<ListingServiceParams> = Object.freeze({
+  page_index: 0,
+  page_size: 20,
+  price_min: 0,
+  beds_min: 0,
+  baths_min: 0,
+  sort_by: 'listedDate',
+  sort_direction: 'desc'
+})
+
 export const DefaultFilterParams: FilterParams = Object.freeze({
   page_index: 0,
   page_size: 20,

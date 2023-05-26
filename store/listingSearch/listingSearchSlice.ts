@@ -19,7 +19,10 @@ import type {
   FeaturesParams,
   SoldDaysParam
 } from '../../lib/types/listing_service_params_types'
-import type { ModifyParams } from '../../lib/listing_service_params'
+import {
+  DefaultListingServiceParams,
+  ModifyParams
+} from '../../lib/listing_service_params'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { PropertyType } from '../../lib/property_types'
@@ -383,8 +386,14 @@ export const modifyParams = (
   }, originalParams)
 }
 
-export const removeUnecessaryParams = (params: ListingServiceParams) =>
-  omitBy(params, (value, _param) => value === null)
+export const removeUnecessaryParams = (
+  params: ListingServiceParams
+): Partial<ListingServiceParams> =>
+  omitBy(
+    params,
+    (value, param) =>
+      value === null || DefaultListingServiceParams[param] === value
+  )
 
 export const selectListingServiceFilters = (state: AppState) => {
   return removeUnecessaryParams({

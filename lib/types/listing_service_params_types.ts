@@ -65,6 +65,8 @@ export interface ListingServiceParams extends FilterParamsPartial {
   bounds_west?: number
   geotype?: ListingServiceGeotype
   address?: string
+  // Index signature, allows us to index like so: params['key']
+  [key: string]: number | string | boolean | SortType | SortDirection | null | undefined
 }
 
 export type CenterLatLonParams = Pick<
