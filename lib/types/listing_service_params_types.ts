@@ -2,16 +2,6 @@ export type SortType = 'listedDate' | 'listPrice' | 'beds' | 'baths' | 'sqft'
 
 export type SortDirection = 'asc' | 'desc'
 
-export type ListingServiceGeotype =
-  | 'AdminDivision1'
-  | 'AdminDivision2'
-  | 'AdminDivision3'
-  | 'Postcode1'
-  | 'Neighborhood'
-  | 'PopulatedPlace'
-  | 'Address'
-  | 'NaturalFeature'
-
 export type OpenHouseScheduleID = 2 | 3 | 4 | 5 | 6 | 7 | null
 
 export interface OpenHouseScheduleIDEnumInterface {
@@ -63,7 +53,6 @@ export interface ListingServiceParams extends FilterParamsPartial {
   bounds_east?: number
   bounds_south?: number
   bounds_west?: number
-  geotype?: ListingServiceGeotype
   address?: string
   // Index signature, allows us to index like so: params['key']
   [key: string]: number | string | boolean | SortType | SortDirection | null | undefined

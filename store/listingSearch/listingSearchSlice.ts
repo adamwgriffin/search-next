@@ -32,7 +32,6 @@ import range from 'lodash/range'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { DefaultFilterParams } from '../../lib/listing_service_params'
 import { modifyParam } from '../../lib/listing_service_params'
-import { selectGeoType } from '../places/placesSlice'
 import http from '../../lib/http'
 
 export const SearchTypes = {
@@ -412,7 +411,6 @@ export const selectParamsForGeospatialSearch = (
     ...selectListingServiceFilters(state),
     ...selectCenterLatLonParams(state),
     ...selectBoundsParams(state),
-    geotype: selectGeoType(state)
   }
   return modifyParams(state, originalParams)
 }
