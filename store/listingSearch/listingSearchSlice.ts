@@ -319,13 +319,6 @@ export const selectDoListingSearchOnMapIdle = (state: AppState) =>
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
 
-export const selectCenterLatLonParams = (
-  state: AppState
-): CenterLatLonParams => {
-  const { lat, lng } = state.places.geocoderResult.location
-  return { lat, lng }
-}
-
 export const selectBoundsParams = (state: AppState): BoundsParams => {
   const { north, east, south, west } = state.listingMap.mapData.bounds
   return {
@@ -409,8 +402,7 @@ export const selectParamsForGeospatialSearch = (
 ): ListingServiceParams => {
   const originalParams = {
     ...selectListingServiceFilters(state),
-    ...selectCenterLatLonParams(state),
-    ...selectBoundsParams(state),
+    ...selectBoundsParams(state)
   }
   return modifyParams(state, originalParams)
 }
