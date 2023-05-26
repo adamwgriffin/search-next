@@ -73,14 +73,14 @@ const initialState: ListingSearchState = {
   filterParams: DefaultFilterParams
 }
 
-// performs a geospatial search using just the "street" param. we use the text that was entered in the search field for
-// the this param. with this method the service takes care of getting all the geospatial data we need to find the
-// listings. first, it geocodes the place text that was passed in the street param using google's geocoder service. then
-// it uses the geocoder response to get the appropriate geotype. next, it gets the boundary layer from our database
-// using the lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which
-// have coordinates that are inside that boundary layer. the resulting response from the service includes the listings
-// and the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
-// requests for the current location using the center_lat, lng & geotype that were provided by the geocoder.
+// performs a geospatial search using just the "address" param. we use the text that was entered in the search field for
+// this param. with this method the service takes care of getting all the geospatial data we need to find the listings.
+// first, it geocodes the place text that was passed in the address param using google's geocoder service. then it uses
+// the geocoder response to get the appropriate geotype. next, it gets the boundary layer from our database using the
+// lat/lng, and geotype from the geocoder response. finally, it searches for listings in our databse which have
+// coordinates that are inside that boundary layer. the resulting response from the service includes the listings and
+// the boundary so we can draw them on the map, but it also includes the geocoder response so we can make further
+// requests for the current location using the lat, lng & geotype that were provided by the geocoder.
 export const doGeospatialGeocodeSearch = createAsyncThunk(
   'listingSearch/doGeospatialGeocodeSearch',
   async (_arg, { getState }) => {
