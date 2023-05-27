@@ -58,6 +58,7 @@ export interface Listing {
   propertyType: PropertyType
   latitude: number
   longitude: number
+  rental?: boolean
 }
 
 export interface IListingDetail extends Listing {

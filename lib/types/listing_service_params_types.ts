@@ -54,6 +54,7 @@ export interface ListingServiceParams extends FilterParamsPartial {
   bounds_south?: number
   bounds_west?: number
   address?: string
+  rental?: boolean
   // Index signature, allows us to index like so: params['key']
   [key: string]: number | string | boolean | SortType | SortDirection | null | undefined
 }

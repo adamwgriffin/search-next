@@ -8,7 +8,6 @@ import type {
   FilterParams,
   ListingServiceParams,
   FilterParamsPartial,
-  CenterLatLonParams,
   BoundsParams,
   BedsBathsParam,
   MoreFiltersParams,
@@ -135,18 +134,6 @@ export const listingSearchSlice = createSlice({
   reducers: {
     setSearchType: (state, action: PayloadAction<SearchTypeOption>) => {
       state.searchType = action.payload
-      switch (action.payload) {
-        case SearchTypes.Buy:
-          state.filterParams.property_type =
-            initialState.filterParams.property_type
-          break
-        case SearchTypes.Rent:
-          // TBD
-          break
-        case SearchTypes.Sold:
-          state.filterParams.property_type =
-            initialState.filterParams.property_type
-      }
     },
 
     setLocationSearchField: (state, action: PayloadAction<string>) => {
@@ -388,11 +375,17 @@ export const removeUnecessaryParams = (
   )
 
 export const selectListingServiceFilters = (state: AppState) => {
-  return removeUnecessaryParams({
+  const params = removeUnecessaryParams({
     ...state.listingSearch.filterParams,
-    property_type: state.listingSearch.propertyTypes.join(',') || null,
-    status: selectStatus(state)
+    status: selectStatus(state),
   })
+  if (state.listingSearch.propertyTypes.length) {
+    params.property_type = state.listingSearch.propertyTypes.join(',')
+  }
+  if (state.listingSearch.searchType === SearchTypes.Rent) {
+    params.rental = true
+  }
+  return params
 }
 
 // if the boundary is active we do a normal geospatial search, which requires center lat/lng and geotype. the geotype
