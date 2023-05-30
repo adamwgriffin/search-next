@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import type { Point } from '@turf/turf'
 import type { IPhotoGalleryImage } from '../../../../lib/types/listing_types'
 import styles from './ListingDetailImage.module.css'
 import ListingMainImage from '../../ListingMainImage/ListingMainImage'

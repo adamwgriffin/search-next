@@ -1,5 +1,4 @@
 import type { PropertyType } from '../property_types'
-import type { Point } from '@turf/turf'
 
 export type PropertyStatus = 'active' | 'pending' | 'sold'
 
