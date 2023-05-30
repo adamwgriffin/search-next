@@ -1,24 +1,28 @@
 import type { NextPage } from 'next'
-import type { Feature } from '../../../../lib/types/listing_types'
+import type { PropertDetailsSection } from '../../../../lib/types/listing_types'
 import { Fragment } from 'react'
 import styles from './PropertyDetails.module.css'
 import ShowMore from '../../../design_system/ShowMore'
 
 export interface PropertyDetailsProps {
-  features: Feature[]
+  propertyDetails: PropertDetailsSection[]
 }
 
-const PropertyDetails: NextPage<PropertyDetailsProps> = ({ features }) => {
+const PropertyDetails: NextPage<PropertyDetailsProps> = ({
+  propertyDetails
+}) => {
   return (
     <ShowMore>
       <h4>Property Details</h4>
-      {features.map(({ feature_description, featureid, subfeatures }) => (
-        <Fragment key={featureid.toString()}>
-          <h5 className={styles.feature}>{feature_description}</h5>
-          <ul className={styles.subfeatures}>
-            {subfeatures.map(({ subfeature_name, subfeatureid }) => (
-              <li key={subfeatureid.toString()}>
-                <div className={styles.subfeatureName}>{subfeature_name}</div>
+      {propertyDetails.map(({ name, details }) => (
+        <Fragment key={name}>
+          <h5 className={styles.sectionName}>{name}</h5>
+          <ul className={styles.details}>
+            {details.map(({ name, details }) => (
+              <li key={name}>
+                <div className={styles.detailsName}>
+                  {name}: {details.join(', ')}
+                </div>
               </li>
             ))}
           </ul>

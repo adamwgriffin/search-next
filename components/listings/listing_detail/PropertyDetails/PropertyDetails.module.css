@@ -1,12 +1,12 @@
 @value smallAndUp from '../../../../styles/breakpoints.module.css';
 
-.feature {
+.sectionName {
   font-weight: 500;
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
-.subfeatures {
+.details {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
@@ -14,18 +14,18 @@
   padding: 0 1rem
 }
 
-.subfeatures > li {
+.details > li {
   display: grid;
   grid-template-columns: minmax(6.25rem, auto);
 }
 
-.subfeatureName {
+.detailsName {
   font-size: 0.875rem;
   color: #767676;
 }
 
 @media smallAndUp {
-  .subfeatures {
+  .details {
     grid-template-columns: repeat(4, 1fr);
   }
 }

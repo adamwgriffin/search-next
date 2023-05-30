@@ -9,7 +9,7 @@ import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
 import ListingDetailBedsBathsSQFT from '../ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
 import Description from '../Description/Description'
 import HomeHighlights from '../Highlights/HomeHighlights'
-// import PropertyDetails from '../PropertyDetails/PropertyDetails'
+import PropertyDetails from '../PropertyDetails/PropertyDetails'
 import SlideShow from '../SlideShow/SlideShow'
 
 export interface ListingDetailProps {
@@ -46,8 +46,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
         <ListingDetailBedsBathsSQFT listing={listing} />
         <Description description={listing.description} />
         <HomeHighlights listing={listing} />
-        {/* TODO: add property details once they are done in the service */}
-        {/* <PropertyDetails features={listing.features} /> */}
+        <PropertyDetails propertyDetails={listing.propertyDetails} />
         <SlideShow
           open={slideShowOpen}
           onClose={() => setSlideShowOpen(false)}

@@ -37,10 +37,21 @@ export interface SubFeature {
 }
 
 export interface Feature {
-  subfeatures: SubFeature[]
   feature_name: string
-  feature_description: string
+  feature_description?: string
   featureid: number
+  subfeatures: SubFeature[]
+}
+
+export interface PropertDetail {
+  name: string
+  details: string[]
+}
+
+export interface PropertDetailsSection {
+  name: string
+  description?: string
+  details: PropertDetail[]
 }
 
 export interface Listing {
@@ -66,4 +77,5 @@ export interface IListingDetail extends Listing {
   lotSize: number
   yearBuilt: number
   daysOnMarket: number
+  propertyDetails: PropertDetailsSection[]
 }
