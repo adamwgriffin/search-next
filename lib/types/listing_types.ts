@@ -23,16 +23,14 @@ export interface ListingBathroomDetails {
   total_bathrooms: number
 }
 
-export interface ListingImage {
-  raw_url: string
-  gallery_url: string
-  full_url: string
-  small_url: string
-  thumb_url: string
-  title: string
+export interface IPhotoGalleryImage {
+  galleryUrl: string // used for slideshow image
+  fullUrl: string // used for listing detail image
+  smallUrl: string // used for listing card image
+  caption?: string
 }
 
-export type ListingImageSizes = 'raw' | 'gallery' | 'full' | 'small' | 'thumb'
+export type PhotoGalleryImageSizes = 'gallery' | 'full' | 'small'
 
 export interface SubFeature {
   subfeature_name: string
@@ -59,6 +57,7 @@ export interface Listing {
   latitude: number
   longitude: number
   rental?: boolean
+  photoGallery: IPhotoGalleryImage[]
 }
 
 export interface IListingDetail extends Listing {

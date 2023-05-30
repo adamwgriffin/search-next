@@ -9,12 +9,11 @@ export interface FormatPriceOptions {
   displayInterval?: boolean
 }
 
-export const ListingImageSizeEnum = Object.freeze({
-  raw: { width: 1600, height: 1600 },
-  gallery: { width: 1600, height: 1600 },
-  full: { width: 720, height: 540 },
-  small: { width: 400, height: 300 },
-  thumb: { width: 120, height: 90 }
+// some default sizes used for getting images from google maps streetview when the listing has no gallery
+export const ListingStreetViewImageSizeEnum = Object.freeze({
+  gallery: { width: 1920, height: 1080 },
+  full: { width: 480, height: 540 },
+  small: { width: 533, height: 300 },
 })
 
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {

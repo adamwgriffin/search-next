@@ -1,17 +1,17 @@
 import type { NextPage } from 'next'
 import type { CSSProperties } from 'react'
 import type {
-  ListingImage,
-  ListingImageSizes
+  IPhotoGalleryImage,
+  PhotoGalleryImageSizes
 } from '../../../lib/types/listing_types'
 import { SyntheticEvent } from 'react'
-import { ListingImageSizeEnum } from '../../../lib/listing_helpers'
+import { ListingStreetViewImageSizeEnum } from '../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
-  image: ListingImage
+  image: IPhotoGalleryImage | undefined
   latitude: number
   longitude: number
-  size?: ListingImageSizes
+  size?: PhotoGalleryImageSizes
   style?: CSSProperties
   className?: string
   alt?: string
@@ -33,11 +33,11 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
   // to look at instead of a generic placeholder image.
   const getStreetViewImage = () => {
     const url = new URL('https://maps.googleapis.com/maps/api/streetview')
-    const { width, height } = ListingImageSizeEnum[size]
+    const { width, height } = ListingStreetViewImageSizeEnum[size]
     url.search = new URLSearchParams({
       location: `${latitude},${longitude}`,
       size: `${width+20}x${height}`,
-      // this causes the request to request to return an http error status code if there is no image for the location
+      // this causes the request to return an http error status code if there is no image for the location
       return_error_code: 'true',
       key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
     }).toString()
@@ -45,9 +45,9 @@ const ListingMainImage: NextPage<ListingMainImageProps> = ({
   }
 
   const getMainListingImage = () => {
-    return image.title === 'NOIMAGE'
-      ? getStreetViewImage()
-      : image[`${size}_url`]
+    return typeof image !== 'undefined'
+      ? image[`${size}Url`]
+      : getStreetViewImage()
   }
 
   // if we receive an http status code for the image response it will trigger the onError event on the image and we can

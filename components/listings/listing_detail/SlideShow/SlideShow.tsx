@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import type { ListingImage } from '../../../../lib/types/listing_types'
+import type { IPhotoGalleryImage } from '../../../../lib/types/listing_types'
 import { useState, useCallback } from 'react'
 import css from 'styled-jsx/css'
 import Overlay from '../../../design_system/Overlay/Overlay'
 
 export interface SlideShowProps {
-  images: ListingImage[]
+  images: IPhotoGalleryImage[]
   open: boolean
   onClose?: () => void
 }
@@ -55,7 +55,7 @@ const SlideShow: NextPage<SlideShowProps> = ({
               <div className='listingImageContainer'>
                 <img
                   alt={`Listing Image ${currentImage}`}
-                  src={images[currentImage].full_url}
+                  src={images[currentImage].fullUrl}
                   className='listingImage'
                 />
               </div>

@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import type { Point } from '@turf/turf'
-import type { ListingImage } from '../../../../lib/types/listing_types'
+import type { IPhotoGalleryImage } from '../../../../lib/types/listing_types'
 import styles from './ListingDetailImage.module.css'
 import ListingMainImage from '../../ListingMainImage/ListingMainImage'
 
 export interface ListingDetailImageProps {
-  images: ListingImage[]
+  images: IPhotoGalleryImage[]
   latitude: number
   longitude: number
   onClick?: () => void

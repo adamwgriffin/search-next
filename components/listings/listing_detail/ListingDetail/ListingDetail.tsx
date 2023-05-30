@@ -16,18 +16,6 @@ export interface ListingDetailProps {
   listing: IListingDetail
 }
 
-// TODO: replace this with real images once that work is done
-const PlaceholderListingImages = [
-  {
-    title: 'NOIMAGE',
-    raw_url: '',
-    gallery_url: '',
-    full_url: 'https://picsum.photos/id/693/5000/2327',
-    small_url: '',
-    thumb_url: ''
-  }
-]
-
 const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
   const [slideShowOpen, setSlideShowOpen] = useState(false)
 
@@ -47,7 +35,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
           <ListingStatusIndicator status={listing.status} />
         </div>
         <ListingDetailImage
-          images={PlaceholderListingImages}
+          images={listing.photoGallery}
           latitude={listing.latitude}
           longitude={listing.longitude}
           onClick={() => setSlideShowOpen(true)}
@@ -63,7 +51,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
         <SlideShow
           open={slideShowOpen}
           onClose={() => setSlideShowOpen(false)}
-          images={PlaceholderListingImages}
+          images={listing.photoGallery}
         />
       </div>
       <style jsx>{styles}</style>

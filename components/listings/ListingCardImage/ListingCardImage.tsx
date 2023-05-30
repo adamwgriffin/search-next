@@ -15,15 +15,7 @@ const ListingCardImage: NextPage<ListingCardImageProps> = ({ listing }) => {
         <FavoriteButton />
       </div>
       <ListingMainImage
-        // TODO: have listing service return this
-        image={{
-          raw_url: '',
-          gallery_url: '',
-          full_url: '',
-          small_url: '',
-          thumb_url: '',
-          title: 'NOIMAGE'
-        }}
+        image={listing.photoGallery[0]}
         latitude={listing.latitude}
         longitude={listing.longitude}
         size='small'
