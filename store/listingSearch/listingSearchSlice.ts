@@ -14,7 +14,6 @@ import type {
   SquareFeetRangeParams,
   LotSizeParams,
   YearBuiltRangeParams,
-  OpenHouseParam,
   FeaturesParams,
   SoldDaysParam
 } from '../../lib/types/listing_service_params_types'
@@ -55,6 +54,7 @@ export interface ListingSearchState {
   highlightedMarker: HighlightedMarker
   propertyTypes: PropertyType[]
   includePending: boolean
+  openHouse: boolean
   filterParams: FilterParams
 }
 
@@ -68,6 +68,7 @@ const initialState: ListingSearchState = {
   highlightedMarker: null,
   propertyTypes: [],
   includePending: false,
+  openHouse: false,
   filterParams: DefaultFilterParams
 }
 
@@ -134,6 +135,10 @@ export const listingSearchSlice = createSlice({
   reducers: {
     setSearchType: (state, action: PayloadAction<SearchTypeOption>) => {
       state.searchType = action.payload
+      switch (action.payload) {
+        case SearchTypes.Sold:
+          state.openHouse = false
+      }
     },
 
     setLocationSearchField: (state, action: PayloadAction<string>) => {
@@ -166,6 +171,10 @@ export const listingSearchSlice = createSlice({
 
     setIncludePending: (state, action: PayloadAction<boolean>) => {
       state.includePending = action.payload
+    },
+
+    setOpenHouse: (state, action: PayloadAction<boolean>) => {
+      state.openHouse = action.payload
     },
 
     clearFilters: (state) => {
@@ -218,6 +227,7 @@ export const {
   setFilterParams,
   setPropertyTypes,
   setIncludePending,
+  setOpenHouse,
   clearFilters
 } = listingSearchSlice.actions
 
@@ -254,7 +264,6 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
     'lot_size_min',
     'year_built_min',
     'year_built_max',
-    'openhouse',
     'waterfront',
     'view',
     'fireplace',
@@ -267,8 +276,8 @@ export const selectMoreFiltersParams = (state: AppState): MoreFiltersParams => {
   ])
 }
 
-export const selectOpenHouseParam = (state: AppState): OpenHouseParam =>
-  pick(state.listingSearch.filterParams, ['openhouse'])
+export const selectOpenHouse = (state: AppState): boolean =>
+  state.listingSearch.openHouse
 
 export const selectIncludePending = (state: AppState): boolean =>
   state.listingSearch.includePending
@@ -384,6 +393,9 @@ export const selectListingServiceFilters = (state: AppState) => {
   }
   if (state.listingSearch.searchType === SearchTypes.Rent) {
     params.rental = true
+  }
+  if (state.listingSearch.openHouse) {
+    params.open_house_after = new Date().toISOString()
   }
   return params
 }

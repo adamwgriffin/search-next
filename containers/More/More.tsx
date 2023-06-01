@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import type { ChangeEvent } from 'react'
 import type {
   PriceRangeParams,
   BedsBathsParam,
@@ -16,7 +17,7 @@ import {
 import {
   selectPriceRange,
   selectBedBathParams,
-  selectOpenHouseParam,
+  selectOpenHouse,
   selectPropertyTypes,
   selectIncludePending,
   selectSquareFeetParams,
@@ -30,6 +31,7 @@ import {
   setPropertyTypes,
   setFilterParams,
   setIncludePending,
+  setOpenHouse,
   searchWithUpdatedFilters
 } from '../../store/listingSearch/listingSearchSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
@@ -50,7 +52,7 @@ const More: NextPage = () => {
   const searchType = useAppSelector(selectSearchType)
   const priceRange = useAppSelector(selectPriceRange)
   const bedsAndBaths = useAppSelector(selectBedBathParams)
-  const openHouseParam = useAppSelector(selectOpenHouseParam)
+  const openHouse = useAppSelector(selectOpenHouse)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const includePending = useAppSelector(selectIncludePending)
   const squareFeetRange = useAppSelector(selectSquareFeetParams)
@@ -97,6 +99,11 @@ const More: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
+  const handleOpenHouseChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setOpenHouse(e.target.checked))
+    dispatch(searchWithUpdatedFilters())
+  }
+
   const handleChange = (params: MoreFiltersParamsPartial) => {
     dispatch(setFilterParams(params))
   }
@@ -127,8 +134,8 @@ const More: NextPage = () => {
       {searchType === SearchTypes.Buy && (
         <div className={styles.buyFilters}>
           <OpenHouse
-            openHouseParam={openHouseParam}
-            onChange={handleChangeAndInitiateSearch}
+            checked={openHouse}
+            onChange={handleOpenHouseChange}
           />
           <IncludePending
             includePending={includePending}

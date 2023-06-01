@@ -2,7 +2,6 @@ import type { AppState } from '../store'
 import type {
   FilterParams,
   ListingServiceParams,
-  OpenHouseScheduleIDEnumInterface
 } from './types/listing_service_params_types'
 import { SearchTypes } from '../store/listingSearch/listingSearchSlice'
 
@@ -33,7 +32,7 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   lot_size_min: null,
   year_built_min: null,
   year_built_max: null,
-  openhouse: null,
+  open_house_after: null,
   waterfront: null,
   view: null,
   fireplace: null,
@@ -46,15 +45,6 @@ export const DefaultFilterParams: FilterParams = Object.freeze({
   sold_in_last: 730,
   property_type: null
 })
-
-export const OpenHouseScheduleIDEnum: OpenHouseScheduleIDEnumInterface = {
-  upcomingWeekend: 2,
-  thisSaturday: 3,
-  thisSunday: 4,
-  todayThroughSunday: 5,
-  today: 6,
-  tomorrow: 7
-}
 
 // the values of certain search params may require us to include, exclude or change the values of other search params.
 // this object provides a mapping between param names that may cause us to make these modifications and the functions
