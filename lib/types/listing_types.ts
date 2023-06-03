@@ -54,6 +54,12 @@ export interface PropertDetailsSection {
   details: PropertDetail[]
 }
 
+export interface IOpenHouse {
+  start: string;
+  end: string;
+  comments?: string;
+}
+
 export interface Listing {
   _id: string
   address: ListingAddress
@@ -68,6 +74,7 @@ export interface Listing {
   longitude: number
   rental?: boolean
   photoGallery: IPhotoGalleryImage[]
+  openHouses: IOpenHouse[]
 }
 
 export interface IListingDetail extends Listing {

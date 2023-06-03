@@ -11,6 +11,7 @@ import Description from '../Description/Description'
 import HomeHighlights from '../Highlights/HomeHighlights'
 import PropertyDetails from '../PropertyDetails/PropertyDetails'
 import SlideShow from '../SlideShow/SlideShow'
+import OpenHouseList from '../OpenHouseList/OpenHouseList'
 
 export interface ListingDetailProps {
   listing: IListingDetail
@@ -45,6 +46,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
         <ListingDetailAddress address={listing.address} />
         <ListingDetailBedsBathsSQFT listing={listing} />
         <Description description={listing.description} />
+        {listing.openHouses.length && <OpenHouseList openHouses={listing.openHouses} />}
         <HomeHighlights listing={listing} />
         <PropertyDetails propertyDetails={listing.propertyDetails} />
         <SlideShow

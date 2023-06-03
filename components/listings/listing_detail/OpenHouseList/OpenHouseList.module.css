@@ -1,0 +1,17 @@
+.openHouseList,
+.openHouse {
+  padding: 0
+}
+
+.openHouse {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 12rem));
+}
+
+.date {
+  font-weight: 500;
+}
+
+.time {
+  text-align: right;
+}
