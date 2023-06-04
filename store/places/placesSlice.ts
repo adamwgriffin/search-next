@@ -1,7 +1,6 @@
 import type { AppState } from '..'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
-import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
 
 export interface PlacesState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
