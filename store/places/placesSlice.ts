@@ -21,7 +21,14 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
     autocompleteService ||= new google.maps.places.AutocompleteService()
     const res = await autocompleteService.getPlacePredictions({
       input: searchString,
-      types: ['geocode'],
+      // restrict autocomplete results to only the boundary types that we currently have available
+      types: [
+        'administrative_area_level_1', // state
+        'administrative_area_level_2', // county
+        'postal_code', // zip_code
+        'locality', // city
+        'neighborhood'
+      ],
       componentRestrictions: DefaultAutocompleteOptions.componentRestrictions
     })
     return res.predictions
