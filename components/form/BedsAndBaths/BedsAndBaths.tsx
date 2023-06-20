@@ -7,7 +7,7 @@ import {
   DefaultBedBathCount,
   countOptions,
   RadioButtonGroups
-} from '../../../lib/beds_and_baths'
+} from './beds_and_baths_helpers'
 
 export interface BedsAndBathsProps {
   countArr?: number[]
