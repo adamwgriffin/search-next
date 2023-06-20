@@ -10,7 +10,7 @@ import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
   selectAutcompletePlacePredictions
-} from '../../store/places/placesSlice'
+} from '../../store/autocomplete/autocompleteSlice'
 import styles from './Header.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'

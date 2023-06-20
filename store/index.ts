@@ -6,7 +6,7 @@ import applicationReducer from './application/applicationSlice'
 import listingSearchReducer from './listingSearch/listingSearchSlice'
 import listingDetailReducer from './listingDetail/listingDetailSlice'
 import listingMapReducer from './listingMap/listingMapSlice'
-import placesReducer from './places/placesSlice'
+import autocompleteReducer from './autocomplete/autocompleteSlice'
 import errorReducer from './error/errorSlice'
 
 export function makeStore() {
@@ -18,7 +18,7 @@ export function makeStore() {
       filters: filtersReducer,
       listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
-      places: placesReducer,
+      autocomplete: autocompleteReducer,
       error: errorReducer
     },
   })

@@ -2,13 +2,13 @@ import type { AppState } from '..'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
 
-export interface PlacesState {
+export interface AutocompleteState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
 }
 
 let autocompleteService: google.maps.places.AutocompleteService
 
-const initialState: PlacesState = {
+const initialState: AutocompleteState = {
   autcompletePlacePredictions: []
 }
 
@@ -34,8 +34,8 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
   }
 )
 
-export const placesSlice = createSlice({
-  name: 'places',
+export const autocompleteSlice = createSlice({
+  name: 'autocomplete',
 
   initialState,
 
@@ -59,9 +59,9 @@ export const placesSlice = createSlice({
   }
 })
 
-export const { resetAutcompletePlacePredictions } = placesSlice.actions
+export const { resetAutcompletePlacePredictions } = autocompleteSlice.actions
 
 export const selectAutcompletePlacePredictions = (state: AppState) =>
-  state.places.autcompletePlacePredictions
+  state.autocomplete.autcompletePlacePredictions
 
-export default placesSlice.reducer
+export default autocompleteSlice.reducer
