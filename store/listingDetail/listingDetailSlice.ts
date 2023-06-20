@@ -4,11 +4,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import http from '../../lib/http'
 
 export interface ListingDetailState {
-  searchListingsResponse: IListingDetail | null
+  listingServiceResponse: IListingDetail | null
 }
 
 const initialState: ListingDetailState = {
-  searchListingsResponse: null
+  listingServiceResponse: null
 }
 
 export const getListingDetail = createAsyncThunk(
@@ -29,13 +29,13 @@ export const listingDetailSlice = createSlice({
 
   reducers: {
     resetListingDetail(state) {
-      state.searchListingsResponse = initialState.searchListingsResponse
+      state.listingServiceResponse = initialState.listingServiceResponse
     }
   },
 
   extraReducers: (builder) => {
     builder.addCase(getListingDetail.fulfilled, (state, action) => {
-      state.searchListingsResponse = action.payload
+      state.listingServiceResponse = action.payload
     })
   }
 })
@@ -44,6 +44,6 @@ export const listingDetailSlice = createSlice({
 export const { resetListingDetail } = listingDetailSlice.actions
 
 export const selectListing = (state: AppState): IListingDetail | null =>
-  state.listingDetail.searchListingsResponse
+  state.listingDetail.listingServiceResponse
 
 export default listingDetailSlice.reducer

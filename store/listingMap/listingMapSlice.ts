@@ -6,7 +6,7 @@ import {
   convertGeojsonCoordinatesToPolygonPaths,
   getGeoLayerBounds
 } from '../../lib/polygon'
-import { doGeospatialGeocodeSearch } from '../listingSearch/listingSearchSlice'
+import { searchNewLocation } from '../listingSearch/listingSearchSlice'
 
 export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
@@ -55,7 +55,7 @@ export const listingMapSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(doGeospatialGeocodeSearch.fulfilled, (state, action) => {
+    builder.addCase(searchNewLocation.fulfilled, (state, action) => {
       if (action.payload.boundary) {
         state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
           action.payload.boundary.geometry.coordinates
@@ -63,7 +63,7 @@ export const listingMapSlice = createSlice({
         state.boundaryActive = true
       } else {
         console.debug(
-          'In doGeospatialGeocodeSearch.fulfilled, nothing in payload.result_geo.'
+          'In searchNewLocation.fulfilled, nothing in payload.result_geo.'
         )
       }
     })

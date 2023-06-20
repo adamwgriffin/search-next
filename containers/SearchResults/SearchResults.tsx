@@ -1,21 +1,19 @@
 import type { NextPage } from 'next'
-import type { SortParams } from '../../lib/types/listing_service_params_types'
+import type { SortFilters } from '../../store/filters/filtersSlice'
 import { useMedia } from 'react-use'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
-  selectSortBy,
   selectListings,
   selectPagination,
   selectListingSearchRunning,
-  setFilterParams,
   setHighlightedMarker,
-  doGeospatialSearch,
+  searchCurrentLocation,
   searchWithUpdatedFilters,
-  clearFilters
 } from '../../store/listingSearch/listingSearchSlice'
+import { selectSortBy, setFilters, clearFilters } from '../../store/filters/filtersSlice'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/util'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'
@@ -29,14 +27,14 @@ const SearchResults: NextPage = () => {
   const pagination = useAppSelector(selectPagination)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
 
-  const handleSortMenuChange = (sortParams: SortParams) => {
-    dispatch(setFilterParams(sortParams))
+  const handleSortMenuChange = (sortParams: SortFilters) => {
+    dispatch(setFilters(sortParams))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handlePaginationButtonClick = (pageIndex: number) => {
-    dispatch(setFilterParams({ page_index: pageIndex }))
-    dispatch(doGeospatialSearch())
+    dispatch(setFilters({ page_index: pageIndex }))
+    dispatch(searchCurrentLocation())
   }
 
   const handleListingCardClick = (url: string, listingId: string) => {

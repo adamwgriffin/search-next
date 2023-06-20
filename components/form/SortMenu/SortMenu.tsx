@@ -2,16 +2,16 @@ import type { NextPage } from 'next'
 import type {
   SortType,
   SortDirection,
-  SortParams
 } from '../../../lib/types/listing_service_params_types'
+import type { SortFilters } from '../../../store/filters/filtersSlice'
 import { useToggle } from 'react-use'
 import styles from './SortMenu.module.css'
 import Dropdown from '../../design_system/Dropdown/Dropdown'
 import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
 
 export interface SortMenuProps {
-  sortBy: SortParams
-  onChange?: (sortParams: SortParams) => void
+  sortBy: SortFilters
+  onChange?: (sortParams: SortFilters) => void
 }
 
 export interface SortTypeLabels {
@@ -53,20 +53,20 @@ const SortTypeLabels: SortTypeLabels[] = [
   }
 ]
 
-const getCurrentSortLabel = (sortParams: SortParams) => {
+const getCurrentSortLabel = (sortParams: SortFilters) => {
   return SortTypeLabels.find(
     ({ type, direction }) =>
-      type === sortParams.sort_by && direction === sortParams.sort_direction
+      type === sortParams.sortBy && direction === sortParams.sortDirection
   )?.label
 }
 
 const SortMenu: NextPage<SortMenuProps> = ({
-  sortBy = { sort_by: 'listedDate', sort_direction: 'desc' },
+  sortBy = { sortBy: 'listedDate', sortDirection: 'desc' },
   onChange
 }) => {
   const [open, toggleMenu] = useToggle(false)
 
-  const handleClick = (sortParams: SortParams) => {
+  const handleClick = (sortParams: SortFilters) => {
     toggleMenu(false)
     onChange?.(sortParams)
   }
@@ -85,13 +85,13 @@ const SortMenu: NextPage<SortMenuProps> = ({
           <li
             key={`${type}-${direction}`}
             onClick={() =>
-              handleClick({ sort_by: type, sort_direction: direction })
+              handleClick({ sortBy: type, sortDirection: direction })
             }
             className={styles.menuItem}
           >
             <div>
-              {sortBy.sort_by === type &&
-                sortBy.sort_direction == direction && <CheckIcon />}
+              {sortBy.sortBy === type &&
+                sortBy.sortDirection == direction && <CheckIcon />}
             </div>
             <div>{label}</div>
           </li>

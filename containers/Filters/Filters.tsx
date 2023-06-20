@@ -1,19 +1,19 @@
 import type { NextPage } from 'next'
 import type {
-  PriceRangeParams,
-  BedsBathsParam
-} from '../../lib/types/listing_service_params_types'
+  PriceRangeFilters,
+  BedsAndBathsFilters
+} from '../../store/filters/filtersSlice'
 import {
   useAppSelector,
   useAppDispatch,
   useRunCallbackIfChanged
 } from '../../hooks'
+import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
   selectPriceRange,
-  selectBedBathParams,
-  setFilterParams,
-  searchWithUpdatedFilters
-} from '../../store/listingSearch/listingSearchSlice'
+  selectBedBathFilters,
+  setFilters
+} from '../../store/filters/filtersSlice'
 import {
   selectViewType,
   setViewType,
@@ -37,23 +37,23 @@ const Filters: NextPage = () => {
     useRunCallbackIfChanged(priceRange, () =>
       dispatch(searchWithUpdatedFilters())
     )
-  const bedsAndBaths = useAppSelector(selectBedBathParams)
+  const bedsAndBaths = useAppSelector(selectBedBathFilters)
   const viewType = useAppSelector(selectViewType)
 
-  const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
-    dispatch(setFilterParams(param))
+  const handleBedsAndBathsChange = (param: Partial<BedsAndBathsFilters>) => {
+    dispatch(setFilters(param))
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePriceChange = (priceRange: Partial<PriceRangeParams>) => {
-    dispatch(setFilterParams(priceRange))
+  const handlePriceChange = (priceRange: Partial<PriceRangeFilters>) => {
+    dispatch(setFilters(priceRange))
   }
 
   const handleFiltersButtonClick = () => {
     dispatch(
       openModal({
         modalType: 'filters',
-        modalProps: { title: 'Filters'}
+        modalProps: { title: 'Filters' }
       })
     )
   }

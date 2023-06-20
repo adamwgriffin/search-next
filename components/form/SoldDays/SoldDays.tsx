@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
-import type { SoldDaysParam } from '../../../lib/types/listing_service_params_types'
+import type { SoldDaysFilter } from '../../../store/filters/filtersSlice'
 import formStyles from '../../../styles/forms.module.css'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
 import Legend from '../../design_system/Legend/Legend'
 
 export interface SoldDaysProps {
-  soldDays: SoldDaysParam
-  onChange?: (soldDays: SoldDaysParam) => void
+  soldDays: SoldDaysFilter
+  onChange?: (soldDays: SoldDaysFilter) => void
 }
 
 const SoldDays: NextPage<SoldDaysProps> = ({ soldDays, onChange }) => {
@@ -15,8 +15,8 @@ const SoldDays: NextPage<SoldDaysProps> = ({ soldDays, onChange }) => {
       <Legend>Sold In Last</Legend>
       <select
         className={formStyles.select}
-        value={soldDays.sold_in_last || undefined}
-        onChange={(e) => onChange?.({ sold_in_last: +e.target.value })}
+        value={soldDays.soldInLast || undefined}
+        onChange={(e) => onChange?.({ soldInLast: +e.target.value })}
       >
         <option value='7'>Week</option>
         <option value='30'>Month</option>

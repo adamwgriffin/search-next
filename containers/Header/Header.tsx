@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../context/google_maps_context'
 import { useAppSelector, useAppDispatch } from '../../hooks'
+import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import {
-  setLocationSearchField,
   selectLocationSearchField,
-  doGeospatialGeocodeSearch
-} from '../../store/listingSearch/listingSearchSlice'
+  setFilters
+} from '../../store/filters/filtersSlice'
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
@@ -33,7 +33,7 @@ const Header: NextPage = () => {
 
   const handleOnSearchInitiated = () => {
     if (googleLoaded) {
-      dispatch(doGeospatialGeocodeSearch())
+      dispatch(searchNewLocation())
     } else {
       console.warn("Google library isn't loaded yet")
     }
@@ -42,16 +42,18 @@ const Header: NextPage = () => {
   const handleOnOptionSelected = (
     autocompletePrediction: google.maps.places.AutocompletePrediction
   ) => {
-    dispatch(setLocationSearchField(autocompletePrediction.description))
+    dispatch(
+      setFilters({ locationSearchField: autocompletePrediction.description })
+    )
     if (googleLoaded && googleMap) {
-      dispatch(doGeospatialGeocodeSearch())
+      dispatch(searchNewLocation())
     } else {
       console.warn('The googleMap instance is not available')
     }
   }
 
   const handleOnInput = (details: string) =>
-    dispatch(setLocationSearchField(details))
+    dispatch(setFilters({ locationSearchField: details }))
 
   return (
     <header className={styles.header}>

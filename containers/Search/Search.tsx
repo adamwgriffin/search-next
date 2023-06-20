@@ -5,7 +5,7 @@ import { useEffectOnce } from 'react-use'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import { selectViewType } from '../../store/application/applicationSlice'
-import { doGeospatialGeocodeSearch, selectListingSearchRunning } from '../../store/listingSearch/listingSearchSlice'
+import { searchNewLocation, selectListingSearchRunning } from '../../store/listingSearch/listingSearchSlice'
 import Header from '../../containers/Header/Header'
 import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../../components/map/ListingMap/ListingMap'
@@ -21,7 +21,7 @@ const Search: NextPage = () => {
   
   // we're just doing a default search on page load for now. eventually we'll want to search based on the url params
   useEffectOnce(() => {
-    dispatch(doGeospatialGeocodeSearch())
+    dispatch(searchNewLocation())
   })
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import type { CountOption } from './types'
-import type { FeaturesParams } from './types/listing_service_params_types'
+import type { FeatureFilters } from '../store/filters/filtersSlice'
 
 export const LotSizeValues: Array<CountOption> = [
   {
@@ -49,7 +49,7 @@ export const LotSizeValues: Array<CountOption> = [
 ]
 
 type FeatureLabels = {
-  [key in keyof FeaturesParams]: string
+  [key in keyof FeatureFilters]: string
 }
 
 export const FeatureLabels: FeatureLabels = {
@@ -58,7 +58,7 @@ export const FeatureLabels: FeatureLabels = {
   fireplace: 'Fireplace',
   basement: 'Basement',
   garage: 'Garage',
-  new_construction: 'New Construction',
+  newConstruction: 'New Construction',
   pool: 'Pool',
-  air_conditioning: 'Air Conditioning'
+  airConditioning: 'Air Conditioning'
 }

@@ -1,5 +1,6 @@
 import type { ThunkAction, Action } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
+import filtersReducer from './filters/filtersSlice'
 import environmentReducer from './environment/environmentSlice'
 import applicationReducer from './application/applicationSlice'
 import listingSearchReducer from './listingSearch/listingSearchSlice'
@@ -14,6 +15,7 @@ export function makeStore() {
       environment: environmentReducer,
       application: applicationReducer,
       listingSearch: listingSearchReducer,
+      filters: filtersReducer,
       listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
       places: placesReducer,

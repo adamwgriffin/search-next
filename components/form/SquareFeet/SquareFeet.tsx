@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SquareFeetRangeParams } from '../../../lib/types/listing_service_params_types'
+import type { SquareFeetRangeFilters } from '../../../store/filters/filtersSlice'
 import styles from './SquareFeet.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
@@ -8,8 +8,8 @@ import Legend from '../../design_system/Legend/Legend'
 import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
 export interface SquareFeetProps {
-  squareFeetRange: SquareFeetRangeParams
-  onChange?: (squareFeetRange: Partial<SquareFeetRangeParams>) => void
+  squareFeetRange: SquareFeetRangeFilters
+  onChange?: (squareFeetRange: Partial<SquareFeetRangeFilters>) => void
   onFocus?: () => void
   onBlur?: () => void
 }
@@ -29,8 +29,8 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onFo
           thousandSeparator=','
           allowNegative={false}
           decimalScale={0}
-          value={squareFeetRange.sqft_min}
-          onValueChange={(v) => onChange?.({ sqft_min: v.floatValue })}
+          value={squareFeetRange.sqftMin}
+          onValueChange={(v) => onChange?.({ sqftMin: v.floatValue })}
           placeholder='Min'
           className={formStyles.input}
           id='sqft_min'
@@ -50,8 +50,8 @@ const SquareFeet: NextPage<SquareFeetProps> = ({ squareFeetRange, onChange, onFo
           thousandSeparator=','
           allowNegative={false}
           decimalScale={0}
-          value={squareFeetRange.sqft_max}
-          onValueChange={(v) => onChange?.({ sqft_max: v.floatValue })}
+          value={squareFeetRange.sqftMax}
+          onValueChange={(v) => onChange?.({ sqftMax: v.floatValue })}
           placeholder='Max'
           className={formStyles.input}
           id='sqft_max'

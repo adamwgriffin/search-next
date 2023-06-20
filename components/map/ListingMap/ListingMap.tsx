@@ -21,14 +21,14 @@ import {
 import {
   setDoListingSearchOnMapIdle,
   setSelectedListing,
-  doGeospatialSearch,
+  searchCurrentLocation,
   searchWithUpdatedFilters,
-  resetStartIndex,
   selectDoListingSearchOnMapIdle,
   selectListings,
   selectListingSearchRunning,
   selectHighlightedMarker
 } from '../../../store/listingSearch/listingSearchSlice'
+import { resetStartIndex } from '../../../store/filters/filtersSlice'
 import { openModal } from '../../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../../lib/util'
 
@@ -95,7 +95,7 @@ const ListingMap: NextPage = () => {
     dispatch(setMapData(currentMapState))
     if (doListingSearchOnMapIdle) {
       dispatch(setDoListingSearchOnMapIdle(false))
-      dispatch(doGeospatialSearch())
+      dispatch(searchCurrentLocation())
     }
   }
 

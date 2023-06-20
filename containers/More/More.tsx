@@ -1,39 +1,36 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
 import type {
-  PriceRangeParams,
-  BedsBathsParam,
-  MoreFiltersParamsPartial,
-  SquareFeetRangeParams,
-  YearBuiltRangeParams
-} from '../../lib/types/listing_service_params_types'
-import type { SearchTypeOption } from '../../store/listingSearch/listingSearchSlice'
+  BedsAndBathsFilters,
+  PriceRangeFilters,
+  SquareFeetRangeFilters,
+  YearBuiltRangeFilters,
+  MoreFilters
+} from '../../store/filters/filtersSlice'
+import type { SearchTypeOption } from '../../store/filters/filtersSlice' 
+import type { AppState } from '../../store'
 import styles from './More.module.css'
 import {
   useAppSelector,
   useAppDispatch,
   useRunCallbackIfChanged
 } from '../../hooks'
+import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
+  SearchTypes,
+  selectSearchType,
   selectPriceRange,
-  selectBedBathParams,
+  selectBedBathFilters,
   selectOpenHouse,
   selectPropertyTypes,
   selectIncludePending,
-  selectSquareFeetParams,
-  selectLotSizeParams,
-  selectYearBuiltParams,
-  selectFeatureParams,
-  selectSearchType,
+  selectSquareFeetRange,
+  selectYearBuiltRange,
+  selectFeatures,
   selectSoldDaysParam,
-  SearchTypes,
-  setSearchType,
-  setPropertyTypes,
-  setFilterParams,
-  setIncludePending,
-  setOpenHouse,
-  searchWithUpdatedFilters
-} from '../../store/listingSearch/listingSearchSlice'
+  setFilters,
+  setSearchType
+} from '../../store/filters/filtersSlice'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import Price from '../../components/form/Price/Price'
@@ -51,25 +48,25 @@ const More: NextPage = () => {
   const dispatch = useAppDispatch()
   const searchType = useAppSelector(selectSearchType)
   const priceRange = useAppSelector(selectPriceRange)
-  const bedsAndBaths = useAppSelector(selectBedBathParams)
+  const bedsAndBaths = useAppSelector(selectBedBathFilters)
   const openHouse = useAppSelector(selectOpenHouse)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const includePending = useAppSelector(selectIncludePending)
-  const squareFeetRange = useAppSelector(selectSquareFeetParams)
-  const lotSizeParams = useAppSelector(selectLotSizeParams)
-  const yearBuiltRange = useAppSelector(selectYearBuiltParams)
-  const featureParams = useAppSelector(selectFeatureParams)
+  const squareFeetRange = useAppSelector(selectSquareFeetRange)
+  const lotSizeMin = useAppSelector((state: AppState) => state.filters.lotSizeMin)
+  const yearBuiltRange = useAppSelector(selectYearBuiltRange)
+  const features = useAppSelector(selectFeatures)
   const soldDays = useAppSelector(selectSoldDaysParam)
   const [setPreviousPriceRange, runSearchIfPriceRangeChanged] =
     useRunCallbackIfChanged(priceRange, () =>
       dispatch(searchWithUpdatedFilters())
     )
   const [setPreviousYearBuilt, runSearchIfYearBuiltChanged] =
-    useRunCallbackIfChanged<YearBuiltRangeParams>(yearBuiltRange, () =>
+    useRunCallbackIfChanged<YearBuiltRangeFilters>(yearBuiltRange, () =>
       dispatch(searchWithUpdatedFilters())
     )
   const [setPreviousSquareFeetRange, runSearchIfSquareFeetChanged] =
-    useRunCallbackIfChanged<SquareFeetRangeParams>(squareFeetRange, () =>
+    useRunCallbackIfChanged<SquareFeetRangeFilters>(squareFeetRange, () =>
       dispatch(searchWithUpdatedFilters())
     )
 
@@ -78,38 +75,38 @@ const More: NextPage = () => {
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handlePriceChange = (priceRange: Partial<PriceRangeParams>) => {
-    dispatch(setFilterParams(priceRange))
+  const handlePriceChange = (priceRange: Partial<PriceRangeFilters>) => {
+    dispatch(setFilters(priceRange))
   }
 
-  const handleBedsAndBathsChange = (param: Partial<BedsBathsParam>) => {
-    dispatch(setFilterParams(param))
+  const handleBedsAndBathsChange = (param: Partial<BedsAndBathsFilters>) => {
+    dispatch(setFilters(param))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handlePropertyTypeChange = (
     updatedPropertyTypes: PropertyTypeIDArray
   ) => {
-    dispatch(setPropertyTypes(updatedPropertyTypes))
+    dispatch(setFilters({ propertyTypes: updatedPropertyTypes }))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handleIncludePendingChange = (includePending: boolean) => {
-    dispatch(setIncludePending(includePending))
+    dispatch(setFilters({ includePending }))
     dispatch(searchWithUpdatedFilters())
   }
 
   const handleOpenHouseChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setOpenHouse(e.target.checked))
+    dispatch(setFilters({ openHouse: e.target.checked }))
     dispatch(searchWithUpdatedFilters())
   }
 
-  const handleChange = (params: MoreFiltersParamsPartial) => {
-    dispatch(setFilterParams(params))
+  const handleChange = (params: Partial<MoreFilters>) => {
+    dispatch(setFilters(params))
   }
 
-  const handleChangeAndInitiateSearch = (params: MoreFiltersParamsPartial) => {
-    dispatch(setFilterParams(params))
+  const handleChangeAndInitiateSearch = (params: Partial<MoreFilters>) => {
+    dispatch(setFilters(params))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -133,10 +130,7 @@ const More: NextPage = () => {
       </div>
       {searchType === SearchTypes.Buy && (
         <div className={styles.buyFilters}>
-          <OpenHouse
-            checked={openHouse}
-            onChange={handleOpenHouseChange}
-          />
+          <OpenHouse checked={openHouse} onChange={handleOpenHouseChange} />
           <IncludePending
             includePending={includePending}
             onChange={handleIncludePendingChange}
@@ -163,7 +157,7 @@ const More: NextPage = () => {
         onBlur={runSearchIfSquareFeetChanged}
       />
       <LotSize
-        lotSizeMin={lotSizeParams.lot_size_min}
+        lotSizeMin={lotSizeMin}
         onChange={handleChangeAndInitiateSearch}
       />
       <YearBuilt
@@ -173,7 +167,7 @@ const More: NextPage = () => {
         onBlur={runSearchIfYearBuiltChanged}
       />
       <Features
-        featureParams={featureParams}
+        featureFilters={features}
         onChange={handleChangeAndInitiateSearch}
       />
     </div>

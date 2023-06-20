@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { YearBuiltRangeParams } from '../../../lib/types/listing_service_params_types'
+import type { YearBuiltRangeFilters } from '../../../store/filters/filtersSlice'
 import { useRef } from 'react'
 import styles from './YearBuilt.module.css'
 import formStyles from '../../../styles/forms.module.css'
@@ -8,20 +8,20 @@ import Legend from '../../design_system/Legend/Legend'
 import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
 export interface YearBuiltProps {
-  yearBuiltRange: YearBuiltRangeParams
+  yearBuiltRange: YearBuiltRangeFilters
   onFocus?: () => void
   onBlur?: () => void
-  onChange?: (yearBuiltRange: YearBuiltRangeParams) => void
+  onChange?: (yearBuiltRange: YearBuiltRangeFilters) => void
 }
 
 const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, onChange }) => {
   const yearBuiltMinRef = useRef<HTMLInputElement>(null)
   const yearBuiltMaxRef = useRef<HTMLInputElement>(null)
 
-  const getYearBuiltRange = (): YearBuiltRangeParams => {
+  const getYearBuiltRange = (): YearBuiltRangeFilters => {
     return {
-      year_built_min: Number(yearBuiltMinRef.current?.value) || null,
-      year_built_max: Number(yearBuiltMaxRef.current?.value) || null
+      yearBuiltMin: Number(yearBuiltMinRef.current?.value) || null,
+      yearBuiltMax: Number(yearBuiltMaxRef.current?.value) || null
     }
   }
 
@@ -46,7 +46,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
           className={formStyles.input}
           id="year_built_min"
           autoComplete='off'
-          value={yearBuiltRange.year_built_min || ''}
+          value={yearBuiltRange.yearBuiltMin || ''}
           onChange={handleChange}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -65,7 +65,7 @@ const YearBuilt: NextPage<YearBuiltProps> = ({ yearBuiltRange, onFocus, onBlur, 
           className={formStyles.input}
           id="year_built_max"
           autoComplete='off'
-          value={yearBuiltRange.year_built_max || ''}
+          value={yearBuiltRange.yearBuiltMax || ''}
           onChange={handleChange}
           onFocus={onFocus}
           onBlur={onBlur}

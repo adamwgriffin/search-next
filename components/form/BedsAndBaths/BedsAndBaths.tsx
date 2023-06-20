@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { BedsBathsParam } from '../../../lib/types/listing_service_params_types'
+import type { BedsAndBathsFilters } from '../../../store/filters/filtersSlice'
 import { useId } from 'react'
 import styles from './BedsAndBaths.module.css'
 import RadioButtonGroup from '../../design_system/RadioButtonGroup/RadioButtonGroup'
@@ -11,8 +11,8 @@ import {
 
 export interface BedsAndBathsProps {
   countArr?: number[]
-  bedsAndBaths: BedsBathsParam
-  onChange?: (param: Partial<BedsBathsParam>) => void
+  bedsAndBaths: BedsAndBathsFilters
+  onChange?: (param: Partial<BedsAndBathsFilters>) => void
 }
 
 const BedsAndBaths: NextPage<BedsAndBathsProps> = ({

@@ -1,15 +1,15 @@
 import type { NextPage } from 'next'
-import type { PriceRangeParams } from '../../../lib/types/listing_service_params_types'
+import type { PriceRangeFilters } from '../../../store/filters/filtersSlice'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
 import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
 export interface PriceProps {
-  priceRange: PriceRangeParams
+  priceRange: PriceRangeFilters
   onFocus?: () => void
   onBlur?: () => void
-  onChange?: (priceRange: Partial<PriceRangeParams>) => void
+  onChange?: (priceRange: Partial<PriceRangeFilters>) => void
 }
 
 // passing null to NumericFormat.value does not clear the input but "" does for some reason
@@ -32,8 +32,8 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={normalizePrice(priceRange.price_min)}
-        onValueChange={(v) => onChange?.({ price_min: v.floatValue })}
+        value={normalizePrice(priceRange.priceMin)}
+        onValueChange={(v) => onChange?.({ priceMin: v.floatValue })}
         placeholder='Min'
         className={formStyles.input}
         id='price_min'
@@ -51,8 +51,8 @@ const Price: NextPage<PriceProps> = ({
         thousandSeparator=','
         allowNegative={false}
         decimalScale={0}
-        value={normalizePrice(priceRange.price_max)}
-        onValueChange={(v) => onChange?.({ price_max: v.floatValue })}
+        value={normalizePrice(priceRange.priceMax)}
+        onValueChange={(v) => onChange?.({ priceMax: v.floatValue })}
         placeholder='Max'
         className={formStyles.input}
         id='price_max'
