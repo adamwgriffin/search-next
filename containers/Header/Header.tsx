@@ -3,9 +3,9 @@ import { useGoogleMaps } from '../../context/google_maps_context'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import {
-  selectLocationSearchField,
   setFilters
 } from '../../store/filters/filtersSlice'
+import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,

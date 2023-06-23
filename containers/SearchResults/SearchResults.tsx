@@ -15,7 +15,8 @@ import {
   selectPagination,
   selectListingSearchRunning,
 } from '../../store/listingSearch/listingSearchSelectors'
-import { selectSortBy, setFilters, clearFilters } from '../../store/filters/filtersSlice'
+import { setFilters, clearFilters } from '../../store/filters/filtersSlice'
+import { selectSortBy } from '../../store/filters/filtersSelectors'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/util'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'

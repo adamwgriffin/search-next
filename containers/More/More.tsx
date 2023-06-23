@@ -20,6 +20,10 @@ import {
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
   SearchTypes,
+  setFilters,
+  setSearchType
+} from '../../store/filters/filtersSlice'
+import {
   selectSearchType,
   selectPriceRange,
   selectBedBathFilters,
@@ -29,10 +33,8 @@ import {
   selectSquareFeetRange,
   selectYearBuiltRange,
   selectFeatures,
-  selectSoldDaysParam,
-  setFilters,
-  setSearchType
-} from '../../store/filters/filtersSlice'
+  selectSoldDaysParam
+} from '../../store/filters/filtersSelectors'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import Price from '../../components/form/Price/Price'

@@ -10,10 +10,12 @@ import {
 } from '../../hooks'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
-  selectPriceRange,
-  selectBedBathFilters,
   setFilters
 } from '../../store/filters/filtersSlice'
+import {
+  selectPriceRange,
+  selectBedBathFilters
+} from '../../store/filters/filtersSelectors'
 import {
   selectViewType,
   setViewType,
