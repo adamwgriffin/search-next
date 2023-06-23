@@ -1,6 +1,6 @@
 import type { AppState } from '..'
 import type { IListingDetail } from '../../lib/types/listing_types'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import http from '../../lib/http'
 
 export interface ListingDetailState {
@@ -13,8 +13,7 @@ const initialState: ListingDetailState = {
 
 export const getListingDetail = createAsyncThunk(
   'listingDetail/getListingDetail',
-  async (listingID: string | string[] | undefined, { getState }) => {
-    const state = getState() as AppState
+  async (listingID: string | string[] | undefined) => {
     const response = await http({
       url: `/api/listing_detail/${listingID}`
     })
