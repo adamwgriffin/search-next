@@ -1,5 +1,5 @@
 import type { AppState } from '..'
-import type { HighlightedMarker } from './listingSearchSlice'
+import type { HighlightedMarker } from './listingSearchTypes'
 import type { Listing } from '../../lib/types/listing_types'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import range from 'lodash/range'

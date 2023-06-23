@@ -7,18 +7,7 @@ import {
   selectParamsForGeocodeSearch,
   selectParamsForGeospatialSearch
 } from '../../lib/listing_service_params'
-
-export type SelectedListing = string | null
-
-export type HighlightedMarker = string | null
-
-export interface ListingSearchState {
-  doListingSearchOnMapIdle: boolean
-  listingSearchRunning: boolean
-  listingServiceResponse: any
-  selectedListing: SelectedListing
-  highlightedMarker: HighlightedMarker
-}
+import { SelectedListing, HighlightedMarker, ListingSearchState } from './listingSearchTypes'
 
 const initialState: ListingSearchState = {
   doListingSearchOnMapIdle: false,
