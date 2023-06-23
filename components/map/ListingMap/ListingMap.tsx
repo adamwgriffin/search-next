@@ -22,12 +22,14 @@ import {
   setDoListingSearchOnMapIdle,
   setSelectedListing,
   searchCurrentLocation,
-  searchWithUpdatedFilters,
+  searchWithUpdatedFilters
+} from '../../../store/listingSearch/listingSearchSlice'
+import {
   selectDoListingSearchOnMapIdle,
   selectListings,
   selectListingSearchRunning,
   selectHighlightedMarker
-} from '../../../store/listingSearch/listingSearchSlice'
+} from '../../../store/listingSearch/listingSearchSelectors'
 import { resetStartIndex } from '../../../store/filters/filtersSlice'
 import { openModal } from '../../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../../lib/util'

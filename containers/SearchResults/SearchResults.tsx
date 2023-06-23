@@ -6,13 +6,15 @@ import ListingResultsHeader from '../../components/listings/ListingResultsHeader
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
+  searchCurrentLocation,
+  searchWithUpdatedFilters,
+  setHighlightedMarker
+} from '../../store/listingSearch/listingSearchSlice'
+import {
   selectListings,
   selectPagination,
   selectListingSearchRunning,
-  setHighlightedMarker,
-  searchCurrentLocation,
-  searchWithUpdatedFilters,
-} from '../../store/listingSearch/listingSearchSlice'
+} from '../../store/listingSearch/listingSearchSelectors'
 import { selectSortBy, setFilters, clearFilters } from '../../store/filters/filtersSlice'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/util'

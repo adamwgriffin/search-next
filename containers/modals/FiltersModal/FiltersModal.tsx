@@ -4,10 +4,8 @@ import {
   selectModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
-import {
-  selectTotalListings,
-  searchWithUpdatedFilters
-} from '../../../store/listingSearch/listingSearchSlice'
+import { searchWithUpdatedFilters } from '../../../store/listingSearch/listingSearchSlice'
+import { selectTotalListings } from '../../../store/listingSearch/listingSearchSelectors'
 import { clearFilters } from '../../../store/filters/filtersSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
