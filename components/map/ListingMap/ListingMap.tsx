@@ -32,7 +32,7 @@ import {
 } from '../../../store/listingSearch/listingSearchSelectors'
 import { resetStartIndex } from '../../../store/filters/filtersSlice'
 import { openModal } from '../../../store/application/applicationSlice'
-import { addUrlToBrowserHistory } from '../../../lib/util'
+import { addUrlToBrowserHistory } from '../../../lib/url'
 
 const ListingMap: NextPage = () => {
   const dispatch = useAppDispatch()

@@ -18,7 +18,7 @@ import {
 import { setFilters, clearFilters } from '../../store/filters/filtersSlice'
 import { selectSortBy } from '../../store/filters/filtersSelectors'
 import { openModal } from '../../store/application/applicationSlice'
-import { addUrlToBrowserHistory } from '../../lib/util'
+import { addUrlToBrowserHistory } from '../../lib/url'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'
 import NoResults from '../../components/listings/NoResults/NoResults'
 
