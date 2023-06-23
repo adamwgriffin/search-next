@@ -6,9 +6,9 @@ import {
 } from '../../../store/application/applicationSlice'
 import {
   selectTotalListings,
-  clearFilters,
   searchWithUpdatedFilters
 } from '../../../store/listingSearch/listingSearchSlice'
+import { clearFilters } from '../../../store/filters/filtersSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
