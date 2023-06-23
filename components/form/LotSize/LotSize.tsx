@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { LotSizeFilter } from '../../../store/filters/filtersSlice'
+import type { LotSizeFilter } from '../../../store/filters/filtersTypes'
 import { LotSizeValues } from '../../../lib/filter'
 import formStyles from '../../../styles/forms.module.css'
 import Fieldset from '../../design_system/Fieldset/Fieldset'

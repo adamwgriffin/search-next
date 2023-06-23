@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type {
   PriceRangeFilters,
   BedsAndBathsFilters
-} from '../../store/filters/filtersSlice'
+} from '../../store/filters/filtersTypes'
 import {
   useAppSelector,
   useAppDispatch,

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SearchTypeOption } from '../../../store/filters/filtersSlice'
+import type { SearchTypeOption } from '../../../store/filters/filtersTypes'
 import { SearchTypes } from '../../../store/filters/filtersSlice'
 import { Fragment } from 'react'
 import styles from './SearchTypeSelector.module.css'

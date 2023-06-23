@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { PriceRangeFilters } from '../../../store/filters/filtersSlice'
+import type { PriceRangeFilters } from '../../../store/filters/filtersTypes'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'

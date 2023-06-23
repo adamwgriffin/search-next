@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SortFilters } from '../../../store/filters/filtersSlice'
+import type { SortFilters } from '../../../store/filters/filtersTypes'
 import styles from './ListingResultsHeader.module.css'
 import ContentLoader from 'react-content-loader'
 import SortMenu from '../../form/SortMenu/SortMenu'

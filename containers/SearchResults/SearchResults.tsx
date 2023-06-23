@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { SortFilters } from '../../store/filters/filtersSlice'
+import type { SortFilters } from '../../store/filters/filtersTypes'
 import { useMedia } from 'react-use'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { BedsAndBathsFilters } from '../../../store/filters/filtersSlice'
+import type { BedsAndBathsFilters } from '../../../store/filters/filtersTypes'
 import { useId } from 'react'
 import styles from './BedsAndBaths.module.css'
 import RadioButtonGroup from '../../design_system/RadioButtonGroup/RadioButtonGroup'

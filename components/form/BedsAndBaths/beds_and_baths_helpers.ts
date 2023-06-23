@@ -1,4 +1,4 @@
-import type { BedsAndBathsFilters } from '../../../store/filters/filtersSlice'
+import type { BedsAndBathsFilters } from '../../../store/filters/filtersTypes'
 import { CountOption } from '../../../lib/types'
 
 export const DefaultBedBathCount = [0, 1, 2, 3, 4, 5]

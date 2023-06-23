@@ -1,7 +1,7 @@
 import type { AppState } from '../store'
 import type { BoundsParams } from './types/listing_service_params_types'
 import type { ListingServiceParams } from './types/listing_service_params_types'
-import type { FiltersState } from '../store/filters/filtersSlice'
+import type { FiltersState } from '../store/filters/filtersTypes'
 import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import snakeCase from 'lodash/snakeCase'

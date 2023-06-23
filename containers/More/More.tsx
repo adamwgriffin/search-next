@@ -1,13 +1,15 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
 import type {
+  MoreFilters
+} from '../../store/filters/filtersSlice'
+import type {
   BedsAndBathsFilters,
   PriceRangeFilters,
   SquareFeetRangeFilters,
-  YearBuiltRangeFilters,
-  MoreFilters
-} from '../../store/filters/filtersSlice'
-import type { SearchTypeOption } from '../../store/filters/filtersSlice' 
+  YearBuiltRangeFilters
+} from '../../store/filters/filtersTypes'
+import type { SearchTypeOption } from '../../store/filters/filtersTypes'
 import type { AppState } from '../../store'
 import styles from './More.module.css'
 import {
