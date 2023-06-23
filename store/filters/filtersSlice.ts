@@ -2,8 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import { searchNewLocation } from '../listingSearch/listingSearchSlice'
 import { FiltersState, SearchTypeOption } from './filtersTypes'
-
-export const DefaultSoldInLast = 730 // 2 years in days
+import { DefaultSoldInLast } from '../../config'
 
 export const SearchTypes = {
   Buy: 'buy',
