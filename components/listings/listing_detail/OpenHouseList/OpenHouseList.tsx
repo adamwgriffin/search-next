@@ -1,5 +1,6 @@
 import type { IOpenHouse } from '../../../../lib/types/listing_types'
 import type { NextPage } from 'next'
+import { Locale } from '../../../../config'
 import styles from './OpenHouseList.module.css'
 
 export interface OpenHouseListProps {
@@ -8,7 +9,7 @@ export interface OpenHouseListProps {
 
 const formatDate = (isoDateString: string) => {
   const date = new Date(isoDateString)
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(Locale, {
     weekday: 'long',
     month: 'long',
     day: 'numeric'
@@ -17,7 +18,7 @@ const formatDate = (isoDateString: string) => {
 
 const formatTime = (isoDateString: string) => {
   const date = new Date(isoDateString)
-  return date.toLocaleTimeString('en-US', {
+  return date.toLocaleTimeString(Locale, {
     hour: 'numeric',
     minute: 'numeric',
     hour12: true

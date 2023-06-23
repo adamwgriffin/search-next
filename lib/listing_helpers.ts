@@ -3,6 +3,7 @@ import type {
   IListingDetail,
   ListingAddress
 } from './types/listing_types'
+import { Locale, Currency } from '../config'
 
 export interface FormatPriceOptions {
   numberFormatOptions?: Intl.NumberFormatOptions
@@ -18,13 +19,13 @@ export const ListingStreetViewImageSizeEnum = Object.freeze({
 
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
-  currency: 'USD',
+  currency: Currency,
   maximumFractionDigits: 0 // (causes 2500.99 to be printed as $2,501)
 }
 
 export const ShortCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
-  currency: 'USD',
+  currency: Currency,
   notation: 'compact'
 }
 
@@ -45,7 +46,7 @@ export const formatPrice = (
   const opts = { defaultFormatPriceOptions, ...options }
   const price = status === 'sold' ? soldPrice : listPrice
   const priceFormatted = Intl.NumberFormat(
-    'en-US',
+    Locale,
     opts.numberFormatOptions
   ).format(Number(price))
   return opts.displayInterval && rental
