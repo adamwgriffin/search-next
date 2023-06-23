@@ -36,7 +36,7 @@ const SearchResults: NextPage = () => {
   }
 
   const handlePaginationButtonClick = (pageIndex: number) => {
-    dispatch(setFilters({ page_index: pageIndex }))
+    dispatch(setFilters({ pageIndex }))
     dispatch(searchCurrentLocation())
   }
 
