@@ -12,7 +12,9 @@ import {
   SquareFeetRangeFilters,
   YearBuiltRangeFilters,
   SoldDaysFilter,
-  SortFilters
+  SortFilters,
+  MoreFilters,
+  FeatureFilters
 } from './filtersTypes'
 
 export const DefaultSoldInLast = 730 // 2 years in days
@@ -116,24 +118,6 @@ export const selectPriceRange = (state: AppState): PriceRangeFilters =>
 export const selectBedBathFilters = (state: AppState): BedsAndBathsFilters =>
   pick(state.filters, ['bedsMin', 'bathsMin'])
 
-export type MoreFilters = Pick<
-  FiltersState,
-  | 'sqftMin'
-  | 'sqftMax'
-  | 'lotSizeMin'
-  | 'yearBuiltMin'
-  | 'yearBuiltMax'
-  | 'waterfront'
-  | 'view'
-  | 'fireplace'
-  | 'basement'
-  | 'garage'
-  | 'newConstruction'
-  | 'pool'
-  | 'airConditioning'
-  | 'soldInLast'
->
-
 export const selectMoreFiltersParams = (state: AppState): MoreFilters => {
   return pick(state.filters, [
     'sqftMin',
@@ -165,18 +149,6 @@ export const selectSquareFeetRange = (
 
 export const selectYearBuiltRange = (state: AppState): YearBuiltRangeFilters =>
   pick(state.filters, ['yearBuiltMin', 'yearBuiltMax'])
-
-export type FeatureFilters = Pick<
-  FiltersState,
-  | 'waterfront'
-  | 'view'
-  | 'fireplace'
-  | 'basement'
-  | 'garage'
-  | 'newConstruction'
-  | 'pool'
-  | 'airConditioning'
->
 
 export const selectFeatures = (state: AppState): FeatureFilters => {
   return pick(state.filters, [

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { FeatureFilters } from '../../../store/filters/filtersSlice'
+import type { FeatureFilters } from '../../../store/filters/filtersTypes'
 import type { ChangeEvent } from 'react'
 import styles from './Features.module.css'
 import formStyles from '../../../styles/forms.module.css'

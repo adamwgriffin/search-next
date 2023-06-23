@@ -66,3 +66,33 @@ export type FeaturesFilters = Pick<
   'pool' |
   'airConditioning'
 >
+
+export type MoreFilters = Pick<
+  FiltersState,
+  | 'sqftMin'
+  | 'sqftMax'
+  | 'lotSizeMin'
+  | 'yearBuiltMin'
+  | 'yearBuiltMax'
+  | 'waterfront'
+  | 'view'
+  | 'fireplace'
+  | 'basement'
+  | 'garage'
+  | 'newConstruction'
+  | 'pool'
+  | 'airConditioning'
+  | 'soldInLast'
+>
+
+export type FeatureFilters = Pick<
+  FiltersState,
+  | 'waterfront'
+  | 'view'
+  | 'fireplace'
+  | 'basement'
+  | 'garage'
+  | 'newConstruction'
+  | 'pool'
+  | 'airConditioning'
+>

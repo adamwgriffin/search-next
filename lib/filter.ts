@@ -1,5 +1,5 @@
 import type { CountOption } from './types'
-import type { FeatureFilters } from '../store/filters/filtersSlice'
+import type { FeatureFilters } from '../store/filters/filtersTypes'
 
 export const LotSizeValues: Array<CountOption> = [
   {

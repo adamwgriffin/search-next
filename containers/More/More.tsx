@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
 import type {
   MoreFilters
-} from '../../store/filters/filtersSlice'
+} from '../../store/filters/filtersTypes'
 import type {
   BedsAndBathsFilters,
   PriceRangeFilters,
