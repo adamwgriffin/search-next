@@ -20,7 +20,7 @@ export interface SortTypeLabels {
   direction: SortDirection
 }
 
-const SortTypeLabels: SortTypeLabels[] = [
+export const SortTypeLabels: SortTypeLabels[] = [
   {
     label: 'Newest',
     type: 'listedDate',
