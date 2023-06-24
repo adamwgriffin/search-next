@@ -48,7 +48,6 @@ export const searchCurrentLocation = createAsyncThunk(
   'listingSearch/searchCurrentLocation',
   async (_arg, { getState }) => {
     const state = getState() as AppState
-    console.log("searchCurrentLocation, state.filters.soldInLast:", state.filters.soldInLast)
     const url = state.listingMap.boundaryActive
       ? `/api/listing/search/boundary/${state.listingSearch.listingServiceResponse.boundary._id}`
       : 'api/listing/search/bounds'

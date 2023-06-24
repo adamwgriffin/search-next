@@ -111,7 +111,6 @@ export const paramsDerivedFromFilterState = (filters: FiltersState) => {
     params.rental = true
   }
   if (filters.searchType === SearchTypes.Sold) {
-    console.log("paramsDerivedFromFilterState, filters.soldInLast:", filters.soldInLast)
     params.status = 'sold'
     params.sold_in_last = filters.soldInLast
   }
