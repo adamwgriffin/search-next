@@ -1,7 +1,6 @@
 import type { AppState } from '..'
 import type { PropertyType } from '../../lib/property_types'
-import pick from 'lodash/pick'
-import {
+import type {
   PriceRangeFilters,
   BedsAndBathsFilters,
   SquareFeetRangeFilters,
@@ -9,8 +8,14 @@ import {
   SoldDaysFilter,
   SortFilters,
   MoreFilters,
-  FeatureFilters
+  FeatureFilters,
+  FiltersState
 } from './filtersTypes'
+import pick from 'lodash/pick'
+import omitBy from 'lodash/omitBy'
+import isEqual from 'lodash/isEqual'
+import { initialState } from './filtersSlice'
+import { omit } from 'lodash'
 
 export const selectSearchType = (state: AppState) => state.filters.searchType
 
@@ -77,3 +82,23 @@ export const selectPropertyTypes = (state: AppState): PropertyType[] =>
 
 export const selectSortBy = (state: AppState): SortFilters =>
   pick(state.filters, ['sortBy', 'sortDirection'])
+
+export const selectListingSearchParams = (
+  state: AppState
+): Partial<FiltersState> => {
+  const filtersToDiff = omit(
+    state.filters,
+    'locationSearchField',
+    'pageSize',
+    'sortDirection',
+    'soldInLast'
+  )
+  const filtersStateDiff = omitBy(
+    filtersToDiff,
+    (value, param) => value === null || isEqual(initialState[param], value)
+  )
+  // we always want to include locationSearchField, regardless of whether it's the same. otherwise we will end up with
+  // an empty location in our url
+  filtersStateDiff.locationSearchField = state.filters.locationSearchField
+  return filtersStateDiff
+}

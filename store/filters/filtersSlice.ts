@@ -10,7 +10,7 @@ export const SearchTypes = {
   Sold: 'sold'
 } as const
 
-const initialState: FiltersState = {
+export const initialState: FiltersState = {
   searchType: SearchTypes.Buy,
   locationSearchField: 'Fremont, Seattle, WA, USA',
   propertyTypes: [],
