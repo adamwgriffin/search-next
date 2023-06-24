@@ -33,7 +33,6 @@ export interface FiltersState {
   basement: boolean
   garage: boolean
   newConstruction: boolean
-  virtualTour: boolean
   pool: boolean
   airConditioning: boolean
   soldInLast: number | null

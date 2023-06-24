@@ -35,7 +35,6 @@ const initialState: FiltersState = {
   basement: false,
   garage: false,
   newConstruction: false,
-  virtualTour: false,
   pool: false,
   airConditioning: false,
   soldInLast: null
