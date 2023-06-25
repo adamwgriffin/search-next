@@ -9,14 +9,12 @@ export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 
 export interface ListingMapState {
-  buffer_miles: number
   boundaryActive: boolean
   mapData: GoogleMapState
   geoLayerCoordinates: GeoLayerCoordinates
 }
 
 const initialState: ListingMapState = {
-  buffer_miles: 0,
   boundaryActive: true,
   mapData: {
     bounds: {
