@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { GeoLayerCoordinates } from '../../../store//listingMap/listingMapSlice'
+import type { GeoLayerCoordinates } from '../../../store/listingMap/listingMapTypes'
 import { useState, useEffect } from 'react'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 

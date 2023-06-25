@@ -1,7 +1,7 @@
 import type {
   GeoLayerCoordinates,
   GeoJSONCoordinates
-} from '../store/listingMap/listingMapSlice'
+} from '../store/listingMap/listingMapTypes'
 
 /*
 we need to transform the geojson we get from the service into a shape that works for the Polygon class we need to use

@@ -4,15 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   convertGeojsonCoordinatesToPolygonPaths} from '../../lib/polygon'
 import { searchNewLocation } from '../listingSearch/listingSearchSlice'
-
-export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
-export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
-
-export interface ListingMapState {
-  boundaryActive: boolean
-  mapData: GoogleMapState
-  geoLayerCoordinates: GeoLayerCoordinates
-}
+import { ListingMapState } from './listingMapTypes'
 
 const initialState: ListingMapState = {
   boundaryActive: true,
