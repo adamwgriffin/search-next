@@ -1,6 +1,6 @@
 import type {
   GeoLayerCoordinates,
-  GeoJSONCoordinates
+  MultiPolygon
 } from '../store/listingMap/listingMapTypes'
 
 /*
@@ -34,8 +34,9 @@ but instead we need:
   ]
 ]
 */
+// TODO: this should be recursive instead
 export const convertGeojsonCoordinatesToPolygonPaths = (
-  geoJsonCoordinates: GeoJSONCoordinates
+  geoJsonCoordinates: MultiPolygon
 ): GeoLayerCoordinates => {
   return geoJsonCoordinates.map((arr) => {
     return arr[0].map((arr) => {

@@ -1,6 +1,6 @@
 import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+export type MultiPolygon = Array<Array<Array<Array<number>>>>
 
-export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 
 export interface ListingMapState {
