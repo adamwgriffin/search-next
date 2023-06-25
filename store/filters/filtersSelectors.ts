@@ -83,10 +83,10 @@ export const selectPropertyTypes = (state: AppState): PropertyType[] =>
 export const selectSortBy = (state: AppState): SortFilters =>
   pick(state.filters, ['sortBy', 'sortDirection'])
 
-export const selectListingSearchParams = (
+export const selectFiltersForListingSearchParams = (
   state: AppState
 ): Partial<FiltersState> => {
-  const filtersToDiff = omit(
+  const includedFilters = omit(
     state.filters,
     'locationSearchField',
     'pageSize',
@@ -94,11 +94,17 @@ export const selectListingSearchParams = (
     'soldInLast'
   )
   const filtersStateDiff = omitBy(
-    filtersToDiff,
+    includedFilters,
     (value, param) => value === null || isEqual(initialState[param], value)
   )
   // we always want to include locationSearchField, regardless of whether it's the same. otherwise we will end up with
   // an empty location in our url
   filtersStateDiff.locationSearchField = state.filters.locationSearchField
   return filtersStateDiff
+}
+
+export const selectListingSearchParams = (
+  state: AppState
+): Partial<FiltersState> => {
+  return selectFiltersForListingSearchParams(state)
 }

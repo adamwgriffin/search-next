@@ -5,7 +5,6 @@ import type {
 import type { PropertyType } from '../../lib/property_types'
 import { SearchTypes } from './filtersSlice'
 
-
 export type SearchTypeOption = (typeof SearchTypes)[keyof typeof SearchTypes]
 
 export interface FiltersState {
@@ -48,7 +47,8 @@ export type SquareFeetRangeFilters = Pick<FiltersState, 'sqftMin' | 'sqftMax'>
 export type LotSizeFilter = Pick<FiltersState, 'lotSizeMin'>
 
 export type YearBuiltRangeFilters = Pick<
-  FiltersState, 'yearBuiltMin' | 'yearBuiltMax'
+  FiltersState,
+  'yearBuiltMin' | 'yearBuiltMax'
 >
 
 export type SortFilters = Pick<FiltersState, 'sortBy' | 'sortDirection'>
@@ -56,14 +56,15 @@ export type SortFilters = Pick<FiltersState, 'sortBy' | 'sortDirection'>
 export type SoldDaysFilter = Pick<FiltersState, 'soldInLast'>
 
 export type FeaturesFilters = Pick<
-  FiltersState, 'waterfront' |
-  'view' |
-  'fireplace' |
-  'basement' |
-  'garage' |
-  'newConstruction' |
-  'pool' |
-  'airConditioning'
+  FiltersState,
+  | 'waterfront'
+  | 'view'
+  | 'fireplace'
+  | 'basement'
+  | 'garage'
+  | 'newConstruction'
+  | 'pool'
+  | 'airConditioning'
 >
 
 export type MoreFilters = Pick<

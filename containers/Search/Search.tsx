@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
 import type { FiltersState } from '../../store/filters/filtersTypes'
+import type { ListingSearchParams } from '../../lib/url'
 import { useRef, useEffect } from 'react'
 import { useEffectOnce } from 'react-use'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
-import { updateSearchUrl } from '../../lib/url'
+import { convertFiltersStateToSearchUrl } from '../../lib/url'
 import { setFilters } from '../../store/filters/filtersSlice'
 import { selectListingSearchParams } from '../../store/filters/filtersSelectors'
 import { selectViewType } from '../../store/application/applicationSlice'
@@ -18,9 +19,10 @@ import ListingMap from '../../components/map/ListingMap/ListingMap'
 
 export interface SearchProps {
   filtersState?: Partial<FiltersState>
+  onUpdateUrl?: (queryParams: Partial<ListingSearchParams>) => void
 }
 
-const Search: NextPage<SearchProps> = ({ filtersState }) => {
+const Search: NextPage<SearchProps> = ({ filtersState, onUpdateUrl }) => {
   const dispatch = useAppDispatch()
   const viewType = useAppSelector(selectViewType)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
@@ -41,9 +43,10 @@ const Search: NextPage<SearchProps> = ({ filtersState }) => {
       searchResultsRef.current.scrollTop = 0;
     }
     if (listingSearchRunning) {
-      updateSearchUrl(listingSearchParams)
+      const queryParams = convertFiltersStateToSearchUrl(listingSearchParams)
+      onUpdateUrl?.(queryParams)
     }
-  }, [listingSearchRunning, listingSearchParams])
+  }, [listingSearchRunning, listingSearchParams, onUpdateUrl])
 
   return (
     <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
