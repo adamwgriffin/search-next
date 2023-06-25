@@ -23,7 +23,7 @@ export const selectGeoLayerCoordinates = (state: AppState) => state.listingMap.g
 // re-run after every dispatched action, regardless of what section of the Redux root state was actually updated. where
 // as this memoized selector will only run if it's input selector "selectGeoLayerCoordinates" returns a value that has
 // changed.
-// 
+//
 // this is very important here, not just because getGeoLayerBounds() is potentially an expensive operation, but
 // also because returning the same value on every action updates the bounds prop for GoogleMap, which causes GoogleMap
 // to call fitBounds() on the same bounds, triggering an onIdle event, which in turn triggers selectGeoLayerBounds

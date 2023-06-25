@@ -12,10 +12,10 @@ import type {
   FiltersState
 } from './filtersTypes'
 import pick from 'lodash/pick'
+import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import isEqual from 'lodash/isEqual'
 import { initialState } from './filtersSlice'
-import { omit } from 'lodash'
 
 export const selectSearchType = (state: AppState) => state.filters.searchType
 

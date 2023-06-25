@@ -46,5 +46,5 @@ export type ListingServiceParams = Partial<ListingServiceRequestParams>
 
 export type BoundsParams = Pick<
 ListingServiceRequestParams,
-  'bounds_north' | 'bounds_east' | 'bounds_west' | 'bounds_south'
+  'bounds_north' | 'bounds_east' | 'bounds_south'  | 'bounds_west'
 >
