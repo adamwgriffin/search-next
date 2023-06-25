@@ -1,11 +1,11 @@
 import type { AppState } from '../store'
-import type { BoundsParams } from './types/listing_service_params_types'
 import type { ListingServiceParams } from './types/listing_service_params_types'
 import type { FiltersState } from '../store/filters/filtersTypes'
 import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import snakeCase from 'lodash/snakeCase'
 import { SearchTypes } from '../store/filters/filtersSlice'
+import { selectBoundsParams } from '../store/listingMap/listingMapSelectors'
 
 // FilterState attributes that have the same key/value as their listing service param counterpart (only with camel case
 // keys)
@@ -41,16 +41,6 @@ export const BooleanParams = [
   'pool',
   'air_conditioning'
 ]
-
-export const selectBoundsParams = (state: AppState): BoundsParams => {
-  const { north, east, south, west } = state.listingMap.mapData.bounds
-  return {
-    bounds_north: north,
-    bounds_east: east,
-    bounds_south: south,
-    bounds_west: west
-  }
-}
 
 export const selectListingServiceParamFilters = (
   state: AppState

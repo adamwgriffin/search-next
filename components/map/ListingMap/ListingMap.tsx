@@ -12,12 +12,13 @@ import ZoomControl from '../ZoomControl/ZoomControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
   setBoundaryActive,
-  setMapData,
+  setMapData} from '../../../store/listingMap/listingMapSlice'
+import {
   selectBoundaryActive,
   selectGeoLayerBounds,
   selectZoom,
   selectGeoLayerCoordinates
-} from '../../../store/listingMap/listingMapSlice'
+} from '../../../store/listingMap/listingMapSelectors'
 import {
   setDoListingSearchOnMapIdle,
   setSelectedListing,

@@ -1,11 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { AppState } from '..'
 import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
-import { createSlice, createSelector } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
-  convertGeojsonCoordinatesToPolygonPaths,
-  getGeoLayerBounds
-} from '../../lib/polygon'
+  convertGeojsonCoordinatesToPolygonPaths} from '../../lib/polygon'
 import { searchNewLocation } from '../listingSearch/listingSearchSlice'
 
 export type GeoJSONCoordinates = Array<Array<Array<Array<number>>>>
@@ -71,31 +68,5 @@ export const listingMapSlice = createSlice({
 })
 
 export const { setMapData, setBoundaryActive } = listingMapSlice.actions
-
-export const selectBoundaryActive = (state: AppState) =>
-  state.listingMap.boundaryActive
-
-export const selectZoom = (state: AppState) => state.listingMap.mapData.zoom
-
-export const selectGeoLayerCoordinates = (state: AppState) =>
-  state.listingMap.geoLayerCoordinates
-
-// this is a memoized selector functions created with the createSelector utility from Reselect. normal selectors will be
-// re-run after every dispatched action, regardless of what section of the Redux root state was actually updated. where
-// as this memoized selector will only run if it's input selector "selectGeoLayerCoordinates" returns a value that has
-// changed.
-
-// this is very important here, not just because getGeoLayerBounds() is potentially an expensive operation, but
-// also because returning the same value on every action updates the bounds prop for GoogleMap, which causes GoogleMap
-// to call fitBounds() on the same bounds, triggering an onIdle event, which in turn triggers selectGeoLayerBounds
-// again, putting us in an endless loop.
-export const selectGeoLayerBounds = createSelector(
-  [selectGeoLayerCoordinates],
-  (geoLayerCoordinates) => {
-    return geoLayerCoordinates.length
-      ? getGeoLayerBounds(geoLayerCoordinates)
-      : null
-  }
-)
 
 export default listingMapSlice.reducer
