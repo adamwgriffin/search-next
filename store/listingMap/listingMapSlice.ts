@@ -6,21 +6,13 @@ import {
 import { searchNewLocation } from '../listingSearch/listingSearchSlice'
 import { ListingMapState } from './listingMapTypes'
 
-const initialState: ListingMapState = {
+export const initialState: ListingMapState = {
   boundaryActive: true,
-  mapData: {
-    bounds: {
-      north: 47.745274294284506,
-      east: -122.38844700157635,
-      south: 47.610393280504454,
-      west: -122.47058697044842
-    },
-    center: {
-      lat: 47.6792172,
-      lng: -122.3860312
-    },
-    zoom: 12
-  },
+  bounds_north: 47.745274294284506,
+  bounds_east: -122.38844700157635,
+  bounds_south: 47.610393280504454,
+  bounds_west: -122.47058697044842,
+  zoom: 12,
   // an array with one or more arrays of LatLngLiterals, e.g., [[{ lat: 47.228309, lng: -122.510645 },],], used for
   // Polygon paths
   geoLayerCoordinates: []
@@ -33,7 +25,17 @@ export const listingMapSlice = createSlice({
 
   reducers: {
     setMapData: (state, action: PayloadAction<Partial<GoogleMapState>>) => {
-      state.mapData = { ...state.mapData, ...action.payload }
+      const { bounds, zoom } = action.payload
+      if (bounds) {
+        const { north, east, south, west } = bounds
+        state.bounds_north = north
+        state.bounds_east = east
+        state.bounds_south = south
+        state.bounds_west = west
+      }
+      if (zoom) {
+        state.zoom = zoom
+      }
     },
 
     setBoundaryActive: (state, action: PayloadAction<boolean>) => {

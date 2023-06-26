@@ -1,10 +1,12 @@
-import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+import type { BoundsParams } from '../../lib/types/listing_service_params_types'
+
 export type MultiPolygon = Array<Array<Array<Array<number>>>>
 
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 
-export interface ListingMapState {
+export interface ListingMapState
+  extends BoundsParams {
   boundaryActive: boolean
-  mapData: GoogleMapState
+  zoom: number
   geoLayerCoordinates: GeoLayerCoordinates
 }
