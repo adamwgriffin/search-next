@@ -12,16 +12,6 @@ import { initialState } from './listingMapSlice'
 export const selectBoundaryActive = (state: AppState) =>
   state.listingMap.boundaryActive
 
-export const selectBoundsParams = (state: AppState): BoundsParams => {
-  return pick(
-    state.listingMap,
-    'bounds_north',
-    'bounds_east',
-    'bounds_south',
-    'bounds_west'
-  )
-}
-
 export const selectZoom = (state: AppState) => state.listingMap.zoom
 
 export const selectGeoLayerCoordinates = (state: AppState) =>

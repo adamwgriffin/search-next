@@ -8,10 +8,10 @@ import { ListingMapState } from './listingMapTypes'
 
 export const initialState: ListingMapState = {
   boundaryActive: true,
-  bounds_north: 47.745274294284506,
-  bounds_east: -122.38844700157635,
-  bounds_south: 47.610393280504454,
-  bounds_west: -122.47058697044842,
+  boundsNorth: 47.745274294284506,
+  boundsEast: -122.38844700157635,
+  boundsSouth: 47.610393280504454,
+  boundsWest: -122.47058697044842,
   zoom: 12,
   // an array with one or more arrays of LatLngLiterals, e.g., [[{ lat: 47.228309, lng: -122.510645 },],], used for
   // Polygon paths
@@ -28,10 +28,10 @@ export const listingMapSlice = createSlice({
       const { bounds, zoom } = action.payload
       if (bounds) {
         const { north, east, south, west } = bounds
-        state.bounds_north = north
-        state.bounds_east = east
-        state.bounds_south = south
-        state.bounds_west = west
+        state.boundsNorth = north
+        state.boundsEast = east
+        state.boundsSouth = south
+        state.boundsWest = west
       }
       if (zoom) {
         state.zoom = zoom
