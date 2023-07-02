@@ -33,7 +33,7 @@ const Price: NextPage<PriceProps> = ({
         allowNegative={false}
         decimalScale={0}
         value={normalizePrice(priceRange.priceMin)}
-        onValueChange={(v) => onChange?.({ priceMin: v.floatValue })}
+        onValueChange={(v) => onChange?.({ priceMin: v.floatValue || null })}
         placeholder='Min'
         className={formStyles.input}
         id='price_min'
@@ -52,7 +52,7 @@ const Price: NextPage<PriceProps> = ({
         allowNegative={false}
         decimalScale={0}
         value={normalizePrice(priceRange.priceMax)}
-        onValueChange={(v) => onChange?.({ priceMax: v.floatValue })}
+        onValueChange={(v) => onChange?.({ priceMax: v.floatValue || null })}
         placeholder='Max'
         className={formStyles.input}
         id='price_max'
