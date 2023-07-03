@@ -11,6 +11,7 @@ import type {
   FeatureFilters,
   FiltersState
 } from './filtersTypes'
+import { createSelector } from '@reduxjs/toolkit'
 import pick from 'lodash/pick'
 import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
@@ -83,28 +84,12 @@ export const selectPropertyTypes = (state: AppState): PropertyType[] =>
 export const selectSortBy = (state: AppState): SortFilters =>
   pick(state.filters, ['sortBy', 'sortDirection'])
 
-export const selectFiltersForListingSearchParams = (
-  state: AppState
-): Partial<FiltersState> => {
-  const includedFilters = omit(
-    state.filters,
-    'locationSearchField',
-    'pageSize',
-    'sortDirection',
-    'soldInLast'
-  )
-  const filtersStateDiff = omitBy(
-    includedFilters,
-    (value, param) => value === null || isEqual(initialState[param], value)
-  )
-  // we always want to include locationSearchField, regardless of whether it's the same. otherwise we will end up with
-  // an empty location in our url
-  filtersStateDiff.locationSearchField = state.filters.locationSearchField
-  return filtersStateDiff
-}
-
-export const selectListingSearchParams = (
-  state: AppState
-): Partial<FiltersState> => {
-  return selectFiltersForListingSearchParams(state)
-}
+export const selectSearchState = createSelector(
+  (state: AppState) => state.filters,
+  (state: FiltersState): Partial<FiltersState> => {
+    return omitBy(
+      omit(state, 'pageSize'),
+      (value, param) => value === null || isEqual(initialState[param], value)
+    )
+  }
+)

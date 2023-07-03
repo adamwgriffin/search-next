@@ -1,14 +1,11 @@
 import type { NextPage } from 'next'
 import type { FiltersState } from '../../store/filters/filtersTypes'
-import type { ListingSearchParams } from '../../lib/url'
 import { useRef, useEffect } from 'react'
-import { useEffectOnce } from 'react-use'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import GoogleMapsProvider from '../../context/google_maps_context'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
-import { convertFiltersStateToSearchUrl } from '../../lib/url'
 import { setFilters } from '../../store/filters/filtersSlice'
-import { selectListingSearchParams } from '../../store/filters/filtersSelectors'
+import { selectSearchState } from '../../store/filters/filtersSelectors'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
@@ -18,35 +15,37 @@ import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../../components/map/ListingMap/ListingMap'
 
 export interface SearchProps {
-  filtersState?: Partial<FiltersState>
-  onUpdateUrl?: (queryParams: Partial<ListingSearchParams>) => void
+  searchState?: Partial<FiltersState>
+  onListingSearchRunning?: (state: Partial<FiltersState>) => void
 }
 
-const Search: NextPage<SearchProps> = ({ filtersState, onUpdateUrl }) => {
+const Search: NextPage<SearchProps> = ({
+  searchState,
+  onListingSearchRunning
+}) => {
   const dispatch = useAppDispatch()
   const viewType = useAppSelector(selectViewType)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
-  const listingSearchParams = useAppSelector(selectListingSearchParams)
-  const searchResultsRef = useRef<null | HTMLDivElement>(null)
+  const currentSearchState = useAppSelector(selectSearchState)
+  const searchResultsRef = useRef<HTMLDivElement>(null)
   const resultsClassName =
     viewType === 'list' ? styles.resultsListView : styles.resultsMapView
-  
-  useEffectOnce(() => {
-    if (filtersState) {
-      dispatch(setFilters(filtersState))
-    }
-    dispatch(searchNewLocation())
-  })
 
   useEffect(() => {
-    if (searchResultsRef?.current?.scrollTop) {
-      searchResultsRef.current.scrollTop = 0;
+    if (searchState) {
+      dispatch(setFilters(searchState))
+      dispatch(searchNewLocation())
     }
+  }, [searchState, dispatch])
+
+  useEffect(() => {
     if (listingSearchRunning) {
-      const queryParams = convertFiltersStateToSearchUrl(listingSearchParams)
-      onUpdateUrl?.(queryParams)
+      if (searchResultsRef?.current?.scrollTop) {
+        searchResultsRef.current.scrollTop = 0
+      }
+      onListingSearchRunning?.(currentSearchState)
     }
-  }, [listingSearchRunning, listingSearchParams, onUpdateUrl])
+  }, [listingSearchRunning, currentSearchState, onListingSearchRunning])
 
   return (
     <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>

@@ -1,13 +1,6 @@
 import type { AppState } from '..'
-import type { BoundsParams } from '../../lib/types/listing_service_params_types'
-import type { listingMapStateForListingSearchParams } from './listingMapTypes'
 import { createSelector } from '@reduxjs/toolkit'
-import pick from 'lodash/pick'
-import omit from 'lodash/omit'
-import omitBy from 'lodash/omitBy'
-import isEqual from 'lodash/isEqual'
 import { getGeoLayerBounds } from '../../lib/polygon'
-import { initialState } from './listingMapSlice'
 
 export const selectBoundaryActive = (state: AppState) =>
   state.listingMap.boundaryActive

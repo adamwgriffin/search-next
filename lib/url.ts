@@ -4,7 +4,7 @@ import type { FiltersState } from '../store/filters/filtersTypes'
 import type { PropertyType } from './property_types'
 import type { SortType } from './types/listing_service_params_types'
 
-export interface ListingSearchParams {
+export interface ListingURLSearchParams {
   location: string
   rental: boolean
   sold: boolean
@@ -39,14 +39,13 @@ export const addUrlToBrowserHistory = (url: string) => {
   history.replaceState({}, '', currentUrl)
 }
 
-/* we need to sync the FilterState with the search url. each time the location changes, or a filter is added
-or removed, we need to update the url with the minimum amount of params that are needed to represent the new state. this
-means that we don't want to add any params to the url that are the same as the default FilterState. The only time
-we would update the search location part of the url is when a search is initiated. */
-export const convertFiltersStateToSearchUrl = (
+// we need to sync the FilterState with the search url. each time the location changes, or a filter is added
+// or removed, we need to update the url with the minimum amount of params that are needed to represent the new state. this
+// means that we don't want to add any params to the url that are the same as the default state.
+export const searchStateToListingSearchURLParams = (
   filterState: Partial<FiltersState>
 ) => {
-  const filterParams: Partial<ListingSearchParams> = {}
+  const filterParams: Partial<ListingURLSearchParams> = {}
   Object.entries(filterState).forEach(([key, value]) => {
     switch (key) {
       case 'locationSearchField':
@@ -68,27 +67,31 @@ export const convertFiltersStateToSearchUrl = (
   return filterParams
 }
 
-// on first load we need to get the url, parse it's params and map them to the filterState slice so that we can do the
-// initial search correctly
-export const convertSearchUrlToFiltersState = (
-  params: Partial<ListingSearchParams>
+// on first load, we need to get the url, parse it's params and map then them to the state so that we can do the initial
+// search correctly
+export const listingSearchURLParamsToSearchState = (
+  urlSearchParams: URLSearchParams
 ): Partial<FiltersState> => {
   const filtersState: Partial<FiltersState> = {}
-  Object.entries(params).forEach(([key, value]) => {
+  for (const [key, value] of urlSearchParams.entries()) {
     switch (key) {
       case 'location':
-        filtersState.locationSearchField = value.split(',').join(', ')
+        filtersState.locationSearchField = decodeURIComponent(value)
+          .split('--')
+          .join(', ')
         break
       case 'property-types':
         filtersState.propertyTypes = value.split(',') as PropertyType[]
         break
       case 'search-type':
-        filtersState.searchType = value
+      case 'sort-by':
+      case 'sort-direction':
+        filtersState[camelCase(key)] = value
         break
       default:
         filtersState[camelCase(key)] = JSON.parse(value)
         break
     }
-  })
+  }
   return filtersState
 }
