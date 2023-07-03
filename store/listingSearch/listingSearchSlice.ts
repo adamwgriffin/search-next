@@ -10,6 +10,7 @@ import {
 import { SelectedListing, HighlightedMarker, ListingSearchState } from './listingSearchTypes'
 
 const initialState: ListingSearchState = {
+  initialSearchComplete: false,
   doListingSearchOnMapIdle: false,
   listingSearchRunning: false,
   listingServiceResponse: {},
@@ -94,6 +95,9 @@ export const listingSearchSlice = createSlice({
     builder.addCase(searchNewLocation.fulfilled, (state, action) => {
       state.listingServiceResponse = action.payload
       state.listingSearchRunning = false
+      if (!state.initialSearchComplete) {
+        state.initialSearchComplete = true
+      }
     })
 
     builder.addCase(searchNewLocation.rejected, (state, action) => {

@@ -4,6 +4,9 @@ import type { Listing } from '../../lib/types/listing_types'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import range from 'lodash/range'
 
+export const selectInitialSearchComplete = (state: AppState): boolean =>
+  state.listingSearch.initialSearchComplete
+
 export const selectHighlightedMarker = (state: AppState): HighlightedMarker =>
   state.listingSearch.highlightedMarker
 
