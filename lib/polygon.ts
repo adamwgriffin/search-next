@@ -34,7 +34,8 @@ but instead we need:
   ]
 ]
 */
-// TODO: this should be recursive instead
+// TODO: this should be recursive instead. also this type is not really a MultiPolygon. it's only the coordinates from a
+// MultiPolygon
 export const convertGeojsonCoordinatesToPolygonPaths = (
   geoJsonCoordinates: MultiPolygon
 ): GeoLayerCoordinates => {
@@ -48,6 +49,11 @@ export const convertGeojsonCoordinatesToPolygonPaths = (
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we
 // used to create the polygon paths, so we might as well just use that data since we already have it
 export const getGeoLayerBounds = (geoLayerCoordinates: GeoLayerCoordinates) => {
+  if (typeof google !== 'undefined') {
+    throw new Error(
+      'Google not loaded. Unable to convert geoLayerCoordinates to google.maps.LatLngBounds.'
+    )
+  }
   const bounds = new google.maps.LatLngBounds()
   geoLayerCoordinates.forEach((latLngArr) =>
     latLngArr.forEach((latLng) => bounds.extend(latLng))
