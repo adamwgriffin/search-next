@@ -69,8 +69,8 @@ const SearchPage: NextPage<SearchPageProps> = () => {
         pathname: router.pathname,
         query: searchStateToListingSearchURLParams(searchState)
       })
+      setPreviousSearchState(searchState)
     }
-    setPreviousSearchState(searchState)
   }, [
     router,
     initialSearchComplete,
