@@ -49,7 +49,7 @@ export const convertGeojsonCoordinatesToPolygonPaths = (
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we
 // used to create the polygon paths, so we might as well just use that data since we already have it
 export const getGeoLayerBounds = (geoLayerCoordinates: GeoLayerCoordinates) => {
-  if (typeof google !== 'undefined') {
+  if (typeof google === 'undefined') {
     throw new Error(
       'Google not loaded. Unable to convert geoLayerCoordinates to google.maps.LatLngBounds.'
     )
