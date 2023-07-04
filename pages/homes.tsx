@@ -17,6 +17,8 @@ import {
 import Search from '../containers/Search/Search'
 import { selectSearchState } from '../store/filters/filtersSelectors'
 import { searchNewLocation } from '../store/listingSearch/listingSearchSlice'
+import GoogleMapsProvider from '../context/google_maps_context'
+import { AppGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
 
 export interface SearchPageProps {
   params: string[]
@@ -81,7 +83,11 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   // may include them
   useUnmount(() => dispatch(clearFilters()))
 
-  return <Search />
+  return (
+    <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
+      <Search />
+    </GoogleMapsProvider>
+  )
 }
 
 export default SearchPage

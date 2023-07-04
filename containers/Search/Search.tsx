@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
 import { useRef, useEffect } from 'react'
 import { useAppSelector } from '../../hooks'
-import GoogleMapsProvider from '../../context/google_maps_context'
-import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
 import styles from './Search.module.css'
@@ -24,21 +22,19 @@ const Search: NextPage = () => {
   }, [listingSearchRunning])
 
   return (
-    <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
-      <div className={styles.search}>
-        <div>
-          <Header />
+    <div className={styles.search}>
+      <div>
+        <Header />
+      </div>
+      <div className={resultsClassName}>
+        <div ref={searchResultsRef} className={styles.searchResults}>
+          <SearchResults />
         </div>
-        <div className={resultsClassName}>
-          <div ref={searchResultsRef} className={styles.searchResults}>
-            <SearchResults />
-          </div>
-          <div className={styles.listingMap}>
-            <ListingMap />
-          </div>
+        <div className={styles.listingMap}>
+          <ListingMap />
         </div>
       </div>
-    </GoogleMapsProvider>
+    </div>
   )
 }
 
