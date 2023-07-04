@@ -52,7 +52,7 @@ export const listingMapSlice = createSlice({
         state.boundaryActive = true
       } else {
         console.debug(
-          'In searchNewLocation.fulfilled, nothing in payload.result_geo.'
+          'In searchNewLocation.fulfilled, nothing in payload.boundary.'
         )
       }
     })
