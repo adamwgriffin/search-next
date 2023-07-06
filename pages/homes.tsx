@@ -84,7 +84,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     }
   }, [listingSearchRunning, shouldUpdateURL, router, searchState])
 
-  // reset the filters when the user navigates away from the search page, otherwise subsequest search from the home page
+  // reset the filters when the user navigates away from the search page, otherwise subsequent search from the home page
   // may include them
   useUnmount(() => dispatch(clearFilters()))
 
