@@ -13,14 +13,14 @@ export const selectHighlightedMarker = (state: AppState): HighlightedMarker =>
 export const selectListings = (state: AppState): Listing[] =>
   state.listingSearch.listingServiceResponse?.listings ?? []
 
+export const selectTotalListings = (state: AppState): number =>
+  state.listingSearch.listingServiceResponse.number_found ?? 0
+
 export const selectDoListingSearchOnMapIdle = (state: AppState) =>
   state.listingSearch.doListingSearchOnMapIdle
 
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
-
-export const selectTotalListings = (state: AppState): number =>
-  state.listingSearch.listingServiceResponse.number_found ?? 0
 
 export const selectPagination = (state: AppState): Pagination => {
   const { pageIndex, pageSize } = state.filters
