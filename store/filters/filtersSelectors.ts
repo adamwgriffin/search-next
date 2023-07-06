@@ -87,6 +87,10 @@ export const selectSearchState = createSelector(
   (state: AppState) => state.filters,
   (state: FiltersState): Partial<FiltersState> => {
     return omitBy(state, (value, key) => {
+      // always include locationSearchField as long as it has a value
+      if (key === 'locationSearchField' && value) {
+        return false
+      }
       return value === null ||
         ['pageSize'].includes(key) ||
         isEqual(initialState[key], value)
