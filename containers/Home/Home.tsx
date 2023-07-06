@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <h1>Home Page</h1>
         <p>Welcome!</p>
         <p>
-          <Link href='/homes'>Search Fremont</Link>
+          <Link href='/homes?location=Fremont--Seattle--WA--USA'>Search Fremont</Link>
         </p>
         <p>
           <Link href='/homes?location=Ballard--Seattle--WA--USA&beds-min=2&baths-min=1'>

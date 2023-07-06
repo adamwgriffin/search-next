@@ -107,10 +107,6 @@ const SearchPage: NextPage<SearchPageProps> = () => {
         pathname: router.pathname,
         query: searchStateToListingSearchURLParams(searchState)
       })
-      // console.log(
-      //   'shouldUpdateURL() true, setting previousSearchState to:',
-      //   searchState
-      // )
       setPreviousSearchState(searchState)
     }
   }, [listingSearchRunning, shouldUpdateURL, router, searchState])
