@@ -16,7 +16,10 @@ import {
 } from '../store/listingSearch/listingSearchSelectors'
 import Search from '../containers/Search/Search'
 import { selectSearchState } from '../store/filters/filtersSelectors'
-import { searchNewLocation } from '../store/listingSearch/listingSearchSlice'
+import {
+  searchNewLocation,
+  searchCurrentLocation
+} from '../store/listingSearch/listingSearchSlice'
 import GoogleMapsProvider from '../context/google_maps_context'
 import { AppGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
 
@@ -33,16 +36,15 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   const [previousSearchState, setPreviousSearchState] =
     useState<Partial<FiltersState>>()
 
-  // get the browser url query string, convert it to a state object, use it to set the state, then run a new search base
-  // on that state
-  const runNewSearchWithURLSearchParams = useCallback(() => {
+  // get the browser url query string, convert it to a state object, use it to set the state, then run a new search
+  // based on that state
+  const getSearchParamsAndSetSearchState = useCallback(() => {
     // TODO: will eventually validate query params with zod and throw away any that are invalid, so that we can
-    // guaruntee that this function will always be passed valid data
-    const searchState = listingSearchURLParamsToSearchState(
+    // guarantee that this function will always be passed valid data
+    const newSearchState = listingSearchURLParamsToSearchState(
       new URLSearchParams(window.location.search)
     )
-    dispatch(setFilters(searchState))
-    dispatch(searchNewLocation())
+    dispatch(setFilters(newSearchState))
   }, [dispatch])
 
   // we're checking initialSearchComplete because we don't wnat to change the url if we just used it to set the
@@ -65,12 +67,33 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   ])
 
   // run a search based on the url when the page first loads.
-  useMount(runNewSearchWithURLSearchParams)
+  useMount(() => {
+    getSearchParamsAndSetSearchState()
+    dispatch(searchNewLocation())
+  })
 
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history and then run a new search to match the url params. the "popstate" event
   // is triggered whenever the history is changed by the user in this way.
-  useEvent('popstate', runNewSearchWithURLSearchParams)
+  const onPopstate = useCallback(
+    () => {
+      const newSearchState = listingSearchURLParamsToSearchState(
+        new URLSearchParams(window.location.search)
+      )
+      dispatch(setFilters(newSearchState))
+      if (
+        newSearchState.locationSearchField ===
+        previousSearchState?.locationSearchField
+      ) {
+        dispatch(searchCurrentLocation())
+      } else {
+        dispatch(searchNewLocation())
+      }
+    },
+    [dispatch, previousSearchState]
+  )
+
+  useEvent('popstate', onPopstate)
 
   // each time the user updates the filters, or searches for a new location, we want to update the url to reflect the
   // new search.
