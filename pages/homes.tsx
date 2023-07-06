@@ -77,6 +77,10 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   // is triggered whenever the history is changed by the user in this way.
   const onPopstate = useCallback(
     () => {
+      // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
+      if (window.location.pathname !== router.pathname) {
+        return
+      }
       const newSearchState = listingSearchURLParamsToSearchState(
         new URLSearchParams(window.location.search)
       )
@@ -90,7 +94,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
         dispatch(searchNewLocation())
       }
     },
-    [dispatch, previousSearchState]
+    [dispatch, previousSearchState, router]
   )
 
   useEvent('popstate', onPopstate)
@@ -103,6 +107,10 @@ const SearchPage: NextPage<SearchPageProps> = () => {
         pathname: router.pathname,
         query: searchStateToListingSearchURLParams(searchState)
       })
+      // console.log(
+      //   'shouldUpdateURL() true, setting previousSearchState to:',
+      //   searchState
+      // )
       setPreviousSearchState(searchState)
     }
   }, [listingSearchRunning, shouldUpdateURL, router, searchState])
