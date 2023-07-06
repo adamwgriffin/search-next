@@ -1,5 +1,10 @@
 @value smallAndUp from '../../../styles/breakpoints.module.css';
 
+.link {
+  color: initial;
+  text-decoration: none;
+}
+
 .logo {
   display: none;
 }
