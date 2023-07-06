@@ -13,7 +13,6 @@ import type {
 } from './filtersTypes'
 import { createSelector } from '@reduxjs/toolkit'
 import pick from 'lodash/pick'
-import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import isEqual from 'lodash/isEqual'
 import { initialState } from './filtersSlice'
@@ -87,9 +86,10 @@ export const selectSortBy = (state: AppState): SortFilters =>
 export const selectSearchState = createSelector(
   (state: AppState) => state.filters,
   (state: FiltersState): Partial<FiltersState> => {
-    return omitBy(
-      omit(state, 'pageSize'),
-      (value, param) => value === null || isEqual(initialState[param], value)
-    )
+    return omitBy(state, (value, key) => {
+      return value === null ||
+        ['pageSize'].includes(key) ||
+        isEqual(initialState[key], value)
+    })
   }
 )
