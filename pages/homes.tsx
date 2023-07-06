@@ -82,12 +82,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
       })
       setPreviousSearchState(searchState)
     }
-  }, [
-    listingSearchRunning,
-    shouldUpdateURL,
-    router,
-    searchState
-  ])
+  }, [listingSearchRunning, shouldUpdateURL, router, searchState])
 
   // reset the filters when the user navigates away from the search page, otherwise subsequest search from the home page
   // may include them
