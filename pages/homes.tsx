@@ -1,7 +1,7 @@
 import type { FiltersState } from '../store/filters/filtersTypes'
 import type { NextPage } from 'next'
 import { useState, useCallback, useEffect } from 'react'
-import { useMount, useUnmount, useEvent } from 'react-use'
+import { useEvent } from 'react-use'
 import { useRouter } from 'next/router'
 import isEqual from 'lodash/isEqual'
 import { useAppSelector, useAppDispatch } from '../hooks'
@@ -49,11 +49,17 @@ const SearchPage: NextPage<SearchPageProps> = () => {
       return newSearchState
     }, [dispatch])
 
-  // run a search based on the url when the page first loads.
-  useMount(() => {
+  useEffect(() => {
+    // run a search based on the url on initial render
     getSearchParamsAndSetSearchState()
     dispatch(searchNewLocation())
-  })
+
+    // reset the filters when the user navigates away from the search page, otherwise a subsequent search from the home
+    // page may include them
+    return () => {
+      dispatch(clearFilters())
+    }
+  }, [dispatch, getSearchParamsAndSetSearchState])
 
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history and then run a new search to match the url params. the "popstate" event
@@ -82,8 +88,8 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   useEvent('popstate', onPopstate)
 
   // each time the user triggers a new search, we want to update the url, so that if the user were to visit this new
-  // url, it would load this specific search. we're checking initialSearchComplete because we don't wnat to change the
-  // url if we just used it to set the FiltersState and run the initial search in the useMount callback. it's only on
+  // url, it would load this specific search. we're checking initialSearchComplete here because we don't want to change
+  // the url if we just used it to set the searchState and run the initial search in the useMount callback. it's only on
   // subsequent runs that we would want to update the url to reflect whatever filters the user has changed. doing this
   // prevents us from adding a duplicate url to the browser history, which can make if seem as if the back button
   // doesn't work if the user clicks it after the search page first loads
@@ -107,10 +113,6 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     previousSearchState,
     router
   ])
-
-  // reset the filters when the user navigates away from the search page, otherwise subsequent search from the home page
-  // may include them
-  useUnmount(() => dispatch(clearFilters()))
 
   return (
     <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
