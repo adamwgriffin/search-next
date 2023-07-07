@@ -38,14 +38,16 @@ const SearchPage: NextPage<SearchPageProps> = () => {
 
   // get the browser url query string, convert it to a state object, use it to set the state, then run a new search
   // based on that state
-  const getSearchParamsAndSetSearchState = useCallback(() => {
-    // TODO: will eventually validate query params with zod and throw away any that are invalid, so that we can
-    // guarantee that this function will always be passed valid data
-    const newSearchState = listingSearchURLParamsToSearchState(
-      new URLSearchParams(window.location.search)
-    )
-    dispatch(setFilters(newSearchState))
-  }, [dispatch])
+  const getSearchParamsAndSetSearchState =
+    useCallback((): Partial<FiltersState> => {
+      // TODO: will eventually validate query params with zod and throw away any that are invalid, so that we can
+      // guarantee that this function will always be passed valid data
+      const newSearchState = listingSearchURLParamsToSearchState(
+        new URLSearchParams(window.location.search)
+      )
+      dispatch(setFilters(newSearchState))
+      return newSearchState
+    }, [dispatch])
 
   // we're checking initialSearchComplete because we don't wnat to change the url if we just used it to set the
   // FiltersState and run the initial search in the useMount callback. it's only on subsequent runs that we would want
@@ -75,27 +77,26 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history and then run a new search to match the url params. the "popstate" event
   // is triggered whenever the history is changed by the user in this way.
-  const onPopstate = useCallback(
-    () => {
-      // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
-      if (window.location.pathname !== router.pathname) {
-        return
-      }
-      const newSearchState = listingSearchURLParamsToSearchState(
-        new URLSearchParams(window.location.search)
-      )
-      dispatch(setFilters(newSearchState))
-      if (
-        newSearchState.locationSearchField ===
-        previousSearchState?.locationSearchField
-      ) {
-        dispatch(searchCurrentLocation())
-      } else {
-        dispatch(searchNewLocation())
-      }
-    },
-    [dispatch, previousSearchState, router]
-  )
+  const onPopstate = useCallback(() => {
+    // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
+    if (window.location.pathname !== router.pathname) {
+      return
+    }
+    const newSearchState = getSearchParamsAndSetSearchState()
+    if (
+      newSearchState.locationSearchField ===
+      previousSearchState?.locationSearchField
+    ) {
+      dispatch(searchCurrentLocation())
+    } else {
+      dispatch(searchNewLocation())
+    }
+  }, [
+    dispatch,
+    getSearchParamsAndSetSearchState,
+    previousSearchState?.locationSearchField,
+    router.pathname
+  ])
 
   useEvent('popstate', onPopstate)
 
