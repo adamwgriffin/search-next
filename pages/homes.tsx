@@ -54,7 +54,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     dispatch(searchNewLocation())
 
     // reset the filters when the user navigates away from the search page, otherwise a subsequent search from the home
-    // page may include them
+    // page could include filters from the previous search
     return () => {
       dispatch(clearFilters())
     }
