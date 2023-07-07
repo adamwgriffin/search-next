@@ -49,25 +49,6 @@ const SearchPage: NextPage<SearchPageProps> = () => {
       return newSearchState
     }, [dispatch])
 
-  // we're checking initialSearchComplete because we don't wnat to change the url if we just used it to set the
-  // FiltersState and run the initial search in the useMount callback. it's only on subsequent runs that we would want
-  // to update the url to reflect whatever filters the user has changed. doing this prevents us from adding a duplicate
-  // url to the browser history, which can make if seem as if the back button doesn't work if the user clicks it after
-  // the search page first loads
-  const shouldUpdateURL = useCallback(() => {
-    return (
-      listingSearchRunning &&
-      initialSearchComplete &&
-      // avoid updating unless the searchState changed, otherwise clicking the back button will not change the url
-      !isEqual(searchState, previousSearchState)
-    )
-  }, [
-    listingSearchRunning,
-    initialSearchComplete,
-    searchState,
-    previousSearchState
-  ])
-
   // run a search based on the url when the page first loads.
   useMount(() => {
     getSearchParamsAndSetSearchState()
@@ -100,17 +81,32 @@ const SearchPage: NextPage<SearchPageProps> = () => {
 
   useEvent('popstate', onPopstate)
 
-  // each time the user updates the filters, or searches for a new location, we want to update the url to reflect the
-  // new search.
+  // each time the user triggers a new search, we want to update the url, so that if the user were to visit this new
+  // url, it would load this specific search. we're checking initialSearchComplete because we don't wnat to change the
+  // url if we just used it to set the FiltersState and run the initial search in the useMount callback. it's only on
+  // subsequent runs that we would want to update the url to reflect whatever filters the user has changed. doing this
+  // prevents us from adding a duplicate url to the browser history, which can make if seem as if the back button
+  // doesn't work if the user clicks it after the search page first loads
   useEffect(() => {
-    if (shouldUpdateURL()) {
+    const shouldUpdateURL =
+      listingSearchRunning &&
+      initialSearchComplete &&
+      // avoid updating unless the searchState changed, otherwise clicking the back button will not change the url
+      !isEqual(searchState, previousSearchState)
+    if (shouldUpdateURL) {
       router.push({
         pathname: router.pathname,
         query: searchStateToListingSearchURLParams(searchState)
       })
       setPreviousSearchState(searchState)
     }
-  }, [listingSearchRunning, shouldUpdateURL, router, searchState])
+  }, [
+    listingSearchRunning,
+    initialSearchComplete,
+    searchState,
+    previousSearchState,
+    router
+  ])
 
   // reset the filters when the user navigates away from the search page, otherwise subsequent search from the home page
   // may include them
