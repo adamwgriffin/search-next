@@ -1,7 +1,6 @@
 import type { FiltersState } from '../store/filters/filtersTypes'
 import type { NextPage } from 'next'
 import { useState, useCallback, useEffect } from 'react'
-import { useEvent } from 'react-use'
 import { useRouter } from 'next/router'
 import isEqual from 'lodash/isEqual'
 import { useAppSelector, useAppDispatch } from '../hooks'
@@ -62,30 +61,31 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   }, [dispatch, getSearchParamsAndSetSearchState])
 
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
-  // previous/next part of the browser history and then run a new search to match the url params. the "popstate" event
+  // previous/next part of the browser history, and then run a new search to match the url params. the "popstate" event
   // is triggered whenever the history is changed by the user in this way.
-  const onPopstate = useCallback(() => {
-    // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
-    if (window.location.pathname !== router.pathname) {
-      return
-    }
-    const newSearchState = getSearchParamsAndSetSearchState()
-    if (
-      newSearchState.locationSearchField ===
-      previousSearchState?.locationSearchField
-    ) {
-      dispatch(searchCurrentLocation())
-    } else {
-      dispatch(searchNewLocation())
-    }
+  useEffect(() => {
+    router.beforePopState(() => {
+      // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
+      if (window.location.pathname === router.pathname) {
+        const newSearchState = getSearchParamsAndSetSearchState()
+        if (
+          newSearchState.locationSearchField ===
+          previousSearchState?.locationSearchField
+        ) {
+          dispatch(searchCurrentLocation())
+        } else {
+          dispatch(searchNewLocation())
+        }
+      }
+      // the router will not navigate to the new url automatically unless we return true
+      return true
+    })
   }, [
     dispatch,
     getSearchParamsAndSetSearchState,
     previousSearchState?.locationSearchField,
-    router.pathname
+    router
   ])
-
-  useEvent('popstate', onPopstate)
 
   // each time the user triggers a new search, we want to update the url, so that if the user were to visit this new
   // url, it would load this specific search. we're checking initialSearchComplete here because we don't want to change
