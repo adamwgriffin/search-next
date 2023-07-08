@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import { useGoogleMaps } from '../../context/google_maps_context'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import { setFilters } from '../../store/filters/filtersSlice'
@@ -16,10 +15,9 @@ const SearchFieldContainer: NextPage = () => {
   const dispatch = useAppDispatch()
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
-  const { googleLoaded, googleMap } = useGoogleMaps()
 
   const handleOnGetPlaceAutocompletePredictions = (val: string) => {
-    googleLoaded && dispatch(getPlaceAutocompletePredictions(val))
+    dispatch(getPlaceAutocompletePredictions(val))
   }
 
   const handleOnClearPlaceAutocompletePredictions = () => {
@@ -27,11 +25,7 @@ const SearchFieldContainer: NextPage = () => {
   }
 
   const handleOnSearchInitiated = () => {
-    if (googleLoaded) {
-      dispatch(searchNewLocation())
-    } else {
-      console.warn("Google library isn't loaded yet")
-    }
+    dispatch(searchNewLocation())
   }
 
   const handleOnOptionSelected = (
@@ -40,11 +34,7 @@ const SearchFieldContainer: NextPage = () => {
     dispatch(
       setFilters({ locationSearchField: autocompletePrediction.description })
     )
-    if (googleLoaded && googleMap) {
-      dispatch(searchNewLocation())
-    } else {
-      console.warn('The googleMap instance is not available')
-    }
+    dispatch(searchNewLocation())
   }
 
   const handleOnInput = (details: string) =>
