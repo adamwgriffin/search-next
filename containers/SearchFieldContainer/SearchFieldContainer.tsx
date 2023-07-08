@@ -2,22 +2,17 @@ import type { NextPage } from 'next'
 import { useGoogleMaps } from '../../context/google_maps_context'
 import { useAppSelector, useAppDispatch } from '../../hooks'
 import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
-import {
-  setFilters
-} from '../../store/filters/filtersSlice'
+import { setFilters } from '../../store/filters/filtersSlice'
 import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
   selectAutcompletePlacePredictions
 } from '../../store/autocomplete/autocompleteSlice'
-import styles from './Header.module.css'
-import Logo from '../../components/header/Logo/Logo'
 import SearchField from '../../components/form/SearchField/SearchField'
-import Filters from '../Filters/Filters'
-import Login from '../../components/header/Login/Login'
 
-const Header: NextPage = () => {
+// a container that simply wraps SearchField and connects it to the redux store
+const SearchFieldContainer: NextPage = () => {
   const dispatch = useAppDispatch()
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
@@ -56,29 +51,20 @@ const Header: NextPage = () => {
     dispatch(setFilters({ locationSearchField: details }))
 
   return (
-    <header className={styles.header}>
-      <Logo />
-      <SearchField
-        value={locationSearchField}
-        options={options}
-        onInput={handleOnInput}
-        onGetPlaceAutocompletePredictions={
-          handleOnGetPlaceAutocompletePredictions
-        }
-        onClearPlaceAutocompletePredictions={
-          handleOnClearPlaceAutocompletePredictions
-        }
-        onSearchInitiated={handleOnSearchInitiated}
-        onOptionSelected={handleOnOptionSelected}
-      />
-      <div className={styles.controls}>
-        <Login />
-      </div>
-      <div className={styles.filters}>
-        <Filters />
-      </div>
-    </header>
+    <SearchField
+      value={locationSearchField}
+      options={options}
+      onInput={handleOnInput}
+      onGetPlaceAutocompletePredictions={
+        handleOnGetPlaceAutocompletePredictions
+      }
+      onClearPlaceAutocompletePredictions={
+        handleOnClearPlaceAutocompletePredictions
+      }
+      onSearchInitiated={handleOnSearchInitiated}
+      onOptionSelected={handleOnOptionSelected}
+    />
   )
 }
 
-export default Header
+export default SearchFieldContainer

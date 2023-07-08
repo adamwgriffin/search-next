@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
 import styles from './Search.module.css'
-import Header from '../../containers/Header/Header'
+import SearchHeader from '../../components/header/SearchHeader/SearchHeader'
 import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../../components/map/ListingMap/ListingMap'
 
@@ -24,7 +24,7 @@ const Search: NextPage = () => {
   return (
     <div className={styles.search}>
       <div>
-        <Header />
+        <SearchHeader />
       </div>
       <div className={resultsClassName}>
         <div ref={searchResultsRef} className={styles.searchResults}>
