@@ -23,7 +23,7 @@ const Header: NextPage = () => {
   const options = useAppSelector(selectAutcompletePlacePredictions)
   const { googleLoaded, googleMap } = useGoogleMaps()
 
-  const handleOnGetPlaceAutocompletePredictions = async (val: string) => {
+  const handleOnGetPlaceAutocompletePredictions = (val: string) => {
     googleLoaded && dispatch(getPlaceAutocompletePredictions(val))
   }
 
