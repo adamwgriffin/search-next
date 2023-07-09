@@ -1,0 +1,9 @@
+@value smallAndUp, largeAndUp from '../../../styles/breakpoints.module.css';
+
+.header {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem .2rem 0 1rem;
+}

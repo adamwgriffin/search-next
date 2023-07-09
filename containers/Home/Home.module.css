@@ -1,7 +1,32 @@
+@value smallAndUp from '../../styles/breakpoints.module.css';
+
 .home {
+  display: grid;
+  grid-template-rows: auto 1fr;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+}
+
+.body {
+  margin: 1rem;
+}
+
+.hero {
+  background-color: #e1d8f1;
+  padding: 10% 5%;
+  text-align: center;
+  border-radius: 0.8rem;
+}
+
+.mainContent {
+  margin: 1rem;
+}
+
+@media smallAndUp {
+  .hero {
+    padding: 10% 20%;
+  }
+
+  .mainContent {
+    margin: 4rem 20%;
+  }
 }
