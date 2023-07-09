@@ -1,4 +1,4 @@
-@value smallAndUp, largeAndUp from '../../../styles/breakpoints.module.css';
+@value smallAndUp, largeAndUp from '../../styles/breakpoints.module.css';
 
 .header {
   display: grid;

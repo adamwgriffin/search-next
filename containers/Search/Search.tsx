@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
 import styles from './Search.module.css'
-import SearchHeader from '../../components/header/SearchHeader/SearchHeader'
+import SearchHeader from '../SearchHeader/SearchHeader'
 import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../../components/map/ListingMap/ListingMap'
 

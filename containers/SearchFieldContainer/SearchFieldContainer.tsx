@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { useAppSelector, useAppDispatch } from '../../hooks'
-import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import { setFilters } from '../../store/filters/filtersSlice'
 import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import {
@@ -10,11 +9,22 @@ import {
 } from '../../store/autocomplete/autocompleteSlice'
 import SearchField from '../../components/form/SearchField/SearchField'
 
+export interface SearchFieldContainerProps {
+  onSearchInitiated?: () => void
+  onOptionSelected?: (option: google.maps.places.AutocompletePrediction) => void
+}
+
 // a container that simply wraps SearchField and connects it to the redux store
-const SearchFieldContainer: NextPage = () => {
+const SearchFieldContainer: NextPage<SearchFieldContainerProps> = ({
+  onSearchInitiated,
+  onOptionSelected
+}) => {
   const dispatch = useAppDispatch()
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
+
+  const handleOnInput = (details: string) =>
+    dispatch(setFilters({ locationSearchField: details }))
 
   const handleOnGetPlaceAutocompletePredictions = (val: string) => {
     dispatch(getPlaceAutocompletePredictions(val))
@@ -24,21 +34,14 @@ const SearchFieldContainer: NextPage = () => {
     dispatch(resetAutcompletePlacePredictions())
   }
 
-  const handleOnSearchInitiated = () => {
-    dispatch(searchNewLocation())
-  }
-
   const handleOnOptionSelected = (
     autocompletePrediction: google.maps.places.AutocompletePrediction
   ) => {
     dispatch(
       setFilters({ locationSearchField: autocompletePrediction.description })
     )
-    dispatch(searchNewLocation())
+    onOptionSelected?.(autocompletePrediction)
   }
-
-  const handleOnInput = (details: string) =>
-    dispatch(setFilters({ locationSearchField: details }))
 
   return (
     <SearchField
@@ -51,7 +54,7 @@ const SearchFieldContainer: NextPage = () => {
       onClearPlaceAutocompletePredictions={
         handleOnClearPlaceAutocompletePredictions
       }
-      onSearchInitiated={handleOnSearchInitiated}
+      onSearchInitiated={onSearchInitiated}
       onOptionSelected={handleOnOptionSelected}
     />
   )
