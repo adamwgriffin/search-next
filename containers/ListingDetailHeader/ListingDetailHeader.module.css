@@ -1,0 +1,24 @@
+@value smallAndUp, largeAndUp from '../../styles/breakpoints.module.css';
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem .2rem 0 1rem;
+}
+
+@media smallAndUp {
+  .header {
+    grid-template-columns: auto 50% auto;
+  }
+}
+
+@media largeAndUp {
+
+  .header {
+    grid-template-columns: auto 40% auto;
+    padding: 1rem .2rem 1rem 1rem;
+  }
+
+}

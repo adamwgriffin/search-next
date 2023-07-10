@@ -11,6 +11,7 @@ import HomePageHeader from '../../components/header/HomePageHeader/HomePageHeade
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
 
 const Home: NextPage = () => {
+  // TODO: make this search code that's duplicated in ListingDetailHeader into a hook that both can share
   const router = useRouter()
   const searchState = useAppSelector(selectSearchState)
 
