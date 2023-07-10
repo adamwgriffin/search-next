@@ -20,15 +20,6 @@ export interface ListingDetailProps {
 const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
   const [slideShowOpen, setSlideShowOpen] = useState(false)
 
-  // TODO: replace this with some ContentLoader components
-  if (!listing)
-    return (
-      <>
-        <div className='listingDetail'>Loading...</div>
-        <style jsx>{styles}</style>
-      </>
-    )
-
   return (
     <>
       <div className='listingDetail'>

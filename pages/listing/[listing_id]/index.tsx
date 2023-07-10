@@ -25,6 +25,7 @@ const ListingPage: NextPage = () => {
     <>
       <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
         <div className='listingDetailPage'>
+          {/* TODO: add a ContentLoader component for when the listing is still loading */}
           {listing && <ListingDetail listing={listing} />}
         </div>
       </GoogleMapsProvider>
