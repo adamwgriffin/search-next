@@ -44,11 +44,13 @@ export interface Feature {
 }
 
 export interface PropertDetail {
+  _id: string
   name: string
   details: string[]
 }
 
 export interface PropertDetailsSection {
+  _id: string
   name: string
   description?: string
   details: PropertDetail[]

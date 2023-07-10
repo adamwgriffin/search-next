@@ -14,12 +14,12 @@ const PropertyDetails: NextPage<PropertyDetailsProps> = ({
   return (
     <ShowMore>
       <h4>Property Details</h4>
-      {propertyDetails.map(({ name, details }) => (
-        <Fragment key={name}>
+      {propertyDetails.map(({ _id, name, details }) => (
+        <Fragment key={_id}>
           <h5 className={styles.sectionName}>{name}</h5>
           <ul className={styles.details}>
-            {details.map(({ name, details }) => (
-              <li key={name}>
+            {details.map(({ _id, name, details }) => (
+              <li key={_id}>
                 <div className={styles.detailsName}>
                   {name}: {details.join(', ')}
                 </div>
