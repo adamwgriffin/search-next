@@ -2,7 +2,8 @@ import { createContext, useContext, useState, ReactNode} from 'react'
 import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'
 import type { Dispatch } from 'react'
-import { Loader, LoaderOptions } from '@googlemaps/js-api-loader'
+import type { LoaderOptions } from '@googlemaps/js-api-loader'
+import { Loader } from '@googlemaps/js-api-loader'
 import { DefaultGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
 
 export interface GoogleMapsContextInterface {
