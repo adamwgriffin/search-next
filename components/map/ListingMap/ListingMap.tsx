@@ -102,7 +102,7 @@ const ListingMap: NextPage = () => {
     }
   }
 
-  if (googleLoaded) {
+  if (googleLoaded && google?.maps?.Map) {
     return (
       <div className={styles.listingMap}>
         <GoogleMap
