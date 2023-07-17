@@ -40,7 +40,14 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
     : styles.listingMarker
 
   return (
-    <Link href={link} className={styles.link}>
+    // we're only using a link here so that we can change the color of the marker depending on whether it has been
+    // visited in the browser history. the actual action taken when clicking the link is handled programmatically, which
+    // is why we're using preventDefault.
+    <Link
+      href={link}
+      className={styles.link}
+      onClick={(e) => e.preventDefault()}
+    >
       <div className={listingMarkerClassName}>
         <div className={styles.icon}>{priceAbbreviated}</div>
         <div className={styles.popup}>
@@ -59,9 +66,7 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
               <div>{formatSqft(listing)} sqft</div>
             </div>
             <div className={styles.address}>
-              <div className={styles.addressLine1}>
-                {listing.address.line1}
-              </div>
+              <div className={styles.addressLine1}>{listing.address.line1}</div>
               <div className={styles.addressLine2}>
                 {cityStateZip(listing.address)}
               </div>
