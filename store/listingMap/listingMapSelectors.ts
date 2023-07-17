@@ -24,7 +24,7 @@ export const selectGeoLayerBounds = createSelector(
   (geoLayerCoordinates) => {
     // getGeoLayerBounds depends on google being loaded to create a bounds object so don't try to call it if google
     // isn't loaded yet
-    return typeof google !== 'undefined' && geoLayerCoordinates.length
+    return typeof google !== 'undefined' && google?.maps?.LatLngBounds && geoLayerCoordinates.length
       ? getGeoLayerBounds(geoLayerCoordinates)
       : null
   }

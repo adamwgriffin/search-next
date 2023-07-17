@@ -1,10 +1,9 @@
-import type { LoaderOptions } from '@googlemaps/js-api-loader'
+import type { Libraries, LoaderOptions } from '@googlemaps/js-api-loader'
 
 // options for @googlemaps/loader, which loads Google Maps by creating a script tag with these params in it. things like
 // your api key and the libraries you want to load go here
 export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: '',
-  libraries: ['drawing', 'places', 'geometry', 'marker'],
   // TODO: change this once AdvancedMarkerView is out of beta
   version: 'beta'
 }
@@ -13,6 +12,8 @@ export const AppGoogleMapsLoaderOptions: LoaderOptions = {
   ...DefaultGoogleMapsLoaderOptions,
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
 }
+
+export const GoogleMapsLibraries: Libraries = ['maps', 'places', 'marker']
 
 // default options for the map itself, such as what UI controls to enable, etc.
 // seems that we can't use Object.freeze on this object, otherwise the map won't load

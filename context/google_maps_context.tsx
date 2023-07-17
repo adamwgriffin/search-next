@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import type { Dispatch } from 'react'
 import type { LoaderOptions } from '@googlemaps/js-api-loader'
 import { Loader } from '@googlemaps/js-api-loader'
-import { DefaultGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
+import { DefaultGoogleMapsLoaderOptions, GoogleMapsLibraries } from '../config/googleMapsOptions'
 
 export interface GoogleMapsContextInterface {
   googleLoaded: boolean
@@ -41,7 +41,12 @@ const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
   // will resolve once its loaded. this way you can execute whatever code depends on the api after the promise resolves.
   useEffectOnce(() => {
     const initializeGoogleMaps = async () => {
-      if (typeof google === 'undefined') await new Loader(loaderOptions).load()
+      const loader = new Loader(loaderOptions)
+      await Promise.all(
+        GoogleMapsLibraries.map((l) =>
+          loader.importLibrary(l)
+        )
+      )
       setGoogleLoaded(true)
     }
     initializeGoogleMaps().catch((error) =>
