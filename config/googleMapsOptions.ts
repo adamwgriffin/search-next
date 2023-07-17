@@ -4,8 +4,7 @@ import type { Libraries, LoaderOptions } from '@googlemaps/js-api-loader'
 // your api key and the libraries you want to load go here
 export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: '',
-  // TODO: change this once AdvancedMarkerView is out of beta
-  version: 'beta'
+  version: '3.53'
 }
 
 export const AppGoogleMapsLoaderOptions: LoaderOptions = {

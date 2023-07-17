@@ -49,14 +49,14 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       />
     )
 
-    const marker = new google.maps.marker.AdvancedMarkerView({
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       map: googleMap,
       position: listingLocationToLatLngLiteral(listing),
       content: markerContainer
     })
 
-    marker.addListener('gmp-click', () => onClick?.(listing._id))
-    // there are only a few events that AdvancedMarkerView supports, so we have to attach events to the element for
+    marker.addListener('click', () => onClick?.(listing._id))
+    // there are only a few events that AdvancedMarkerElement supports, so we have to attach events to the element for
     // others.
     const element = marker.element as HTMLElement
     element.style.zIndex = highlighted ? '10000' : zIndex.toString()
