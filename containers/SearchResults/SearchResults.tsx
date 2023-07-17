@@ -16,7 +16,7 @@ import {
   selectListingSearchRunning,
 } from '../../store/listingSearch/listingSearchSelectors'
 import { setFilters, clearFilters } from '../../store/filters/filtersSlice'
-import { selectSortBy } from '../../store/filters/filtersSelectors'
+import { selectSortBy, selectSearchType } from '../../store/filters/filtersSelectors'
 import { openModal } from '../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../lib/url'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'
@@ -26,6 +26,7 @@ const SearchResults: NextPage = () => {
   const dispatch = useAppDispatch()
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const sortBy = useAppSelector(selectSortBy)
+  const searchType = useAppSelector(selectSearchType)
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
@@ -73,6 +74,7 @@ const SearchResults: NextPage = () => {
         totalListings={pagination.total}
         listingSearchRunning={listingSearchRunning}
         sortBy={sortBy}
+        searchType={searchType}
         onSortMenuChange={handleSortMenuChange}
       />
       {(listings.length > 0 || listingSearchRunning) && (

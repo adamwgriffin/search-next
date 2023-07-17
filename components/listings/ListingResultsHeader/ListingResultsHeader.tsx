@@ -1,13 +1,15 @@
 import type { NextPage } from 'next'
-import type { SortFilters } from '../../../store/filters/filtersTypes'
+import type { SortFilters, SearchTypeOption } from '../../../store/filters/filtersTypes'
 import styles from './ListingResultsHeader.module.css'
 import ContentLoader from 'react-content-loader'
 import SortMenu from '../../form/SortMenu/SortMenu'
+import { SearchTypes } from '../../../store/filters/filtersSlice'
 
 export interface ListingResultsHeaderProps {
   totalListings: number
   listingSearchRunning: boolean
   sortBy: SortFilters
+  searchType: SearchTypeOption
   onSortMenuChange: (sortParams: SortFilters) => void
 }
 
@@ -15,12 +17,25 @@ const ListingResultsHeader: NextPage<ListingResultsHeaderProps> = ({
   totalListings,
   listingSearchRunning,
   sortBy,
+  searchType,
   onSortMenuChange
 }) => {
-  const totalListingsMessage = () =>
-    `${totalListings.toLocaleString()} ${
-      totalListings === 1 ? 'Home' : 'Homes'
-    }`
+  const totalListingsMessage = () => {
+    const plural =  totalListings > 1
+    let searchedFor
+    switch (searchType) {
+      case SearchTypes.Buy:
+        searchedFor = plural ? 'Homes' : 'Home'
+        break;
+      case SearchTypes.Rent:
+        searchedFor = plural ? 'Rentals' : 'Rental'
+        break;
+      case SearchTypes.Sold:
+        searchedFor = plural ? 'Sold Homes' : 'Sold Home'
+        break;
+    }
+    return `${totalListings.toLocaleString()} ${searchedFor}`
+  }
 
   return (
     <div className={styles.listingResultsHeader}>
