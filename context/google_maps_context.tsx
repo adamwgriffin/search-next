@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode} from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'
 import type { Dispatch } from 'react'
@@ -8,7 +8,7 @@ import { DefaultGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
 
 export interface GoogleMapsContextInterface {
   googleLoaded: boolean
-  googleMap: google.maps.Map|null
+  googleMap: google.maps.Map | null
   setGoogleMap: Dispatch<google.maps.Map>
 }
 
@@ -34,7 +34,7 @@ const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
 }) => {
   const [googleLoaded, setGoogleLoaded] = useState(false)
   // this will be set later by the GoogleMap component since it generates the div we need to create the map instance
-  const [googleMap, setGoogleMap] = useState<google.maps.Map|null>(null)
+  const [googleMap, setGoogleMap] = useState<google.maps.Map | null>(null)
 
   // there is no npm module for the google maps api. you have to load it via a script tag. @googlemaps/js-api-loader
   // just creates a nice interface that you can use to create the script tag dynamically, and returns a promise that
@@ -44,7 +44,9 @@ const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
       if (typeof google === 'undefined') await new Loader(loaderOptions).load()
       setGoogleLoaded(true)
     }
-    initializeGoogleMaps().catch(error => console.error("Unable to load Google Maps API", error))
+    initializeGoogleMaps().catch((error) =>
+      console.error('Unable to load Google Maps API', error)
+    )
   })
 
   // passing the specific data we want as an object to the value prop in the Provider component is what makes it
@@ -58,4 +60,3 @@ const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
 }
 
 export default GoogleMapsProvider
-
