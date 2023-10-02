@@ -1,3 +1,5 @@
+'use client'
+
 import type { NextPage } from 'next'
 import type { ModalType } from '../../../store/application/applicationSlice'
 import { selectModal } from '../../../store/application/applicationSlice'

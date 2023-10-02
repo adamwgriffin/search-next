@@ -1,6 +1,8 @@
+'use client'
+
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useParams } from 'next/navigation'
 import css from 'styled-jsx/css'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
@@ -13,14 +15,14 @@ import ListingDetailHeader from '../../../containers/ListingDetailHeader/Listing
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
 
 const ListingPage: NextPage = () => {
-  const router = useRouter()
+  const params = useParams()
   const dispatch = useAppDispatch()
   const listing = useAppSelector(selectListing)
 
   useEffect(() => {
-    router.query.listing_id &&
-      dispatch(getListingDetail(router.query.listing_id))
-  }, [router.query.listing_id, dispatch])
+    params?.listing_id &&
+      dispatch(getListingDetail(params?.listing_id))
+  }, [params?.listing_id, dispatch])
 
   return (
     <>

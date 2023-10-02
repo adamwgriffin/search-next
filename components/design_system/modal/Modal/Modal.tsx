@@ -13,7 +13,7 @@ export interface ModalProps {
   onAfterClose?: () => void
 }
 
-ReactModal.setAppElement('#__next')
+ReactModal.setAppElement('body')
 
 const Modal: NextPage<ModalProps> = ({
   isOpen = false,

@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useState, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
 import type { NextPage } from 'next'

@@ -1,26 +1,33 @@
-import type { FiltersState } from '../store/filters/filtersTypes'
+'use client'
+
+import type { FiltersState } from '../../store/filters/filtersTypes'
 import type { NextPage } from 'next'
 import { useState, useCallback, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter, usePathname } from 'next/navigation'
+import { useEvent } from 'react-use'
 import isEqual from 'lodash/isEqual'
-import { useAppSelector, useAppDispatch } from '../hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks'
 import {
   listingSearchURLParamsToSearchState,
   searchStateToListingSearchURLParams
-} from '../lib/url'
-import { clearFilters, setFilters } from '../store/filters/filtersSlice'
+} from '../../lib/url'
+import {
+  initialState,
+  clearFilters,
+  setFilters
+} from '../../store/filters/filtersSlice'
 import {
   selectInitialSearchComplete,
   selectListingSearchRunning
-} from '../store/listingSearch/listingSearchSelectors'
-import Search from '../containers/Search/Search'
-import { selectSearchState } from '../store/filters/filtersSelectors'
+} from '../../store/listingSearch/listingSearchSelectors'
+import Search from '../../containers/Search/Search'
+import { selectSearchState } from '../../store/filters/filtersSelectors'
 import {
   searchNewLocation,
   searchCurrentLocation
-} from '../store/listingSearch/listingSearchSlice'
-import GoogleMapsProvider from '../context/google_maps_context'
-import { AppGoogleMapsLoaderOptions } from '../config/googleMapsOptions'
+} from '../../store/listingSearch/listingSearchSlice'
+import GoogleMapsProvider from '../../context/google_maps_context'
+import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 
 export interface SearchPageProps {
   params: string[]
@@ -28,6 +35,7 @@ export interface SearchPageProps {
 
 const SearchPage: NextPage<SearchPageProps> = () => {
   const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useAppDispatch()
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const initialSearchComplete = useAppSelector(selectInitialSearchComplete)
@@ -36,14 +44,21 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     useState<Partial<FiltersState>>()
 
   // get the browser url query string, convert it to a state object, use it to set the state, then run a new search
-  // based on that state
+  // based on that state.
+  // TODO: we will eventually validate query params with zod and throw away any that are invalid, so that we can
+  // guarantee that this function will always be passed valid data
   const getSearchParamsAndSetSearchState =
     useCallback((): Partial<FiltersState> => {
-      // TODO: will eventually validate query params with zod and throw away any that are invalid, so that we can
-      // guarantee that this function will always be passed valid data
-      const newSearchState = listingSearchURLParamsToSearchState(
-        new URLSearchParams(window.location.search)
-      )
+      // we have to include all the intial state and then override those defaults with the params from the url. this is
+      // necessary because the url only includes params that are different from the default filters. it is possible for
+      // the app's filters to have been changed from the default but then a brand new url is entered. in that scenario
+      // the internal state and the url params may get out of sync.
+      const newSearchState = {
+        ...initialState,
+        ...listingSearchURLParamsToSearchState(
+          new URLSearchParams(window.location.search)
+        )
+      }
       dispatch(setFilters(newSearchState))
       return newSearchState
     }, [dispatch])
@@ -63,29 +78,23 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history, and then run a new search to match the url params. the "popstate" event
   // is triggered whenever the history is changed by the user in this way.
-  useEffect(() => {
-    router.beforePopState(() => {
-      // avoid running a search if previous/next url moves us away from the search page, e.g., going from /homes to /
-      if (window.location.pathname === router.pathname) {
-        const newSearchState = getSearchParamsAndSetSearchState()
-        if (
-          newSearchState.locationSearchField ===
-          previousSearchState?.locationSearchField
-        ) {
-          dispatch(searchCurrentLocation())
-        } else {
-          dispatch(searchNewLocation())
-        }
-      }
-      // the router will not navigate to the new url automatically unless we return true
-      return true
-    })
+  const onPopState = useCallback(() => {
+    const newSearchState = getSearchParamsAndSetSearchState()
+    if (
+      newSearchState.locationSearchField ===
+      previousSearchState?.locationSearchField
+    ) {
+      dispatch(searchCurrentLocation())
+    } else {
+      dispatch(searchNewLocation())
+    }
   }, [
     dispatch,
     getSearchParamsAndSetSearchState,
-    previousSearchState?.locationSearchField,
-    router
+    previousSearchState?.locationSearchField
   ])
+
+  useEvent('popstate', onPopState)
 
   // each time the user triggers a new search, we want to update the url, so that if the user were to visit this new
   // url, it would load this specific search. we're checking initialSearchComplete here because we don't want to change
@@ -100,10 +109,11 @@ const SearchPage: NextPage<SearchPageProps> = () => {
       // avoid updating unless the searchState changed, otherwise clicking the back button will not change the url
       !isEqual(searchState, previousSearchState)
     if (shouldUpdateURL) {
-      router.push({
-        pathname: router.pathname,
-        query: searchStateToListingSearchURLParams(searchState)
-      })
+      router.push(
+        pathname +
+          '?' +
+          new URLSearchParams(searchStateToListingSearchURLParams(searchState))
+      )
       setPreviousSearchState(searchState)
     }
   }, [
@@ -111,7 +121,8 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     initialSearchComplete,
     searchState,
     previousSearchState,
-    router
+    router,
+    pathname
   ])
 
   return (
