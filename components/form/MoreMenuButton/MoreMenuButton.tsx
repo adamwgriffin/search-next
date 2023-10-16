@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
-import css from 'styled-jsx/css'
+import { useMedia } from 'react-use'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
+import styles from './MoreMenuButton.module.css'
 
 export interface MoreMenuButtonProps {
-  children: ReactNode
+  children: React.ReactNode
   onClose?: () => void
 }
 
@@ -12,43 +12,20 @@ const MoreMenuButton: NextPage<MoreMenuButtonProps> = ({
   children,
   onClose
 }) => {
+  const isLargeAndUp = useMedia('(min-width: 992px)', false)
   return (
-    <>
-      <MenuButton label='More' className={className} onClose={onClose}>
+    <MenuButton
+      label='More'
+      onClose={onClose}
+      alignRight={isLargeAndUp}
+      alignCenter={!isLargeAndUp}
+    >
+      <div className={styles.moreMenuButtonContainer}>
         {children}
-      </MenuButton>
-      {styles}
-    </>
+      </div>
+    </MenuButton>
+
   )
 }
-
-const { className, styles } = css.resolve`
-  .menu {
-    left: auto;
-    right: auto;
-  }
-
-  /* smallAndUp */
-  @media only screen and (min-width: 576px) {
-    .menu {
-      left: 50%;
-      right: auto;
-      transform: translateX(-50%);
-      padding: 1rem;
-      overflow-y: auto;
-      width: 28rem;
-      max-height: 80vh;
-    }
-  }
-
-  /* largeAndUp */
-  @media only screen and (min-width: 992px) {
-    .menu {
-      left: auto;
-      right: 0;
-      transform: none;
-    }
-  }
-`
 
 export default MoreMenuButton

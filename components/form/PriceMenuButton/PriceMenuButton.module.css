@@ -1,0 +1,22 @@
+@value largeAndUp from '../../../styles//breakpoints.module.css';
+
+.priceMenuOpen {
+  composes: menuOpen from '../../design_system/MenuDropdown/MenuDropdown.module.css';
+  right: auto;
+}
+
+.priceMenuClosed {
+  composes: menuClosed from '../../design_system/MenuDropdown/MenuDropdown.module.css';
+  right: auto;
+}
+
+.priceMenuContainer {
+  padding: 1rem;
+  width: 22rem;
+}
+
+@media largeAndUp {
+  .priceMenuOpen {
+    right: 0;
+  }
+}

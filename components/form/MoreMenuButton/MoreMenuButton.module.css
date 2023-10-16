@@ -1,0 +1,6 @@
+.moreMenuButtonContainer {
+  padding: 1rem;
+  overflow-y: auto;
+  width: 28rem;
+  max-height: 80vh;
+}

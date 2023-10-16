@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
-import css from 'styled-jsx/css'
+import { useMedia } from 'react-use'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
+import breakpointStyles from '../../../styles/breakpoints.module.css'
+import styles from './PriceMenuButton.module.css'
 
 export interface PriceMenuButtonProps {
-  children: ReactNode
+  children: React.ReactNode
   onClose?: () => void
 }
 
@@ -12,28 +13,19 @@ const PriceMenuButton: NextPage<PriceMenuButtonProps> = ({
   children,
   onClose
 }) => {
+  const isLargeAndUp = useMedia(breakpointStyles.largeAndUp, false)
+
   return (
-    <>
-      <MenuButton label='Price' className={className} onClose={onClose}>
+    <MenuButton
+      label='Price'
+      alignRight={isLargeAndUp}
+      onClose={onClose}
+    >
+      <div className={styles.priceMenuContainer}>
         {children}
-      </MenuButton>
-      {styles}
-    </>
+      </div>
+    </MenuButton>
   )
 }
-
-const { className, styles } = css.resolve`
-  .menu {
-    right: auto;
-    padding: 1rem;
-    width: 22rem;
-  }
-
-  @media only screen and (min-width: 992px) {
-    .menu {
-      right: 0;
-    }
-  }
-`
 
 export default PriceMenuButton

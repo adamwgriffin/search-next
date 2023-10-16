@@ -1,19 +1,19 @@
 import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
 import { useToggle } from 'react-use'
-import css from 'styled-jsx/css'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import OutlinedButton from '../OutlinedButton/OutlinedButton'
 import MenuOpenIcon from '../icons/MenuOpenIcon/MenuOpenIcon'
+import styles from './MenuButton.module.css'
 
 interface MenuButtonProps {
   label: string
+  alignCenter?: boolean
   alignRight?: boolean
   alignBottom?: boolean
   highlighted?: boolean
   condensed?: boolean
-  className?: string
   children: ReactNode
   onOpen?: () => void
   onClose?: () => void
@@ -21,11 +21,11 @@ interface MenuButtonProps {
 
 const MenuButton: NextPage<MenuButtonProps> = ({
   label,
+  alignCenter = false,
   alignRight = false,
   alignBottom = false,
   highlighted = false,
   condensed = false,
-  className,
   children,
   onOpen,
   onClose
@@ -39,28 +39,21 @@ const MenuButton: NextPage<MenuButtonProps> = ({
         onClick={toggleMenu}
         condensed={condensed}
       >
-        <span className='label'>{label}</span>
+        <span className={styles.label}>{label}</span>
         <MenuOpenIcon open={open} />
       </OutlinedButton>
       <MenuDropdown
         open={open}
+        alignCenter={alignCenter}
         alignRight={alignRight}
         alignBottom={alignBottom}
-        className={className}
         onOpen={onOpen}
         onClose={onClose}
       >
         {children}
       </MenuDropdown>
-      <style jsx>{styles}</style>
     </MenuContainter>
   )
 }
-
-const styles = css`
-  .label {
-    margin-right: 0.5rem;
-  }
-`
 
 export default MenuButton

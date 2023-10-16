@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
-import css from 'styled-jsx/css'
+import { useMedia } from 'react-use'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
+import styles from './BedsAndBathsMenuButton.module.css'
 
 export interface BedsAndBathsMenuButtonProps {
-  children: ReactNode
+  children: React.ReactNode
   onClose?: () => void
 }
 
@@ -12,35 +12,19 @@ const BedsAndBathsMenuButton: NextPage<BedsAndBathsMenuButtonProps> = ({
   children,
   onClose
 }) => {
+  const isLargeAndUp = useMedia('(min-width: 992px)', false)
+
   return (
-    <>
-      <MenuButton label='Beds & Baths' className={className} onClose={onClose}>
+    <MenuButton
+      label='Beds & Baths'
+      alignRight={isLargeAndUp}
+      onClose={onClose}
+    >
+      <div className={styles.bedsAndBathsMenuContainer}>
         {children}
-      </MenuButton>
-      {styles}
-    </>
+      </div>
+    </MenuButton>
   )
 }
-
-const { className, styles } = css.resolve`
-  .menu {
-    right: auto;
-  }
-
-  /* smallAndUp */
-  @media only screen and (min-width: 576px) {
-    .menu {
-      min-width: 440px;
-      padding: 1rem;
-    }
-  }
-
-  /* largeAndUp */
-  @media only screen and (min-width: 992px) {
-    .menu {
-      right: 0;
-    }
-  }
-`
 
 export default BedsAndBathsMenuButton
