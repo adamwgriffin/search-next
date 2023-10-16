@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
+import StyledJsxRegistry from './registry'
 import ReduxProvider from '../context/ReduxProvider'
 import ThemeProvider from '../context/ThemeProvider'
 import ModalRoot from '../containers/modals/ModalRoot/ModalRoot'
@@ -19,12 +20,14 @@ export default function RootLayout({
     // warning
     <html lang='en' suppressHydrationWarning>
       <body>
-        <ReduxProvider>
-          <ThemeProvider>
-            {children}
-            <ModalRoot />
-          </ThemeProvider>
-        </ReduxProvider>
+        <StyledJsxRegistry>
+          <ReduxProvider>
+            <ThemeProvider>
+              {children}
+              <ModalRoot />
+            </ThemeProvider>
+          </ReduxProvider>
+        </StyledJsxRegistry>
       </body>
     </html>
   )
