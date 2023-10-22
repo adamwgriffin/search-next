@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { useMemo } from 'react'
 import { useMedia } from 'react-use'
 import { useGoogleMaps } from '../../../context/google_maps_context'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
@@ -12,13 +13,9 @@ import ZoomControl from '../ZoomControl/ZoomControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
   setBoundaryActive,
-  setMapData} from '../../../store/listingMap/listingMapSlice'
-import {
-  selectBoundaryActive,
-  selectGeoLayerBounds,
-  selectZoom,
-  selectGeoLayerCoordinates
-} from '../../../store/listingMap/listingMapSelectors'
+  setMapData
+} from '../../../store/listingMap/listingMapSlice'
+import { selectMapState } from '../../../store/listingMap/listingMapSelectors'
 import {
   setDoListingSearchOnMapIdle,
   setSelectedListing,
@@ -34,21 +31,37 @@ import {
 import { resetStartIndex } from '../../../store/filters/filtersSlice'
 import { openModal } from '../../../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../../../lib/url'
+import { getGeoLayerBounds } from '../../../lib/polygon'
 
 const ListingMap: NextPage = () => {
   const dispatch = useAppDispatch()
   const { googleLoaded } = useGoogleMaps()
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
-  const boundaryActive = useAppSelector(selectBoundaryActive)
-  const geoLayerBounds = useAppSelector(selectGeoLayerBounds)
-  const zoom = useAppSelector(selectZoom)
-  const geoLayerCoordinates = useAppSelector(selectGeoLayerCoordinates)
+  const mapState = useAppSelector(selectMapState)
   const doListingSearchOnMapIdle = useAppSelector(
     selectDoListingSearchOnMapIdle
   )
   const listings = useAppSelector(selectListings)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const highlightedMarker = useAppSelector(selectHighlightedMarker)
+
+  // Memoizing bounds is important here because without it we can wind up in an endless loop. With each render, we pass
+  // bounds to the <GoogleMap> bounds prop, which causes <GoogleMap> to call fitBounds(bounds). Calling fitBounds()
+  // triggers an onIdle event from <GoogleMap>, which we handle by dispatching setMap. since setMap changes the
+  // listingtMap store, it may cause <ListingMap> to re-render. without useMemo the bounds can be exactly the same but
+  // will have a new reference ID, which will trigger the cycle again as if there were new bounds.
+  //
+  // We're checking googleLoaded because the getGeoLayerBounds function depends on google being loaded to be able to
+  // create a bounds object. It's also important to track googleLoaded in the dependency array here because we want to
+  // make sure that bounds updates once google is loaded if there are bounds available. If we don't do that the map
+  // sometimes gets zoomed out too far because <GoogleMap> never gets the bounds, and therefore doesn't call fitBounds(),
+  // which would adjust the zoom. This is also why we switched to useMemo instead of createSelector for this: the bug
+  // showed up and there was no simple way to track googleLoaded like this with createSelector.
+  const bounds = useMemo(() => {
+    return googleLoaded && mapState.geoLayerCoordinates.length
+      ? getGeoLayerBounds(mapState.geoLayerCoordinates)
+      : null
+  }, [googleLoaded, mapState.geoLayerCoordinates])
 
   const handleListingMarkerMouseEnter = (listingid: string) => {
     isSmallAndUp && dispatch(setSelectedListing(listingid))
@@ -87,15 +100,15 @@ const ListingMap: NextPage = () => {
   }
 
   const handleZoomIn = () => {
-    handleUserAdjustedMap({ zoom: zoom + 1 })
+    handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
   }
 
   const handleZoomOut = () => {
-    handleUserAdjustedMap({ zoom: zoom - 1 })
+    handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
   }
 
-  const handleIdle = (currentMapState: GoogleMapState) => {
-    dispatch(setMapData(currentMapState))
+  const handleIdle = (newMapState: GoogleMapState) => {
+    dispatch(setMapData(newMapState))
     if (doListingSearchOnMapIdle) {
       dispatch(setDoListingSearchOnMapIdle(false))
       dispatch(searchCurrentLocation())
@@ -107,8 +120,8 @@ const ListingMap: NextPage = () => {
       <div className={styles.listingMap}>
         <GoogleMap
           options={DefaultMapOptions}
-          bounds={geoLayerBounds}
-          zoom={zoom}
+          bounds={bounds}
+          zoom={mapState.zoom}
           onIdle={handleIdle}
           onDragEnd={handleUserAdjustedMap}
           onZoomChanged={handleUserAdjustedMap}
@@ -125,13 +138,13 @@ const ListingMap: NextPage = () => {
             />
           ))}
           <MapBoundary
-            coordinates={geoLayerCoordinates}
-            visible={boundaryActive}
+            coordinates={mapState.geoLayerCoordinates}
+            visible={mapState.boundaryActive}
             options={MapBoundaryOptions}
           />
         </GoogleMap>
         <MapControl
-          boundaryActive={boundaryActive}
+          boundaryActive={mapState.boundaryActive}
           listingSearchRunning={listingSearchRunning}
           onBoundaryControlClick={handleBoundaryControlClick}
         />

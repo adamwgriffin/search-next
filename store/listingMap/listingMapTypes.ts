@@ -11,3 +11,8 @@ export interface ListingMapState {
   zoom: number
   geoLayerCoordinates: GeoLayerCoordinates
 }
+
+export type ListingMapStateForMap = Omit<
+  ListingMapState,
+  'boundsNorth' | 'boundsEast' | 'boundsSouth' | 'boundsWest'
+>
