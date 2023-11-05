@@ -11,12 +11,12 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=[the Google Maps API key]
 NEXT_PUBLIC_GOOGLE_MAPS_ID=[A Map ID is required for the version of Google Maps API that we use]
 NEXT_PUBLIC_LOCALE=en-US
 NEXT_PUBLIC_CURRENCY=USD
-SERVICE_BASE=[Domain name for the Listing Service]
+SERVICE_BASE=http://localhost:3001
 ```
 
 Install:
-* Node.js >= 18.12.1 
-* yarn >= 1.22.10
+* Node.js >= 18.17.0 
+* yarn >= 1.22.19
 
 If you use asdf you can just run `asdf install` for node.
 
