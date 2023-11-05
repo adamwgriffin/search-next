@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types/listing_types'
 import { useEffect, memo } from 'react'
 import { createRoot } from 'react-dom/client'
-import { useGoogleMaps } from '../../../context/google_maps_context'
+import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
 import { listingLocationToLatLngLiteral } from '../../../lib/listing_helpers'
 

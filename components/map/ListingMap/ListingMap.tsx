@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useMemo } from 'react'
 import { useMedia } from 'react-use'
-import { useGoogleMaps } from '../../../context/google_maps_context'
+import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'

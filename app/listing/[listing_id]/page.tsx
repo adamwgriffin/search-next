@@ -9,7 +9,7 @@ import {
   getListingDetail,
   selectListing
 } from '../../../store/listingDetail/listingDetailSlice'
-import GoogleMapsProvider from '../../../context/google_maps_context'
+import GoogleMapsProvider from '../../../providers/GoogleMapsProvider'
 import { AppGoogleMapsLoaderOptions } from '../../../config/googleMapsOptions'
 import ListingDetailHeader from '../../../containers/ListingDetailHeader/ListingDetailHeader'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'

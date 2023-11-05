@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useRef, useEffect, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
-import { useGoogleMaps } from '../../../context/google_maps_context'
+import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import styles from './GoogleMap.module.css'
 
 export interface GoogleMapProps {

@@ -26,7 +26,7 @@ import {
   searchNewLocation,
   searchCurrentLocation
 } from '../../store/listingSearch/listingSearchSlice'
-import GoogleMapsProvider from '../../context/google_maps_context'
+import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 
 export interface SearchPageProps {

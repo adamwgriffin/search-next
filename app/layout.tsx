@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import '../styles/globals.css'
-import StyledJsxRegistry from './registry'
-import ReduxProvider from '../context/ReduxProvider'
-import ThemeProvider from '../context/ThemeProvider'
+import StyledJsxRegistry from '../providers/StyledJsxRegistry'
+import ReduxProvider from '../providers/ReduxProvider'
+import ThemeProvider from '../providers/ThemeProvider'
 import ModalRoot from '../containers/modals/ModalRoot/ModalRoot'
 
 export const metadata: Metadata = {
