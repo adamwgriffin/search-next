@@ -1,0 +1,6 @@
+.noUserImageIcon {
+  display: block;
+  height: 30px;
+  width: 30px;
+  fill: var(--no-user-image-icon);
+}

@@ -1,12 +1,17 @@
+'use client'
+
 import type { NextPage } from 'next'
 import { useToggle } from 'react-use'
-import styles from './Login.module.css'
+import { useSession } from 'next-auth/react'
+import styles from './UserMenu.module.css'
 import MenuContainter from '../../design_system/MenuContainter/MenuContainter'
 import MenuDropdown from '../../design_system/MenuDropdown/MenuDropdown'
 import HamburgerIcon from '../../design_system/icons/HamburgerIcon/HamburgerIcon'
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
+import Avatar from '../Avatar/Avatar'
 
-const Login: NextPage = () => {
+const UserMenu: NextPage = () => {
+  const { data: session } = useSession()
   const [open, toggleMenu] = useToggle(false)
 
   return (
@@ -16,14 +21,16 @@ const Login: NextPage = () => {
       </button>
       <MenuDropdown open={open} alignRight>
         <div className={styles.loginMenu}>
+          <Avatar src={session?.user?.image} />
           <h1 className={styles.user}>
-            John Doe
+            {session?.user?.name}
           </h1>
           <ThemeSwitcher />
+          <p>Sign Out</p>
         </div>
       </MenuDropdown>
     </MenuContainter>
   )
 }
 
-export default Login
+export default UserMenu

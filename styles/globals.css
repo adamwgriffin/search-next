@@ -31,6 +31,7 @@ body,
   --listing-marker-background-highlighted: var(--primary);
   --listing-marker-foreground-highlighted: white;
   --map-control: var(--background);
+  --no-user-image-icon: #6b7280;
 }
 
 [data-theme='purple'] {
@@ -40,6 +41,7 @@ body,
   --logo: var(--primary-dark);
   --search-button-background: var(--primary);
   --search-button-background-hover: var(--primary-dark);
+  --no-user-image-icon: #d1d5db;
 }
 
 [data-theme='orange'] {
