@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "prisma:migrate:local": "dotenv -e .env.local prisma migrate dev",
+    "prisma:push:local": "dotenv -e .env.local prisma db push"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
