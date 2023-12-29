@@ -1,0 +1,28 @@
+.page {
+  max-width: 36rem;
+  padding: 5rem 0;
+  margin: 0 auto;
+}
+
+.login {
+  border-radius: 0.75rem;
+  border: solid var(--outline) 1px;
+}
+
+.header {
+  padding: 1.5rem;
+  border-bottom: solid var(--outline) 1px;
+}
+
+.heading {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4;
+  padding: 2rem;
+}
