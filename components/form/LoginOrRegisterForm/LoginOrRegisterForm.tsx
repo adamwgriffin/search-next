@@ -1,21 +1,17 @@
 'use client'
 
-import ContainedButton from '../../design_system/ContainedButton/ContainedButton'
+import { signIn } from 'next-auth/react'
 import LoginButton from '../LoginButton/LoginButton'
 import { FcGoogle } from 'react-icons/fc'
 import { AiFillGithub } from 'react-icons/ai'
 import styles from './LoginOrRegisterForm.module.css'
 
 export interface LoginOrRegisterFormProps {
-  onToggleForm: () => void
-  showLoginForm: boolean
   onFormSuccess?: () => void
   callbackUrl?: string
 }
 
 const LoginOrRegisterForm: React.FC<LoginOrRegisterFormProps> = ({
-  onToggleForm,
-  showLoginForm,
   onFormSuccess,
   callbackUrl
 }) => {
@@ -23,8 +19,16 @@ const LoginOrRegisterForm: React.FC<LoginOrRegisterFormProps> = ({
     <>
       <p className={styles.message}>Login with</p>
       <div className={styles.loginButtons}>
-        <LoginButton icon={FcGoogle} label='Google' />
-        <LoginButton icon={AiFillGithub} label='Github' />
+        <LoginButton
+          icon={FcGoogle}
+          label='Google'
+          onClick={() => signIn('google', { callbackUrl })}
+        />
+        <LoginButton
+          icon={AiFillGithub}
+          label='Github'
+          onClick={() => signIn('github', { callbackUrl })}
+        />
       </div>
     </>
   )
