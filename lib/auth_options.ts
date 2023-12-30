@@ -16,6 +16,21 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET!
     })
   ],
+  callbacks: {
+    async jwt({ token, account, user }) {
+      // Persist the the user id to the token right after signin
+      if (account) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // Send the user id from that database to the client. This was added to the token in the jwt() callbacka above.
+      // This is accessible via the useSession() hook
+      session.user.id = token.id
+      return session
+    }
+  },
   pages: {
     signIn: '/login',
     signOut: '/?has_logged_out=1'
