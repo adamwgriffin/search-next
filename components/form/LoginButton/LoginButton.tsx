@@ -8,9 +8,17 @@ export interface LoginButtonProps {
   onClick?: () => void
 }
 
-const LoginButton: React.FC<LoginButtonProps> = ({ icon: Icon, label, onClick }) => {
+const LoginButton: React.FC<LoginButtonProps> = ({
+  icon: Icon,
+  label,
+  onClick
+}) => {
   return (
-    <ContainedButton onClick={onClick} backgroundColor='white'>
+    <ContainedButton
+      onClick={onClick}
+      textColor='var(--foreground)'
+      backgroundColor='white'
+    >
       <div className={styles.content}>
         <Icon size={24} /> {label}
       </div>
