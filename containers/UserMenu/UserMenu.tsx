@@ -2,29 +2,38 @@
 
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { signOut } from 'next-auth/react'
 import { useToggle } from 'react-use'
 import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
+import { useAppDispatch } from '../../hooks'
+import { openModal } from '../../store/application/applicationSlice'
 import styles from './UserMenu.module.css'
-import MenuContainter from '../../design_system/MenuContainter/MenuContainter'
-import MenuDropdown from '../../design_system/MenuDropdown/MenuDropdown'
-import HamburgerIcon from '../../design_system/icons/HamburgerIcon/HamburgerIcon'
-import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
-import Avatar from '../Avatar/Avatar'
+import MenuContainter from '../../components/design_system/MenuContainter/MenuContainter'
+import MenuDropdown from '../../components/design_system/MenuDropdown/MenuDropdown'
+import HamburgerIcon from '../../components/design_system/icons/HamburgerIcon/HamburgerIcon'
+import ThemeSwitcher from '../../components/header/ThemeSwitcher/ThemeSwitcher'
+import Avatar from '../../components/header/Avatar/Avatar'
 
 const UserMenu: NextPage = () => {
+  const dispatch = useAppDispatch()
   const { data: session } = useSession()
   const [open, toggleMenu] = useToggle(false)
 
   const handleLogout = useCallback(() => {
     toggleMenu(false)
-    console.log("TBD")
+    signOut({ redirect: false })
   }, [toggleMenu])
 
   const handleLogin = useCallback(() => {
     toggleMenu(false)
-    console.log("TBD")
-  }, [toggleMenu])
+    dispatch(
+      openModal({
+        modalType: 'loginOrRegister',
+        modalProps: { title: 'Login or Sign Up' }
+      })
+    )
+  }, [dispatch, toggleMenu])
 
   return (
     <MenuContainter onClickAway={() => toggleMenu(false)}>

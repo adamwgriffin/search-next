@@ -5,7 +5,7 @@ import { selectSearchState } from '../../store/filters/filtersSelectors'
 import styles from './ListingDetailHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
-import UserMenu from '../../components/header/UserMenu/UserMenu'
+import UserMenu from '../UserMenu/UserMenu'
 import { searchStateToListingSearchURLParams } from '../../lib/url'
 
 const ListingDetailHeader: NextPage = () => {

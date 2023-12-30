@@ -5,7 +5,7 @@ import styles from './SearchHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
 import Filters from '../Filters/Filters'
-import UserMenu from '../../components/header/UserMenu/UserMenu'
+import UserMenu from '../UserMenu/UserMenu'
 
 const SearchHeader: NextPage = () => {
   const dispatch = useAppDispatch()

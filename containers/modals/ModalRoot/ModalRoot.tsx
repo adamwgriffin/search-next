@@ -8,6 +8,7 @@ import FiltersModal from '../FiltersModal/FiltersModal'
 import SaveSearchModal from '../SaveSearchModal/SaveSearchModal'
 import ErrorModal from '../ErrorModal/ErrorModal'
 import ListingDetailModal from '../ListingDetailModal/ListingDetailModal'
+import LoginOrRegisterModal from '../LoginOrRegisterModal/LoginOrRegisterModal'
 
 export type ModalComponentTypes = Record<ModalType, NextPage<any>>
 
@@ -15,7 +16,8 @@ const ModalComponents: ModalComponentTypes = {
   filters: FiltersModal,
   saveSearch: SaveSearchModal,
   error: ErrorModal,
-  listingDetail: ListingDetailModal
+  listingDetail: ListingDetailModal,
+  loginOrRegister: LoginOrRegisterModal
 }
 
 const ModalRoot: NextPage= () => {

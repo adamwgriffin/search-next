@@ -4,17 +4,24 @@ import type { FiltersModalProps } from '../../containers/modals/FiltersModal/Fil
 import type { SaveSearchModalProps } from '../../containers/modals/SaveSearchModal/SaveSearchModal'
 import type { ErrorModalProps } from '../../containers/modals/ErrorModal/ErrorModal'
 import type { ListingDetailModalProps } from '../../containers/modals/ListingDetailModal/ListingDetailModal'
+import type { LoginOrRegisterModalProps } from '../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
 import { createSlice } from '@reduxjs/toolkit'
 
 export type ViewType = 'list' | 'map'
 
-export type ModalType = 'filters' | 'saveSearch' | 'error' | 'listingDetail'
+export type ModalType =
+  | 'filters'
+  | 'saveSearch'
+  | 'error'
+  | 'listingDetail'
+  | 'loginOrRegister'
 
 export type ModalPropsTypes =
   | FiltersModalProps
   | SaveSearchModalProps
   | ErrorModalProps
   | ListingDetailModalProps
+  | LoginOrRegisterModalProps
   | null
 
 export interface ApplicationState {
@@ -64,7 +71,8 @@ export const applicationSlice = createSlice({
   }
 })
 
-export const { setViewType, openModal, closeModal, resetModal } = applicationSlice.actions
+export const { setViewType, openModal, closeModal, resetModal } =
+  applicationSlice.actions
 
 export const selectViewType = (state: AppState) => state.application.viewType
 
