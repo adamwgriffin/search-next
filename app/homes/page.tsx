@@ -2,6 +2,7 @@
 
 import type { FiltersState } from '../../store/filters/filtersTypes'
 import type { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import { useState, useCallback, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useEvent } from 'react-use'
@@ -26,6 +27,7 @@ import {
   searchNewLocation,
   searchCurrentLocation
 } from '../../store/listingSearch/listingSearchSlice'
+import { getCurrentUser } from '../../store/user/userSlice'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 
@@ -34,6 +36,7 @@ export interface SearchPageProps {
 }
 
 const SearchPage: NextPage<SearchPageProps> = () => {
+  const { status } = useSession()
   const router = useRouter()
   const pathname = usePathname()
   const dispatch = useAppDispatch()
@@ -42,6 +45,12 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   const searchState = useAppSelector(selectSearchState)
   const [previousSearchState, setPreviousSearchState] =
     useState<Partial<FiltersState>>()
+  
+  useEffect(() => {
+    if (status === 'authenticated') {
+      dispatch(getCurrentUser())
+    }
+  }, [dispatch, status])
 
   // get the browser url query string, convert it to a state object, use it to set the state, then run a new search
   // based on that state.
