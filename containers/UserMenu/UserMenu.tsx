@@ -8,6 +8,7 @@ import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useAppDispatch } from '../../hooks'
 import { openModal } from '../../store/application/applicationSlice'
+import { resetCurrentUser } from '../../store/user/userSlice'
 import styles from './UserMenu.module.css'
 import MenuContainter from '../../components/design_system/MenuContainter/MenuContainter'
 import MenuDropdown from '../../components/design_system/MenuDropdown/MenuDropdown'
@@ -20,10 +21,11 @@ const UserMenu: NextPage = () => {
   const { data: session } = useSession()
   const [open, toggleMenu] = useToggle(false)
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
     toggleMenu(false)
-    signOut({ redirect: false })
-  }, [toggleMenu])
+    await signOut({ redirect: false })
+    dispatch(resetCurrentUser())
+  }, [dispatch, toggleMenu])
 
   const handleLogin = useCallback(() => {
     toggleMenu(false)
