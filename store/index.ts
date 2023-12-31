@@ -7,6 +7,7 @@ import listingDetailReducer from './listingDetail/listingDetailSlice'
 import listingMapReducer from './listingMap/listingMapSlice'
 import autocompleteReducer from './autocomplete/autocompleteSlice'
 import errorReducer from './error/errorSlice'
+import useReducer from './user/userSlice'
 
 export function makeStore() {
   return configureStore({
@@ -17,7 +18,8 @@ export function makeStore() {
       listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
       autocomplete: autocompleteReducer,
-      error: errorReducer
+      error: errorReducer,
+      user: useReducer
     },
   })
 }
