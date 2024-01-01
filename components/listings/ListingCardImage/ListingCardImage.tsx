@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
 import ListingMainImage from '../ListingMainImage/ListingMainImage'
-import FavoriteButton from '../FavoriteButton/FavoriteButton'
+import FavoriteButton from '../../../containers/FavoriteButton/FavoriteButton'
 
 export interface ListingCardImageProps {
   listing: Listing
@@ -12,7 +12,7 @@ const ListingCardImage: NextPage<ListingCardImageProps> = ({ listing }) => {
   return (
     <div className='listingCardImage'>
       <div className='favoriteButtonContainer'>
-        <FavoriteButton />
+        <FavoriteButton listingId={listing._id} />
       </div>
       <ListingMainImage
         image={listing.photoGallery[0]}
