@@ -1,7 +1,14 @@
 @value smallAndUp from '../../../../styles/breakpoints.module.css';
 
 .listingDetailImage {
+  position: relative;
   height: 20rem;
+}
+
+.favoriteButtonContainer {
+  position: absolute;
+  right: 0;
+  margin: .5rem;
 }
 
 @media smallAndUp {

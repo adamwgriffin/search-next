@@ -1,27 +1,27 @@
 import type { NextPage } from 'next'
-import type { IPhotoGalleryImage } from '../../../../lib/types/listing_types'
+import type { IListingDetail } from '../../../../lib/types/listing_types'
 import styles from './ListingDetailImage.module.css'
 import ListingMainImage from '../../ListingMainImage/ListingMainImage'
+import FavoriteButton from '../../../../containers/FavoriteButton/FavoriteButton'
 
 export interface ListingDetailImageProps {
-  images: IPhotoGalleryImage[]
-  latitude: number
-  longitude: number
+  listing: IListingDetail
   onClick?: () => void
 }
 
 const ListingDetailImage: NextPage<ListingDetailImageProps> = ({
-  images,
-  latitude,
-  longitude,
+  listing,
   onClick
 }) => {
   return (
     <div className={styles.listingDetailImage}>
+      <div className={styles.favoriteButtonContainer}>
+        <FavoriteButton listingId={listing._id} />
+      </div>
       <ListingMainImage
-        image={images[0]}
-        latitude={latitude}
-        longitude={longitude}
+        image={listing.photoGallery[0]}
+        latitude={listing.latitude}
+        longitude={listing.longitude}
         size='full'
         style={{
           objectFit: 'cover',

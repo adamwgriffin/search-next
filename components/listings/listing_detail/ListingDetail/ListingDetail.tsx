@@ -27,9 +27,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
           <ListingStatusIndicator status={listing.status} />
         </div>
         <ListingDetailImage
-          images={listing.photoGallery}
-          latitude={listing.latitude}
-          longitude={listing.longitude}
+          listing={listing}
           onClick={() => setSlideShowOpen(true)}
         />
         <div className='price'>{formatPrice(listing)}</div>

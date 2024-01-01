@@ -3,21 +3,31 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
 import { useParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import css from 'styled-jsx/css'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import {
   getListingDetail,
   selectListing
 } from '../../../store/listingDetail/listingDetailSlice'
+import { getCurrentUser } from '../../../store/user/userSlice'
 import GoogleMapsProvider from '../../../providers/GoogleMapsProvider'
 import { AppGoogleMapsLoaderOptions } from '../../../config/googleMapsOptions'
 import ListingDetailHeader from '../../../containers/ListingDetailHeader/ListingDetailHeader'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
 
 const ListingPage: NextPage = () => {
+  const { status } = useSession()
   const params = useParams()
   const dispatch = useAppDispatch()
   const listing = useAppSelector(selectListing)
+
+  // TODO: make this into a custom hook
+  useEffect(() => {
+    if (status === 'authenticated') {
+      dispatch(getCurrentUser())
+    }
+  }, [dispatch, status])
 
   useEffect(() => {
     params?.listing_id &&

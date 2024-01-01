@@ -46,6 +46,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   const [previousSearchState, setPreviousSearchState] =
     useState<Partial<FiltersState>>()
   
+  // TODO: make this into a custom hook
   useEffect(() => {
     if (status === 'authenticated') {
       dispatch(getCurrentUser())
