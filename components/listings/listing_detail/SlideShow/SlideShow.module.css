@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5rem 2.5rem 1.25rem 2.5rem;
+  padding: 2.5rem 3rem 1.25rem 2.5rem;
 }
 
 .close {
@@ -44,6 +44,11 @@
 
 .close:hover {
   background: rgb(74, 74, 74);
+}
+
+.imageCount {
+  text-align: center;
+  flex-grow: 1;
 }
 
 .carouselButton {

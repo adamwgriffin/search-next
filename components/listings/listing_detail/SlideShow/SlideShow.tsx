@@ -34,10 +34,9 @@ const SlideShow: NextPage<SlideShowProps> = ({ images, open, onClose }) => {
               <button className={styles.close} onClick={onClose}>
                 X Close
               </button>
-              <div>
+              <div className={styles.imageCount}>
                 {currentImage + 1} / {images.length}
               </div>
-              <div>♡</div>
             </div>
             <div className={styles.carousel}>
               <div>
