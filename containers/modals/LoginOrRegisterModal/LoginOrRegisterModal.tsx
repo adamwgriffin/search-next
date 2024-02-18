@@ -25,7 +25,7 @@ const LoginOrRegisterModal: NextPage<LoginOrRegisterModalProps> = ({
   return (
     <Modal
       isOpen={modalOpen}
-      contentLabel='Save Search'
+      contentLabel='Login'
       onRequestClose={handleClose}
     >
       <ModalHeader title={title} onClose={handleClose} />
