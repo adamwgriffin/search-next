@@ -26,9 +26,9 @@ export const getCurrentUser = createAsyncThunk(
 )
 
 /**
-* Optimistically updates currentUser.favoriteIds with the given listingId. Adds the ID if it doesn't exist, otherwise
-* removes it.
-*/
+ * Optimistically updates currentUser.favoriteIds with the given listingId. Adds the ID if it doesn't exist, otherwise
+ * removes it.
+ */
 export const toggleFavorite = createAsyncThunk(
   'user/toggleFavorite',
   async (listingId: string, { dispatch, getState }) => {
