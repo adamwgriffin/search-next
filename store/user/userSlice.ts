@@ -37,10 +37,10 @@ export const toggleFavorite = createAsyncThunk(
     dispatch(setPreviousFavoriteIds(state.user.currentUser.favoriteIds))
     if (state.user.currentUser.favoriteIds.includes(listingId)) {
       dispatch(removeFromFavoriteIds(listingId))
-      return await http.delete(`/api/favorites/${listingId}`)
+      return (await http.delete(`/api/favorites/${listingId}`)).data
     } else {
       dispatch(addToFavoriteIds(listingId))
-      return await http.post(`/api/favorites/${listingId}`)
+      return (await http.post(`/api/favorites/${listingId}`)).data
     }
   }
 )
