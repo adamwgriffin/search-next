@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import type { Listing } from '../../../lib/types/listing_types'
-import css from 'styled-jsx/css'
+import ListingImageContainer from '../ListingImageContainer/ListingImageContainer'
+import ListingImageContainerElements from '../ListingImageContainerElements/ListingImageContainerElements'
 import ListingMainImage from '../ListingMainImage/ListingMainImage'
 import FavoriteButton from '../../../containers/FavoriteButton/FavoriteButton'
 
@@ -10,42 +11,24 @@ export interface ListingCardImageProps {
 
 const ListingCardImage: NextPage<ListingCardImageProps> = ({ listing }) => {
   return (
-    <div className='listingCardImage'>
-      <div className='favoriteButtonContainer'>
+    <ListingImageContainer>
+      <ListingImageContainerElements>
         <FavoriteButton listingId={listing._id} />
-      </div>
+      </ListingImageContainerElements>
       <ListingMainImage
         image={listing.photoGallery[0]}
         latitude={listing.latitude}
         longitude={listing.longitude}
         size='small'
-        className={className}
+        style={{
+          objectFit: 'cover',
+          width: '100%',
+          aspectRatio: '1 / 1',
+          borderRadius: '0.8rem'
+        }}
       />
-      <style jsx>{listingCardImageStyles}</style>
-      {listingMainImageStyles}
-    </div>
+    </ListingImageContainer>
   )
 }
-
-const listingCardImageStyles = css`
-  .listingCardImage {
-    position: relative;
-  }
-
-  .favoriteButtonContainer {
-    position: absolute;
-    right: 0;
-    margin: .5rem;
-  }
-`
-
-const { className, styles: listingMainImageStyles } = css.resolve`
-  img {
-    object-fit: cover;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 0.8rem;
-  }
-`
 
 export default ListingCardImage
