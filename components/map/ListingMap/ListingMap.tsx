@@ -94,7 +94,7 @@ const ListingMap: NextPage = () => {
   const handleUserAdjustedMap = async (
     currentMapState: Partial<GoogleMapState>
   ) => {
-    await dispatch(setMapData(currentMapState))
+    dispatch(setMapData(currentMapState))
     dispatch(resetStartIndex())
     dispatch(setDoListingSearchOnMapIdle(true))
   }
