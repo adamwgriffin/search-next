@@ -1,3 +1,5 @@
+'use client'
+
 import type { NextPage } from 'next'
 import { useMemo } from 'react'
 import { useMedia } from 'react-use'
