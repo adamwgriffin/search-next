@@ -13,6 +13,7 @@ export interface ListingMarkerProps {
   listing: Listing
   highlighted?: boolean
   zIndex: number
+  authenticaticated: boolean
   onMouseEnter?: (listingid: string) => void
   onMouseLeave?: () => void
   onClick?: (listingid: string) => void
@@ -106,7 +107,11 @@ const propsAreEqual = (
     'listing._id',
     'listing.latitude',
     'listing.longitude',
-    'highlighted'
+    'highlighted',
+    // we need to re-render every time the authentication status changes, otherwise the favorite button will not
+    // re-render and get the new value from useSession. it depends on the session state in order to know whether to open
+    // the login modal if the user isn't logged in
+    'authenticaticated'
   ])
 }
 

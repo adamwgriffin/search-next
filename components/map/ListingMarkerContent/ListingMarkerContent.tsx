@@ -10,6 +10,9 @@ import {
 } from '../../../lib/listing_helpers'
 import styles from './ListingMarkerContent.module.css'
 import Link from 'next/link'
+import ListingImageContainer from '../../listings/ListingImageContainer/ListingImageContainer'
+import ListingImageContainerElements from '../../listings/ListingImageContainerElements/ListingImageContainerElements'
+import FavoriteButton from '../../../containers/FavoriteButton/FavoriteButton'
 import ListingMainImage from '../../listings/ListingMainImage/ListingMainImage'
 
 export interface ListingMarkerContentProps {
@@ -51,13 +54,18 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
       <div className={listingMarkerClassName}>
         <div className={styles.icon}>{priceAbbreviated}</div>
         <div className={styles.popup}>
-          <ListingMainImage
-            image={listing.photoGallery[0]}
-            latitude={listing.latitude}
-            longitude={listing.longitude}
-            size='small'
-            style={listingMainImageStyles}
-          />
+          <ListingImageContainer>
+            <ListingImageContainerElements>
+              <FavoriteButton listingId={listing._id} />
+            </ListingImageContainerElements>
+            <ListingMainImage
+              image={listing.photoGallery[0]}
+              latitude={listing.latitude}
+              longitude={listing.longitude}
+              size='small'
+              style={listingMainImageStyles}
+            />
+          </ListingImageContainer>
           <div className={styles.details}>
             <div className={styles.price}>{formatPrice(listing)}</div>
             <div className={styles.bedBathSqft}>

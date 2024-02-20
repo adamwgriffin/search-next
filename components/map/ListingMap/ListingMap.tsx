@@ -3,6 +3,7 @@
 import type { NextPage } from 'next'
 import { useMemo } from 'react'
 import { useMedia } from 'react-use'
+import { useSession } from 'next-auth/react'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import { DefaultMapOptions } from '../../../config/googleMapsOptions'
 import { MapBoundaryOptions } from '../../../config/googleMapsOptions'
@@ -36,6 +37,7 @@ import { addUrlToBrowserHistory } from '../../../lib/url'
 import { getGeoLayerBounds } from '../../../lib/polygon'
 
 const ListingMap: NextPage = () => {
+  const { status } = useSession()
   const dispatch = useAppDispatch()
   const { googleLoaded } = useGoogleMaps()
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
@@ -131,6 +133,7 @@ const ListingMap: NextPage = () => {
           {listings.map((l, i) => (
             <ListingMarker
               key={l._id.toString()}
+              authenticaticated={status === 'authenticated'}
               listing={l}
               highlighted={highlightedMarker === l._id}
               zIndex={i}
