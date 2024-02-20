@@ -132,11 +132,11 @@ const ListingMap: NextPage = () => {
             <ListingMarker
               key={l._id.toString()}
               listing={l}
+              highlighted={highlightedMarker === l._id}
+              zIndex={i}
               onMouseEnter={handleListingMarkerMouseEnter}
               onMouseLeave={handleListingMarkerMouseLeave}
               onClick={handleListingMarkerMouseClick}
-              highlighted={highlightedMarker === l._id}
-              zIndex={i}
             />
           ))}
           <MapBoundary
