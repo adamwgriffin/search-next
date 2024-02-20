@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import ListingMarkerContent from '../ListingMarkerContent/ListingMarkerContent'
 import { listingLocationToLatLngLiteral } from '../../../lib/listing_helpers'
+import { objectsValuesEqual } from '../../../lib'
 
 export interface ListingMarkerProps {
   listing: Listing
@@ -94,14 +95,12 @@ const areEqual = (
   prevProps: Readonly<ListingMarkerProps>,
   nextProps: Readonly<ListingMarkerProps>
 ) => {
-  return (
-    prevProps.listing._id === nextProps.listing._id &&
-    prevProps.listing.latitude ===
-      nextProps.listing.latitude &&
-    prevProps.listing.longitude ===
-      nextProps.listing.longitude &&
-    prevProps.highlighted === nextProps.highlighted
-  )
+  return objectsValuesEqual(prevProps, nextProps, [
+    'listing._id',
+    'listing.latitude',
+    'listing.longitude',
+    'highlighted'
+  ])
 }
 
 // use the memo() HOC to avoid re-rendering markers on the map so it's more effecient and doesn't cause every marker
