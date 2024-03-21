@@ -4,7 +4,11 @@ import { useMedia } from 'react-use'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import {
+  useAppSelector,
+  useAppDispatch,
+  useListingCardClickHandler
+} from '../../hooks'
 import {
   searchCurrentLocation,
   searchWithUpdatedFilters,
@@ -13,23 +17,24 @@ import {
 import {
   selectListings,
   selectPagination,
-  selectListingSearchRunning,
+  selectListingSearchRunning
 } from '../../store/listingSearch/listingSearchSelectors'
 import { setFilters, clearFilters } from '../../store/filters/filtersSlice'
-import { selectSortBy, selectSearchType } from '../../store/filters/filtersSelectors'
-import { openModal } from '../../store/application/applicationSlice'
-import { addUrlToBrowserHistory } from '../../lib/url'
+import {
+  selectSortBy,
+  selectSearchType
+} from '../../store/filters/filtersSelectors'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'
 import NoResults from '../../components/listings/NoResults/NoResults'
 
 const SearchResults: NextPage = () => {
   const dispatch = useAppDispatch()
-  const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const sortBy = useAppSelector(selectSortBy)
   const searchType = useAppSelector(selectSearchType)
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
+  const handleListingCardClick = useListingCardClickHandler(false)
 
   const handleSortMenuChange = (sortParams: SortFilters) => {
     dispatch(setFilters(sortParams))
@@ -39,20 +44,6 @@ const SearchResults: NextPage = () => {
   const handlePaginationButtonClick = (pageIndex: number) => {
     dispatch(setFilters({ pageIndex }))
     dispatch(searchCurrentLocation())
-  }
-
-  const handleListingCardClick = (url: string, listingId: string) => {
-    if (isSmallAndUp) {
-      window.open(url, '_blank')
-    } else {
-      dispatch(
-        openModal({
-          modalType: 'listingDetail',
-          modalProps: { listingId }
-        })
-      )
-      addUrlToBrowserHistory(url)
-    }
   }
 
   const handleListingCardMouseEnter = (listingId: string) => {
