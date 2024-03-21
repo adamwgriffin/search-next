@@ -26,10 +26,10 @@ const ListingCards: NextPage<ListingCardProps> = ({
           <li key={listing._id.toString()}>
             <ListingCard
               listing={listing}
-              url={`listing/${listing._id}`}
+              url={`/listing/${listing._id}`}
               onClick={() =>
                 onListingCardClick(
-                  `listing/${listing._id}`,
+                  `/listing/${listing._id}`,
                   listing._id
                 )
               }
