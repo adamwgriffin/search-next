@@ -8,6 +8,7 @@ const ListingCardLoader: NextPage = () => (
     <ContentLoader
       width={'100%'}
       height={'100%'}
+      uniqueKey="listing-card-loader"
     >
       <rect x="0" y="0" width="100%" height="300" rx='12.8px'/>      
       <rect x="0" y="310" width="50%" height="24" rx='6px' />
