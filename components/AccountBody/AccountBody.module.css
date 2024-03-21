@@ -1,0 +1,17 @@
+@value smallAndUp from '../../styles/breakpoints.module.css';
+
+.accountBody {
+  padding: 1rem;
+}
+
+@media smallAndUp {
+  .accountBody {
+    padding: 2rem 6rem;
+  }
+}
+
+@media mediumAndUp {
+  .accountBody {
+    padding: 2rem 12rem;
+  }
+}

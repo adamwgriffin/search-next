@@ -56,9 +56,8 @@ const UserMenu: NextPage = () => {
                 </Link>
               </li>
               <li className={styles.menuItem}>
-                {/* Real link TBD */}
-                <Link href='/account' className={styles.link}>
-                  Favorites
+                <Link href='/account/favorites' className={styles.link}>
+                  Saved Homes
                 </Link>
               </li>
               <li className={styles.menuItem}>

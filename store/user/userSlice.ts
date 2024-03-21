@@ -1,18 +1,27 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
 import type { User } from '@prisma/client'
+import type { Listing } from '../../lib/types/listing_types'
 import { createSelector } from '@reduxjs/toolkit'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import http from '../../lib/http'
 
+export interface GetListingsResponse {
+  listings: Listing[]
+}
+
 export interface UserState {
   currentUser: User | null
   previousFavoriteIds: string[]
+  favoriteListings: Listing[]
+  getFavoriteListingsLoading: boolean
 }
 
 const initialState: UserState = {
   currentUser: null,
-  previousFavoriteIds: []
+  previousFavoriteIds: [],
+  favoriteListings: [],
+  getFavoriteListingsLoading: false
 }
 
 export const getCurrentUser = createAsyncThunk(
@@ -42,6 +51,21 @@ export const toggleFavorite = createAsyncThunk(
       dispatch(addToFavoriteIds(listingId))
       return (await http.post(`/api/favorites/${listingId}`)).data
     }
+  }
+)
+
+export const getFavoriteListings = createAsyncThunk(
+  'user/getFavoriteListings',
+  async (_arg, { getState }): Promise<GetListingsResponse> => {
+    const state = getState() as AppState
+    if (!state.user.currentUser) {
+      throw new Error("Can't get favorites because currentUser is null")
+    }
+    const listingIds = state.user.currentUser.favoriteIds
+    const response = await http({
+      url: `/api/listings/${state.user.currentUser.favoriteIds}`
+    })
+    return response.data
   }
 )
 
@@ -79,6 +103,22 @@ export const userSlice = createSlice({
       state.currentUser = action.payload
     })
 
+    builder.addCase(getFavoriteListings.pending, (state) => {
+      state.getFavoriteListingsLoading = true
+    })
+
+    builder.addCase(
+      getFavoriteListings.fulfilled,
+      (state, action: PayloadAction<GetListingsResponse>) => {
+        state.getFavoriteListingsLoading = false
+        state.favoriteListings = action.payload.listings
+      }
+    )
+
+    builder.addCase(getFavoriteListings.rejected, (state) => {
+      state.getFavoriteListingsLoading = false
+    })
+
     // if the request to add the favorite fails for some reason, undo the optimistic update that added it to
     // currentUser.favoriteIds.
     builder.addCase(toggleFavorite.rejected, (state, action) => {
@@ -103,5 +143,11 @@ export const selectFavoriteIds = createSelector(
   [selectCurrentUser],
   (currentUser) => currentUser?.favoriteIds || []
 )
+
+export const selectFavoriteListings = (state: AppState) =>
+  state.user.favoriteListings
+
+export const selectGetFavoriteListingsLoading = (state: AppState) =>
+  state.user.getFavoriteListingsLoading
 
 export default userSlice.reducer
