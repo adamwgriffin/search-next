@@ -11,34 +11,83 @@ datasource db {
 }
 
 model User {
-  id              String @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?   @unique
-  emailVerified   DateTime?
-  image           String?
-  hashedPassword  String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  favoriteIds     String[] @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  favoriteIds    String[]  @db.ObjectId
 
-  accounts Account[]
+  accounts      Account[]
+  savedSearches SavedSearch[]
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model SavedSearch {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  userId         String       @db.ObjectId
+  name           String
+  messageCadence Int?
+  searchParams   SearchParams
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+type SearchParams {
+  lat              Float?
+  lng              Float?
+  bounds_north     Float?
+  bounds_east      Float?
+  bounds_south     Float?
+  bounds_west      Float?
+  address          String?
+  rental           Boolean?
+  page_index       Int?
+  page_size        Int?
+  price_min        Float?
+  price_max        Float?
+  beds_min         Int?
+  baths_min        Int?
+  sqft_min         Float?
+  sqft_max         Float?
+  sort_by          String?
+  sort_direction   String?
+  lot_size_min     Float?
+  year_built_min   Int?
+  year_built_max   Int?
+  open_house_after String?
+  sold_in_last     Int?
+  property_type    String?
+  status           String?
+  waterfront       Boolean?
+  view             Boolean?
+  fireplace        Boolean?
+  basement         Boolean?
+  garage           Boolean?
+  new_construction Boolean?
+  pool             Boolean?
+  air_conditioning Boolean?
 }
