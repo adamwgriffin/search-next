@@ -2,7 +2,7 @@
 
 import type { NextPage } from 'next'
 import type { ModalType } from '../../../store/application/applicationSlice'
-import { selectModal } from '../../../store/application/applicationSlice'
+import { selectModalType, selectModalProps } from '../../../store/application/applicationSlice'
 import { useAppSelector } from '../../../hooks'
 import FiltersModal from '../FiltersModal/FiltersModal'
 import SaveSearchModal from '../SaveSearchModal/SaveSearchModal'
@@ -20,8 +20,9 @@ const ModalComponents: ModalComponentTypes = {
   loginOrRegister: LoginOrRegisterModal
 }
 
-const ModalRoot: NextPage= () => {
-  const { modalType, modalProps } = useAppSelector(selectModal)
+const ModalRoot: NextPage = () => {
+  const modalType = useAppSelector(selectModalType)
+  const modalProps = useAppSelector(selectModalProps)
   if (!modalType) return null
   const SpecificModal = ModalComponents[modalType]
   return <SpecificModal {...modalProps} />
