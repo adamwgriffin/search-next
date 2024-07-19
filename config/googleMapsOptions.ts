@@ -4,7 +4,7 @@ import type { Libraries, LoaderOptions } from '@googlemaps/js-api-loader'
 // your api key and the libraries you want to load go here
 export const GoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-  version: '3.53'
+  version: 'quarterly'
 }
 
 export const GoogleMapsLibraries: Libraries = ['maps', 'places', 'marker']
