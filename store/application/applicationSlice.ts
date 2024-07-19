@@ -5,7 +5,7 @@ import type { SaveSearchModalProps } from '../../containers/modals/SaveSearchMod
 import type { ErrorModalProps } from '../../containers/modals/ErrorModal/ErrorModal'
 import type { ListingDetailModalProps } from '../../containers/modals/ListingDetailModal/ListingDetailModal'
 import type { LoginOrRegisterModalProps } from '../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 
 export type ViewType = 'list' | 'map'
 
@@ -76,11 +76,10 @@ export const { setViewType, openModal, closeModal, resetModal } =
 
 export const selectViewType = (state: AppState) => state.application.viewType
 
-export const selectModal = (state: AppState) => ({
-  modalType: state.application.modalType,
-  modalProps: state.application.modalProps,
-  modalOpen: state.application.modalOpen
-})
+export const selectModalType = (state: AppState) => state.application.modalType
+
+export const selectModalProps = (state: AppState) =>
+  state.application.modalProps
 
 export const selectModalOpen = (state: AppState) => state.application.modalOpen
 
