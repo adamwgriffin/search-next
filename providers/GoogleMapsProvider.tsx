@@ -6,7 +6,10 @@ import type { NextPage } from 'next'
 import type { Dispatch } from 'react'
 import type { LoaderOptions } from '@googlemaps/js-api-loader'
 import { Loader } from '@googlemaps/js-api-loader'
-import { DefaultGoogleMapsLoaderOptions, GoogleMapsLibraries } from '../config/googleMapsOptions'
+import {
+  GoogleMapsLoaderOptions,
+  GoogleMapsLibraries
+} from '../config/googleMapsOptions'
 
 export interface GoogleMapsContextInterface {
   googleLoaded: boolean
@@ -31,8 +34,7 @@ export const useGoogleMaps = () => useContext(GoogleMapsContext)
 
 // wrap <GoogleMapsProvider> around all components that need access to GoogleMapsContext
 const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
-  children,
-  loaderOptions = DefaultGoogleMapsLoaderOptions
+  children
 }) => {
   const [googleLoaded, setGoogleLoaded] = useState(false)
   // this will be set later by the GoogleMap component since it generates the div we need to create the map instance
@@ -43,12 +45,8 @@ const GoogleMapsProvider: NextPage<GoogleMapsProviderProps> = ({
   // will resolve once its loaded. this way you can execute whatever code depends on the api after the promise resolves.
   useEffectOnce(() => {
     const initializeGoogleMaps = async () => {
-      const loader = new Loader(loaderOptions)
-      await Promise.all(
-        GoogleMapsLibraries.map((l) =>
-          loader.importLibrary(l)
-        )
-      )
+      const loader = new Loader(GoogleMapsLoaderOptions)
+      await Promise.all(GoogleMapsLibraries.map((l) => loader.importLibrary(l)))
       setGoogleLoaded(true)
     }
     initializeGoogleMaps().catch((error) =>
