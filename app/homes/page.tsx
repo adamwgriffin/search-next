@@ -29,7 +29,6 @@ import {
 } from '../../store/listingSearch/listingSearchSlice'
 import { getCurrentUser } from '../../store/user/userSlice'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
-import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 
 export interface SearchPageProps {
   params: string[]
@@ -136,7 +135,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   ])
 
   return (
-    <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
+    <GoogleMapsProvider>
       <Search />
     </GoogleMapsProvider>
   )

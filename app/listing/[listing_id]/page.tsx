@@ -12,7 +12,6 @@ import {
 } from '../../../store/listingDetail/listingDetailSlice'
 import { getCurrentUser } from '../../../store/user/userSlice'
 import GoogleMapsProvider from '../../../providers/GoogleMapsProvider'
-import { AppGoogleMapsLoaderOptions } from '../../../config/googleMapsOptions'
 import ListingDetailHeader from '../../../containers/ListingDetailHeader/ListingDetailHeader'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
 
@@ -36,7 +35,7 @@ const ListingPage: NextPage = () => {
 
   return (
     <>
-      <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
+      <GoogleMapsProvider>
         <ListingDetailHeader />
         <div className='listingDetailPage'>
           {/* TODO: add a ContentLoader component for when the listing is still loading */}

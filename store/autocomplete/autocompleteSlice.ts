@@ -1,6 +1,6 @@
 import type { AppState } from '..'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DefaultAutocompleteOptions } from '../../config/googleMapsOptions'
+import { GoogleMapsAutocompleteOptions } from '../../config/googleMapsOptions'
 
 export interface AutocompleteState {
   autcompletePlacePredictions: google.maps.places.AutocompletePrediction[]
@@ -28,7 +28,7 @@ export const getPlaceAutocompletePredictions = createAsyncThunk(
         'locality', // city
         'neighborhood'
       ],
-      componentRestrictions: DefaultAutocompleteOptions.componentRestrictions
+      componentRestrictions: GoogleMapsAutocompleteOptions.componentRestrictions
     })
     return res.predictions
   }

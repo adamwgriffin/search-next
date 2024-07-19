@@ -5,8 +5,8 @@ import { useMemo } from 'react'
 import { useMedia } from 'react-use'
 import { useSession } from 'next-auth/react'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
-import { DefaultMapOptions } from '../../../config/googleMapsOptions'
-import { MapBoundaryOptions } from '../../../config/googleMapsOptions'
+import { GoogleMapsMapOptions } from '../../../config/googleMapsOptions'
+import { GoogleMapsPolygonOptions } from '../../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
 import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
 import ListingMarker from '../ListingMarker/ListingMarker'
@@ -123,7 +123,7 @@ const ListingMap: NextPage = () => {
     return (
       <div className={styles.listingMap}>
         <GoogleMap
-          options={DefaultMapOptions}
+          options={GoogleMapsMapOptions}
           bounds={bounds}
           zoom={mapState.zoom}
           onIdle={handleIdle}
@@ -145,7 +145,7 @@ const ListingMap: NextPage = () => {
           <MapBoundary
             coordinates={mapState.geoLayerCoordinates}
             visible={mapState.boundaryActive}
-            options={MapBoundaryOptions}
+            options={GoogleMapsPolygonOptions}
           />
         </GoogleMap>
         <MapControl

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useAppSelector } from '../../hooks'
 import { selectSearchState } from '../../store/filters/filtersSelectors'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
-import { AppGoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
+import { GoogleMapsLoaderOptions } from '../../config/googleMapsOptions'
 import { searchStateToListingSearchURLParams } from '../../lib/url'
 import styles from './Home.module.css'
 import HomePageHeader from '../../components/header/HomePageHeader/HomePageHeader'
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <GoogleMapsProvider loaderOptions={AppGoogleMapsLoaderOptions}>
+    <GoogleMapsProvider>
       <div className={styles.home}>
         <div>
           <HomePageHeader />
