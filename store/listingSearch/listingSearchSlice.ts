@@ -40,7 +40,7 @@ export const searchNewLocation = createAsyncThunk(
 
 // executes a listing service request for the current location. we would want to use this request if the place that was
 // entered in the search field has already been geocoded. usually, we would perform the initial search using the
-// searchNewLocation() action, which has the service geocode the location. then we would use this for subsequen
+// searchNewLocation() action, which has the service geocode the location. then we would use this for subsequent
 // requests, such as if the user dragged the map or changed the filters. since we have the boundary data stored from the
 // previous request, we can just pass the boundary ID to the service instead of having the service geocode the place for
 // us again. if the boundary is not active then all we need is the viewport bounds, which will always be included in the

@@ -1,15 +1,12 @@
 import type { AppState } from '..'
-import type { PropertyType } from '../../lib/property_types'
 import type {
   PriceRangeFilters,
   BedsAndBathsFilters,
   SquareFeetRangeFilters,
   YearBuiltRangeFilters,
-  SoldDaysFilter,
   SortFilters,
-  MoreFilters,
   FeatureFilters,
-  FiltersState
+  FiltersState,
 } from './filtersTypes'
 import { createSelector } from '@reduxjs/toolkit'
 import pick from 'lodash/pick'
@@ -17,52 +14,50 @@ import omitBy from 'lodash/omitBy'
 import isEqual from 'lodash/isEqual'
 import { initialState } from './filtersSlice'
 
-export const selectSearchType = (state: AppState) => state.filters.searchType
+export const selectFilters = (state: AppState) =>
+  state.filters
 
-export const selectLocationSearchField = (state: AppState): string => {
-  return state.filters.locationSearchField
-}
+export const selectSearchType = (state: AppState) =>
+  state.filters.searchType
 
-export const selectPriceRange = (state: AppState): PriceRangeFilters =>
-  pick(state.filters, ['priceMin', 'priceMax'])
+export const selectLocationSearchField = (state: AppState) =>
+  state.filters.locationSearchField
 
-export const selectBedBathFilters = (state: AppState): BedsAndBathsFilters =>
-  pick(state.filters, ['bedsMin', 'bathsMin'])
-
-export const selectMoreFiltersParams = (state: AppState): MoreFilters => {
-  return pick(state.filters, [
-    'sqftMin',
-    'sqftMax',
-    'lotSizeMin',
-    'yearBuiltMin',
-    'yearBuiltMax',
-    'waterfront',
-    'view',
-    'fireplace',
-    'basement',
-    'garage',
-    'newConstruction',
-    'pool',
-    'airConditioning',
-    'soldInLast'
-  ])
-}
-
-export const selectOpenHouse = (state: AppState): boolean =>
+export const selectOpenHouse = (state: AppState) =>
   state.filters.openHouse
 
-export const selectIncludePending = (state: AppState): boolean =>
+export const selectIncludePending = (state: AppState) =>
   state.filters.includePending
 
-export const selectSquareFeetRange = (
-  state: AppState
-): SquareFeetRangeFilters => pick(state.filters, ['sqftMin', 'sqftMax'])
+export const selectSoldInLast = (state: AppState) =>
+  state.filters.soldInLast
 
-export const selectYearBuiltRange = (state: AppState): YearBuiltRangeFilters =>
-  pick(state.filters, ['yearBuiltMin', 'yearBuiltMax'])
+export const selectPropertyTypes = (state: AppState) =>
+  state.filters.propertyTypes
 
-export const selectFeatures = (state: AppState): FeatureFilters => {
-  return pick(state.filters, [
+export const selectPriceRange = createSelector(
+  selectFilters,
+  (filters): PriceRangeFilters => pick(filters, ['priceMin', 'priceMax'])
+)
+
+export const selectBedBathFilters = createSelector(
+  selectFilters,
+  (filters): BedsAndBathsFilters => pick(filters, ['bedsMin', 'bathsMin'])
+)
+
+export const selectSquareFeetRange = createSelector(
+  selectFilters,
+  (filters): SquareFeetRangeFilters => pick(filters, ['sqftMin', 'sqftMax'])
+)
+
+export const selectYearBuiltRange = createSelector(
+  selectFilters,
+  (filters): YearBuiltRangeFilters => pick(filters, ['yearBuiltMin', 'yearBuiltMax'])
+)
+
+export const selectFeatures = createSelector(
+  selectFilters,
+  (filters): FeatureFilters => pick(filters, [
     'waterfront',
     'view',
     'fireplace',
@@ -72,19 +67,15 @@ export const selectFeatures = (state: AppState): FeatureFilters => {
     'pool',
     'airConditioning'
   ])
-}
+)
 
-export const selectSoldDaysParam = (state: AppState): SoldDaysFilter =>
-  pick(state.filters, ['soldInLast'])
-
-export const selectPropertyTypes = (state: AppState): PropertyType[] =>
-  state.filters.propertyTypes
-
-export const selectSortBy = (state: AppState): SortFilters =>
-  pick(state.filters, ['sortBy', 'sortDirection'])
+export const selectSortBy = createSelector(
+  selectFilters,
+  (filters): SortFilters => pick(filters, ['sortBy', 'sortDirection'])
+)
 
 export const selectSearchState = createSelector(
-  (state: AppState) => state.filters,
+  selectFilters,
   (state: FiltersState): Partial<FiltersState> => {
     return omitBy(state, (value, key) => {
       // always include locationSearchField as long as it has a value

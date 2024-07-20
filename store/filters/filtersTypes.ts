@@ -53,7 +53,7 @@ export type YearBuiltRangeFilters = Pick<
 
 export type SortFilters = Pick<FiltersState, 'sortBy' | 'sortDirection'>
 
-export type SoldDaysFilter = Pick<FiltersState, 'soldInLast'>
+export type SoldInLastFilter = FiltersState['soldInLast']
 
 export type FeaturesFilters = Pick<
   FiltersState,

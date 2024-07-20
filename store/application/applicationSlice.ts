@@ -5,7 +5,7 @@ import type { SaveSearchModalProps } from '../../containers/modals/SaveSearchMod
 import type { ErrorModalProps } from '../../containers/modals/ErrorModal/ErrorModal'
 import type { ListingDetailModalProps } from '../../containers/modals/ListingDetailModal/ListingDetailModal'
 import type { LoginOrRegisterModalProps } from '../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export type ViewType = 'list' | 'map'
 
