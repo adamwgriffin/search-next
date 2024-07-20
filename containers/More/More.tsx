@@ -33,7 +33,7 @@ import {
   selectSquareFeetRange,
   selectYearBuiltRange,
   selectFeatures,
-  selectSoldDaysParam
+  selectSoldInLast
 } from '../../store/filters/filtersSelectors'
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
@@ -60,7 +60,7 @@ const More: NextPage = () => {
   const lotSizeMin = useAppSelector((state: AppState) => state.filters.lotSizeMin)
   const yearBuiltRange = useAppSelector(selectYearBuiltRange)
   const features = useAppSelector(selectFeatures)
-  const soldDays = useAppSelector(selectSoldDaysParam)
+  const soldInLast = useAppSelector(selectSoldInLast)
   const [setPreviousPriceRange, runSearchIfPriceRangeChanged] =
     useRunCallbackIfChanged(priceRange, () =>
       dispatch(searchWithUpdatedFilters())
@@ -150,7 +150,7 @@ const More: NextPage = () => {
       )}
       {searchType === SearchTypes.Sold && (
         <SoldDays
-          soldDays={soldDays}
+          soldInLast={soldInLast}
           onChange={handleChangeAndInitiateSearch}
         />
       )}
