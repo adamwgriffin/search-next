@@ -51,43 +51,7 @@ model SavedSearch {
   userId         String       @db.ObjectId
   name           String
   messageCadence Int?
-  searchParams   SearchParams
+  searchParams   Json
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-type SearchParams {
-  lat              Float?
-  lng              Float?
-  bounds_north     Float?
-  bounds_east      Float?
-  bounds_south     Float?
-  bounds_west      Float?
-  address          String?
-  rental           Boolean?
-  page_index       Int?
-  page_size        Int?
-  price_min        Float?
-  price_max        Float?
-  beds_min         Int?
-  baths_min        Int?
-  sqft_min         Float?
-  sqft_max         Float?
-  sort_by          String?
-  sort_direction   String?
-  lot_size_min     Float?
-  year_built_min   Int?
-  year_built_max   Int?
-  open_house_after String?
-  sold_in_last     Int?
-  property_type    String?
-  status           String?
-  waterfront       Boolean?
-  view             Boolean?
-  fireplace        Boolean?
-  basement         Boolean?
-  garage           Boolean?
-  new_construction Boolean?
-  pool             Boolean?
-  air_conditioning Boolean?
 }
