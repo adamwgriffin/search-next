@@ -35,7 +35,7 @@ export async function PUT(
   } catch (error) {
     console.error("Error updating saved search:", error)
     return NextResponse.json(
-      { message: 'Error updating saved search' },
+      { error: 'Error updating saved search' },
       { status: 422 }
     )
   }

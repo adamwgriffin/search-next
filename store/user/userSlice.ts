@@ -2,16 +2,19 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
 import type { User } from '@prisma/client'
 import type { Listing } from '../../lib/types/listing_types'
-import { createSelector } from '@reduxjs/toolkit'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import type { ListingServiceRequestParams } from '../../lib/types/listing_service_params_types'
+import type { DefaultAPIResponse } from '../../lib/types'
+import type { GetListingsByIdsResponse } from '../../pages/api/listings/[listing_ids]'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
 
-export interface GetListingsResponse {
-  listings: Listing[]
 }
 
-export interface UserState {
-  currentUser: User | null
+export type CurrentUser = Pick<User, 'id' | 'name' | 'email' | 'image' | 'favoriteIds'>
+
+export type UserState = {
+  currentUser: CurrentUser | null
   previousFavoriteIds: string[]
   favoriteListings: Listing[]
   getFavoriteListingsLoading: boolean
@@ -24,13 +27,11 @@ const initialState: UserState = {
   getFavoriteListingsLoading: false
 }
 
-export const getCurrentUser = createAsyncThunk(
+export const getCurrentUser = createAppAsyncThunk<UserState['currentUser'] | null>(
   'user/getCurrentUser',
   async () => {
-    const response = await http({
-      url: '/api/current_user'
-    })
-    return response.data
+    const res = await http.get<UserState['currentUser']>('/api/current_user')
+    return res.data
   }
 )
 
@@ -38,10 +39,10 @@ export const getCurrentUser = createAsyncThunk(
  * Optimistically updates currentUser.favoriteIds with the given listingId. Adds the ID if it doesn't exist, otherwise
  * removes it.
  */
-export const toggleFavorite = createAsyncThunk(
+export const toggleFavorite = createAppAsyncThunk<DefaultAPIResponse, Listing['_id']>(
   'user/toggleFavorite',
-  async (listingId: string, { dispatch, getState }) => {
-    const state = getState() as AppState
+  async (listingId, { dispatch, getState }) => {
+    const state = getState()
     if (!state.user.currentUser) return
     dispatch(setPreviousFavoriteIds(state.user.currentUser.favoriteIds))
     if (state.user.currentUser.favoriteIds.includes(listingId)) {
@@ -54,18 +55,17 @@ export const toggleFavorite = createAsyncThunk(
   }
 )
 
-export const getFavoriteListings = createAsyncThunk(
+export const getFavoriteListings = createAppAsyncThunk<GetListingsByIdsResponse>(
   'user/getFavoriteListings',
-  async (_arg, { getState }): Promise<GetListingsResponse> => {
-    const state = getState() as AppState
+  async (_arg, { getState, rejectWithValue }) => {
+    const state = getState()
     if (!state.user.currentUser) {
-      throw new Error("Can't get favorites because currentUser is null")
+      return rejectWithValue("Can't get favorites because currentUser is null")
     }
-    const listingIds = state.user.currentUser.favoriteIds
-    const response = await http({
-      url: `/api/listings/${state.user.currentUser.favoriteIds}`
-    })
-    return response.data
+    const res = await http.get<GetListingsByIdsResponse>(`/api/listings/${state.user.currentUser.favoriteIds}`)
+    return res.data
+  }
+)
   }
 )
 
@@ -79,18 +79,16 @@ export const userSlice = createSlice({
       state.currentUser = initialState.currentUser
     },
 
-    setPreviousFavoriteIds(state, action: PayloadAction<string[]>) {
+    setPreviousFavoriteIds(state, action: PayloadAction<Listing['_id'][]>) {
       state.previousFavoriteIds = action.payload
     },
 
-    addToFavoriteIds(state, action: PayloadAction<string>) {
+    addToFavoriteIds(state, action: PayloadAction<Listing['_id']>) {
       if (!state.currentUser) return
-      state.currentUser.favoriteIds = state.currentUser.favoriteIds.concat(
-        action.payload
-      )
+      state.currentUser.favoriteIds.push(action.payload)
     },
 
-    removeFromFavoriteIds(state, action: PayloadAction<string>) {
+    removeFromFavoriteIds(state, action: PayloadAction<Listing['_id']>) {
       if (!state.currentUser) return
       state.currentUser.favoriteIds = state.currentUser.favoriteIds.filter(
         (id) => id !== action.payload
@@ -109,7 +107,7 @@ export const userSlice = createSlice({
 
     builder.addCase(
       getFavoriteListings.fulfilled,
-      (state, action: PayloadAction<GetListingsResponse>) => {
+      (state, action) => {
         state.getFavoriteListingsLoading = false
         state.favoriteListings = action.payload.listings
       }
@@ -136,7 +134,7 @@ export const {
   removeFromFavoriteIds
 } = userSlice.actions
 
-export const selectCurrentUser = (state: AppState): User | null =>
+export const selectCurrentUser = (state: AppState) =>
   state.user.currentUser
 
 export const selectFavoriteIds = createSelector(
