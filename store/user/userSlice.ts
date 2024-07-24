@@ -1,15 +1,21 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
-import type { User } from '@prisma/client'
+import type { User, SavedSearch } from '@prisma/client'
 import type { Listing } from '../../lib/types/listing_types'
-import type { ListingServiceRequestParams } from '../../lib/types/listing_service_params_types'
+import type { ListingServiceParams } from '../../lib/types/listing_service_params_types'
 import type { DefaultAPIResponse } from '../../lib/types'
 import type { GetListingsByIdsResponse } from '../../pages/api/listings/[listing_ids]'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
 
+export type SavedSearchData = Omit<SavedSearch, 'createdAt' | 'updatedAt' | 'searchParams'> & {
+  createdAt: string
+  updatedAt: string
+  searchParams: ListingServiceParams
 }
+
+export type CreateSavedSearchData = Omit<SavedSearchData, 'id' | 'createdAt' | 'updatedAt'>
 
 export type CurrentUser = Pick<User, 'id' | 'name' | 'email' | 'image' | 'favoriteIds'>
 
@@ -18,13 +24,15 @@ export type UserState = {
   previousFavoriteIds: string[]
   favoriteListings: Listing[]
   getFavoriteListingsLoading: boolean
+  savedSearches: SavedSearchData[]
 }
 
 const initialState: UserState = {
   currentUser: null,
   previousFavoriteIds: [],
   favoriteListings: [],
-  getFavoriteListingsLoading: false
+  getFavoriteListingsLoading: false,
+  savedSearches: []
 }
 
 export const getCurrentUser = createAppAsyncThunk<UserState['currentUser'] | null>(
@@ -66,6 +74,42 @@ export const getFavoriteListings = createAppAsyncThunk<GetListingsByIdsResponse>
     return res.data
   }
 )
+
+export const createSavedSearch = createAppAsyncThunk<SavedSearchData, CreateSavedSearchData>(
+  'user/createSavedSearch',
+  async (newSavedSearchData) => {
+    const res = await http.post<SavedSearchData>(
+      '/api/saved_search',
+      newSavedSearchData
+    )
+    return res.data
+  }
+)
+
+export const getSavedSearches = createAppAsyncThunk<SavedSearchData[], User['id']>(
+  'user/getSavedSearches',
+  async (userId) => {
+    const res = await http.get(`/api/saved_searches/${userId}`)
+    return res.data
+  }
+)
+
+export const updateSavedSearch = createAppAsyncThunk<DefaultAPIResponse, Partial<SavedSearchData>>(
+  'user/createSavedSearch',
+  async (updatedSavedSearch) => {
+    const res = await http.put<DefaultAPIResponse>(
+      '/api/saved_search',
+      updatedSavedSearch
+    )
+    return res.data
+  }
+)
+
+export const deleteSavedSearch = createAppAsyncThunk<DefaultAPIResponse, void>(
+  'user/createSavedSearch',
+  async () => {
+    const res = await http.delete<DefaultAPIResponse>('/api/saved_search')
+    return res.data
   }
 )
 
@@ -123,6 +167,10 @@ export const userSlice = createSlice({
       console.error(action.error)
       if (!state.currentUser) return
       state.currentUser.favoriteIds = state.previousFavoriteIds
+    })
+
+    builder.addCase(getSavedSearches.fulfilled, (state, action) => {
+      state.savedSearches = action.payload
     })
   }
 })
