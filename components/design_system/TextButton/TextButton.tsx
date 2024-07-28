@@ -2,14 +2,12 @@ import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
 import styles from './TextButton.module.css'
 
-export interface TextButtonProps {
-  children: ReactNode
-  onClick?: () => void
-}
-
-const TextButton: NextPage<TextButtonProps> = ({ children, onClick }) => {
+const TextButton: NextPage<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  ...props
+}) => {
   return (
-    <button className={styles.textButton} onClick={onClick}>
+    <button className={styles.textButton} {...props}>
       {children}
     </button>
   )
