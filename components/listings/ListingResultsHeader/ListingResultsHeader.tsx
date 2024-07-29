@@ -3,7 +3,7 @@ import type { SortFilters, SearchTypeOption } from '../../../store/filters/filte
 import styles from './ListingResultsHeader.module.css'
 import ContentLoader from 'react-content-loader'
 import SortMenu from '../../form/SortMenu/SortMenu'
-import { SearchTypes } from '../../../store/filters/filtersSlice'
+import { SearchTypes } from '../../../lib/filter'
 
 export interface ListingResultsHeaderProps {
   totalListings: number

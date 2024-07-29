@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { SearchTypeOption } from '../../../store/filters/filtersTypes'
-import { SearchTypes } from '../../../store/filters/filtersSlice'
+import { SearchTypes } from '../../../lib/filter'
 import { Fragment } from 'react'
 import styles from './SearchTypeSelector.module.css'
 import Fieldset from '../../design_system/Fieldset/Fieldset'

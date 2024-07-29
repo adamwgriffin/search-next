@@ -19,7 +19,6 @@ import {
 import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
-  SearchTypes,
   setFilters,
   setSearchType
 } from '../../store/filters/filtersSlice'
@@ -47,6 +46,7 @@ import YearBuilt from '../../components/form/YearBuilt/YearBuilt'
 import OpenHouse from '../../components/form/OpenHouse/OpenHouse'
 import Features from '../../components/form/Features/Features'
 import SoldDays from '../../components/form/SoldDays/SoldDays'
+import { SearchTypes } from '../../lib/filter'
 
 const More: NextPage = () => {
   const dispatch = useAppDispatch()
