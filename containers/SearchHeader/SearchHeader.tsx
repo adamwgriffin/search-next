@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch } from '../../hooks/app_hooks'
 import { searchNewLocation } from '../../store/listingSearch/listingSearchSlice'
 import styles from './SearchHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'

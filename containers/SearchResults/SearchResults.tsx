@@ -1,14 +1,13 @@
 import type { NextPage } from 'next'
 import type { SortFilters } from '../../store/filters/filtersTypes'
-import { useMedia } from 'react-use'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import {
   useAppSelector,
   useAppDispatch,
-  useListingCardClickHandler
-} from '../../hooks'
+} from '../../hooks/app_hooks'
+import { useListingCardClickHandler } from '../../hooks/listing_card_click_handler_hook'
 import {
   searchCurrentLocation,
   searchWithUpdatedFilters,

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { setFilters } from '../../store/filters/filtersSlice'
 import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import {

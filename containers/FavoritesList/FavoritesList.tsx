@@ -2,8 +2,8 @@
 
 import { useEffect, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
-import { useAppSelector, useAppDispatch } from '../../hooks'
-import { useListingCardClickHandler } from '../../hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
+import { useListingCardClickHandler } from '../../hooks/listing_card_click_handler_hook'
 import {
   getCurrentUser,
   getFavoriteListings,

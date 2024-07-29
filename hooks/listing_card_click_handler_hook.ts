@@ -1,5 +1,5 @@
 import { useMedia } from 'react-use'
-import { useAppDispatch } from '.'
+import { useAppDispatch } from './app_hooks'
 import { openModal } from '../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../lib/url'
 

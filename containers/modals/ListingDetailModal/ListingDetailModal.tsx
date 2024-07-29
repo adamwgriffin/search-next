@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectModalOpen,
   closeModal,

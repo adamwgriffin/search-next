@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useRef, useEffect } from 'react'
-import { useAppSelector } from '../../hooks'
+import { useAppSelector } from '../../hooks/app_hooks'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
 import styles from './Search.module.css'

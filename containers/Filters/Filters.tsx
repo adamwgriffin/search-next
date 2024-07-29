@@ -6,8 +6,8 @@ import type {
 import {
   useAppSelector,
   useAppDispatch,
-  useRunCallbackIfChanged
-} from '../../hooks'
+} from '../../hooks/app_hooks'
+import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
   setFilters

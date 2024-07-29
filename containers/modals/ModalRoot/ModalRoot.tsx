@@ -3,7 +3,7 @@
 import type { NextPage } from 'next'
 import type { ModalType } from '../../../store/application/applicationSlice'
 import { selectModalType, selectModalProps } from '../../../store/application/applicationSlice'
-import { useAppSelector } from '../../../hooks'
+import { useAppSelector } from '../../../hooks/app_hooks'
 import FiltersModal from '../FiltersModal/FiltersModal'
 import SaveSearchModal from '../SaveSearchModal/SaveSearchModal'
 import ErrorModal from '../ErrorModal/ErrorModal'

@@ -7,7 +7,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useEvent } from 'react-use'
 import isEqual from 'lodash/isEqual'
-import { useAppSelector, useAppDispatch } from '../../hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import {
   listingSearchURLParamsToSearchState,
   searchStateToListingSearchURLParams

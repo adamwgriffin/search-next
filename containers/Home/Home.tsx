@@ -3,7 +3,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useAppSelector } from '../../hooks'
+import { useAppSelector } from '../../hooks/app_hooks'
 import { selectSearchState } from '../../store/filters/filtersSelectors'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 import { GoogleMapsLoaderOptions } from '../../config/googleMapsOptions'

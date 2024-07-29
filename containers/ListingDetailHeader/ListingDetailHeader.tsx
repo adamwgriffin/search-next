@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/navigation'
-import { useAppSelector } from '../../hooks'
+import { useAppSelector } from '../../hooks/app_hooks'
 import { selectSearchState } from '../../store/filters/filtersSelectors'
 import styles from './ListingDetailHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'
