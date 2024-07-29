@@ -1,5 +1,5 @@
+import type { AppDispatch, AppState } from '../store'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { AppDispatch, AppState } from '../store'
 
 // putting this in store/index.ts with the function that creates the store causes a circular dependency error for some
 // reason so we're keeping it here instead
