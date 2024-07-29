@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --dir .",
     "test": "jest",
     "prisma:generate:local": "dotenv -e .env.local prisma generate", 
     "prisma:validate:local": "dotenv -e .env.local prisma validate" 
