@@ -50,7 +50,7 @@ model SavedSearch {
   updatedAt      DateTime     @updatedAt
   userId         String       @db.ObjectId
   name           String
-  messageCadence Int?
+  messageCadence Int
   searchParams   Json
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
