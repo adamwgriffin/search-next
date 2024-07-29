@@ -6,7 +6,7 @@ import http from '../../lib/http'
 import {
   selectParamsForGeocodeSearch,
   selectParamsForGeospatialSearch
-} from '../../lib/listing_service_params'
+} from './listingSearchSelectors'
 import { SelectedListing, HighlightedMarker, ListingSearchState } from './listingSearchTypes'
 
 const initialState: ListingSearchState = {
