@@ -16,7 +16,7 @@ import {
   useAppSelector,
   useAppDispatch,
 } from '../../hooks/app_hooks'
-import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed'
+import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed_hook'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
   setFilters,
