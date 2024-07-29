@@ -1,5 +1,11 @@
 import type { CountOption } from './types'
-import type { FeatureFilters } from '../store/filters/filtersTypes'
+import type { FeatureLabelsType } from '../store/filters/filtersTypes'
+
+export const SearchTypes = {
+  Buy: 'buy',
+  Rent: 'rent',
+  Sold: 'sold'
+} as const
 
 export const LotSizeValues: Array<CountOption> = [
   {
@@ -48,11 +54,7 @@ export const LotSizeValues: Array<CountOption> = [
   }
 ]
 
-type FeatureLabels = {
-  [key in keyof FeatureFilters]: string
-}
-
-export const FeatureLabels: FeatureLabels = {
+export const FeatureLabels: FeatureLabelsType = {
   waterfront: 'Waterfront',
   view: 'Views',
   fireplace: 'Fireplace',

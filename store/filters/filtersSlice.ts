@@ -1,14 +1,12 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
-import { searchNewLocation } from '../listingSearch/listingSearchSlice'
+import {
+  searchNewLocation,
+  searchWithUpdatedFilters
+} from '../listingSearch/listingSearchSlice'
 import { FiltersState, SearchTypeOption } from './filtersTypes'
 import { DefaultSoldInLast } from '../../config'
-
-export const SearchTypes = {
-  Buy: 'buy',
-  Rent: 'rent',
-  Sold: 'sold'
-} as const
+import { SearchTypes } from '../../lib/filter'
 
 export const initialState: FiltersState = {
   searchType: SearchTypes.Buy,
@@ -79,6 +77,10 @@ export const filtersSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(searchNewLocation.pending, (state) => {
+      state.pageIndex = initialState.pageIndex
+    })
+
+    builder.addCase(searchWithUpdatedFilters.pending, (state) => {
       state.pageIndex = initialState.pageIndex
     })
   }

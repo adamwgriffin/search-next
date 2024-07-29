@@ -1,5 +1,4 @@
 import type { AppState } from '..'
-import { resetStartIndex } from '../filters/filtersSlice'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import http from '../../lib/http'
@@ -63,7 +62,6 @@ export const searchCurrentLocation = createAsyncThunk(
 export const searchWithUpdatedFilters = createAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
-    dispatch(resetStartIndex())
     dispatch(searchCurrentLocation())
   }
 )
