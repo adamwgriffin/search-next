@@ -1,19 +1,11 @@
-'use client'
-
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useAppSelector } from '../../hooks/app_hooks'
-import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
-import { selectSearchState } from '../../store/filters/filtersSelectors'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 import styles from './Home.module.css'
 import HomePageHeader from '../../components/header/HomePageHeader/HomePageHeader'
-import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
+import StandaloneSearchField from '../StandaloneSearchField/StandaloneSearchField'
 
 const Home: NextPage = () => {
-  const searchWithFilterState = useSearchWithFilterState()
-  const searchState = useAppSelector(selectSearchState)
-
   return (
     <GoogleMapsProvider>
       <div className={styles.home}>
@@ -24,15 +16,7 @@ const Home: NextPage = () => {
         <div className={styles.body}>
           <div className={styles.hero}>
             <h1>Discover the Awsöm!</h1>
-            <SearchFieldContainer
-              onSearchInitiated={() => searchWithFilterState(searchState)}
-              onOptionSelected={(autocompletePrediction) =>
-                searchWithFilterState({
-                  ...searchState,
-                  locationSearchField: autocompletePrediction.description
-                })
-              }
-            />
+            <StandaloneSearchField />
           </div>
 
           <main className={styles.mainContent}>
