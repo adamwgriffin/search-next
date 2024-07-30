@@ -4,13 +4,13 @@ import type { FiltersState } from '../../store/filters/filtersTypes'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useState, useCallback, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEvent } from 'react-use'
 import isEqual from 'lodash/isEqual'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
+import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
 import {
   listingSearchURLParamsToSearchState,
-  searchStateToListingSearchURLParams
 } from '../../lib/url'
 import {
   initialState,
@@ -36,15 +36,15 @@ export interface SearchPageProps {
 
 const SearchPage: NextPage<SearchPageProps> = () => {
   const { status } = useSession()
-  const router = useRouter()
   const pathname = usePathname()
   const dispatch = useAppDispatch()
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const initialSearchComplete = useAppSelector(selectInitialSearchComplete)
+  const searchWithFilterState = useSearchWithFilterState()
   const searchState = useAppSelector(selectSearchState)
   const [previousSearchState, setPreviousSearchState] =
     useState<Partial<FiltersState>>()
-  
+
   // TODO: make this into a custom hook
   useEffect(() => {
     if (status === 'authenticated') {
@@ -118,11 +118,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
       // avoid updating unless the searchState changed, otherwise clicking the back button will not change the url
       !isEqual(searchState, previousSearchState)
     if (shouldUpdateURL) {
-      router.push(
-        pathname +
-          '?' +
-          new URLSearchParams(searchStateToListingSearchURLParams(searchState))
-      )
+      searchWithFilterState(searchState)
       setPreviousSearchState(searchState)
     }
   }, [
@@ -130,8 +126,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     initialSearchComplete,
     searchState,
     previousSearchState,
-    router,
-    pathname
+    searchWithFilterState
   ])
 
   return (

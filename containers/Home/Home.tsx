@@ -1,44 +1,18 @@
 'use client'
 
 import type { NextPage } from 'next'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAppSelector } from '../../hooks/app_hooks'
+import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
 import { selectSearchState } from '../../store/filters/filtersSelectors'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
-import { searchStateToListingSearchURLParams } from '../../lib/url'
 import styles from './Home.module.css'
 import HomePageHeader from '../../components/header/HomePageHeader/HomePageHeader'
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
 
 const Home: NextPage = () => {
-  // TODO: make this search code that's duplicated in ListingDetailHeader into a hook that both can share
-  const router = useRouter()
+  const searchWithFilterState = useSearchWithFilterState()
   const searchState = useAppSelector(selectSearchState)
-
-  const handleOnSearchInitiated = () => {
-    router.push(
-      '/homes?' +
-        new URLSearchParams(searchStateToListingSearchURLParams(searchState))
-    )
-  }
-
-  const handleOnOptionSelected = (
-    autocompletePrediction: google.maps.places.AutocompletePrediction
-  ) => {
-    // locationSearchField doesn't get updated in searchState by the time we execute this function, so we only get the
-    // partial text that was typed in the field instead of the entire text that was selected in the autocomplete. we're
-    // adding the autocompletePrediction.description here to make sure the search is correct.
-    router.push(
-      '/homes?' +
-        new URLSearchParams(
-          searchStateToListingSearchURLParams({
-            ...searchState,
-            locationSearchField: autocompletePrediction.description
-          })
-        )
-    )
-  }
 
   return (
     <GoogleMapsProvider>
@@ -51,8 +25,13 @@ const Home: NextPage = () => {
           <div className={styles.hero}>
             <h1>Discover the Awsöm!</h1>
             <SearchFieldContainer
-              onSearchInitiated={handleOnSearchInitiated}
-              onOptionSelected={handleOnOptionSelected}
+              onSearchInitiated={() => searchWithFilterState(searchState)}
+              onOptionSelected={(autocompletePrediction) =>
+                searchWithFilterState({
+                  ...searchState,
+                  locationSearchField: autocompletePrediction.description
+                })
+              }
             />
           </div>
 
