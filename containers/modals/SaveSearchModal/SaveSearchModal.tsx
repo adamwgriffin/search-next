@@ -73,11 +73,11 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
       <form onSubmit={handleSubmit(handleSave)}>
         <ModalBody>
           <div className={formStyles.inputGroup}>
-            <label htmlFor='name' className={formStyles.label}>
+            <label htmlFor='searchName' className={formStyles.label}>
               Name
             </label>
             <input
-              id='name'
+              id='searchName'
               type='text'
               className={formStyles.input}
               {...register('name')}
