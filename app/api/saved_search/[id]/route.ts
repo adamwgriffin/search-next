@@ -25,13 +25,13 @@ export async function PUT(
   { params }: { params: SavedSearchParams }
 ) {
   try {
-    await prisma.savedSearch.update({
+    const savedSearch = await prisma.savedSearch.update({
       where: {
         id: params.id
       },
       data: await request.json()
     })
-    return new NextResponse(null, { status: 200 })
+    return NextResponse.json(savedSearch)
   } catch (error) {
     console.error("Error updating saved search:", error)
     return NextResponse.json(
