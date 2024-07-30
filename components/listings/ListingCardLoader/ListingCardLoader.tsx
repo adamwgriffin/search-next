@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import React from 'react'
 import ContentLoader from 'react-content-loader'
 import styles from './ListingCardLoader.module.css'
 
@@ -10,7 +9,7 @@ const ListingCardLoader: NextPage = () => (
       height={'100%'}
       uniqueKey="listing-card-loader"
     >
-      <rect x="0" y="0" width="100%" height="300" rx='12.8px'/>      
+      <rect x="0" y="0" width="100%" height="300" rx='12.8px'/>
       <rect x="0" y="310" width="50%" height="24" rx='6px' />
       <rect x="0" y="344" width="36" height="16" rx='6px' />
       <rect x="46" y="344" width="36" height="16" rx='6px' />
