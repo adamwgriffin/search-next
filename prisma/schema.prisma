@@ -51,7 +51,7 @@ model SavedSearch {
   userId         String       @db.ObjectId
   name           String
   messageCadence Int
-  searchParams   Json
+  searchState   Json @map("searchState")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

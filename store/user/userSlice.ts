@@ -2,17 +2,20 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { AppState } from '..'
 import type { User, SavedSearch } from '@prisma/client'
 import type { Listing } from '../../lib/types/listing_types'
-import type { ListingServiceParams } from '../../lib/types/listing_service_params_types'
+import type { FiltersState } from '../filters/filtersTypes'
 import type { DefaultAPIResponse } from '../../lib/types'
 import type { GetListingsByIdsResponse } from '../../pages/api/listings/[listing_ids]'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
 
-export type SavedSearchData = Omit<SavedSearch, 'createdAt' | 'updatedAt' | 'searchParams'> & {
+export type SavedSearchData = Omit<
+  SavedSearch,
+  'createdAt' | 'updatedAt' | 'searchState'
+> & {
   createdAt: string
   updatedAt: string
-  searchParams: ListingServiceParams
+  searchState: Partial<FiltersState>
 }
 
 export type CreateSavedSearchData = Omit<SavedSearchData, 'id' | 'createdAt' | 'updatedAt'>

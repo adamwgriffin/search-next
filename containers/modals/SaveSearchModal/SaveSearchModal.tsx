@@ -18,7 +18,7 @@ import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBo
 import ModalFooter from '../../../components/design_system/modal/ModalFooter/ModalFooter'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
-import { selectParamsForGeocodeSearch } from '../../../store/listingSearch/listingSearchSelectors'
+import { selectSearchState } from '../../../store/filters/filtersSelectors'
 
 export interface SaveSearchModalProps {
   title: string
@@ -33,7 +33,7 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectModalOpen)
   const locationSearchField = useAppSelector(selectLocationSearchField)
-  const paramsForGeocodeSearch = useAppSelector(selectParamsForGeocodeSearch)
+  const searchState = useAppSelector(selectSearchState)
   const currentUser = useAppSelector(selectCurrentUser)
 
   const { register, handleSubmit } = useForm<SaveSearchFormData>({
@@ -55,7 +55,7 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
         userId: currentUser.id,
         name: formData.name,
         messageCadence: Number(formData.messageCadence),
-        searchParams: paramsForGeocodeSearch
+        searchState: searchState
       })
     )
     // should maybe wait for saved search to be created, then publish a toast upon success. we could do all of this
