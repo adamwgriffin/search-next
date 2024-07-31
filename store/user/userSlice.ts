@@ -39,6 +39,7 @@ export type UserState = {
   favoriteListings: Listing[]
   getFavoriteListingsLoading: boolean
   savedSearches: SavedSearchData[]
+  getSavedSearchesLoading: boolean
 }
 
 const initialState: UserState = {
@@ -46,7 +47,8 @@ const initialState: UserState = {
   previousFavoriteIds: [],
   favoriteListings: [],
   getFavoriteListingsLoading: false,
-  savedSearches: []
+  savedSearches: [],
+  getSavedSearchesLoading: false,
 }
 
 export const getCurrentUser = createAppAsyncThunk<
@@ -183,9 +185,19 @@ export const userSlice = createSlice({
       if (!state.currentUser) return
       state.currentUser.favoriteIds = state.previousFavoriteIds
     })
+    
+    builder.addCase(getSavedSearches.pending, (state) => {
+      state.getSavedSearchesLoading = true
+    })
 
     builder.addCase(getSavedSearches.fulfilled, (state, action) => {
       state.savedSearches = action.payload
+      state.getSavedSearchesLoading = false
+    })
+
+
+    builder.addCase(getSavedSearches.rejected, (state) => {
+      state.getSavedSearchesLoading = false
     })
 
     builder.addCase(updateSavedSearch.fulfilled, (state, action) => {
@@ -230,5 +242,8 @@ export const selectGetFavoriteListingsLoading = (state: AppState) =>
   state.user.getFavoriteListingsLoading
 
 export const selectSavedSearches = (state: AppState) => state.user.savedSearches
+
+export const selectGetSavedSearchesLoading = (state: AppState) =>
+  state.user.getSavedSearchesLoading
 
 export default userSlice.reducer
