@@ -61,8 +61,7 @@ const UserMenu: NextPage = () => {
                 </Link>
               </li>
               <li className={styles.menuItem}>
-                {/* Real link TBD */}
-                <Link href='/account' className={styles.link}>
+                <Link href='/account/saved_searches' className={styles.link}>
                   Saved Searches
                 </Link>
               </li>
