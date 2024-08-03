@@ -7,6 +7,12 @@ export const SearchTypes = {
   Sold: 'sold'
 } as const
 
+export const SearchTypeLabels = {
+  [SearchTypes.Buy]: 'For Sale',
+  [SearchTypes.Rent]: 'For Rent',
+  [SearchTypes.Sold]: 'Sold'
+}
+
 export const LotSizeValues: Array<CountOption> = [
   {
     label: 'No Min',
