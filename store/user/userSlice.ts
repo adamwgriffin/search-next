@@ -24,7 +24,7 @@ export type CreateSavedSearchData = Omit<
   'id' | 'createdAt' | 'updatedAt'
 >
 
-export type UpdateSavedSearch = {
+export type UpdateSavedSearchData = {
   id: SavedSearchData['id']
 } & Partial<SavedSearchData>
 
@@ -116,7 +116,7 @@ export const getSavedSearches = createAppAsyncThunk<
 
 export const updateSavedSearch = createAppAsyncThunk<
   SavedSearchData,
-  UpdateSavedSearch
+  UpdateSavedSearchData
 >('user/updateSavedSearch', async (savedSearchUpdate) => {
   const res = await http.put<SavedSearchData>(
     `/api/saved_search/${savedSearchUpdate.id}`,
