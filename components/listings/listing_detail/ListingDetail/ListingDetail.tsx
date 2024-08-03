@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useState } from 'react'
 import type { IListingDetail } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
-import { formatPrice } from '../../../../lib/listing_helpers'
+import { formatPriceFromListing } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
 import ListingDetailImage from '../ListingDetailImage/ListingDetailImage'
 import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
@@ -30,7 +30,7 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
           listing={listing}
           onClick={() => setSlideShowOpen(true)}
         />
-        <div className='price'>{formatPrice(listing)}</div>
+        <div className='price'>{formatPriceFromListing(listing)}</div>
         <div className='neighborhood'>{listing.neighborhood}</div>
         <ListingDetailAddress address={listing.address} />
         <ListingDetailBedsBathsSQFT listing={listing} />

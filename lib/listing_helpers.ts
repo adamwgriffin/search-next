@@ -1,7 +1,8 @@
 import type {
   Listing,
   IListingDetail,
-  ListingAddress
+  ListingAddress,
+  PropertyStatus
 } from './types/listing_types'
 import { Locale, Currency } from '../config'
 
@@ -14,7 +15,7 @@ export interface FormatPriceOptions {
 export const ListingStreetViewImageSizeEnum = Object.freeze({
   gallery: { width: 1920, height: 1080 },
   full: { width: 480, height: 540 },
-  small: { width: 533, height: 300 },
+  small: { width: 533, height: 300 }
 })
 
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
@@ -35,12 +36,10 @@ const defaultFormatPriceOptions: FormatPriceOptions = {
 }
 
 export const formatPrice = (
-  {
-    status,
-    soldPrice,
-    listPrice,
-    rental
-  }: Listing | IListingDetail,
+  status: PropertyStatus,
+  soldPrice: number | null | undefined,
+  listPrice: number,
+  rental: boolean,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
   const opts = { defaultFormatPriceOptions, ...options }
@@ -54,9 +53,12 @@ export const formatPrice = (
     : priceFormatted
 }
 
-export const getBathrooms = (
-  listing: Listing | IListingDetail
-): number => {
+export const formatPriceFromListing = (
+  { status, soldPrice, listPrice, rental }: Listing | IListingDetail,
+  options: FormatPriceOptions = {}
+) => formatPrice(status, soldPrice, listPrice, Boolean(rental), options)
+
+export const getBathrooms = (listing: Listing | IListingDetail): number => {
   return listing.baths || 0
 }
 
