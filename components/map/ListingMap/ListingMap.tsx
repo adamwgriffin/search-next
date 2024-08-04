@@ -13,7 +13,7 @@ import ListingMarker from '../ListingMarker/ListingMarker'
 import MapBoundary from '../MapBoundary/MapBoundary'
 import MapControl from '../MapControl/MapControl'
 import ZoomControl from '../ZoomControl/ZoomControl'
-import { useAppSelector, useAppDispatch } from '../../../hooks'
+import { useAppSelector, useAppDispatch } from '../../../hooks/app_hooks'
 import {
   setBoundaryActive,
   setMapData

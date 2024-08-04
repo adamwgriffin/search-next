@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import css from 'styled-jsx/css'
-import { useAppSelector, useAppDispatch } from '../../../hooks'
+import { useAppSelector, useAppDispatch } from '../../../hooks/app_hooks'
 import {
   getListingDetail,
   selectListing

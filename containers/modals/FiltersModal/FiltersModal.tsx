@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useAppDispatch, useAppSelector } from '../../../hooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectModalOpen,
   closeModal

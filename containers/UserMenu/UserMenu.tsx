@@ -6,7 +6,7 @@ import { signOut } from 'next-auth/react'
 import { useToggle } from 'react-use'
 import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
-import { useAppDispatch } from '../../hooks'
+import { useAppDispatch } from '../../hooks/app_hooks'
 import { openModal } from '../../store/application/applicationSlice'
 import { resetCurrentUser } from '../../store/user/userSlice'
 import styles from './UserMenu.module.css'
@@ -61,8 +61,7 @@ const UserMenu: NextPage = () => {
                 </Link>
               </li>
               <li className={styles.menuItem}>
-                {/* Real link TBD */}
-                <Link href='/account' className={styles.link}>
+                <Link href='/account/saved_searches' className={styles.link}>
                   Saved Searches
                 </Link>
               </li>

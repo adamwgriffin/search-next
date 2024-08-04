@@ -3,7 +3,7 @@ import type {
   SortType
 } from '../../lib/types/listing_service_params_types'
 import type { PropertyType } from '../../lib/property_types'
-import { SearchTypes } from './filtersSlice'
+import { SearchTypes } from '../../lib/filter'
 
 export type SearchTypeOption = (typeof SearchTypes)[keyof typeof SearchTypes]
 
@@ -96,3 +96,7 @@ export type FeatureFilters = Pick<
   | 'pool'
   | 'airConditioning'
 >
+
+export type FeatureLabelsType = {
+  [key in keyof FeatureFilters]: string
+}

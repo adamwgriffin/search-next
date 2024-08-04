@@ -4,7 +4,7 @@ import type { Listing } from '../../../lib/types/listing_types'
 import Link from 'next/link'
 import styles from './ListingCard.module.css'
 import {
-  formatPrice,
+  formatPriceFromListing,
   getBathrooms,
   formatSqft,
   cityStateZip
@@ -41,7 +41,7 @@ const ListingCard: NextPage<ListingCardProps> = ({
     >
       <ListingCardImage listing={listing} />
       <div className={styles.details}>
-        <div className={styles.price}>{formatPrice(listing)}</div>
+        <div className={styles.price}>{formatPriceFromListing(listing)}</div>
         <div className={styles.bedBathSqft}>
           <div>{listing.beds}bd</div>
           <div>{getBathrooms(listing)}ba</div>

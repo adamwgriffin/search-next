@@ -1,25 +1,17 @@
-import type { AppState } from '../store'
-import type { BoundsParams } from './types/listing_service_params_types'
-import type { ListingServiceParams } from './types/listing_service_params_types'
+import type {
+  ListingServiceParamFilters,
+  ListingServiceParams
+} from './types/listing_service_params_types'
 import type { FiltersState } from '../store/filters/filtersTypes'
 import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import snakeCase from 'lodash/snakeCase'
-import { SearchTypes } from '../store/filters/filtersSlice'
+import { SearchTypes } from './filter'
 
-// FilterState attributes that have the same key/value as their listing service param counterpart (only with camel case
-// keys)
-export type ListingServiceParamFilters = Omit<
-  FiltersState,
-  | 'searchType'
-  | 'locationSearchField'
-  | 'propertyTypes'
-  | 'openHouse'
-  | 'includePending'
->
-
-// keep track of a subset of listing param defaults so that we can avoid sending them in the request if the service
-// would behave this way be default anyway
+/**
+ * Keep track of a subset of Listing Service param defaults so that we can avoid sending them in the request if the
+ * service would behave this way be default anyway
+ */
 export const DefaultListingServiceParams: ListingServiceParams = Object.freeze({
   page_index: 0,
   page_size: 20,
@@ -30,7 +22,7 @@ export const DefaultListingServiceParams: ListingServiceParams = Object.freeze({
   sort_direction: 'desc'
 })
 
-export const BooleanParams = [
+export const BooleanParams = Object.freeze([
   'waterfront',
   'view',
   'fireplace',
@@ -40,32 +32,9 @@ export const BooleanParams = [
   'virtual_tour',
   'pool',
   'air_conditioning'
-]
+])
 
-export const selectBoundsParams = (state: AppState): BoundsParams => {
-  const { boundsNorth, boundsEast, boundsSouth, boundsWest } = state.listingMap
-  return {
-    bounds_north: boundsNorth,
-    bounds_east: boundsEast,
-    bounds_south: boundsSouth,
-    bounds_west: boundsWest
-  }
-}
-
-export const selectListingServiceParamFilters = (
-  state: AppState
-): ListingServiceParamFilters => {
-  return omit(
-    state.filters,
-    'searchType',
-    'locationSearchField',
-    'propertyTypes',
-    'openHouse',
-    'includePending'
-  )
-}
-
-export const convertListingServiceFilterKeys = (
+export const convertFilterKeysToProperCase = (
   filters: ListingServiceParamFilters
 ) => {
   return Object.entries(filters).reduce(
@@ -77,10 +46,29 @@ export const convertListingServiceFilterKeys = (
   )
 }
 
-// we want to avoid including params that have a boolean value that is false in most circumstances because we really
-// only care about filtering on those that are true
-export const falseBooleanParam = (param: string, value: unknown): boolean => {
+/**
+ * We want to avoid including parameters with a boolean value that is false in most circumstances. We only care about
+ * filtering on those that are true.
+ */
+export const isFalseBooleanParam = (param: string, value: unknown) => {
   return BooleanParams.includes(param) && value === false
+}
+
+/**
+ * Remove attributes from filters state that are not actual params that the Listing Service recognizes. Most of these
+ * are used to compute values for actual service params instead of being used directly.
+ */
+export const removeNonListingServiceParamFilters = (
+  filters: FiltersState
+): ListingServiceParamFilters => {
+  return omit(
+    filters,
+    'searchType',
+    'locationSearchField',
+    'propertyTypes',
+    'openHouse',
+    'includePending'
+  )
 }
 
 export const removeUnecessaryParams = (
@@ -90,12 +78,14 @@ export const removeUnecessaryParams = (
     return (
       value === null ||
       DefaultListingServiceParams[param] === value ||
-      falseBooleanParam(param, value)
+      isFalseBooleanParam(param, value)
     )
   })
 }
 
-// adds additional listing service params based on certain filter state values
+/**
+ * adds additional listing service params based on certain filter state values
+ */
 export const paramsDerivedFromFilterState = (filters: FiltersState) => {
   const params: ListingServiceParams = {}
   if (filters.propertyTypes.length) {
@@ -117,30 +107,17 @@ export const paramsDerivedFromFilterState = (filters: FiltersState) => {
   return params
 }
 
-export const selectListingServiceFilters = (state: AppState) => {
-  const listingServiceParams = convertListingServiceFilterKeys(
-    selectListingServiceParamFilters(state)
+/**
+ * The main entry point for putting the filters state into the correct shape for sending params to the Listing Service
+ */
+export const convertFiltersToListingServiceParams = (
+  filters: FiltersState
+): ListingServiceParams => {
+  const listingServiceParams = convertFilterKeysToProperCase(
+    removeNonListingServiceParamFilters(filters)
   )
   return {
     ...removeUnecessaryParams(listingServiceParams),
-    ...paramsDerivedFromFilterState(state.filters)
-  }
-}
-
-export const selectParamsForGeospatialSearch = (
-  state: AppState
-): ListingServiceParams => {
-  return {
-    ...selectListingServiceFilters(state),
-    ...selectBoundsParams(state)
-  }
-}
-
-export const selectParamsForGeocodeSearch = (
-  state: AppState
-): ListingServiceParams => {
-  return {
-    ...selectListingServiceFilters(state),
-    address: state.filters.locationSearchField
+    ...paramsDerivedFromFilterState(filters)
   }
 }

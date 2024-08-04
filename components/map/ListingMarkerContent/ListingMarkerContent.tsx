@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type { CSSProperties } from 'react'
 import type { Listing } from '../../../lib/types/listing_types'
 import {
-  formatPrice,
+  formatPriceFromListing,
   ShortCurrencyFormat,
   getBathrooms,
   formatSqft,
@@ -34,7 +34,7 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
   link,
   highlighted = false
 }) => {
-  const priceAbbreviated = formatPrice(listing, {
+  const priceAbbreviated = formatPriceFromListing(listing, {
     numberFormatOptions: ShortCurrencyFormat,
     displayInterval: false
   })
@@ -67,7 +67,7 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
             />
           </ListingImageContainer>
           <div className={styles.details}>
-            <div className={styles.price}>{formatPrice(listing)}</div>
+            <div className={styles.price}>{formatPriceFromListing(listing)}</div>
             <div className={styles.bedBathSqft}>
               <div>{listing.beds}bd</div>
               <div>{getBathrooms(listing)}ba</div>

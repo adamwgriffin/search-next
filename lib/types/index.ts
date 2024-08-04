@@ -3,3 +3,5 @@ export interface CountOption {
   value: number
   checked?: boolean
 }
+
+export type DefaultAPIResponse = null | { error: string }

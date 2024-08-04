@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { SearchTypeOption } from '../../../store/filters/filtersTypes'
-import { SearchTypes } from '../../../store/filters/filtersSlice'
+import { SearchTypeLabels, SearchTypes } from '../../../lib/filter'
 import { Fragment } from 'react'
 import styles from './SearchTypeSelector.module.css'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
@@ -8,12 +8,6 @@ import Fieldset from '../../design_system/Fieldset/Fieldset'
 export interface SearchTypeProps {
   searchType: SearchTypeOption
   onChange?: (searchType: SearchTypeOption) => void
-}
-
-export const SearchTypeLabels = {
-  [SearchTypes.Buy]: 'For Sale',
-  [SearchTypes.Rent]: 'For Rent',
-  [SearchTypes.Sold]: 'Sold'
 }
 
 const SearchTypeSelector: NextPage<SearchTypeProps> = ({

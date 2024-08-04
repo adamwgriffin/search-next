@@ -2,9 +2,13 @@ import type { AppState } from '..'
 import type { HighlightedMarker } from './listingSearchTypes'
 import type { Listing } from '../../lib/types/listing_types'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
+import type { ListingServiceParams } from '../../lib/types/listing_service_params_types'
 import range from 'lodash/range'
 import { createSelector } from '@reduxjs/toolkit'
-import { selectFilters } from '../filters/filtersSelectors'
+import { convertFiltersToListingServiceParams } from '../../lib/listing_service_params'
+import { selectBounds } from '../listingMap/listingMapSelectors'
+
+const selectFilterState = (state: AppState) => state.filters
 
 export const selectInitialSearchComplete = (state: AppState): boolean =>
   state.listingSearch.initialSearchComplete
@@ -32,7 +36,7 @@ export const selectTotalListings = createSelector(
 )
 
 export const selectPagination = createSelector(
-  [selectFilters, selectListings, selectListingServiceResponse],
+  [selectFilterState, selectListings, selectListingServiceResponse],
   (filters, listings, listingServiceResponse): Pagination => {
     const { pageIndex, pageSize } = filters
     const numberReturned = listings.length
@@ -44,6 +48,22 @@ export const selectPagination = createSelector(
       total: numberAvailable,
       pages: range(0, numberOfPages),
       currentPage: pageIndex
+    }
+  }
+)
+
+export const selectParamsForGeospatialSearch = createSelector(
+  [selectFilterState, selectBounds],
+  (filters, bounds): ListingServiceParams =>
+    convertFiltersToListingServiceParams({ ...filters, ...bounds })
+)
+
+export const selectParamsForGeocodeSearch = createSelector(
+  [selectFilterState],
+  (filters): ListingServiceParams => {
+    return {
+      ...convertFiltersToListingServiceParams(filters),
+      address: filters.locationSearchField
     }
   }
 )
