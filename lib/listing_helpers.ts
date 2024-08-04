@@ -2,7 +2,6 @@ import type {
   Listing,
   IListingDetail,
   ListingAddress,
-  PropertyStatus
 } from './types/listing_types'
 import { Locale, Currency } from '../config'
 
@@ -36,14 +35,11 @@ const defaultFormatPriceOptions: FormatPriceOptions = {
 }
 
 export const formatPrice = (
-  status: PropertyStatus,
-  soldPrice: number | null | undefined,
-  listPrice: number,
+  price: number,
   rental: boolean,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
   const opts = { defaultFormatPriceOptions, ...options }
-  const price = status === 'sold' ? soldPrice : listPrice
   const priceFormatted = Intl.NumberFormat(
     Locale,
     opts.numberFormatOptions
@@ -54,9 +50,9 @@ export const formatPrice = (
 }
 
 export const formatPriceFromListing = (
-  { status, soldPrice, listPrice, rental }: Listing | IListingDetail,
+  { soldPrice, listPrice, rental }: Listing | IListingDetail,
   options: FormatPriceOptions = {}
-) => formatPrice(status, soldPrice, listPrice, Boolean(rental), options)
+) => formatPrice((soldPrice || listPrice), Boolean(rental), options)
 
 export const getBathrooms = (listing: Listing | IListingDetail): number => {
   return listing.baths || 0
