@@ -1,5 +1,6 @@
 import type { SavedSearchData } from '../../store/user/userSlice'
 import { MdDelete } from 'react-icons/md'
+import { getSearchDescription } from '../../lib/saved_search_helpers'
 import formStyles from '../../styles/forms.module.css'
 import styles from './SavedSearchCard.module.css'
 
@@ -22,7 +23,7 @@ const SavedSearchCard: React.FC<SavedSearchCard> = ({
     <div className={styles.savedSearch} onClick={onClick}>
       <div className={styles.body}>
         <h2 className={styles.heading}>{savedSearch.name}</h2>
-        <p>For Rent: No Min - $3.0K/month</p>
+        <p>{getSearchDescription(savedSearch.searchState)}</p>
         <label htmlFor={messageCadenceId} className={formStyles.label}>
           Email Me
         </label>
