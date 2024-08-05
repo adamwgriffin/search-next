@@ -1,9 +1,23 @@
-import type { NextPage } from 'next'
+import type { CSSProperties } from 'react'
 import styles from './LoadingDots.module.css'
 
-const LoadingDots: NextPage = () => {
+export type LoadingDotsProps = {
+  size?: string
+  gap?: string
+}
+
+const LoadingDots: React.FC<LoadingDotsProps> = ({
+  size = '1rem',
+  gap = '0.3125rem'
+}) => {
+  const dotStyle: CSSProperties = { width: size, height: size }
+
   return (
-    <div className={styles.loadingDots}></div>
+    <div style={{ columnGap: gap }} className={styles.loadingDots}>
+      <div style={dotStyle}></div>
+      <div style={dotStyle}></div>
+      <div style={dotStyle}></div>
+    </div>
   )
 }
 

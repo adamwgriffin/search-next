@@ -1,49 +1,24 @@
 .loadingDots {
-  position: relative;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: gray;
-  color: gray;
-  animation: dotFlashing 1s infinite linear alternate;
-  animation-delay: .5s;
+  display: inline-flex;
 }
 
-.loadingDots::before, .loadingDots::after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  top: 0;
+.loadingDots > div {
+  border-radius: 50%;
+  background-color: #a3a1a1;
+  opacity: 1;
+  animation: loadingDots 1s infinite alternate;
 }
 
-.loadingDots::before {
-  left: -15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: gray;
-  color: gray;
-  animation: dotFlashing 1s infinite alternate;
-  animation-delay: 0s;
-}
-
-.loadingDots::after {
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: gray;
-  color: gray;
-  animation: dotFlashing 1s infinite alternate;
-  animation-delay: 1s;
-}
-
-@keyframes dotFlashing {
-  0% {
-    background-color: gray;
+@keyframes loadingDots {
+  to {
+    opacity: 0.1;
   }
-  50%,
-  100% {
-    background-color: lightgray;
-  }
+}
+
+.loadingDots > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loadingDots > div:nth-child(3) {
+  animation-delay: 0.4s;
 }

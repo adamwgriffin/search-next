@@ -20,7 +20,7 @@ const MapControl: NextPage<MapControlProps> = ({
         {!listingSearchRunning && boundaryActive && (
           <BoundaryControl onClick={onBoundaryControlClick} />
         )}
-        {listingSearchRunning && <LoadingDots />}
+        {listingSearchRunning && <LoadingDots size='var(--loading-dots-small)' />}
       </div>
     )
   } else {

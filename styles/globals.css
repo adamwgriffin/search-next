@@ -32,6 +32,7 @@ body,
   --listing-marker-foreground-highlighted: white;
   --map-control: var(--background);
   --no-user-image-icon: #6b7280;
+  --loading-dots-small: 0.625rem;
 }
 
 [data-theme='purple'] {
