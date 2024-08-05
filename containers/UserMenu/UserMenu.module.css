@@ -36,8 +36,8 @@
 
 .menuItem {
   cursor: pointer;
-  padding: .5rem 1rem;
   font-weight: 500;
+  padding: 0;
 }
 
 .menuItem:hover {
@@ -45,6 +45,12 @@
 }
 
 .link {
+  display: block;
   color: var(--foreground);
   text-decoration: none;
+}
+
+.link,
+.menuItemContainer {
+  padding: .5rem 1rem;
 }

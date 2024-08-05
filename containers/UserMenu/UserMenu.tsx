@@ -68,20 +68,24 @@ const UserMenu: NextPage = () => {
             </ul>
             <ul className={styles.menuListWithSeparator}>
               <li className={styles.menuItem}>
-                <ThemeSwitcher />
+                <div className={styles.menuItemContainer}>
+                  <ThemeSwitcher />
+                </div>
               </li>
               <li onClick={handleLogout} className={styles.menuItem}>
-                Log Out
+                <div className={styles.menuItemContainer}>Log Out</div>
               </li>
             </ul>
           </>
         ) : (
           <ul className={styles.menuList}>
             <li className={styles.menuItem}>
-              <ThemeSwitcher />
+              <div className={styles.menuItemContainer}>
+                <ThemeSwitcher />
+              </div>
             </li>
             <li onClick={handleLogin} className={styles.menuItem}>
-              Log in
+              <div className={styles.menuItemContainer}>Log in</div>
             </li>
           </ul>
         )}
