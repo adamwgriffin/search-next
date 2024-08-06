@@ -1,10 +1,9 @@
-import type { NextPage } from 'next'
 import { useRef, useEffect, ReactNode } from 'react'
 import { useEffectOnce } from 'react-use'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import styles from './GoogleMap.module.css'
 
-export interface GoogleMapProps {
+export type GoogleMapProps = {
   options: google.maps.MapOptions
   bounds?: google.maps.LatLngBoundsLiteral | null
   zoom?: number
@@ -15,7 +14,7 @@ export interface GoogleMapProps {
   children: ReactNode
 }
 
-export interface GoogleMapState {
+export type GoogleMapState = {
   bounds: google.maps.LatLngBoundsLiteral
   center: google.maps.LatLngLiteral
   zoom: number
