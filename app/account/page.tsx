@@ -1,11 +1,15 @@
+import MinimalHeader from '../../components/header/MinimalHeader/MinimalHeader'
+import AccountBody from '../../components/AccountBody/AccountBody'
+import MyAccount from '../../containers/MyAccount/MyAccount'
+
 export default function Account() {
   return (
-    <div>
-      <h1>My Account</h1>
-      <p>
-        Login required to reach this page. Defined in middleware.ts
-        config.matcher.
-      </p>
-    </div>
+    <>
+      <MinimalHeader />
+      <AccountBody>
+        <h1>My Account</h1>
+        <MyAccount />
+      </AccountBody>
+    </>
   )
 }
