@@ -22,17 +22,16 @@ export type GoogleMapState = {
 
 const eventListeners: google.maps.MapsEventListener[] = []
 
-const GoogleMap: NextPage<GoogleMapProps> = (props) => {
-  const {
-    options,
-    bounds,
-    zoom = 12,
-    children,
-    onDragStart,
-    onDragEnd,
-    onZoomChanged,
-    onIdle
-  } = props
+const GoogleMap: React.FC<GoogleMapProps> = ({
+  options,
+  bounds,
+  zoom = 12,
+  children,
+  onDragStart,
+  onDragEnd,
+  onZoomChanged,
+  onIdle
+}) => {
   const mapEl = useRef(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
 
