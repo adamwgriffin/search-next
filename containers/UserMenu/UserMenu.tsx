@@ -2,6 +2,7 @@
 
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { useToggle } from 'react-use'
 import { useCallback } from 'react'
@@ -9,6 +10,7 @@ import { useSession } from 'next-auth/react'
 import { useAppDispatch } from '../../hooks/app_hooks'
 import { openModal } from '../../store/application/applicationSlice'
 import { resetCurrentUser } from '../../store/user/userSlice'
+import { AuthPaths } from '../../middleware'
 import styles from './UserMenu.module.css'
 import MenuContainter from '../../components/design_system/MenuContainter/MenuContainter'
 import MenuDropdown from '../../components/design_system/MenuDropdown/MenuDropdown'
@@ -16,16 +18,23 @@ import HamburgerIcon from '../../components/design_system/icons/HamburgerIcon/Ha
 import ThemeSwitcher from '../../components/header/ThemeSwitcher/ThemeSwitcher'
 import Avatar from '../../components/header/Avatar/Avatar'
 
+export const pathRequiresAuth = (pathname: string | null) =>
+  AuthPaths.some((pattern) => pattern.test(String(pathname)))
+
 const UserMenu: NextPage = () => {
   const dispatch = useAppDispatch()
   const { data: session } = useSession()
+  const pathname = usePathname()
   const [open, toggleMenu] = useToggle(false)
 
   const handleLogout = useCallback(async () => {
     toggleMenu(false)
-    await signOut({ redirect: false })
+    const signOutOptions = pathRequiresAuth(pathname)
+      ? { callbackUrl: '/', redirect: true }
+      : { redirect: false }
+    await signOut(signOutOptions)
     dispatch(resetCurrentUser())
-  }, [dispatch, toggleMenu])
+  }, [dispatch, pathname, toggleMenu])
 
   const handleLogin = useCallback(() => {
     toggleMenu(false)
