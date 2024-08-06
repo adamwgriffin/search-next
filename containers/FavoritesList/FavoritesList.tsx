@@ -1,34 +1,24 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useListingCardClickHandler } from '../../hooks/listing_card_click_handler_hook'
+import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_if_authenticated_hook'
 import {
-  getCurrentUser,
   getFavoriteListings,
-  selectCurrentUser,
   selectFavoriteListings,
   selectGetFavoriteListingsLoading
 } from '../../store/user/userSlice'
 import ListingCards from '../../components/listings/ListingCards/ListingCards'
 
 const FavoritesList: React.FC = () => {
-  const { status } = useSession()
   const dispatch = useAppDispatch()
   const favoriteListings = useAppSelector(selectFavoriteListings)
   const getFavoriteListingsLoading = useAppSelector(
     selectGetFavoriteListingsLoading
   )
-  const currentUser = useAppSelector(selectCurrentUser)
+  const currentUser = useGetCurrentUserIfAuthenticated()
   const handleListingCardClick = useListingCardClickHandler(false)
-
-  // TODO: make this into a custom hook
-  useEffect(() => {
-    if (status === 'authenticated') {
-      dispatch(getCurrentUser())
-    }
-  }, [dispatch, status])
 
   useEffect(() => {
     if (currentUser?.favoriteIds) {
@@ -39,9 +29,7 @@ const FavoritesList: React.FC = () => {
   return (
     <ListingCards
       listings={favoriteListings}
-      listingSearchRunning={
-        status !== 'authenticated' || getFavoriteListingsLoading
-      }
+      listingSearchRunning={!currentUser || getFavoriteListingsLoading}
       onListingCardClick={handleListingCardClick}
     />
   )

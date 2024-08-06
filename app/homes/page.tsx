@@ -2,12 +2,11 @@
 
 import type { FiltersState } from '../../store/filters/filtersTypes'
 import type { NextPage } from 'next'
-import { useSession } from 'next-auth/react'
 import { useState, useCallback, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import { useEvent } from 'react-use'
 import isEqual from 'lodash/isEqual'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
+import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_if_authenticated_hook'
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
 import {
   listingSearchURLParamsToSearchState,
@@ -27,7 +26,6 @@ import {
   searchNewLocation,
   searchCurrentLocation
 } from '../../store/listingSearch/listingSearchSlice'
-import { getCurrentUser } from '../../store/user/userSlice'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 
 export interface SearchPageProps {
@@ -35,22 +33,15 @@ export interface SearchPageProps {
 }
 
 const SearchPage: NextPage<SearchPageProps> = () => {
-  const { status } = useSession()
-  const pathname = usePathname()
   const dispatch = useAppDispatch()
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const initialSearchComplete = useAppSelector(selectInitialSearchComplete)
   const searchWithFilterState = useSearchWithFilterState()
+  // We want to get the currentUser so that we can display their favorites on the listing cards
+  useGetCurrentUserIfAuthenticated()
   const searchState = useAppSelector(selectSearchState)
   const [previousSearchState, setPreviousSearchState] =
     useState<Partial<FiltersState>>()
-
-  // TODO: make this into a custom hook
-  useEffect(() => {
-    if (status === 'authenticated') {
-      dispatch(getCurrentUser())
-    }
-  }, [dispatch, status])
 
   // get the browser url query string, convert it to a state object, use it to set the state, then run a new search
   // based on that state.

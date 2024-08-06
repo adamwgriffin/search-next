@@ -5,12 +5,11 @@ import { useSession } from 'next-auth/react'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { selectGetSavedSearchesLoading } from '../../store/user/userSlice'
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
+import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_if_authenticated_hook'
 import {
-  getCurrentUser,
   getSavedSearches,
   updateSavedSearch,
   deleteSavedSearch,
-  selectCurrentUser,
   selectSavedSearches
 } from '../../store/user/userSlice'
 import SavedSearchCard from '../../components/SavedSearchCard/SavedSearchCard'
@@ -18,18 +17,11 @@ import SavedSearchCardLoader from '../../components/SavedSearchCardLoader/SavedS
 import styles from './SavedSearchList.module.css'
 
 const SavedSearchList: React.FC = () => {
-  const { status } = useSession()
   const dispatch = useAppDispatch()
-  const currentUser = useAppSelector(selectCurrentUser)
+  const currentUser = useGetCurrentUserIfAuthenticated()
   const searchWithFilterState = useSearchWithFilterState()
   const getSavedSearchesLoading = useAppSelector(selectGetSavedSearchesLoading)
   const savedSearches = useAppSelector(selectSavedSearches)
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      dispatch(getCurrentUser())
-    }
-  }, [dispatch, status])
 
   useEffect(() => {
     if (currentUser?.id) {

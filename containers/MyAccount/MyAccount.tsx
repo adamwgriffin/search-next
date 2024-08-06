@@ -1,26 +1,18 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
-import { getCurrentUser, selectCurrentUser } from '../../store/user/userSlice'
+import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_if_authenticated_hook'
 import LoadingDots from '../../components/design_system/LoadingDots/LoadingDots'
 
 const MyAccount: React.FC = () => {
-  const { status } = useSession()
-  const dispatch = useAppDispatch()
-  const currentUser = useAppSelector(selectCurrentUser)
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      dispatch(getCurrentUser())
-    }
-  }, [dispatch, status])
+  const currentUser = useGetCurrentUserIfAuthenticated()
 
   if (!currentUser) {
-    return <div><LoadingDots /></div>
+    return (
+      <div>
+        <LoadingDots />
+      </div>
+    )
   }
-
 
   return (
     <div>
