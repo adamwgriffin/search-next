@@ -68,8 +68,10 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
   }
 
   // a generic handler for event props that just returns data about the map state if the event prop was defined
-  const eventHandlerFactoryFunc = (fn: Function|undefined): Function|undefined => {
-    if(fn) return () => fn(getCurrentMapState())
+  const eventHandlerFactoryFunc = (
+    fn: Function | undefined
+  ): Function | undefined => {
+    if (fn) return () => fn(getCurrentMapState())
   }
 
   const eventListenerMapping = {
@@ -84,7 +86,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
       if (googleMap && typeof callback === 'function') {
         eventListeners.push(
           google.maps.event.addListener(googleMap, eventName, callback)
-        )  
+        )
       }
     }
   }
@@ -110,7 +112,7 @@ const GoogleMap: NextPage<GoogleMapProps> = (props) => {
       googleMap.fitBounds(bounds)
     }
   }, [bounds, googleMap])
-  
+
   useEffect(() => {
     if (googleMap && googleMap.getZoom() !== zoom) {
       googleMap.setZoom(zoom)
