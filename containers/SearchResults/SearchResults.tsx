@@ -7,7 +7,7 @@ import {
   useAppSelector,
   useAppDispatch,
 } from '../../hooks/app_hooks'
-import { useListingCardClickHandler } from '../../hooks/listing_card_click_handler_hook'
+import { useOpenListingDetail } from '../../hooks/open_listing_detail_hook'
 import {
   searchCurrentLocation,
   searchWithUpdatedFilters,
@@ -33,7 +33,7 @@ const SearchResults: NextPage = () => {
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
-  const handleListingCardClick = useListingCardClickHandler(false)
+  const openListingDetail = useOpenListingDetail(false)
 
   const handleSortMenuChange = (sortParams: SortFilters) => {
     dispatch(setFilters(sortParams))
@@ -71,7 +71,7 @@ const SearchResults: NextPage = () => {
         <ListingCards
           listings={listings}
           listingSearchRunning={listingSearchRunning}
-          onListingCardClick={handleListingCardClick}
+          onListingCardClick={openListingDetail}
           onListingCardMouseEnter={handleListingCardMouseEnter}
           onListingCardMouseLeave={handleListingCardMouseLeave}
         />

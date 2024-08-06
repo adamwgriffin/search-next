@@ -14,6 +14,7 @@ import MapBoundary from '../MapBoundary/MapBoundary'
 import MapControl from '../MapControl/MapControl'
 import ZoomControl from '../ZoomControl/ZoomControl'
 import { useAppSelector, useAppDispatch } from '../../../hooks/app_hooks'
+import { useOpenListingDetail } from '../../../hooks/open_listing_detail_hook'
 import {
   setBoundaryActive,
   setMapData
@@ -32,14 +33,13 @@ import {
   selectHighlightedMarker
 } from '../../../store/listingSearch/listingSearchSelectors'
 import { resetStartIndex } from '../../../store/filters/filtersSlice'
-import { openModal } from '../../../store/application/applicationSlice'
-import { addUrlToBrowserHistory } from '../../../lib/url'
 import { getGeoLayerBounds } from '../../../lib/polygon'
 
 const ListingMap: NextPage = () => {
   const { status } = useSession()
   const dispatch = useAppDispatch()
   const { googleLoaded } = useGoogleMaps()
+  const openListingDetail = useOpenListingDetail(true)
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const mapState = useAppSelector(selectMapState)
   const doListingSearchOnMapIdle = useAppSelector(
@@ -76,18 +76,7 @@ const ListingMap: NextPage = () => {
   }
 
   const handleListingMarkerMouseClick = (listingId: string) => {
-    const url = `/listing/${listingId}`
-    if (isSmallAndUp) {
-      window.open(url, '_blank')
-    } else {
-      dispatch(
-        openModal({
-          modalType: 'listingDetail',
-          modalProps: { listingId }
-        })
-      )
-      addUrlToBrowserHistory(url)
-    }
+    openListingDetail(`/listing/${listingId}`, listingId)
   }
 
   const handleBoundaryControlClick = () => {

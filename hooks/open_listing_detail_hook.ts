@@ -3,7 +3,7 @@ import { useAppDispatch } from './app_hooks'
 import { openModal } from '../store/application/applicationSlice'
 import { addUrlToBrowserHistory } from '../lib/url'
 
-export const useListingCardClickHandler = (addUrlOnModalOpen = true) => {
+export const useOpenListingDetail = (addUrlOnModalOpen = true) => {
   const dispatch = useAppDispatch()
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
 
