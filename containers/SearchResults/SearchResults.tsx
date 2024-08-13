@@ -16,6 +16,7 @@ import {
 import {
   selectListings,
   selectPagination,
+  selectInitialSearchComplete,
   selectListingSearchRunning
 } from '../../store/listingSearch/listingSearchSelectors'
 import { setFilters, clearFilters } from '../../store/filters/filtersSlice'
@@ -32,6 +33,7 @@ const SearchResults: NextPage = () => {
   const searchType = useAppSelector(selectSearchType)
   const listings = useAppSelector(selectListings)
   const pagination = useAppSelector(selectPagination)
+  const initialSearchComplete = useAppSelector(selectInitialSearchComplete)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const openListingDetail = useOpenListingDetail(false)
 
@@ -76,7 +78,7 @@ const SearchResults: NextPage = () => {
           onListingCardMouseLeave={handleListingCardMouseLeave}
         />
       )}
-      {listings.length === 0 && !listingSearchRunning && (
+      {listings.length === 0 && initialSearchComplete && !listingSearchRunning && (
         <NoResults onClearFiltersClick={handleClearAll} />
       )}
       {listings.length > 0 && (
