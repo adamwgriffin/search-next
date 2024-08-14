@@ -9,5 +9,5 @@ export default async function handler(
     url: `${process.env.SERVICE_BASE}/listing/search/geocode`,
     params: req.query
   })
-  res.status(200).json(response.data)
+  res.status(response.status).json(response.data)
 }
