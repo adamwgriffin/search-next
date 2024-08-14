@@ -2,7 +2,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  convertGeojsonCoordinatesToPolygonPaths} from '../../lib/polygon'
+  convertGeojsonCoordinatesToPolygonPaths,
+  convertViewportToLatLngBoundsLiteral
+} from '../../lib/polygon'
 import { searchNewLocation } from '../listingSearch/listingSearchSlice'
 import { ListingMapState } from './listingMapTypes'
 
@@ -15,7 +17,8 @@ export const initialState: ListingMapState = {
   zoom: 12,
   // an array with one or more arrays of LatLngLiterals, e.g., [[{ lat: 47.228309, lng: -122.510645 },],], used for
   // Polygon paths
-  geoLayerCoordinates: []
+  geoLayerCoordinates: [],
+  viewportBounds: null
 }
 
 export const listingMapSlice = createSlice({
@@ -49,11 +52,14 @@ export const listingMapSlice = createSlice({
         state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
           action.payload.boundary.geometry.coordinates
         )
+        state.viewportBounds = initialState.viewportBounds
         state.boundaryActive = true
       } else {
-        console.debug(
-          'In searchNewLocation.fulfilled, nothing in payload.boundary.'
+        state.geoLayerCoordinates = initialState.geoLayerCoordinates
+        state.viewportBounds = convertViewportToLatLngBoundsLiteral(
+          action.payload.geocoderResult[0].geometry.viewport
         )
+        state.boundaryActive = false
       }
     })
   }

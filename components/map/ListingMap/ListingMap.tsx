@@ -62,10 +62,15 @@ const ListingMap: NextPage = () => {
   // fitBounds(), which would adjust the zoom. This is also why we switched to useMemo instead of createSelector for
   // this: the bug showed up and there was no simple way to track googleLoaded like this with createSelector.
   const bounds = useMemo(() => {
-    return googleLoaded && mapState.geoLayerCoordinates.length
-      ? getGeoLayerBounds(mapState.geoLayerCoordinates)
-      : null
-  }, [googleLoaded, mapState.geoLayerCoordinates])
+    if (!googleLoaded) return null
+    if (mapState.geoLayerCoordinates.length) {
+      return getGeoLayerBounds(mapState.geoLayerCoordinates)
+    }
+    if (mapState.viewportBounds) {
+      return mapState.viewportBounds
+    }
+    return null
+  }, [googleLoaded, mapState.geoLayerCoordinates, mapState.viewportBounds])
 
   const handleListingMarkerMouseEnter = (listingid: string) => {
     isSmallAndUp && dispatch(setSelectedListing(listingid))

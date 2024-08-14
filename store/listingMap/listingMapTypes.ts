@@ -9,10 +9,16 @@ export interface ListingMapState {
   boundsSouth: number
   boundsWest: number
   zoom: number
-  geoLayerCoordinates: GeoLayerCoordinates
+  geoLayerCoordinates: GeoLayerCoordinates,
+  viewportBounds: google.maps.LatLngBoundsLiteral | null
 }
 
 export type ListingMapStateForMap = Omit<
   ListingMapState,
   'boundsNorth' | 'boundsEast' | 'boundsSouth' | 'boundsWest'
 >
+
+export type ViewportLatLngBounds = {
+  northeast: google.maps.LatLngLiteral;
+  southwest: google.maps.LatLngLiteral;
+}

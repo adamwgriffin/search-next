@@ -1,6 +1,7 @@
 import type {
   GeoLayerCoordinates,
-  MultiPolygon
+  MultiPolygon,
+  ViewportLatLngBounds
 } from '../store/listingMap/listingMapTypes'
 
 /*
@@ -44,6 +45,14 @@ export const convertGeojsonCoordinatesToPolygonPaths = (
       return { lat: arr[1], lng: arr[0] }
     })
   })
+}
+
+export const convertViewportToLatLngBoundsLiteral = (viewport: ViewportLatLngBounds) => {
+  const bounds = new google.maps.LatLngBounds(
+    viewport.southwest,
+    viewport.northeast
+  )
+  return bounds.toJSON()
 }
 
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we

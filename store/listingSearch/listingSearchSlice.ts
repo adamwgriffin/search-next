@@ -96,6 +96,9 @@ export const listingSearchSlice = createSlice({
       if (!state.initialSearchComplete) {
         state.initialSearchComplete = true
       }
+      if (!action.payload.boundary) {
+        state.doListingSearchOnMapIdle = true
+      }
     })
 
     builder.addCase(searchNewLocation.rejected, (state, action) => {
