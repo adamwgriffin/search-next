@@ -29,8 +29,12 @@ export const GoogleMapsMapOptions: google.maps.MapOptions = {
 }
 
 export const GoogleMapsAutocompleteOptions = {
-  fields: ['place_id', 'address_components', 'geometry', 'icon', 'name'],
-  componentRestrictions: { country: ['us', 'ca', 'mx'] }
+  // types restricts the autocomplete results to only a specific set of place types. The "geocode" type seems to be the
+  // only decent choice for both addresses and places like neighborhoods/cities/states, etc. The places API has weird,
+  // strict rules about what types you can and can't use, which makes it really difficult to get very granular with the
+  // specific types we would normally want to use.
+  types: ['geocode'],
+  componentRestrictions: { country: ['us'] }
 }
 
 export const GoogleMapsPolygonOptions: google.maps.PolygonOptions = {
