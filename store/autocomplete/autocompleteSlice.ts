@@ -1,5 +1,6 @@
 import type { AppState } from '..'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import { createAppAsyncThunk } from '../../lib/store_helpers'
 import { GoogleMapsAutocompleteOptions } from '../../config/googleMapsOptions'
 
 export interface AutocompleteState {
@@ -12,19 +13,17 @@ const initialState: AutocompleteState = {
   autcompletePlacePredictions: []
 }
 
-export const getPlaceAutocompletePredictions = createAsyncThunk(
-  'places/getPlaceAutocompletePredictions',
-  async (
-    searchString: string
-  ): Promise<google.maps.places.AutocompletePrediction[]> => {
-    autocompleteService ||= new google.maps.places.AutocompleteService()
-    const res = await autocompleteService.getPlacePredictions({
-      input: searchString,
-      ...GoogleMapsAutocompleteOptions
-    })
-    return res.predictions
-  }
-)
+export const getPlaceAutocompletePredictions = createAppAsyncThunk<
+  google.maps.places.AutocompletePrediction[],
+  string
+>('places/getPlaceAutocompletePredictions', async (searchString: string) => {
+  autocompleteService ||= new google.maps.places.AutocompleteService()
+  const res = await autocompleteService.getPlacePredictions({
+    input: searchString,
+    ...GoogleMapsAutocompleteOptions
+  })
+  return res.predictions
+})
 
 export const autocompleteSlice = createSlice({
   name: 'autocomplete',
@@ -41,10 +40,7 @@ export const autocompleteSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       getPlaceAutocompletePredictions.fulfilled,
-      (
-        state,
-        action: PayloadAction<google.maps.places.AutocompletePrediction[]>
-      ) => {
+      (state, action) => {
         state.autcompletePlacePredictions = action.payload
       }
     )

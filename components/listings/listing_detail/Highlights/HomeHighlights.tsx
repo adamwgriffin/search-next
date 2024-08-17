@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import type { IListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../lib/types/listing_types'
 import styles from './HomeHighlights.module.css'
 import { getPropertyTypeLabel } from '../../../../lib/property_types'
 
 export interface HomeHighlightsProps {
-  listing: IListingDetail
+  listing: ListingDetail
 }
 
 const HomeHighlights: NextPage<HomeHighlightsProps> = ({

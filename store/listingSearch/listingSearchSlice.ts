@@ -1,18 +1,26 @@
-import type { AppState } from '..'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import type {
+  ListingSearchGeocodeResponse,
+  ListingSearchBoundaryResponse
+} from '../../lib/types/listing_types'
+import { createSlice } from '@reduxjs/toolkit'
+import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
 import {
   selectParamsForGeocodeSearch,
   selectParamsForGeospatialSearch
 } from './listingSearchSelectors'
-import { SelectedListing, HighlightedMarker, ListingSearchState } from './listingSearchTypes'
+import {
+  SelectedListing,
+  HighlightedMarker,
+  ListingSearchState
+} from './listingSearchTypes'
 
 const initialState: ListingSearchState = {
   initialSearchComplete: false,
   doListingSearchOnMapIdle: false,
   listingSearchRunning: false,
-  listingServiceResponse: {},
+  listingServiceResponse: null,
   selectedListing: null,
   highlightedMarker: null
 }
@@ -24,18 +32,19 @@ const initialState: ListingSearchState = {
 // the geocoder response. finally, it searches for listings in our databse which have coordinates that are inside that
 // boundary layer. the resulting response from the service includes the listings and the boundary so we can draw them on
 // the map.
-export const searchNewLocation = createAsyncThunk(
-  'listingSearch/searchNewLocation',
-  async (_arg, { getState }) => {
-    // typescript doesn't know the type of our redux state that's returned so we have to set it as AppState
-    const state = getState() as AppState
-    const response = await http({
-      url: '/api/listing/search/geocode',
-      params: selectParamsForGeocodeSearch(state)
-    })
-    return response.data
-  }
-)
+export const searchNewLocation =
+  createAppAsyncThunk<ListingSearchGeocodeResponse>(
+    'listingSearch/searchNewLocation',
+    async (_arg, { getState }) => {
+      const response = await http.get<ListingSearchGeocodeResponse>(
+        '/api/listing/search/geocode',
+        {
+          params: selectParamsForGeocodeSearch(getState())
+        }
+      )
+      return response.data
+    }
+  )
 
 // executes a listing service request for the current location. we would want to use this request if the place that was
 // entered in the search field has already been geocoded. usually, we would perform the initial search using the
@@ -44,22 +53,22 @@ export const searchNewLocation = createAsyncThunk(
 // previous request, we can just pass the boundary ID to the service instead of having the service geocode the place for
 // us again. if the boundary is not active then all we need is the viewport bounds, which will always be included in the
 // params we use for this request.
-export const searchCurrentLocation = createAsyncThunk(
-  'listingSearch/searchCurrentLocation',
-  async (_arg, { getState }) => {
-    const state = getState() as AppState
-    const url = state.listingMap.boundaryActive
-      ? `/api/listing/search/boundary/${state.listingSearch.listingServiceResponse.boundary._id}`
-      : 'api/listing/search/bounds'
-    const response = await http({
-      url,
-      params: selectParamsForGeospatialSearch(state)
-    })
-    return response.data
-  }
-)
+export const searchCurrentLocation =
+  createAppAsyncThunk<ListingSearchBoundaryResponse>(
+    'listingSearch/searchCurrentLocation',
+    async (_arg, { getState }) => {
+      const state = getState()
+      const url = state.listingMap.boundaryActive
+        ? `/api/listing/search/boundary/${state.listingSearch.listingServiceResponse?.boundary?._id}`
+        : 'api/listing/search/bounds'
+      const response = await http.get<ListingSearchBoundaryResponse>(url, {
+        params: selectParamsForGeospatialSearch(state)
+      })
+      return response.data
+    }
+  )
 
-export const searchWithUpdatedFilters = createAsyncThunk(
+export const searchWithUpdatedFilters = createAppAsyncThunk(
   'listingSearch/searchWithUpdatedParams',
   async (_args, { dispatch }) => {
     dispatch(searchCurrentLocation())
@@ -96,6 +105,9 @@ export const listingSearchSlice = createSlice({
       if (!state.initialSearchComplete) {
         state.initialSearchComplete = true
       }
+      // essentially what we're doing by setting doListingSearchOnMapIdle is triggering searchCurrentLocation via
+      // handleIdle in the ListingMap component. the only problem is if you were to search again in the same location
+      // the map idle event would not be triggered
       if (!action.payload.boundary) {
         state.doListingSearchOnMapIdle = true
       }
@@ -114,6 +126,7 @@ export const listingSearchSlice = createSlice({
       state.listingSearchRunning = false
       // just update the parts that would change with this type of search. the initial search would have set boundary
       // and geocoderResult attributes that we don't want to overwite
+      state.listingServiceResponse = state.listingServiceResponse ?? {}
       state.listingServiceResponse.listings = action.payload.listings
       state.listingServiceResponse.pagination = action.payload.pagination
     })

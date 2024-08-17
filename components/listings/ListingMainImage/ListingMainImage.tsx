@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import type { CSSProperties } from 'react'
 import type {
-  IPhotoGalleryImage,
+  PhotoGalleryImage,
   PhotoGalleryImageSizes
 } from '../../../lib/types/listing_types'
 import { SyntheticEvent } from 'react'
 import { ListingStreetViewImageSizeEnum } from '../../../lib/listing_helpers'
 
 export interface ListingMainImageProps {
-  image: IPhotoGalleryImage | undefined
+  image: PhotoGalleryImage | undefined
   latitude: number
   longitude: number
   size?: PhotoGalleryImageSizes

@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import type { IPhotoGalleryImage } from '../../../../lib/types/listing_types'
+import type { PhotoGalleryImage } from '../../../../lib/types/listing_types'
 import { useState, useCallback } from 'react'
 import styles from './SlideShow.module.css'
 import Overlay from '../../../design_system/Overlay/Overlay'
 
 export interface SlideShowProps {
-  images: IPhotoGalleryImage[]
+  images: PhotoGalleryImage[]
   open: boolean
   onClose?: () => void
 }

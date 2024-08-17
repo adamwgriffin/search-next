@@ -1,28 +1,20 @@
+import {
+  MultiPolygon,
+  ViewportLatLngBounds
+} from '../../store/listingMap/listingMapTypes'
 import type { PropertyType } from '../property_types'
 
 export type PropertyStatus = 'active' | 'pending' | 'sold'
 
 export interface ListingAddress {
   line1: string
-  line2: string | null
+  line2?: string
   city: string
   state: string
   zip: string
-  county: string
-  country_code: string
 }
 
-export interface ListingBathroomDetails {
-  bathrooms_display: number 
-  full_baths: number
-  half_baths: number
-  one_quarter_baths: number | null
-  partial_baths: number | null
-  three_quarter_baths: number
-  total_bathrooms: number
-}
-
-export interface IPhotoGalleryImage {
+export interface PhotoGalleryImage {
   galleryUrl: string // used for slideshow image
   fullUrl: string // used for listing detail image
   smallUrl: string // used for listing card image
@@ -43,6 +35,8 @@ export interface Feature {
   subfeatures: SubFeature[]
 }
 
+// The _id is added by Mongo automatically, so it's not defined explicityl in the Listing Service version of this type
+// definition
 export interface PropertDetail {
   _id: string
   name: string
@@ -56,35 +50,69 @@ export interface PropertDetailsSection {
   details: PropertDetail[]
 }
 
-export interface IOpenHouse {
-  start: string;
-  end: string;
-  comments?: string;
+export interface OpenHouse {
+  start: string
+  end: string
+  comments?: string
 }
 
 export interface Listing {
   _id: string
-  address: ListingAddress
+  status: PropertyStatus
+  listPrice: number
+  soldPrice?: number | null
+  listedDate: Date
   beds: number
   baths: number
   sqft: number | null
-  status: PropertyStatus
-  listPrice: number
-  soldPrice: number | null
-  propertyType: PropertyType
+  neighborhood: string
+  description: string | null
+  address: ListingAddress
   latitude: number
   longitude: number
   rental?: boolean
-  photoGallery: IPhotoGalleryImage[]
-  openHouses: IOpenHouse[]
+  photoGallery?: PhotoGalleryImage[]
+  openHouses: OpenHouse[]
+  placeId?: string
 }
 
-export interface IListingDetail extends Listing {
-  listedDate: Date
-  neighborhood: string
-  description: string | null
-  lotSize: number
+export interface ListingDetail extends Listing {
+  propertyType: PropertyType
   yearBuilt: number
+  soldDate?: Date
   daysOnMarket: number
-  propertyDetails: PropertDetailsSection[]
+  propertyDetails?: PropertDetailsSection[]
+}
+
+export interface BoundaryRecord {
+  _id: string
+  name: string
+  type: string
+  geometry: {
+    type: string
+    coordinates: MultiPolygon
+  }
+}
+
+export interface ListingSearchGeocoderResult
+  extends google.maps.GeocoderResult {
+  geometry: google.maps.GeocoderGeometry & { viewport: ViewportLatLngBounds }
+}
+
+export interface ListingSearchBoundaryResponse {
+  listings: Listing[]
+  pagination: {
+    page: number
+    pageSize: number
+    numberReturned: number
+    numberAvailable: number
+    numberOfPages: number
+  }
+  error?: string
+}
+
+export interface ListingSearchGeocodeResponse extends ListingSearchBoundaryResponse {
+  boundary: BoundaryRecord | null
+  geocoderResult: ListingSearchGeocoderResult[]
+  listingDetail?: ListingDetail
 }

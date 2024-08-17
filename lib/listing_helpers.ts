@@ -1,6 +1,6 @@
 import type {
   Listing,
-  IListingDetail,
+  ListingDetail,
   ListingAddress,
 } from './types/listing_types'
 import { Locale, Currency } from '../config'
@@ -50,15 +50,15 @@ export const formatPrice = (
 }
 
 export const formatPriceFromListing = (
-  { soldPrice, listPrice, rental }: Listing | IListingDetail,
+  { soldPrice, listPrice, rental }: Listing | ListingDetail,
   options: FormatPriceOptions = {}
 ) => formatPrice((soldPrice || listPrice), Boolean(rental), options)
 
-export const getBathrooms = (listing: Listing | IListingDetail): number => {
+export const getBathrooms = (listing: Listing | ListingDetail): number => {
   return listing.baths || 0
 }
 
-export const formatSqft = ({ sqft }: Listing | IListingDetail) =>
+export const formatSqft = ({ sqft }: Listing | ListingDetail) =>
   sqft?.toLocaleString()
 
 export const cityStateZip = (location: ListingAddress) => {

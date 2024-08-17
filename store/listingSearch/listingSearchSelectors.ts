@@ -27,25 +27,24 @@ export const selectListingServiceResponse = (state: AppState) =>
 
 export const selectListings = createSelector(
   selectListingServiceResponse,
-  (listingServiceResponse): Listing[] => listingServiceResponse.listings ?? []
+  (listingServiceResponse): Listing[] => listingServiceResponse?.listings ?? []
 )
 
 export const selectTotalListings = createSelector(
   [selectListingServiceResponse],
-  (listingServiceResponse) => listingServiceResponse.number_found ?? 0
+  (listingServiceResponse) => listingServiceResponse?.pagination?.numberAvailable ?? 0
 )
 
 export const selectPagination = createSelector(
-  [selectFilterState, selectListings, selectListingServiceResponse],
-  (filters, listings, listingServiceResponse): Pagination => {
+  [selectFilterState, selectListings, selectTotalListings],
+  (filters, listings, totalListings): Pagination => {
     const { pageIndex, pageSize } = filters
     const numberReturned = listings.length
-    const numberAvailable = listingServiceResponse.pagination?.numberAvailable ?? 0
-    const numberOfPages = Math.ceil(numberAvailable / pageSize)
+    const numberOfPages = Math.ceil(totalListings / pageSize)
     return {
       start: pageIndex * pageSize + 1,
       end: pageIndex * pageSize + numberReturned,
-      total: numberAvailable,
+      total: totalListings,
       pages: range(0, numberOfPages),
       currentPage: pageIndex
     }

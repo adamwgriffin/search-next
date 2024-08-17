@@ -1,10 +1,10 @@
-import type { IOpenHouse } from '../../../../lib/types/listing_types'
+import type { OpenHouse } from '../../../../lib/types/listing_types'
 import type { NextPage } from 'next'
 import { Locale } from '../../../../config'
 import styles from './OpenHouseList.module.css'
 
 export interface OpenHouseListProps {
-  openHouses: IOpenHouse[]
+  openHouses: OpenHouse[]
 }
 
 const formatDate = (isoDateString: string) => {

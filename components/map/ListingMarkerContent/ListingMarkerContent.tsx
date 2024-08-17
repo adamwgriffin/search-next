@@ -59,7 +59,7 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
               <FavoriteButton listingId={listing._id} />
             </ListingImageContainerElements>
             <ListingMainImage
-              image={listing.photoGallery[0]}
+              image={listing?.photoGallery?.[0]}
               latitude={listing.latitude}
               longitude={listing.longitude}
               size='small'

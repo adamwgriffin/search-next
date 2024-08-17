@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { IListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../lib/types/listing_types'
 import styles from './ListingDetailImage.module.css'
 import ListingImageContainer from '../../ListingImageContainer/ListingImageContainer'
 import ListingImageContainerElements from '../../ListingImageContainerElements/ListingImageContainerElements'
@@ -7,7 +7,7 @@ import ListingMainImage from '../../ListingMainImage/ListingMainImage'
 import FavoriteButton from '../../../../containers/FavoriteButton/FavoriteButton'
 
 export interface ListingDetailImageProps {
-  listing: IListingDetail
+  listing: ListingDetail
   onClick?: () => void
 }
 
@@ -22,7 +22,7 @@ const ListingDetailImage: NextPage<ListingDetailImageProps> = ({
           <FavoriteButton listingId={listing._id} />
         </ListingImageContainerElements>
         <ListingMainImage
-          image={listing.photoGallery[0]}
+          image={listing?.photoGallery?.[0]}
           latitude={listing.latitude}
           longitude={listing.longitude}
           size='full'

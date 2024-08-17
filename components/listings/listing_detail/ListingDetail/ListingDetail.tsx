@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
-import type { IListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../lib/types/listing_types'
 import css from 'styled-jsx/css'
 import { formatPriceFromListing } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
@@ -14,7 +14,7 @@ import SlideShow from '../SlideShow/SlideShow'
 import OpenHouseList from '../OpenHouseList/OpenHouseList'
 
 export interface ListingDetailProps {
-  listing: IListingDetail
+  listing: ListingDetail
 }
 
 const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
@@ -37,11 +37,11 @@ const ListingDetail: NextPage<ListingDetailProps> = ({ listing }) => {
         <Description description={listing.description} />
         {listing.openHouses.length && <OpenHouseList openHouses={listing.openHouses} />}
         <HomeHighlights listing={listing} />
-        <PropertyDetails propertyDetails={listing.propertyDetails} />
+        {listing.propertyDetails && <PropertyDetails propertyDetails={listing.propertyDetails} />}
         <SlideShow
           open={slideShowOpen}
           onClose={() => setSlideShowOpen(false)}
-          images={listing.photoGallery}
+          images={listing.photoGallery || []}
         />
       </div>
       <style jsx>{styles}</style>
