@@ -3,10 +3,7 @@ import type { SortFilters } from '../../store/filters/filtersTypes'
 import styles from './SearchResults.module.css'
 import ListingResultsHeader from '../../components/listings/ListingResultsHeader/ListingResultsHeader'
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
-import {
-  useAppSelector,
-  useAppDispatch,
-} from '../../hooks/app_hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useOpenListingDetail } from '../../hooks/open_listing_detail_hook'
 import {
   searchCurrentLocation,
@@ -78,9 +75,11 @@ const SearchResults: NextPage = () => {
           onListingCardMouseLeave={handleListingCardMouseLeave}
         />
       )}
-      {listings.length === 0 && initialSearchComplete && !listingSearchRunning && (
-        <NoResults onClearFiltersClick={handleClearAll} />
-      )}
+      {listings.length === 0 &&
+        initialSearchComplete &&
+        !listingSearchRunning && (
+          <NoResults onClearFiltersClick={handleClearAll} />
+        )}
       {listings.length > 0 && (
         <ListingResultsPagination
           {...pagination}

@@ -47,20 +47,22 @@ export const convertGeojsonCoordinatesToPolygonPaths = (
   })
 }
 
-export const convertViewportToLatLngBoundsLiteral = (viewport: ViewportLatLngBounds) => {
-  const bounds = new google.maps.LatLngBounds(
-    viewport.southwest,
-    viewport.northeast
-  )
-  return bounds.toJSON()
-}
-
 // most examples use polygon.getPaths() to extend the bounds, but that data is the same as the geojson coordinates we
 // used to create the polygon paths, so we might as well just use that data since we already have it
 export const getGeoLayerBounds = (geoLayerCoordinates: GeoLayerCoordinates) => {
   const bounds = new google.maps.LatLngBounds()
   geoLayerCoordinates.forEach((latLngArr) =>
     latLngArr.forEach((latLng) => bounds.extend(latLng))
+  )
+  return bounds.toJSON()
+}
+
+export const convertViewportToLatLngBoundsLiteral = (
+  viewport: ViewportLatLngBounds
+) => {
+  const bounds = new google.maps.LatLngBounds(
+    viewport.southwest,
+    viewport.northeast
   )
   return bounds.toJSON()
 }

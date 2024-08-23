@@ -2,6 +2,11 @@ export type MultiPolygon = Array<Array<Array<Array<number>>>>
 
 export type GeoLayerCoordinates = Array<Array<google.maps.LatLngLiteral>>
 
+export type ViewportLatLngBounds = {
+  northeast: google.maps.LatLngLiteral
+  southwest: google.maps.LatLngLiteral
+}
+
 export interface ListingMapState {
   boundaryActive: boolean
   boundsNorth: number
@@ -17,8 +22,3 @@ export type ListingMapStateForMap = Omit<
   ListingMapState,
   'boundsNorth' | 'boundsEast' | 'boundsSouth' | 'boundsWest'
 >
-
-export type ViewportLatLngBounds = {
-  northeast: google.maps.LatLngLiteral
-  southwest: google.maps.LatLngLiteral
-}

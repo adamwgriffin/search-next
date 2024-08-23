@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
-import type {
-  MoreFilters
-} from '../../store/filters/filtersTypes'
+import type { MoreFilters } from '../../store/filters/filtersTypes'
 import type {
   BedsAndBathsFilters,
   PriceRangeFilters,
@@ -12,10 +10,7 @@ import type {
 import type { SearchTypeOption } from '../../store/filters/filtersTypes'
 import type { AppState } from '../../store'
 import styles from './More.module.css'
-import {
-  useAppSelector,
-  useAppDispatch,
-} from '../../hooks/app_hooks'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed_hook'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
 import {
@@ -57,7 +52,9 @@ const More: NextPage = () => {
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const includePending = useAppSelector(selectIncludePending)
   const squareFeetRange = useAppSelector(selectSquareFeetRange)
-  const lotSizeMin = useAppSelector((state: AppState) => state.filters.lotSizeMin)
+  const lotSizeMin = useAppSelector(
+    (state: AppState) => state.filters.lotSizeMin
+  )
   const yearBuiltRange = useAppSelector(selectYearBuiltRange)
   const features = useAppSelector(selectFeatures)
   const soldInLast = useAppSelector(selectSoldInLast)
