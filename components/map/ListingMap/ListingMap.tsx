@@ -22,9 +22,7 @@ import {
 import { selectMapState } from '../../../store/listingMap/listingMapSelectors'
 import {
   setDoListingSearchOnMapIdle,
-  setSelectedListing,
-  searchCurrentLocation,
-  searchWithUpdatedFilters
+  setSelectedListing
 } from '../../../store/listingSearch/listingSearchSlice'
 import {
   selectDoListingSearchOnMapIdle,
@@ -33,7 +31,14 @@ import {
   selectHighlightedMarker
 } from '../../../store/listingSearch/listingSearchSelectors'
 import { resetStartIndex } from '../../../store/filters/filtersSlice'
-import { getGeoLayerBounds } from '../../../lib/polygon'
+import {
+  convertViewportToLatLngBoundsLiteral,
+  getGeoLayerBounds
+} from '../../../lib/polygon'
+import {
+  searchWithUpdatedFilters,
+  searchCurrentLocation
+} from '../../../store/listingSearch/listingSearchCommon'
 
 const ListingMap: NextPage = () => {
   const { status } = useSession()
@@ -67,7 +72,7 @@ const ListingMap: NextPage = () => {
       return getGeoLayerBounds(mapState.geoLayerCoordinates)
     }
     if (mapState.viewportBounds) {
-      return mapState.viewportBounds
+      return convertViewportToLatLngBoundsLiteral(mapState.viewportBounds)
     }
     return null
   }, [googleLoaded, mapState.geoLayerCoordinates, mapState.viewportBounds])

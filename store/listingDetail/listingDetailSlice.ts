@@ -1,26 +1,27 @@
 import type { AppState } from '..'
 import type { ListingDetail } from '../../lib/types/listing_types'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
+import { newLocationGeocodeSearch } from '../listingSearch/listingSearchCommon'
 
 export interface ListingDetailState {
-  listingServiceResponse: ListingDetail | null
+  listing: ListingDetail | null
 }
 
 const initialState: ListingDetailState = {
-  listingServiceResponse: null
+  listing: null
 }
 
-export const getListingDetail = createAppAsyncThunk<
-  ListingDetail,
-  string
->('listingDetail/getListingDetail', async (listingID) => {
-  const response = await http.get<ListingDetail>(
-    `/api/listing_detail/${listingID}`
-  )
-  return response.data
-})
+export const getListingDetail = createAppAsyncThunk<ListingDetail, string>(
+  'listingDetail/getListingDetail',
+  async (listingID) => {
+    const response = await http.get<ListingDetail>(
+      `/api/listing_detail/${listingID}`
+    )
+    return response.data
+  }
+)
 
 export const listingDetailSlice = createSlice({
   name: 'listingDetail',
@@ -29,23 +30,30 @@ export const listingDetailSlice = createSlice({
 
   reducers: {
     resetListingDetail(state) {
-      state.listingServiceResponse = initialState.listingServiceResponse
+      state.listing = initialState.listing
+    },
+
+    listingFoundForAddressSearch(state, action: PayloadAction<ListingDetail>) {
+      state.listing = action.payload
     }
   },
 
   extraReducers: (builder) => {
     builder.addCase(getListingDetail.fulfilled, (state, action) => {
-      state.listingServiceResponse = action.payload
+      state.listing = action.payload
+    })
+
+    builder.addCase(newLocationGeocodeSearch.pending, (state) => {
+      state.listing = initialState.listing
     })
   }
 })
 
 // add any reducers that we want to export as actions here
-export const { resetListingDetail } = listingDetailSlice.actions
+export const { resetListingDetail, listingFoundForAddressSearch } =
+  listingDetailSlice.actions
 
-export const selectListing = (
-  state: AppState
-): ListingDetailState['listingServiceResponse'] =>
-  state.listingDetail.listingServiceResponse
+export const selectListing = (state: AppState): ListingDetailState['listing'] =>
+  state.listingDetail.listing
 
 export default listingDetailSlice.reducer

@@ -5,11 +5,11 @@ import ListingResultsHeader from '../../components/listings/ListingResultsHeader
 import ListingResultsPagination from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useOpenListingDetail } from '../../hooks/open_listing_detail_hook'
+import { setHighlightedMarker } from '../../store/listingSearch/listingSearchSlice'
 import {
   searchCurrentLocation,
-  searchWithUpdatedFilters,
-  setHighlightedMarker
-} from '../../store/listingSearch/listingSearchSlice'
+  searchWithUpdatedFilters
+} from '../../store/listingSearch/listingSearchCommon'
 import {
   selectListings,
   selectPagination,

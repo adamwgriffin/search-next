@@ -12,11 +12,8 @@ import type { AppState } from '../../store'
 import styles from './More.module.css'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed_hook'
-import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
-import {
-  setFilters,
-  setSearchType
-} from '../../store/filters/filtersSlice'
+import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchCommon'
+import { setFilters, setSearchType } from '../../store/filters/filtersSlice'
 import {
   selectSearchType,
   selectPriceRange,

@@ -8,9 +8,8 @@ import isEqual from 'lodash/isEqual'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_if_authenticated_hook'
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
-import {
-  listingSearchURLParamsToSearchState,
-} from '../../lib/url'
+import { useSearchNewLocation } from '../../hooks/search_new_location_hook'
+import { listingSearchURLParamsToSearchState } from '../../lib/url'
 import {
   initialState,
   clearFilters,
@@ -22,10 +21,7 @@ import {
 } from '../../store/listingSearch/listingSearchSelectors'
 import Search from '../../containers/Search/Search'
 import { selectSearchState } from '../../store/filters/filtersSelectors'
-import {
-  searchNewLocation,
-  searchCurrentLocation
-} from '../../store/listingSearch/listingSearchSlice'
+import { searchCurrentLocation } from '../../store/listingSearch/listingSearchCommon'
 import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 
 export interface SearchPageProps {
@@ -37,6 +33,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
   const initialSearchComplete = useAppSelector(selectInitialSearchComplete)
   const searchWithFilterState = useSearchWithFilterState()
+  const searchNewLocation = useSearchNewLocation()
   // We want to get the currentUser so that we can display their favorites on the listing cards
   useGetCurrentUserIfAuthenticated()
   const searchState = useAppSelector(selectSearchState)
@@ -66,14 +63,14 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   useEffect(() => {
     // run a search based on the url on initial render
     getSearchParamsAndSetSearchState()
-    dispatch(searchNewLocation())
+    searchNewLocation()
 
     // reset the filters when the user navigates away from the search page, otherwise a subsequent search from the home
     // page could include filters from the previous search
     return () => {
       dispatch(clearFilters())
     }
-  }, [dispatch, getSearchParamsAndSetSearchState])
+  }, [dispatch, getSearchParamsAndSetSearchState, searchNewLocation])
 
   // if the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history, and then run a new search to match the url params. the "popstate" event
@@ -86,12 +83,13 @@ const SearchPage: NextPage<SearchPageProps> = () => {
     ) {
       dispatch(searchCurrentLocation())
     } else {
-      dispatch(searchNewLocation())
+      searchNewLocation()
     }
   }, [
     dispatch,
     getSearchParamsAndSetSearchState,
-    previousSearchState?.locationSearchField
+    previousSearchState?.locationSearchField,
+    searchNewLocation
   ])
 
   useEvent('popstate', onPopState)

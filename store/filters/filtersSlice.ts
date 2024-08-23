@@ -1,9 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  searchNewLocation,
-  searchWithUpdatedFilters
-} from '../listingSearch/listingSearchSlice'
+  searchWithUpdatedFilters,
+  newLocationGeocodeSearch
+} from '../listingSearch/listingSearchCommon'
 import { FiltersState, SearchTypeOption } from './filtersTypes'
 import { DefaultSoldInLast } from '../../config'
 import { SearchTypes } from '../../lib/filter'
@@ -76,7 +76,7 @@ export const filtersSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(searchNewLocation.pending, (state) => {
+    builder.addCase(newLocationGeocodeSearch.pending, (state) => {
       state.pageIndex = initialState.pageIndex
     })
 

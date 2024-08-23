@@ -21,13 +21,10 @@ const ListingPage: NextPage = () => {
   const listing = useAppSelector(selectListing)
 
   useEffect(() => {
-    if (
-      typeof params?.listing_id === 'string' &&
-      params.listing_id.length > 0
-    ) {
+    if (!listing && typeof params?.listing_id === 'string') {
       dispatch(getListingDetail(params.listing_id))
     }
-  }, [params?.listing_id, dispatch])
+  }, [params?.listing_id, dispatch, listing])
 
   return (
     <>

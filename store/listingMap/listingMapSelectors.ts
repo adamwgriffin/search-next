@@ -6,6 +6,11 @@ import omit from 'lodash/omit'
 
 export const selectListingMap = (state: AppState) => state.listingMap
 
+export const selectViewportBounds = createSelector(
+  [selectListingMap],
+  (listingMap) => listingMap.viewportBounds
+)
+
 export const selectMapState = createSelector(
   [selectListingMap],
   (listingMap): ListingMapStateForMap => {

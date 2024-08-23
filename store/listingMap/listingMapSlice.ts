@@ -1,11 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
 import { createSlice } from '@reduxjs/toolkit'
+import { convertGeojsonCoordinatesToPolygonPaths } from '../../lib/polygon'
 import {
-  convertGeojsonCoordinatesToPolygonPaths,
-  convertViewportToLatLngBoundsLiteral
-} from '../../lib/polygon'
-import { searchNewLocation } from '../listingSearch/listingSearchSlice'
+  boundaryFoundForNewLocationSearch,
+  noBoundaryFoundForNewLocationSearch
+} from '../listingSearch/listingSearchSlice'
 import { ListingMapState } from './listingMapTypes'
 
 export const initialState: ListingMapState = {
@@ -47,20 +47,18 @@ export const listingMapSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(searchNewLocation.fulfilled, (state, action) => {
-      if (action.payload.boundary) {
-        state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
-          action.payload.boundary.geometry.coordinates
-        )
-        state.viewportBounds = initialState.viewportBounds
-        state.boundaryActive = true
-      } else {
-        state.geoLayerCoordinates = initialState.geoLayerCoordinates
-        state.viewportBounds = convertViewportToLatLngBoundsLiteral(
-          action.payload.geocoderResult[0].geometry.viewport
-        )
-        state.boundaryActive = false
-      }
+    builder.addCase(boundaryFoundForNewLocationSearch, (state, action) => {
+      state.geoLayerCoordinates = convertGeojsonCoordinatesToPolygonPaths(
+        action.payload?.boundary?.geometry?.coordinates || []
+      )
+      state.viewportBounds = initialState.viewportBounds
+      state.boundaryActive = true
+    })
+
+    builder.addCase(noBoundaryFoundForNewLocationSearch, (state, action) => {
+      state.geoLayerCoordinates = initialState.geoLayerCoordinates
+      state.viewportBounds = action.payload.geocoderResult[0].geometry.viewport
+      state.boundaryActive = false
     })
   }
 })

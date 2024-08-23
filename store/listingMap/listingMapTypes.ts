@@ -15,7 +15,7 @@ export interface ListingMapState {
   boundsWest: number
   zoom: number
   geoLayerCoordinates: GeoLayerCoordinates
-  viewportBounds: google.maps.LatLngBoundsLiteral | null
+  viewportBounds: ViewportLatLngBounds | null
 }
 
 export type ListingMapStateForMap = Omit<

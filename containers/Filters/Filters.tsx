@@ -5,10 +5,8 @@ import type {
 } from '../../store/filters/filtersTypes'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed_hook'
-import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchSlice'
-import {
-  setFilters
-} from '../../store/filters/filtersSlice'
+import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchCommon'
+import { setFilters } from '../../store/filters/filtersSlice'
 import {
   selectPriceRange,
   selectBedBathFilters
