@@ -1,5 +1,8 @@
+'use client'
+
 import type { NextPage } from 'next'
 import { useRef, useEffect } from 'react'
+import { useGoogleMaps } from '../../providers/GoogleMapsProvider'
 import { useAppSelector } from '../../hooks/app_hooks'
 import { selectViewType } from '../../store/application/applicationSlice'
 import { selectListingSearchRunning } from '../../store/listingSearch/listingSearchSelectors'
@@ -11,6 +14,7 @@ import ListingMap from '../../components/map/ListingMap/ListingMap'
 const Search: NextPage = () => {
   const viewType = useAppSelector(selectViewType)
   const listingSearchRunning = useAppSelector(selectListingSearchRunning)
+  const { googleLoaded } = useGoogleMaps()
   const searchResultsRef = useRef<HTMLDivElement>(null)
   const resultsClassName =
     viewType === 'list' ? styles.resultsListView : styles.resultsMapView
@@ -31,7 +35,7 @@ const Search: NextPage = () => {
           <SearchResults />
         </div>
         <div className={styles.listingMap}>
-          <ListingMap />
+          {googleLoaded && <ListingMap />}
         </div>
       </div>
     </div>

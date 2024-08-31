@@ -4,7 +4,6 @@ import type { NextPage } from 'next'
 import { useMemo, useCallback } from 'react'
 import { useMedia } from 'react-use'
 import { useSession } from 'next-auth/react'
-import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import { GoogleMapsMapOptions } from '../../../config/googleMapsOptions'
 import { GoogleMapsPolygonOptions } from '../../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
@@ -43,7 +42,6 @@ import {
 const ListingMap: NextPage = () => {
   const { status } = useSession()
   const dispatch = useAppDispatch()
-  const { googleLoaded } = useGoogleMaps()
   const openListingDetail = useOpenListingDetail(true)
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
   const mapState = useAppSelector(selectMapState)
@@ -67,7 +65,6 @@ const ListingMap: NextPage = () => {
   // fitBounds(), which would adjust the zoom. This is also why we switched to useMemo instead of createSelector for
   // this: the bug showed up and there was no simple way to track googleLoaded like this with createSelector.
   const bounds = useMemo(() => {
-    if (!googleLoaded) return null
     if (mapState.geoLayerCoordinates.length) {
       return getGeoLayerBounds(mapState.geoLayerCoordinates)
     }
@@ -75,7 +72,7 @@ const ListingMap: NextPage = () => {
       return convertViewportToLatLngBoundsLiteral(mapState.viewportBounds)
     }
     return null
-  }, [googleLoaded, mapState.geoLayerCoordinates, mapState.viewportBounds])
+  }, [mapState.geoLayerCoordinates, mapState.viewportBounds])
 
   const handleListingMarkerMouseEnter = useCallback(
     (listingid: string) => {
@@ -128,45 +125,42 @@ const ListingMap: NextPage = () => {
     [dispatch, doListingSearchOnMapIdle]
   )
 
-  if (googleLoaded) {
-    return (
-      <div className={styles.listingMap}>
-        <GoogleMap
-          options={GoogleMapsMapOptions}
-          bounds={bounds}
-          zoom={mapState.zoom}
-          onIdle={handleIdle}
-          onDragEnd={handleUserAdjustedMap}
-          onZoomChanged={handleUserAdjustedMap}
-        >
-          {listings.map((l, i) => (
-            <ListingMarker
-              key={l._id.toString()}
-              authenticaticated={status === 'authenticated'}
-              listing={l}
-              highlighted={highlightedMarker === l._id}
-              zIndex={i}
-              onMouseEnter={handleListingMarkerMouseEnter}
-              onMouseLeave={handleListingMarkerMouseLeave}
-              onClick={handleListingMarkerMouseClick}
-            />
-          ))}
-          <MapBoundary
-            coordinates={mapState.geoLayerCoordinates}
-            visible={mapState.boundaryActive}
-            options={GoogleMapsPolygonOptions}
+  return (
+    <div className={styles.listingMap}>
+      <GoogleMap
+        options={GoogleMapsMapOptions}
+        bounds={bounds}
+        zoom={mapState.zoom}
+        onIdle={handleIdle}
+        onDragEnd={handleUserAdjustedMap}
+        onZoomChanged={handleUserAdjustedMap}
+      >
+        {listings.map((l, i) => (
+          <ListingMarker
+            key={l._id.toString()}
+            authenticaticated={status === 'authenticated'}
+            listing={l}
+            highlighted={highlightedMarker === l._id}
+            zIndex={i}
+            onMouseEnter={handleListingMarkerMouseEnter}
+            onMouseLeave={handleListingMarkerMouseLeave}
+            onClick={handleListingMarkerMouseClick}
           />
-        </GoogleMap>
-        <MapControl
-          boundaryActive={mapState.boundaryActive}
-          listingSearchRunning={listingSearchRunning}
-          onBoundaryControlClick={handleBoundaryControlClick}
+        ))}
+        <MapBoundary
+          coordinates={mapState.geoLayerCoordinates}
+          visible={mapState.boundaryActive}
+          options={GoogleMapsPolygonOptions}
         />
-        <ZoomControl onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
-      </div>
-    )
-  }
-  return <div className={styles.listingMap}></div>
+      </GoogleMap>
+      <MapControl
+        boundaryActive={mapState.boundaryActive}
+        listingSearchRunning={listingSearchRunning}
+        onBoundaryControlClick={handleBoundaryControlClick}
+      />
+      <ZoomControl onZoomIn={handleZoomIn} onZoomOut={handleZoomOut} />
+    </div>
+  )
 }
 
 export default ListingMap
