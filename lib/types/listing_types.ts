@@ -94,11 +94,6 @@ export interface BoundaryRecord {
   }
 }
 
-export interface ListingSearchGeocoderResult
-  extends google.maps.GeocoderResult {
-  geometry: google.maps.GeocoderGeometry & { viewport: ViewportLatLngBounds }
-}
-
 export interface ListingSearchBoundaryResponse {
   listings: Listing[]
   pagination: {
@@ -112,7 +107,7 @@ export interface ListingSearchBoundaryResponse {
 }
 
 export interface ListingSearchGeocodeResponse extends ListingSearchBoundaryResponse {
-  boundary: BoundaryRecord | null
-  geocoderResult: ListingSearchGeocoderResult[]
+  boundary?: BoundaryRecord
+  viewport?: ViewportLatLngBounds
   listingDetail?: ListingDetail
 }

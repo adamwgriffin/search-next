@@ -76,8 +76,8 @@ export const listingSearchSlice = createSlice({
 
     builder.addCase(searchCurrentLocation.fulfilled, (state, action) => {
       state.listingSearchRunning = false
-      // just update the parts that would change with this type of search. the initial search would have set boundary
-      // and geocoderResult attributes that we don't want to overwite
+      // just update the parts that would change with this type of search. the initial search would have set certain
+      // attributes, e.g., boundary, that we don't want to overwite
       state.listingServiceResponse = state.listingServiceResponse ?? {}
       state.listingServiceResponse.listings = action.payload.listings
       state.listingServiceResponse.pagination = action.payload.pagination

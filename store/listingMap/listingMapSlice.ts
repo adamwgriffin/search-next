@@ -56,9 +56,13 @@ export const listingMapSlice = createSlice({
     })
 
     builder.addCase(noBoundaryFoundForNewLocationSearch, (state, action) => {
-      state.geoLayerCoordinates = initialState.geoLayerCoordinates
-      state.viewportBounds = action.payload.geocoderResult[0].geometry.viewport
-      state.boundaryActive = false
+      if (action.payload.viewport) {
+        state.geoLayerCoordinates = initialState.geoLayerCoordinates
+        state.viewportBounds = action.payload.viewport
+        state.boundaryActive = false
+      } else {
+        console.error("No viewport found in noBoundaryFoundForNewLocationSearch action")
+      }
     })
   }
 })

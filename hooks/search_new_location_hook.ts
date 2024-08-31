@@ -22,7 +22,7 @@ const sameViewportBoundsAsPreviousNewLocationSearch = (
 ) =>
   isEqual(
     currentViewportBounds,
-    listingSearchResponse.geocoderResult[0].geometry.viewport
+    listingSearchResponse.viewport
   )
 
 /**
@@ -62,6 +62,9 @@ export const useSearchNewLocation = () => {
     // just clicked the search button again. This is because having the same bounds would not cause the map to trigger
     // it's "idle" event, which is what's normally used to trigger the searchCurrentLocation after the map has been
     // adjusted.
+    if (!res.viewport) {
+      throw new Error("Invalid response.")
+    }
     if (
       sameViewportBoundsAsPreviousNewLocationSearch(currentViewportBounds, res)
     ) {
