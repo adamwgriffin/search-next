@@ -4,40 +4,40 @@ import type { NextPage } from 'next'
 import { useMemo, useCallback } from 'react'
 import { useMedia } from 'react-use'
 import { useSession } from 'next-auth/react'
-import { GoogleMapsMapOptions } from '../../../config/googleMapsOptions'
-import { GoogleMapsPolygonOptions } from '../../../config/googleMapsOptions'
+import { GoogleMapsMapOptions } from '../../config/googleMapsOptions'
+import { GoogleMapsPolygonOptions } from '../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
-import GoogleMap, { GoogleMapState } from '../GoogleMap/GoogleMap'
-import ListingMarker from '../ListingMarker/ListingMarker'
-import MapBoundary from '../MapBoundary/MapBoundary'
-import MapControl from '../MapControl/MapControl'
-import ZoomControl from '../ZoomControl/ZoomControl'
-import { useAppSelector, useAppDispatch } from '../../../hooks/app_hooks'
-import { useOpenListingDetail } from '../../../hooks/open_listing_detail_hook'
+import GoogleMap, { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+import ListingMarker from '../../components/map/ListingMarker/ListingMarker'
+import MapBoundary from '../../components/map/MapBoundary/MapBoundary'
+import MapControl from '../../components/map/MapControl/MapControl'
+import ZoomControl from '../../components/map/ZoomControl/ZoomControl'
+import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
+import { useOpenListingDetail } from '../../hooks/open_listing_detail_hook'
 import {
   setBoundaryActive,
   setMapData
-} from '../../../store/listingMap/listingMapSlice'
-import { selectMapState } from '../../../store/listingMap/listingMapSelectors'
+} from '../../store/listingMap/listingMapSlice'
+import { selectMapState } from '../../store/listingMap/listingMapSelectors'
 import {
   setDoListingSearchOnMapIdle,
   setSelectedListing
-} from '../../../store/listingSearch/listingSearchSlice'
+} from '../../store/listingSearch/listingSearchSlice'
 import {
   selectDoListingSearchOnMapIdle,
   selectListings,
   selectListingSearchRunning,
   selectHighlightedMarker
-} from '../../../store/listingSearch/listingSearchSelectors'
-import { resetStartIndex } from '../../../store/filters/filtersSlice'
+} from '../../store/listingSearch/listingSearchSelectors'
+import { resetStartIndex } from '../../store/filters/filtersSlice'
 import {
   convertViewportToLatLngBoundsLiteral,
   getGeoLayerBounds
-} from '../../../lib/polygon'
+} from '../../lib/polygon'
 import {
   searchWithUpdatedFilters,
   searchCurrentLocation
-} from '../../../store/listingSearch/listingSearchCommon'
+} from '../../store/listingSearch/listingSearchCommon'
 
 const ListingMap: NextPage = () => {
   const { status } = useSession()

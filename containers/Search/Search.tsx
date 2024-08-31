@@ -9,7 +9,7 @@ import { selectListingSearchRunning } from '../../store/listingSearch/listingSea
 import styles from './Search.module.css'
 import SearchHeader from '../SearchHeader/SearchHeader'
 import SearchResults from '../../containers/SearchResults/SearchResults'
-import ListingMap from '../../components/map/ListingMap/ListingMap'
+import ListingMap from '../ListingMap/ListingMap'
 
 const Search: NextPage = () => {
   const viewType = useAppSelector(selectViewType)
