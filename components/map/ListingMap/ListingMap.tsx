@@ -1,7 +1,7 @@
 'use client'
 
 import type { NextPage } from 'next'
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useMedia } from 'react-use'
 import { useSession } from 'next-auth/react'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
@@ -77,46 +77,56 @@ const ListingMap: NextPage = () => {
     return null
   }, [googleLoaded, mapState.geoLayerCoordinates, mapState.viewportBounds])
 
-  const handleListingMarkerMouseEnter = (listingid: string) => {
-    isSmallAndUp && dispatch(setSelectedListing(listingid))
-  }
+  const handleListingMarkerMouseEnter = useCallback(
+    (listingid: string) => {
+      isSmallAndUp && dispatch(setSelectedListing(listingid))
+    },
+    [dispatch, isSmallAndUp]
+  )
 
-  const handleListingMarkerMouseLeave = () => {
+  const handleListingMarkerMouseLeave = useCallback(() => {
     isSmallAndUp && dispatch(setSelectedListing(null))
-  }
+  }, [dispatch, isSmallAndUp])
 
-  const handleListingMarkerMouseClick = (listingId: string) => {
-    openListingDetail(`/listing/${listingId}`, listingId)
-  }
+  const handleListingMarkerMouseClick = useCallback(
+    (listingId: string) => {
+      openListingDetail(`/listing/${listingId}`, listingId)
+    },
+    [openListingDetail]
+  )
 
-  const handleBoundaryControlClick = () => {
+  const handleBoundaryControlClick = useCallback(() => {
     dispatch(setBoundaryActive(false))
     dispatch(searchWithUpdatedFilters())
-  }
+  }, [dispatch])
 
-  const handleUserAdjustedMap = async (
-    currentMapState: Partial<GoogleMapState>
-  ) => {
-    dispatch(setMapData(currentMapState))
-    dispatch(resetStartIndex())
-    dispatch(setDoListingSearchOnMapIdle(true))
-  }
+  const handleUserAdjustedMap = useCallback(
+    async (currentMapState: Partial<GoogleMapState>) => {
+      dispatch(setMapData(currentMapState))
+      dispatch(resetStartIndex())
+      dispatch(setDoListingSearchOnMapIdle(true))
+    },
+    [dispatch]
+  )
 
-  const handleZoomIn = () => {
+  const handleZoomIn = useCallback(() => {
     handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
-  }
+  }, [handleUserAdjustedMap, mapState.zoom])
 
-  const handleZoomOut = () => {
+  const handleZoomOut = useCallback(() => {
     handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
-  }
+  }, [handleUserAdjustedMap, mapState.zoom])
 
-  const handleIdle = (newMapState: GoogleMapState) => {
-    dispatch(setMapData(newMapState))
-    if (doListingSearchOnMapIdle) {
-      dispatch(setDoListingSearchOnMapIdle(false))
-      dispatch(searchCurrentLocation())
-    }
-  }
+  const handleIdle = useCallback(
+    (newMapState: GoogleMapState) => {
+      dispatch(setMapData(newMapState))
+      if (doListingSearchOnMapIdle) {
+        dispatch(setDoListingSearchOnMapIdle(false))
+        dispatch(searchCurrentLocation())
+      }
+    },
+    [dispatch, doListingSearchOnMapIdle]
+  )
 
   if (googleLoaded) {
     return (
