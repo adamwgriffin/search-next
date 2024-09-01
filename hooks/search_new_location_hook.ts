@@ -19,11 +19,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 const sameViewportBoundsAsPreviousNewLocationSearch = (
   currentViewportBounds: ViewportLatLngBounds | null,
   listingSearchResponse: ListingSearchGeocodeResponse
-) =>
-  isEqual(
-    currentViewportBounds,
-    listingSearchResponse.viewport
-  )
+) => isEqual(currentViewportBounds, listingSearchResponse.viewport)
 
 /**
  * Makes a new request to the Listing Service to geocode what is entered in the search field then dispatches the
@@ -38,7 +34,7 @@ export const useSearchNewLocation = () => {
   // several of the useEffect hooks that have it in their dependency array.
   return useCallback(async () => {
     const res = unwrapResult(await dispatch(newLocationGeocodeSearch()))
-    
+
     // We found a boundary for the location. This is the normal response we would expect.
     if (res.boundary) {
       dispatch(boundaryFoundForNewLocationSearch(res))
@@ -63,7 +59,7 @@ export const useSearchNewLocation = () => {
     // it's "idle" event, which is what's normally used to trigger the searchCurrentLocation after the map has been
     // adjusted.
     if (!res.viewport) {
-      throw new Error("Invalid response.")
+      throw new Error('Invalid response.')
     }
     if (
       sameViewportBoundsAsPreviousNewLocationSearch(currentViewportBounds, res)
