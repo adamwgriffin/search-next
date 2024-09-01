@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { useCallback } from 'react'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { setFilters } from '../../store/filters/filtersSlice'
 import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
@@ -23,36 +24,28 @@ const SearchFieldContainer: NextPage<SearchFieldContainerProps> = ({
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const options = useAppSelector(selectAutcompletePlacePredictions)
 
-  const handleOnInput = (details: string) =>
-    dispatch(setFilters({ locationSearchField: details }))
-
-  const handleOnGetPlaceAutocompletePredictions = (val: string) => {
-    dispatch(getPlaceAutocompletePredictions(val))
-  }
-
-  const handleOnClearPlaceAutocompletePredictions = () => {
-    dispatch(resetAutcompletePlacePredictions())
-  }
-
-  const handleOnOptionSelected = (
-    autocompletePrediction: google.maps.places.AutocompletePrediction
-  ) => {
-    dispatch(
-      setFilters({ locationSearchField: autocompletePrediction.description })
-    )
-    onOptionSelected?.(autocompletePrediction)
-  }
+  const handleOnOptionSelected = useCallback(
+    (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
+      dispatch(
+        setFilters({ locationSearchField: autocompletePrediction.description })
+      )
+      onOptionSelected?.(autocompletePrediction)
+    },
+    [dispatch, onOptionSelected]
+  )
 
   return (
     <SearchField
       value={locationSearchField}
       options={options}
-      onInput={handleOnInput}
-      onGetPlaceAutocompletePredictions={
-        handleOnGetPlaceAutocompletePredictions
+      onInput={(details) =>
+        dispatch(setFilters({ locationSearchField: details }))
       }
-      onClearPlaceAutocompletePredictions={
-        handleOnClearPlaceAutocompletePredictions
+      onGetPlaceAutocompletePredictions={(val) =>
+        dispatch(getPlaceAutocompletePredictions(val))
+      }
+      onClearPlaceAutocompletePredictions={() =>
+        dispatch(resetAutcompletePlacePredictions())
       }
       onSearchInitiated={onSearchInitiated}
       onOptionSelected={handleOnOptionSelected}
