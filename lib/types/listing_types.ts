@@ -94,19 +94,22 @@ export interface BoundaryRecord {
   }
 }
 
+export interface ListingSearchPagination {
+  page: number
+  pageSize: number
+  numberReturned: number
+  numberAvailable: number
+  numberOfPages: number
+}
+
 export interface ListingSearchBoundaryResponse {
   listings: Listing[]
-  pagination: {
-    page: number
-    pageSize: number
-    numberReturned: number
-    numberAvailable: number
-    numberOfPages: number
-  }
+  pagination: ListingSearchPagination
   error?: string
 }
 
-export interface ListingSearchGeocodeResponse extends ListingSearchBoundaryResponse {
+export interface ListingSearchGeocodeResponse
+  extends ListingSearchBoundaryResponse {
   boundary?: BoundaryRecord
   viewport?: ViewportLatLngBounds
   listingDetail?: ListingDetail

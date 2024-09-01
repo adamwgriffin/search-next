@@ -41,7 +41,7 @@ export const searchCurrentLocation =
     async (_arg, { getState }) => {
       const state = getState()
       const url = state.listingMap.boundaryActive
-        ? `/api/listing/search/boundary/${state.listingSearch.listingServiceResponse?.boundary?._id}`
+        ? `/api/listing/search/boundary/${state.listingSearch.boundaryId}`
         : 'api/listing/search/bounds'
       const response = await http.get<ListingSearchBoundaryResponse>(url, {
         params: selectParamsForGeospatialSearch(state)

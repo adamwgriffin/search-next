@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { ListingSearchGeocodeResponse } from '../../lib/types/listing_types'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   SelectedListing,
   HighlightedMarker,
@@ -10,12 +10,15 @@ import {
   newLocationGeocodeSearch,
   searchCurrentLocation
 } from './listingSearchCommon'
+import { listingFoundForAddressSearch } from '../listingDetail/listingDetailSlice'
 
 const initialState: ListingSearchState = {
+  boundaryId: null,
+  listings: [],
+  pagination: null,
   initialSearchComplete: false,
   doListingSearchOnMapIdle: false,
   listingSearchRunning: false,
-  listingServiceResponse: null,
   selectedListing: null,
   highlightedMarker: null
 }
@@ -30,7 +33,14 @@ export const listingSearchSlice = createSlice({
       state,
       action: PayloadAction<ListingSearchGeocodeResponse>
     ) => {
-      state.listingServiceResponse = action.payload
+      if (!action.payload.boundary) {
+        throw new Error(
+          'No boundary present for boundaryFoundForNewLocationSearch payload'
+        )
+      }
+      state.boundaryId = action.payload.boundary._id
+      state.listings = action.payload.listings
+      state.pagination = action.payload.pagination
       state.listingSearchRunning = false
     },
 
@@ -76,17 +86,26 @@ export const listingSearchSlice = createSlice({
 
     builder.addCase(searchCurrentLocation.fulfilled, (state, action) => {
       state.listingSearchRunning = false
-      // just update the parts that would change with this type of search. the initial search would have set certain
-      // attributes, e.g., boundary, that we don't want to overwite
-      state.listingServiceResponse = state.listingServiceResponse ?? {}
-      state.listingServiceResponse.listings = action.payload.listings
-      state.listingServiceResponse.pagination = action.payload.pagination
+      state.listings = action.payload.listings
+      state.pagination = action.payload.pagination
     })
 
     builder.addCase(searchCurrentLocation.rejected, (state, action) => {
       state.listingSearchRunning = false
       console.error(action.error)
     })
+
+    // Reset the boundaryId to null for actions that indicate there is no boundary available or needed based on the
+    // listing service response
+    builder.addMatcher(
+      isAnyOf(
+        listingFoundForAddressSearch,
+        noBoundaryFoundForNewLocationSearch
+      ),
+      (state) => {
+        state.boundaryId = initialState.boundaryId
+      }
+    )
   }
 })
 

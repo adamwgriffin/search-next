@@ -22,17 +22,16 @@ export const selectDoListingSearchOnMapIdle = (state: AppState) =>
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
 
-export const selectListingServiceResponse = (state: AppState) =>
-  state.listingSearch.listingServiceResponse
 
-export const selectListings = createSelector(
-  selectListingServiceResponse,
-  (listingServiceResponse): Listing[] => listingServiceResponse?.listings ?? []
-)
+export const selectListings = (state: AppState) =>
+  state.listingSearch.listings
+
+export const selectListingSearchPagination = (state: AppState) =>
+  state.listingSearch.pagination
 
 export const selectTotalListings = createSelector(
-  [selectListingServiceResponse],
-  (listingServiceResponse) => listingServiceResponse?.pagination?.numberAvailable ?? 0
+  [selectListingSearchPagination],
+  (listingSearchPagination) => listingSearchPagination?.numberAvailable ?? 0
 )
 
 export const selectPagination = createSelector(
