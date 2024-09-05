@@ -38,7 +38,7 @@ export const useSearchNewLocation = () => {
     // We found a boundary for the location. This is the normal response we would expect.
     if (res.boundary) {
       dispatch(boundaryFoundForNewLocationSearch(res))
-      return
+      return res
     }
 
     // There was no boundary found. Look at the response to determine what to do next
@@ -48,7 +48,7 @@ export const useSearchNewLocation = () => {
     if (res.listingDetail) {
       await dispatch(listingFoundForAddressSearch(res.listingDetail))
       router.push(`/listing/${res.listingDetail._id}`)
-      return
+      return res
     }
 
     // No boundary and no listing means either A) it was an address search and no listing was available for that
@@ -68,5 +68,7 @@ export const useSearchNewLocation = () => {
     } else {
       dispatch(noBoundaryFoundForNewLocationSearch(res))
     }
+
+    return res
   }, [currentViewportBounds, dispatch, router])
 }

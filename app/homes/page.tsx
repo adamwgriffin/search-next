@@ -10,11 +10,7 @@ import { useGetCurrentUserIfAuthenticated } from '../../hooks/get_current_user_i
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
 import { useSearchNewLocation } from '../../hooks/search_new_location_hook'
 import { listingSearchURLParamsToSearchState } from '../../lib/url'
-import {
-  initialState,
-  clearFilters,
-  setFilters
-} from '../../store/filters/filtersSlice'
+import { initialState, setFilters } from '../../store/filters/filtersSlice'
 import {
   selectInitialSearchComplete,
   selectListingSearchRunning
@@ -64,13 +60,12 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   useEffect(() => {
     getSearchParamsAndSetSearchState()
     searchNewLocation()
-
-    // reset the filters when the user navigates away from the search page, otherwise a subsequent search from the home
-    // page could include filters from the previous search
-    return () => {
-      dispatch(clearFilters())
-    }
-  }, [dispatch, getSearchParamsAndSetSearchState, searchNewLocation])
+  }, [
+    dispatch,
+    getSearchParamsAndSetSearchState,
+    initialSearchComplete,
+    searchNewLocation
+  ])
 
   // If the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history, and then run a new search to match the url params. The "popstate" event

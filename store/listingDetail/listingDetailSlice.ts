@@ -42,10 +42,6 @@ export const listingDetailSlice = createSlice({
     builder.addCase(getListingDetail.fulfilled, (state, action) => {
       state.listing = action.payload
     })
-
-    builder.addCase(newLocationGeocodeSearch.pending, (state) => {
-      state.listing = initialState.listing
-    })
   }
 })
 
