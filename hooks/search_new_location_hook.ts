@@ -32,7 +32,7 @@ export const useSearchNewLocation = () => {
 
   // It's very important to put this function inside of useCallback. Without it, we can get into infinite loops with
   // several of the useEffect hooks that have it in their dependency array.
-  return useCallback(async () => {
+  return useCallback(async (): Promise<ListingSearchGeocodeResponse> => {
     const res = unwrapResult(await dispatch(newLocationGeocodeSearch()))
 
     // We found a boundary for the location. This is the normal response we would expect.

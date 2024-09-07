@@ -41,14 +41,22 @@ export interface ListingServiceRequestParams {
   pool: boolean | null
   air_conditioning: boolean | null
   // Index signature, allows us to index like so: params['key']
-  [key: string]: number | string | boolean | SortType | SortDirection | null | undefined | Date
+  [key: string]:
+    | number
+    | string
+    | boolean
+    | SortType
+    | SortDirection
+    | null
+    | undefined
+    | Date
 }
 
 export type ListingServiceParams = Partial<ListingServiceRequestParams>
 
 export type BoundsParams = Pick<
-ListingServiceRequestParams,
-  'bounds_north' | 'bounds_east' | 'bounds_south'  | 'bounds_west'
+  ListingServiceRequestParams,
+  'bounds_north' | 'bounds_east' | 'bounds_south' | 'bounds_west'
 >
 
 // FilterState attributes that have the same key/value as their listing service param counterpart (only with camel case

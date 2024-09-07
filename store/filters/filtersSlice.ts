@@ -45,6 +45,7 @@ export const filtersSlice = createSlice({
 
   reducers: {
     setFilters: (state, action: PayloadAction<Partial<FiltersState>>) => {
+      // TODO: Why are we replacing the entire state?
       // we have to return the object in order to replace the entire state
       return { ...state, ...action.payload }
     },

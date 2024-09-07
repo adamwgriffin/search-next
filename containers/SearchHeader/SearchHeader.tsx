@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import { useAppDispatch } from '../../hooks/app_hooks'
 import { useSearchNewLocation } from '../../hooks/search_new_location_hook'
 import styles from './SearchHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'

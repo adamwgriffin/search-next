@@ -188,10 +188,6 @@ const SearchField: NextPage<SearchFieldProps> = ({
     setLastInputValue(val)
   }
 
-  const pinIconColor = (active: boolean) => {
-    return active ? '#e96262' : '#999'
-  }
-
   useClickAway(ref, closeDropdown)
 
   useEffect(() => {
