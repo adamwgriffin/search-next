@@ -1,12 +1,15 @@
 import type { AppState } from '..'
 import type { HighlightedMarker } from './listingSearchTypes'
-import type { Listing } from '../../lib/types/listing_types'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
 import type { ListingServiceParams } from '../../lib/types/listing_service_params_types'
 import range from 'lodash/range'
 import { createSelector } from '@reduxjs/toolkit'
-import { convertFiltersToListingServiceParams } from '../../lib/listing_service_params'
+import {
+  convertFiltersToListingServiceParams,
+  addGeocodeParams
+} from '../../lib/listing_service_params'
 import { selectBounds } from '../listingMap/listingMapSelectors'
+import { selectSelectedAutcompletePlacePrediction } from '../autocomplete/autocompleteSelectors'
 
 const selectFilterState = (state: AppState) => state.filters
 
@@ -22,9 +25,7 @@ export const selectDoListingSearchOnMapIdle = (state: AppState) =>
 export const selectListingSearchRunning = (state: AppState) =>
   state.listingSearch.listingSearchRunning
 
-
-export const selectListings = (state: AppState) =>
-  state.listingSearch.listings
+export const selectListings = (state: AppState) => state.listingSearch.listings
 
 export const selectListingSearchPagination = (state: AppState) =>
   state.listingSearch.pagination
@@ -57,11 +58,12 @@ export const selectParamsForGeospatialSearch = createSelector(
 )
 
 export const selectParamsForGeocodeSearch = createSelector(
-  [selectFilterState],
-  (filters): ListingServiceParams => {
-    return {
-      ...convertFiltersToListingServiceParams(filters),
-      address: filters.locationSearchField
-    }
+  [selectFilterState, selectSelectedAutcompletePlacePrediction],
+  (filters, prediction): ListingServiceParams => {
+    return addGeocodeParams(
+      convertFiltersToListingServiceParams(filters),
+      prediction,
+      filters.locationSearchField
+    )
   }
 )

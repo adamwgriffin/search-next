@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/app_hooks'
 import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
-import { clearFilters } from '../../store/filters/filtersSlice'
+import { standaloneSearchInitialized } from '../../store/listingSearch/listingSearchCommon'
 import { useAppDispatch } from '../../hooks/app_hooks'
 import { useSearchNewLocation } from '../../hooks/search_new_location_hook'
 
@@ -17,7 +17,7 @@ const StandaloneSearchField: React.FC = () => {
 
   // Reset the filters back to defaults in case a previous search on the /homes page changed them
   useEffect(() => {
-    dispatch(clearFilters())
+    dispatch(standaloneSearchInitialized())
   }, [dispatch])
 
   const searchThenRedirect = useCallback(

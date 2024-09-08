@@ -2,8 +2,10 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import {
   searchWithUpdatedFilters,
-  newLocationGeocodeSearch
+  newLocationGeocodeSearch,
+  standaloneSearchInitialized
 } from '../listingSearch/listingSearchCommon'
+import { autocompletePredictionSelected } from '../autocomplete/autocompleteSlice'
 import { FiltersState, SearchTypeOption } from './filtersTypes'
 import { DefaultSoldInLast } from '../../config'
 import { SearchTypes } from '../../lib/filter'
@@ -71,12 +73,16 @@ export const filtersSlice = createSlice({
       state.pageIndex = initialState.pageIndex
     },
 
-    clearFilters: () => {
-      return initialState
-    }
+    clearFilters: () => initialState
   },
 
   extraReducers: (builder) => {
+    builder.addCase(standaloneSearchInitialized, () => initialState)
+    
+    builder.addCase(autocompletePredictionSelected, (state, action) => {
+      state.locationSearchField = action.payload.description
+    })
+
     builder.addCase(newLocationGeocodeSearch.pending, (state) => {
       state.pageIndex = initialState.pageIndex
     })
@@ -87,7 +93,11 @@ export const filtersSlice = createSlice({
   }
 })
 
-export const { setFilters, setSearchType, resetStartIndex, clearFilters } =
-  filtersSlice.actions
+export const {
+  setFilters,
+  setSearchType,
+  resetStartIndex,
+  clearFilters,
+} = filtersSlice.actions
 
 export default filtersSlice.reducer

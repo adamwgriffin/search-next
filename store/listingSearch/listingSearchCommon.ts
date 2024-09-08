@@ -2,6 +2,7 @@ import type {
   ListingSearchBoundaryResponse,
   ListingSearchGeocodeResponse
 } from '../../lib/types/listing_types'
+import { createAction } from '@reduxjs/toolkit'
 import http from '../../lib/http'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import {
@@ -58,4 +59,8 @@ export const searchWithUpdatedFilters = createAppAsyncThunk(
   async (_args, { dispatch }) => {
     dispatch(searchCurrentLocation())
   }
+)
+
+export const standaloneSearchInitialized = createAction(
+  'listingSearch/standaloneSearchInitialized'
 )

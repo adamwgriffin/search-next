@@ -3,6 +3,7 @@ import type {
   ListingServiceParams
 } from './types/listing_service_params_types'
 import type { FiltersState } from '../store/filters/filtersTypes'
+import type { AutocompleteState } from '../store/autocomplete/autocompleteSlice'
 import omit from 'lodash/omit'
 import omitBy from 'lodash/omitBy'
 import snakeCase from 'lodash/snakeCase'
@@ -120,4 +121,25 @@ export const convertFiltersToListingServiceParams = (
     ...removeUnecessaryParams(listingServiceParams),
     ...paramsDerivedFromFilterState(filters)
   }
+}
+
+/**
+ * Add params specific to a Listing Service geocode search request
+ */
+export const addGeocodeParams = (
+  params: ListingServiceParams,
+  prediction: AutocompleteState['selectedAutcompletePlacePrediction'],
+  locationSearchField: string
+) => {
+  // If the user selected a prediction from the autocomplete, use the place_id inside it. It seems like it would be more
+  // effecient to send that to the Listing Service instead of an address string since it would only need to do a lookup
+  // via ID rather than parse the address. We're checking the locationSearchField here in case the user changed the text
+  // there and just clicked the search button without choosing a new autocomplete prediction, in which case the old
+  // place_id would no longer be accurate
+  if (prediction?.description === locationSearchField) {
+    params.place_id = prediction.place_id
+  } else {
+    params.address = locationSearchField
+  }
+  return params
 }

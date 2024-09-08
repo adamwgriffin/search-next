@@ -14,6 +14,7 @@ export interface ListingServiceRequestParams {
   bounds_south: number
   bounds_west: number
   address: string
+  place_id: string
   rental: boolean
   page_index: number
   page_size: number

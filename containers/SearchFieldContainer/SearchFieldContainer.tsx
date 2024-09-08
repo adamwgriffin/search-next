@@ -6,8 +6,9 @@ import { selectLocationSearchField } from '../../store/filters/filtersSelectors'
 import {
   getPlaceAutocompletePredictions,
   resetAutcompletePlacePredictions,
-  selectAutcompletePlacePredictions
+  autocompletePredictionSelected
 } from '../../store/autocomplete/autocompleteSlice'
+import { selectAutcompletePlacePredictions } from '../../store/autocomplete/autocompleteSelectors'
 import SearchField from '../../components/form/SearchField/SearchField'
 
 export interface SearchFieldContainerProps {
@@ -26,9 +27,7 @@ const SearchFieldContainer: NextPage<SearchFieldContainerProps> = ({
 
   const handleOnOptionSelected = useCallback(
     (autocompletePrediction: google.maps.places.AutocompletePrediction) => {
-      dispatch(
-        setFilters({ locationSearchField: autocompletePrediction.description })
-      )
+      dispatch(autocompletePredictionSelected(autocompletePrediction))
       onOptionSelected?.(autocompletePrediction)
     },
     [dispatch, onOptionSelected]
