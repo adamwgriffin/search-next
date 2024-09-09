@@ -92,6 +92,7 @@ export interface BoundaryRecord {
     type: string
     coordinates: MultiPolygon
   }
+  placeId: string
 }
 
 export interface ListingSearchPagination {
