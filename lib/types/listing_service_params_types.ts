@@ -15,6 +15,8 @@ export interface ListingServiceRequestParams {
   bounds_west: number
   address: string
   place_id: string
+  /** A comma-separated list of types that the prediction belongs to */
+  address_types: string
   rental: boolean
   page_index: number
   page_size: number

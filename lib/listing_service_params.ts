@@ -131,13 +131,13 @@ export const addGeocodeParams = (
   prediction: AutocompleteState['selectedAutcompletePlacePrediction'],
   locationSearchField: string
 ) => {
-  // If the user selected a prediction from the autocomplete, use the place_id inside it. It seems like it would be more
-  // effecient to send that to the Listing Service instead of an address string since it would only need to do a lookup
-  // via ID rather than parse the address. We're checking the locationSearchField here in case the user changed the text
-  // there and just clicked the search button without choosing a new autocomplete prediction, in which case the old
-  // place_id would no longer be accurate
+  // If the user selected a prediction from the autocomplete, use the place_id inside it. This is more effecient for the
+  // Listing Service since it can potentially avoid doing a geocode request when the place_id is available. We're
+  // checking the locationSearchField here in case the user changed the text there and just clicked the search button
+  // without choosing a new autocomplete prediction, in which case the old place_id would no longer be accurate
   if (prediction?.description === locationSearchField) {
     params.place_id = prediction.place_id
+    params.address_types = prediction.types.join(',')
   } else {
     params.address = locationSearchField
   }
