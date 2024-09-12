@@ -39,8 +39,8 @@ export const listingSearchSlice = createSlice({
         )
       }
       state.boundaryId = action.payload.boundary._id
-      state.listings = action.payload.listings
-      state.pagination = action.payload.pagination
+      state.listings = action.payload.listings || []
+      state.pagination = action.payload.pagination || null
       state.listingSearchRunning = false
     },
 

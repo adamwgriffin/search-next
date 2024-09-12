@@ -110,7 +110,7 @@ export interface ListingSearchBoundaryResponse {
 }
 
 export interface ListingSearchGeocodeResponse
-  extends ListingSearchBoundaryResponse {
+  extends Partial<ListingSearchBoundaryResponse> {
   boundary?: BoundaryRecord
   viewport?: ViewportLatLngBounds
   listingDetail?: ListingDetail
