@@ -3,7 +3,6 @@ import type { ListingDetail } from '../../lib/types/listing_types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
-import { newLocationGeocodeSearch } from '../listingSearch/listingSearchCommon'
 
 export interface ListingDetailState {
   listing: ListingDetail | null
