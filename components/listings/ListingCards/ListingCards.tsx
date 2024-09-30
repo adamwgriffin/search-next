@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { Listing } from '../../../lib/types/listing_types'
+import type { Listing } from '../../../types/listing_types'
 import styles from './ListingCards.module.css'
 import ListingCard from '../ListingCard/ListingCard'
 import ListingCardLoader from '../ListingCardLoader/ListingCardLoader'

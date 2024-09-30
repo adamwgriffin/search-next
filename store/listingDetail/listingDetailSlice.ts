@@ -1,5 +1,5 @@
 import type { AppState } from '..'
-import type { ListingDetail } from '../../lib/types/listing_types'
+import type { ListingDetail } from '../../types/listing_types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'

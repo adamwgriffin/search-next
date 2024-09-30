@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import type { MouseEvent } from 'react'
-import type { Listing } from '../../../lib/types/listing_types'
+import type { Listing } from '../../../types/listing_types'
 import Link from 'next/link'
 import styles from './ListingCard.module.css'
 import {

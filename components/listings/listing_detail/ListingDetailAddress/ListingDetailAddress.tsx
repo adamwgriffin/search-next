@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { ListingAddress } from '../../../../lib/types/listing_types'
+import type { ListingAddress } from '../../../../types/listing_types'
 import css from 'styled-jsx/css'
 import { cityStateZip } from '../../../../lib/listing_helpers'
 

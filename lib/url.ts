@@ -2,7 +2,7 @@ import camelCase from 'lodash/camelCase'
 import kebabCase from 'lodash/kebabCase'
 import type { FiltersState } from '../store/filters/filtersTypes'
 import type { PropertyType } from './property_types'
-import type { SortType } from './types/listing_service_params_types'
+import type { SortType } from '../types/listing_service_params_types'
 
 export interface ListingURLSearchParams {
   location: string

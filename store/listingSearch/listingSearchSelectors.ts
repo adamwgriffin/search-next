@@ -1,7 +1,7 @@
 import type { AppState } from '..'
 import type { HighlightedMarker } from './listingSearchTypes'
 import type { Pagination } from '../../components/listings/ListingResultsPagination/ListingResultsPagination'
-import type { ListingServiceParams } from '../../lib/types/listing_service_params_types'
+import type { ListingServiceParams } from '../../types/listing_service_params_types'
 import range from 'lodash/range'
 import { createSelector } from '@reduxjs/toolkit'
 import {

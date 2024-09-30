@@ -1,4 +1,4 @@
-import { Listing, ListingSearchPagination } from '../../lib/types/listing_types'
+import { Listing, ListingSearchPagination } from '../../types/listing_types'
 
 export type SelectedListing = string | null
 

@@ -1,4 +1,4 @@
-import type { OpenHouse } from '../../../../lib/types/listing_types'
+import type { OpenHouse } from '../../../../types/listing_types'
 import type { NextPage } from 'next'
 import { Locale } from '../../../../config'
 import styles from './OpenHouseList.module.css'

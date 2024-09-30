@@ -2,7 +2,7 @@ import type {
   Listing,
   ListingDetail,
   ListingAddress,
-} from './types/listing_types'
+} from '../types/listing_types'
 import { Locale, Currency } from '../config'
 
 export interface FormatPriceOptions {

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { PhotoGalleryImage } from '../../../../lib/types/listing_types'
+import type { PhotoGalleryImage } from '../../../../types/listing_types'
 import { useState, useCallback } from 'react'
 import styles from './SlideShow.module.css'
 import Overlay from '../../../design_system/Overlay/Overlay'

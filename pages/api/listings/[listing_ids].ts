@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { Listing } from '../../../lib/types/listing_types'
+import type { Listing } from '../../../types/listing_types'
 import http from '../../../lib/http'
 
 export type GetListingsByIdsResponse = {

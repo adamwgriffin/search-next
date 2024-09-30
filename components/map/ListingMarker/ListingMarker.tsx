@@ -1,7 +1,7 @@
 'use client'
 
 import type { NextPage } from 'next'
-import type { Listing } from '../../../lib/types/listing_types'
+import type { Listing } from '../../../types/listing_types'
 import { useEffect, useState, useCallback, memo } from 'react'
 import { createPortal } from 'react-dom'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'

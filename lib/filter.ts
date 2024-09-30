@@ -1,4 +1,4 @@
-import type { CountOption } from './types'
+import type { CountOption } from '../types'
 import type { FeatureLabelsType } from '../store/filters/filtersTypes'
 
 export const SearchTypes = {

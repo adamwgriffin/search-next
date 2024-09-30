@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { ListingDetail } from '../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../types/listing_types'
 import http from '../../../lib/http'
 
 export default async function handler(

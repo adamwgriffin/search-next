@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import type {
   SortType,
   SortDirection,
-} from '../../../lib/types/listing_service_params_types'
+} from '../../../types/listing_service_params_types'
 import type { SortFilters } from '../../../store/filters/filtersTypes'
 import { useToggle } from 'react-use'
 import styles from './SortMenu.module.css'

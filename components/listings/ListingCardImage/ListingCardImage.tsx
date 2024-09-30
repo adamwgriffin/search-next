@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { Listing } from '../../../lib/types/listing_types'
+import type { Listing } from '../../../types/listing_types'
 import ListingImageContainer from '../ListingImageContainer/ListingImageContainer'
 import ListingImageContainerElements from '../ListingImageContainerElements/ListingImageContainerElements'
 import ListingMainImage from '../ListingMainImage/ListingMainImage'

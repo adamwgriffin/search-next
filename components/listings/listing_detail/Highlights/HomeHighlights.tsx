@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { ListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../types/listing_types'
 import styles from './HomeHighlights.module.css'
 import { getPropertyTypeLabel } from '../../../../lib/property_types'
 

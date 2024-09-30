@@ -1,5 +1,5 @@
 import type { ViewportLatLngBounds } from '../store/listingMap/listingMapTypes'
-import type { ListingSearchGeocodeResponse } from '../lib/types/listing_types'
+import type { ListingSearchGeocodeResponse } from '../types/listing_types'
 import { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import isEqual from 'lodash/isEqual'

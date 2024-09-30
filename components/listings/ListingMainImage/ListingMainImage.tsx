@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 import type {
   PhotoGalleryImage,
   PhotoGalleryImageSizes
-} from '../../../lib/types/listing_types'
+} from '../../../types/listing_types'
 import { SyntheticEvent } from 'react'
 import { ListingStreetViewImageSizeEnum } from '../../../lib/listing_helpers'
 

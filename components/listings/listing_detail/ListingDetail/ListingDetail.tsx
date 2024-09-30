@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useState } from 'react'
-import type { ListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../types/listing_types'
 import css from 'styled-jsx/css'
 import { formatPriceFromListing } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'

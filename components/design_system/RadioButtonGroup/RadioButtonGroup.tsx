@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { CountOption } from '../../../lib/types'
+import type { CountOption } from '../../../types'
 import Fieldset from '../Fieldset/Fieldset'
 import Legend from '../Legend/Legend'
 import RadioButton from '../RadioButton/RadioButton'

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { useId } from 'react'
-import type { CountOption } from '../../../lib/types'
+import type { CountOption } from '../../../types'
 import styles from './RadioButton.module.css'
 
 export interface RadioButtonProps extends CountOption {

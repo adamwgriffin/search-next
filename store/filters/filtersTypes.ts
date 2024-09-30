@@ -1,7 +1,7 @@
 import type {
   SortDirection,
   SortType
-} from '../../lib/types/listing_service_params_types'
+} from '../../types/listing_service_params_types'
 import type { PropertyType } from '../../lib/property_types'
 import { SearchTypes } from '../../lib/filter'
 

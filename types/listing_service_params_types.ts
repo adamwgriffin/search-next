@@ -1,4 +1,4 @@
-import { FiltersState } from '../../store/filters/filtersTypes'
+import type { FiltersState } from '../store/filters/filtersTypes'
 
 export type SortType = 'listedDate' | 'listPrice' | 'beds' | 'baths' | 'sqft'
 

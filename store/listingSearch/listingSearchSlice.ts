@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { ListingSearchGeocodeResponse } from '../../lib/types/listing_types'
+import type { ListingSearchGeocodeResponse } from '../../types/listing_types'
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   SelectedListing,

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import type { ListingDetail } from '../../../../lib/types/listing_types'
+import type { ListingDetail } from '../../../../types/listing_types'
 import css from 'styled-jsx/css'
 import {
   getBathrooms,

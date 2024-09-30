@@ -1,7 +1,7 @@
 import type {
   ListingServiceParamFilters,
   ListingServiceParams
-} from './types/listing_service_params_types'
+} from '../types/listing_service_params_types'
 import type { FiltersState } from '../store/filters/filtersTypes'
 import type { AutocompleteState } from '../store/autocomplete/autocompleteSlice'
 import omit from 'lodash/omit'
