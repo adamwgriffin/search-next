@@ -106,7 +106,6 @@ export interface ListingSearchPagination {
 export interface ListingSearchBoundaryResponse {
   listings: Listing[]
   pagination: ListingSearchPagination
-  error?: string
 }
 
 export interface ListingSearchGeocodeResponse
