@@ -4,7 +4,6 @@ import type { User, SavedSearch } from '@prisma/client'
 import type { Listing } from '../../types/listing_types'
 import type { FiltersState } from '../filters/filtersTypes'
 import type { DefaultAPIResponse } from '../../types'
-import type { GetListingsByIdsResponse } from '../../pages/api/listings/[listing_ids]'
 import { createSelector, createSlice } from '@reduxjs/toolkit'
 import omit from 'lodash/omit'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
@@ -32,6 +31,10 @@ export type CurrentUser = Pick<
   User,
   'id' | 'name' | 'email' | 'image' | 'favoriteIds'
 >
+
+export type GetListingsByIdsResponse = {
+  listings: Listing[]
+}
 
 export type UserState = {
   currentUser: CurrentUser | null
