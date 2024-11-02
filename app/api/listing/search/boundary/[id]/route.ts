@@ -1,5 +1,4 @@
 import type { NextRequest } from 'next/server'
-import type { BoundarySearchQueryParams } from '../../../../../../zod_schemas/boundarySearchRequestSchema'
 import { NextResponse } from 'next/server'
 import dbConnect from '../../../../../../lib/dbConnect'
 import Listing from '../../../../../../models/ListingModel'
@@ -7,6 +6,7 @@ import Boundary from '../../../../../../models/BoundaryModel'
 import { getPaginationParams } from '../../../../../../lib'
 import { getBoundaryGeometryWithBounds } from '../../../../../../lib/listing_search_helpers'
 import listingSearchView from '../../../../../../views/listingSearchView'
+import { boundsSearchQuerySchema } from '../../../../../../zod_schemas/boundsSearchRequestSchema'
 
 export type BoundaryParams = {
   params: {
@@ -16,6 +16,16 @@ export type BoundaryParams = {
 
 export async function GET(request: NextRequest, { params }: BoundaryParams) {
   await dbConnect()
+
+  const searchParamsObject = Object.fromEntries(
+    request.nextUrl.searchParams.entries()
+  )
+  const result = boundsSearchQuerySchema.safeParse(searchParamsObject)
+  if (!result.success) {
+    return NextResponse.json(result.error, { status: 400 })
+  }
+  const searchParams = result.data
+
   const boundary = await Boundary.findById(params.id)
   if (!boundary) {
     return NextResponse.json(
@@ -23,13 +33,10 @@ export async function GET(request: NextRequest, { params }: BoundaryParams) {
       { status: 404 }
     )
   }
-  const searchParamsObject: BoundarySearchQueryParams = Object.fromEntries(
-    request.nextUrl.searchParams.entries()
-  )
-  const pagination = getPaginationParams(searchParamsObject)
+  const pagination = getPaginationParams(searchParams)
   const results = await Listing.findWithinBounds(
-    getBoundaryGeometryWithBounds(boundary, searchParamsObject),
-    searchParamsObject,
+    getBoundaryGeometryWithBounds(boundary, searchParams),
+    searchParams,
     pagination
   )
   return NextResponse.json(listingSearchView(results, pagination))
