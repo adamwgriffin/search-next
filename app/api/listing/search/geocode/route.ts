@@ -1,6 +1,6 @@
 import type { GeocodeBoundaryQueryParams } from '../../../../../zod_schemas/geocodeBoundarySearchSchema'
 import { type NextRequest, NextResponse } from 'next/server'
-import dbConnect from '../../../../../lib/dbConnect'
+import mongooseConnect from '../../../../../lib/mongooseConnect'
 import {
   getResponseForBoundary,
   getResponseForListingAddress,
@@ -14,7 +14,7 @@ import {
 import { geocodeBoundaryQuerySchema } from '../../../../../zod_schemas/geocodeBoundarySearchSchema'
 
 export async function GET(request: NextRequest) {
-  await dbConnect()
+  await mongooseConnect()
 
   const searchParamsObject: GeocodeBoundaryQueryParams = Object.fromEntries(
     request.nextUrl.searchParams.entries()

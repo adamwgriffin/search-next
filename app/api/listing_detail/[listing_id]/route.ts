@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import dbConnect from '../../../../lib/dbConnect'
+import mongooseConnect from '../../../../lib/mongooseConnect'
 import Listing from '../../../../models/ListingModel'
 import { ListingDetailResultProjectionFields } from '../../../../config/listing_search.config'
 import { daysOnMarket } from '../../../../lib/listing_search_helpers'
@@ -15,7 +15,7 @@ export async function GET(
   _request: NextRequest,
   { params }: ListingDetailParams
 ) {
-  await dbConnect()
+  await mongooseConnect()
 
   const listing = await Listing.findById(
     params.listing_id,

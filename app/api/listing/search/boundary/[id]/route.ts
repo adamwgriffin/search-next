@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import dbConnect from '../../../../../../lib/dbConnect'
+import mongooseConnect from '../../../../../../lib/mongooseConnect'
 import Listing from '../../../../../../models/ListingModel'
 import Boundary from '../../../../../../models/BoundaryModel'
 import { getPaginationParams } from '../../../../../../lib'
@@ -15,7 +15,7 @@ export type BoundaryParams = {
 }
 
 export async function GET(request: NextRequest, { params }: BoundaryParams) {
-  await dbConnect()
+  await mongooseConnect()
 
   const searchParamsObject = Object.fromEntries(
     request.nextUrl.searchParams.entries()

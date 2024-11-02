@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import dbConnect from '../../../../../lib/dbConnect'
+import mongooseConnect from '../../../../../lib/mongooseConnect'
 import { boundsSearchQuerySchema } from '../../../../../zod_schemas/boundsSearchRequestSchema'
 import { boundsParamsToGeoJSONPolygon } from '../../../../../lib/listing_search_helpers'
 import { getPaginationParams } from '../../../../../lib'
@@ -8,7 +8,7 @@ import Listing from '../../../../../models/ListingModel'
 import listingSearchView from '../../../../../views/listingSearchView'
 
 export async function GET(request: NextRequest) {
-  await dbConnect()
+  await mongooseConnect()
 
   const searchParamsObject = Object.fromEntries(
     request.nextUrl.searchParams.entries()

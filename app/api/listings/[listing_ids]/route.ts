@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import dbConnect from '../../../../lib/dbConnect'
+import mongooseConnect from '../../../../lib/mongooseConnect'
 import Listing from '../../../../models/ListingModel'
 import { ListingResultProjectionFields } from '../../../../config'
 
@@ -10,7 +10,7 @@ export type ListingIdsParams = {
 }
 
 export async function GET(_request: NextRequest, { params }: ListingIdsParams) {
-  await dbConnect()
+  await mongooseConnect()
 
   const ids = params.listing_ids.split(',')
   const listings = await Listing.find(
