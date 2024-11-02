@@ -1,6 +1,6 @@
-import type { NextRequest } from 'next/server'
 import type { GeocodeBoundaryQueryParams } from '../../../../../zod_schemas/geocodeBoundarySearchSchema'
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
+import dbConnect from '../../../../../lib/dbConnect'
 import {
   getResponseForBoundary,
   getResponseForListingAddress,
@@ -11,7 +11,7 @@ import {
   getGeocodeParamsFromQuery,
   isListingAddressType
 } from '../../../../../lib/geocoder'
-import dbConnect from '../../../../../lib/dbConnect'
+import { geocodeBoundaryQuerySchema } from '../../../../../zod_schemas/geocodeBoundarySearchSchema'
 
 export async function GET(request: NextRequest) {
   await dbConnect()
@@ -19,13 +19,18 @@ export async function GET(request: NextRequest) {
   const searchParamsObject: GeocodeBoundaryQueryParams = Object.fromEntries(
     request.nextUrl.searchParams.entries()
   )
+  const result = geocodeBoundaryQuerySchema.safeParse(searchParamsObject)
+  if (!result.success) {
+    return NextResponse.json(result.error, { status: 400 })
+  }
+  const searchParams = result.data
 
-  const placeIdRes = await getResponseForPlaceId(searchParamsObject)
+  const placeIdRes = await getResponseForPlaceId(searchParams)
   if (placeIdRes) {
     return NextResponse.json(placeIdRes)
   }
 
-  const { place_id, address } = searchParamsObject
+  const { place_id, address } = searchParams
   const geocodeResult = (
     await geocode(getGeocodeParamsFromQuery({ place_id, address }))
   ).data.results[0]
@@ -35,6 +40,6 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json(
-    await getResponseForBoundary(geocodeResult, searchParamsObject)
+    await getResponseForBoundary(geocodeResult, searchParams)
   )
 }
