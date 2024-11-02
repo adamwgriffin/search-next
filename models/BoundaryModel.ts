@@ -82,5 +82,5 @@ BoundarySchema.statics.findBoundaries = async function (
   })
 }
 
-export default (mongoose.models.Listing as BoundaryModel) ||
+export default (mongoose.models.Boundary as BoundaryModel) ||
   model<IBoundary, BoundaryModel>('Boundary', BoundarySchema)
