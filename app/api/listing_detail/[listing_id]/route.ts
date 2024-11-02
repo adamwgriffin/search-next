@@ -1,6 +1,9 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import http from '../../../../lib/http'
+import dbConnect from '../../../../lib/dbConnect'
+import Listing from '../../../../models/ListingModel'
+import { ListingDetailResultProjectionFields } from '../../../../config/listing_search.config'
+import { daysOnMarket } from '../../../../lib/listing_search_helpers'
 
 export type ListingDetailParams = {
   params: {
@@ -12,8 +15,20 @@ export async function GET(
   _request: NextRequest,
   { params }: ListingDetailParams
 ) {
-  const response = await http.get(
-    `${process.env.SERVICE_BASE}/listing/${params.listing_id}`
+  await dbConnect()
+
+  const listing = await Listing.findById(
+    params.listing_id,
+    ListingDetailResultProjectionFields
   )
-  return NextResponse.json(response.data, { status: response.status })
+  if (!listing) {
+    return NextResponse.json(
+      { message: `Listing not found with ID ${params.listing_id}` },
+      { status: 404 }
+    )
+  }
+  return NextResponse.json({
+    ...listing.toObject(),
+    daysOnMarket: daysOnMarket(listing.listedDate, listing.soldDate)
+  })
 }
