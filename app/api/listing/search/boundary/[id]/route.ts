@@ -1,10 +1,10 @@
 import type { NextRequest } from 'next/server'
+import type { BoundarySearchQueryParams } from '../../../../../../zod_schemas/boundarySearchRequestSchema'
 import { NextResponse } from 'next/server'
 import dbConnect from '../../../../../../lib/dbConnect'
 import Listing from '../../../../../../models/ListingModel'
 import Boundary from '../../../../../../models/BoundaryModel'
 import { getPaginationParams } from '../../../../../../lib'
-import { GeocodeBoundaryQueryParams } from '../../../../../../zod_schemas/geocodeBoundarySearchSchema'
 import { getBoundaryGeometryWithBounds } from '../../../../../../lib/listing_search_helpers'
 import listingSearchView from '../../../../../../views/listingSearchView'
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: BoundaryParams) {
       { status: 404 }
     )
   }
-  const searchParamsObject: GeocodeBoundaryQueryParams = Object.fromEntries(
+  const searchParamsObject: BoundarySearchQueryParams = Object.fromEntries(
     request.nextUrl.searchParams.entries()
   )
   const pagination = getPaginationParams(searchParamsObject)
