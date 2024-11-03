@@ -1,27 +1,19 @@
-# Search-Next
+# Search
 
 A real estate search app written with Next.js.
 
-## Getting Started
+## Setup
 
-Add a .env.local file at the top level of the project with the following environment variables:
-
-```
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=[the Google Maps API key]
-NEXT_PUBLIC_GOOGLE_MAPS_ID=[A Map ID is required for the version of Google Maps API that we use]
-NEXT_PUBLIC_LOCALE=en-US
-NEXT_PUBLIC_CURRENCY=USD
-SERVICE_BASE=http://localhost:3001
-```
+Rename the `env.local.example` file to `.env.local` and add the missing values for any blank environment variables. You can generate `NEXTAUTH_SECRET` with `openssl rand -base64 32`.
 
 Install:
-* Node.js >= 18.17.0 
-* yarn >= 1.22.19
+* Node.js >= 20.18.0
+* Bun >= 1.1.34 
 
-If you use asdf you can just run `asdf install` for node.
+If you use asdf/mise you can just run `asdf install` for node and bun.
 
-Run `yarn install` to install dependencies.
+Run `bun install` to install dependencies.
 
-Run the development server with `yarn dev`.
+Run the development server with `bun run dev`.
 
-Run the tests with `yarn test`.
+Run the tests with `bun run test`.
