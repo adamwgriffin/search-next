@@ -1,9 +1,6 @@
 {
   "name": "search-next",
   "private": true,
-  "engines": {
-    "node": ">=20.18.0"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
