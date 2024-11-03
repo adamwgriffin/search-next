@@ -2,8 +2,7 @@
   "name": "search-next",
   "private": true,
   "engines": {
-    "node": ">=18.17.0",
-    "yarn": "^1.22.19"
+    "node": ">=20.18.0"
   },
   "scripts": {
     "dev": "next dev",
