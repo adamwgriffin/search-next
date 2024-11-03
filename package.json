@@ -1,5 +1,5 @@
 {
-  "name": "search-next",
+  "name": "search",
   "private": true,
   "scripts": {
     "dev": "next dev",
