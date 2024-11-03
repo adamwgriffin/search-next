@@ -1,6 +1,7 @@
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
-import http from '../../../../lib/http'
+import { type NextRequest, NextResponse } from 'next/server'
+import mongooseConnect from '../../../../lib/mongooseConnect'
+import Listing from '../../../../models/ListingModel'
+import { ListingResultProjectionFields } from '../../../../config'
 
 export type ListingIdsParams = {
   params: {
@@ -8,12 +9,13 @@ export type ListingIdsParams = {
   }
 }
 
-export async function GET(
-  _request: NextRequest,
-  { params }: ListingIdsParams
-) {
-  const response = await http.get(
-    `${process.env.SERVICE_BASE}/listings/${params.listing_ids}`
+export async function GET(_request: NextRequest, { params }: ListingIdsParams) {
+  await mongooseConnect()
+
+  const ids = params.listing_ids.split(',')
+  const listings = await Listing.find(
+    { _id: { $in: ids } },
+    ListingResultProjectionFields
   )
-  return NextResponse.json(response.data, { status: response.status })
+  return NextResponse.json({ listings })
 }
