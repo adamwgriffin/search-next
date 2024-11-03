@@ -1,5 +1,10 @@
+import { Suspense } from 'react'
 import LoginOrRegisterForm from '../../components/form/LoginOrRegisterForm/LoginOrRegisterForm'
 import styles from './login.module.css'
+
+function LoginOrRegisterFormFallback() {
+  return <></>
+}
 
 const Login: React.FC = () => {
   return (
@@ -9,7 +14,9 @@ const Login: React.FC = () => {
           <h1 className={styles.heading}>Login or Sign Up</h1>
         </header>
         <div className={styles.formContainer}>
-          <LoginOrRegisterForm useCallbackUrl />
+          <Suspense fallback={<LoginOrRegisterFormFallback />}>
+            <LoginOrRegisterForm useCallbackUrl />
+          </Suspense>
         </div>
       </div>
     </div>
