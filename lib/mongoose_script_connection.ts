@@ -14,7 +14,7 @@ mongoose.connection.on('error', (e) => {
 
 export const connectToDatabase = async (): Promise<void> => {
   try {
-    const conn = await mongoose.connect(process.env.DATABASE_URL!)
+    const conn = await mongoose.connect(process.env.MONGODB_URI!)
     console.debug(`MongoDB connected: ${conn.connection.host}`)
   } catch (err) {
     console.error(err)
