@@ -20,4 +20,8 @@
     color: var(--logo);
   }
 
+  .logoImage {
+    font-size: 2rem;
+    padding-bottom: 0.3rem;
+  }
 }

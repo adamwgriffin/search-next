@@ -20,7 +20,7 @@ const Home: NextPage = () => {
           </div>
 
           <main className={styles.mainContent}>
-            <h2>Explore homes on AwsömRE</h2>
+            <h2>Explore homes on Awsom</h2>
             <p>
               Check out awsöm homes with our patented{' '}
               <em>&quot;Search That Doesn&apos;t Suck™</em>&quot;. A brand new

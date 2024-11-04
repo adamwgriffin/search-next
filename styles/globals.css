@@ -20,7 +20,7 @@ body,
   --secondary-dark: #cd5a5a;
   --focus: var(--primary);
   --outline: #cccccc;
-  --logo: black;
+  --logo: var(--secondary);
   --search-button-background: var(--secondary);
   --search-button-background-hover: var(--secondary-dark);
   --search-button-foreground: white;

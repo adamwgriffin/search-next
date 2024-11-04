@@ -7,7 +7,7 @@ import ThemeProvider from '../providers/ThemeProvider'
 import ModalRoot from '../containers/modals/ModalRoot/ModalRoot'
 
 export const metadata: Metadata = {
-  title: 'AwsömRE',
+  title: 'Awsom',
   description: "Search That Doesn't Suck™"
 }
 
