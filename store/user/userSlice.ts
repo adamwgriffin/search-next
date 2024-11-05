@@ -51,7 +51,7 @@ const initialState: UserState = {
   favoriteListings: [],
   getFavoriteListingsLoading: false,
   savedSearches: [],
-  getSavedSearchesLoading: false,
+  getSavedSearchesLoading: false
 }
 
 export const getCurrentUser = createAppAsyncThunk<
@@ -188,7 +188,7 @@ export const userSlice = createSlice({
       if (!state.currentUser) return
       state.currentUser.favoriteIds = state.previousFavoriteIds
     })
-    
+
     builder.addCase(getSavedSearches.pending, (state) => {
       state.getSavedSearchesLoading = true
     })
@@ -215,10 +215,12 @@ export const userSlice = createSlice({
     )
 
     builder.addCase(deleteSavedSearch.fulfilled, (state, action) => {
-      state.savedSearches = state.savedSearches.filter(s => s.id !== action.payload);
+      state.savedSearches = state.savedSearches.filter(
+        (s) => s.id !== action.payload
+      )
     })
 
-    builder.addCase(deleteSavedSearch.rejected, (_state, action)=> {
+    builder.addCase(deleteSavedSearch.rejected, (_state, action) => {
       console.error(action.error)
     })
   }
