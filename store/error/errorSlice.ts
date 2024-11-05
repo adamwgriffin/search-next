@@ -20,7 +20,10 @@ export const errorSlice = createSlice({
 
   extraReducers(builder) {
     builder.addMatcher(isRejected, (_state, action) => {
-      console.error(`Error in action "${action.type}", message "${action.error.message}."`)
+      console.error(
+        `Error in action "${action.type}", message: "${action.error.message}, payload:"`,
+        action.payload
+      )
       console.debug(action.error)
     })
   }
