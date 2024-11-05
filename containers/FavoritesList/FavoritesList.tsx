@@ -21,7 +21,7 @@ const FavoritesList: React.FC = () => {
   const openListingDetail = useOpenListingDetail(false)
 
   useEffect(() => {
-    if (currentUser?.favoriteIds) {
+    if (currentUser?.favoriteIds.length) {
       dispatch(getFavoriteListings())
     }
   }, [dispatch, currentUser])

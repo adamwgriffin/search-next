@@ -86,9 +86,9 @@ export const getFavoriteListings =
     'user/getFavoriteListings',
     async (_arg, { getState, rejectWithValue }) => {
       const state = getState()
-      if (!state.user.currentUser) {
+      if (!state.user?.currentUser?.favoriteIds.length) {
         return rejectWithValue(
-          "Can't get favorites because currentUser is null"
+          "Can't get favorites because there are no favoriteIds"
         )
       }
       const res = await http.get<GetListingsByIdsResponse>(
@@ -197,7 +197,6 @@ export const userSlice = createSlice({
       state.savedSearches = action.payload
       state.getSavedSearchesLoading = false
     })
-
 
     builder.addCase(getSavedSearches.rejected, (state) => {
       state.getSavedSearchesLoading = false
