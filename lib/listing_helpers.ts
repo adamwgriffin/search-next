@@ -29,6 +29,18 @@ export const ShortCurrencyFormat: Intl.NumberFormatOptions = {
   notation: 'compact'
 }
 
+export const LongDateFormat: Intl.DateTimeFormatOptions = {
+  weekday: 'long',
+  month: 'long',
+  day: 'numeric'
+}
+
+export const DefaultTimeFormat: Intl.DateTimeFormatOptions = {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true
+}
+
 const defaultFormatPriceOptions: FormatPriceOptions = {
   numberFormatOptions: LongCurrencyFormat,
   displayInterval: true
@@ -52,7 +64,13 @@ export const formatPrice = (
 export const formatPriceFromListing = (
   { soldPrice, listPrice, rental }: Listing | ListingDetail,
   options: FormatPriceOptions = {}
-) => formatPrice((soldPrice || listPrice), Boolean(rental), options)
+) => formatPrice(soldPrice || listPrice, Boolean(rental), options)
+
+export const formatOpenHouseDate = (dateStr: string) =>
+  new Date(dateStr).toLocaleDateString(Locale, LongDateFormat)
+
+export const formatOpenHouseTime = (dateStr: string) =>
+  new Date(dateStr).toLocaleTimeString(Locale, DefaultTimeFormat)
 
 export const getBathrooms = (listing: Listing | ListingDetail): number => {
   return listing.baths || 0
