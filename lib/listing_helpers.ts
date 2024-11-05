@@ -1,7 +1,7 @@
 import type {
   Listing,
   ListingDetail,
-  ListingAddress,
+  ListingAddress
 } from '../types/listing_types'
 import { Locale, Currency } from '../config'
 
@@ -27,6 +27,12 @@ export const ShortCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
   currency: Currency,
   notation: 'compact'
+}
+
+export const ShortDateFormat: Intl.DateTimeFormatOptions = {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric'
 }
 
 export const LongDateFormat: Intl.DateTimeFormatOptions = {
@@ -65,6 +71,9 @@ export const formatPriceFromListing = (
   { soldPrice, listPrice, rental }: Listing | ListingDetail,
   options: FormatPriceOptions = {}
 ) => formatPrice(soldPrice || listPrice, Boolean(rental), options)
+
+export const formatListingDetailDate = (dateStr: string) =>
+  new Date(dateStr).toLocaleDateString(Locale, ShortDateFormat)
 
 export const formatOpenHouseDate = (dateStr: string) =>
   new Date(dateStr).toLocaleDateString(Locale, LongDateFormat)
