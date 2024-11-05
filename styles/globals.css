@@ -33,6 +33,8 @@ body,
   --map-control: var(--background);
   --no-user-image-icon: #6b7280;
   --loading-dots-small: 0.625rem;
+  --active-listing: green;
+  --sold-listing: red;
 }
 
 [data-theme='purple'] {
