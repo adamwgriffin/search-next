@@ -51,7 +51,7 @@ const initialState: UserState = {
   favoriteListings: [],
   getFavoriteListingsLoading: false,
   savedSearches: [],
-  getSavedSearchesLoading: false,
+  getSavedSearchesLoading: false
 }
 
 export const getCurrentUser = createAppAsyncThunk<
@@ -86,9 +86,9 @@ export const getFavoriteListings =
     'user/getFavoriteListings',
     async (_arg, { getState, rejectWithValue }) => {
       const state = getState()
-      if (!state.user.currentUser) {
+      if (!state.user?.currentUser?.favoriteIds.length) {
         return rejectWithValue(
-          "Can't get favorites because currentUser is null"
+          "Can't get favorites because there are no favoriteIds"
         )
       }
       const res = await http.get<GetListingsByIdsResponse>(
@@ -188,7 +188,7 @@ export const userSlice = createSlice({
       if (!state.currentUser) return
       state.currentUser.favoriteIds = state.previousFavoriteIds
     })
-    
+
     builder.addCase(getSavedSearches.pending, (state) => {
       state.getSavedSearchesLoading = true
     })
@@ -197,7 +197,6 @@ export const userSlice = createSlice({
       state.savedSearches = action.payload
       state.getSavedSearchesLoading = false
     })
-
 
     builder.addCase(getSavedSearches.rejected, (state) => {
       state.getSavedSearchesLoading = false
@@ -215,10 +214,12 @@ export const userSlice = createSlice({
     )
 
     builder.addCase(deleteSavedSearch.fulfilled, (state, action) => {
-      state.savedSearches = state.savedSearches.filter(s => s.id !== action.payload);
+      state.savedSearches = state.savedSearches.filter(
+        (s) => s.id !== action.payload
+      )
     })
 
-    builder.addCase(deleteSavedSearch.rejected, (_state, action)=> {
+    builder.addCase(deleteSavedSearch.rejected, (_state, action) => {
       console.error(action.error)
     })
   }

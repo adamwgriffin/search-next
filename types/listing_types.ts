@@ -79,7 +79,7 @@ export interface Listing {
 export interface ListingDetail extends Listing {
   propertyType: PropertyType
   yearBuilt: number
-  soldDate?: Date
+  soldDate?: string
   daysOnMarket: number
   propertyDetails?: PropertDetailsSection[]
 }

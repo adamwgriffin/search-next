@@ -7,12 +7,12 @@
 
 .statusActive {
   composes: status;
-  border: 1px solid green;
-  color: green;
+  border: 1px solid var(--active-listing);
+  color: var(--active-listing);
 }
 
 .statusSold {
   composes: status;
-  border: 1px solid red;
-  color: red;
+  border: 1px solid var(--sold-listing);
+  color: var(--sold-listing);
 }
