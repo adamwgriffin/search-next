@@ -1,6 +1,8 @@
 .outlinedButton {
   display: flex;
   align-items: center;
+  width: fit-content;
+  white-space: nowrap;
   cursor: pointer;
   border: 1px solid var(--outline);
   border-radius: 1.25rem;
