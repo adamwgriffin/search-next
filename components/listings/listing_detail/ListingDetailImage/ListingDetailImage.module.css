@@ -1,7 +1,7 @@
 @value smallAndUp from '../../../../styles/breakpoints.module.css';
 
 .listingDetailImage {
-  height: 20rem;
+  max-height: 20rem;
 }
 
 @media smallAndUp {

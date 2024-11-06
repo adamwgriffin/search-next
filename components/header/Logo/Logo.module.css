@@ -1,27 +1,16 @@
-@value smallAndUp from '../../../styles/breakpoints.module.css';
-
-.link {
+.logo {
   color: initial;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--logo);
 }
 
-.logo {
-  display: none;
-}
-
-@media smallAndUp {
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--logo);
-  }
-
-  .logoImage {
-    font-size: 2rem;
-    padding-bottom: 0.3rem;
-  }
+.logoImage {
+  font-size: 2rem;
+  padding-bottom: 0.3rem;
 }
