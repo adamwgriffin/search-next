@@ -5,11 +5,9 @@ import styles from './Logo.module.css'
 
 const Logo: NextPage = () => {
   return (
-    <Link href='/' className={styles.link}>
-      <div className={styles.logo}>
-        <FaHouse className={styles.logoImage} />
-        wsom
-      </div>
+    <Link href='/' className={styles.logo}>
+      <FaHouse className={styles.logoImage} />
+      wsom
     </Link>
   )
 }

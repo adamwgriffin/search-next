@@ -1,0 +1,7 @@
+@value smallAndDown from '../../styles/breakpoints.module.css';
+
+@media smallAndDown {
+  .mobileHidden {
+    composes: screenReaderOnly from '../../styles/index.module.css';
+  }
+}
