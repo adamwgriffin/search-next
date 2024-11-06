@@ -72,7 +72,7 @@ export const formatPriceFromListing = (
   options: FormatPriceOptions = {}
 ) => formatPrice(soldPrice || listPrice, Boolean(rental), options)
 
-export const formatListingDetailDate = (dateStr: string) =>
+export const formatSoldDate = (dateStr: string) =>
   new Date(dateStr).toLocaleDateString(Locale, ShortDateFormat)
 
 export const formatOpenHouseDate = (dateStr: string) =>

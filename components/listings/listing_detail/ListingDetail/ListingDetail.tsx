@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import type { ListingDetail } from '../../../../types/listing_types'
-import { formatPriceFromListing } from '../../../../lib/listing_helpers'
+import {
+  formatPriceFromListing,
+  formatSoldDate
+} from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
 import ListingDetailImage from '../ListingDetailImage/ListingDetailImage'
 import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
@@ -23,17 +26,14 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
     <div className={styles.listingDetail}>
       <div className={styles.status}>
         <ListingStatusIndicator status={listing.status} />
+        {listing.soldDate && formatSoldDate(listing.soldDate)}
       </div>
       <ListingDetailImage
         listing={listing}
         onClick={() => setSlideShowOpen(true)}
       />
-      <div className={styles.price}>
-        {formatPriceFromListing(listing)}
-      </div>
-      <div className={styles.neighborhood}>
-        {listing.neighborhood}
-      </div>
+      <div className={styles.price}>{formatPriceFromListing(listing)}</div>
+      <div className={styles.neighborhood}>{listing.neighborhood}</div>
       <ListingDetailAddress address={listing.address} />
       <ListingDetailBedsBathsSQFT listing={listing} />
       <Description description={listing.description} />
