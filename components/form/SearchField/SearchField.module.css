@@ -32,6 +32,7 @@
 .locationSearchField {
   /* need to set width: 100% otherwise input will not shrink in flex container */
   width: 100%;
+  min-width: 8rem;
   border: none;
   padding-left: 10px;
   font-size: inherit;
