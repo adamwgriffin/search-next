@@ -66,7 +66,18 @@ export interface OpenHouse {
   comments?: string
 }
 
-export interface IListing {
+export interface ListingAmenities {
+  waterfront?: boolean
+  view?: boolean
+  fireplace?: boolean
+  basement?: boolean
+  garage?: boolean
+  newConstruction?: boolean
+  pool?: boolean
+  airConditioning?: boolean
+}
+
+export interface IListing extends ListingAmenities {
   listPrice: number
   soldPrice?: number
   listedDate: Date
@@ -84,14 +95,6 @@ export interface IListing {
   lotSize: number
   yearBuilt: number
   rental?: boolean
-  waterfront?: boolean
-  view?: boolean
-  fireplace?: boolean
-  basement?: boolean
-  garage?: boolean
-  newConstruction?: boolean
-  pool?: boolean
-  airConditioning?: boolean
   photoGallery?: PhotoGalleryImage[]
   propertyDetails?: PropertDetailsSection[]
   openHouses?: OpenHouse[]

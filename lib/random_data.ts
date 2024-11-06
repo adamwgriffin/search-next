@@ -6,6 +6,8 @@ import type {
   PropertDetail,
   PropertyStatus,
   OpenHouse,
+  PropertyType,
+  ListingAmenities
 } from '../models/ListingModel'
 import type { Point, Polygon, MultiPolygon } from '@turf/turf'
 import { bbox, randomPoint, booleanPointInPolygon } from '@turf/turf'
@@ -22,6 +24,8 @@ import {
   RentalPropertyStatuses
 } from '../models/ListingModel'
 import { listingAddressHasRequiredFields } from './listing_search_helpers'
+
+export const RentalPropertyTypes = PropertyTypes.filter((t) => t !== 'land')
 
 export const AddressComponentAddressTemplate: ListingAddress = Object.freeze({
   line1: '',
@@ -54,9 +58,7 @@ export const randomNumberInRangeRounded = (
   min: number,
   max: number,
   roundTo: number
-): number => {
-  return roundDownToNearest(faker.number.int({ min, max }), roundTo)
-}
+): number => roundDownToNearest(faker.number.int({ min, max }), roundTo)
 
 export const addSoldData = (listing: IListing): IListing => {
   const today = new Date()
@@ -75,16 +77,16 @@ export const addSoldData = (listing: IListing): IListing => {
   }
 }
 
-const getListPrice = (rental: boolean): number => {
-  return rental
+const getListPrice = (rental: boolean): number =>
+  rental
     ? randomNumberInRangeRounded(1000, 5000, 1000)
     : randomNumberInRangeRounded(100000, 800000, 1000)
-}
 
-const getStatus = (rental: boolean): PropertyStatus => {
-  const statuses = rental ? RentalPropertyStatuses : PropertyStatuses
-  return faker.helpers.arrayElement(statuses)
-}
+const getStatus = (rental: boolean): PropertyStatus =>
+  faker.helpers.arrayElement(rental ? RentalPropertyStatuses : PropertyStatuses)
+
+const getPropertyType = (rental: boolean) =>
+  faker.helpers.arrayElement(rental ? RentalPropertyTypes : PropertyTypes)
 
 const createPhotoGallery = (numberOfImages: number): PhotoGalleryImage[] => {
   const lock = faker.number.int()
@@ -100,27 +102,22 @@ const createPhotoGallery = (numberOfImages: number): PhotoGalleryImage[] => {
   return images
 }
 
-const randomWordArray = (min: number, max: number): string[] => {
-  const numberOfWords = faker.number.int({ min, max })
-  return Array.from({ length: numberOfWords }, () => faker.lorem.word())
-}
+const randomWordArray = (min: number, max: number) =>
+  Array.from({ length: faker.number.int({ min, max }) }, () =>
+    faker.lorem.word()
+  )
 
-const titleCase = (word: string): string => {
-  return word.charAt(0).toUpperCase() + word.slice(1)
-}
+const titleCase = (word: string) => word.charAt(0).toUpperCase() + word.slice(1)
 
-const generateRandomTitle = (min: number, max: number): string => {
-  return randomWordArray(min, max)
+const generateRandomTitle = (min: number, max: number) =>
+  randomWordArray(min, max)
     .map((w) => titleCase(w))
     .join(' ')
-}
 
-const createPropertyDetail = (): PropertDetail => {
-  return {
-    name: generateRandomTitle(1, 3),
-    details: randomWordArray(1, 6).map((w) => titleCase(w))
-  }
-}
+const createPropertyDetail = (): PropertDetail => ({
+  name: generateRandomTitle(1, 3),
+  details: randomWordArray(1, 6).map((w) => titleCase(w))
+})
 
 const createPropertDetailsSection = (): PropertDetailsSection => {
   const numberOfDetails = faker.number.int({ min: 2, max: 6 })
@@ -165,6 +162,57 @@ const createOpenHouses = (
   return openHouses.sort((a, b) => a.start.getTime() - b.start.getTime())
 }
 
+const createAmenities = (propertyType: PropertyType): ListingAmenities => {
+  if (propertyType === 'land') {
+    return {
+      waterfront: faker.datatype.boolean({ probability: 0.2 }),
+      view: faker.datatype.boolean({ probability: 0.3 }),
+      fireplace: false,
+      basement: false,
+      garage: false,
+      pool: false,
+      airConditioning: false
+    }
+  }
+  return {
+    waterfront: faker.datatype.boolean({ probability: 0.3 }),
+    view: faker.datatype.boolean({ probability: 0.5 }),
+    fireplace: faker.datatype.boolean({ probability: 0.7 }),
+    basement: faker.datatype.boolean({ probability: 0.8 }),
+    garage: faker.datatype.boolean({ probability: 0.9 }),
+    pool: faker.datatype.boolean({ probability: 0.2 }),
+    airConditioning: faker.datatype.boolean({ probability: 0.3 })
+  }
+}
+
+const createBedsAndBaths = (propertyType: PropertyType) => {
+  switch (propertyType) {
+    case 'land':
+      return {
+        beds: 0,
+        baths: 0
+      }
+    case 'condo':
+      return {
+        beds: faker.number.int({ min: 1, max: 3 }),
+        baths: faker.number.int({ min: 1, max: 2 })
+      }
+    case 'multi-family':
+      return {
+        beds: faker.number.int({ min: 3, max: 6 }),
+        baths: faker.number.int({ min: 2, max: 4 })
+      }
+    default:
+      return {
+        beds: faker.number.int({ min: 2, max: 5 }),
+        baths: faker.number.int({ min: 1, max: 4 })
+      }
+  }
+}
+
+const createNewConstruction = (propertyType: PropertyType) =>
+  propertyType === 'land' ? false : faker.datatype.boolean({ probability: 0.4 })
+
 export const createRandomListingModel = (
   address: Partial<ListingAddress>,
   neighborhood: string,
@@ -172,7 +220,8 @@ export const createRandomListingModel = (
   placeId: IListing['placeId']
 ): IListing => {
   const today = new Date()
-  const rental = faker.datatype.boolean({ probability: 0.5 })
+  const rental = faker.datatype.boolean({ probability: 0.4 })
+  const propertyType = getPropertyType(rental)
   const listing: IListing = {
     listPrice: getListPrice(rental),
     listedDate: faker.date.between({
@@ -182,23 +231,16 @@ export const createRandomListingModel = (
     address: { ...AddressComponentAddressTemplate, ...address },
     geometry: point,
     placeId,
-    neighborhood: neighborhood,
-    propertyType: faker.helpers.arrayElement(PropertyTypes),
+    neighborhood,
+    propertyType,
     status: getStatus(rental),
     description: faker.lorem.sentences({ min: 1, max: 3 }),
-    beds: faker.number.int({ min: 2, max: 5 }),
-    baths: faker.number.int({ min: 1, max: 4 }),
+    ...createBedsAndBaths(propertyType),
     sqft: randomNumberInRangeRounded(1000, 5000, 100),
     lotSize: randomNumberInRangeRounded(1000, 7500, 100),
     yearBuilt: faker.number.int({ min: 1910, max: today.getFullYear() }),
-    waterfront: faker.datatype.boolean({ probability: 0.3 }),
-    view: faker.datatype.boolean({ probability: 0.5 }),
-    fireplace: faker.datatype.boolean({ probability: 0.7 }),
-    basement: faker.datatype.boolean({ probability: 0.8 }),
-    garage: faker.datatype.boolean({ probability: 0.9 }),
-    newConstruction: faker.datatype.boolean({ probability: 0.4 }),
-    pool: faker.datatype.boolean({ probability: 0.2 }),
-    airConditioning: faker.datatype.boolean({ probability: 0.3 }),
+    newConstruction: createNewConstruction(propertyType),
+    ...createAmenities(propertyType),
     photoGallery: createPhotoGallery(faker.number.int({ min: 2, max: 5 })),
     propertyDetails: createPropertyDetails(
       faker.number.int({ min: 4, max: 12 })
@@ -213,14 +255,14 @@ export const createRandomListingModel = (
   }
   if (listing.status === 'active' && !listing.rental) {
     listing.openHouses = createOpenHouses(
-      faker.number.int({ min: 1, max: 3 }),
+      faker.number.int({ min: 1, max: 5 }),
       listing.listedDate
     )
   }
   return listing
 }
 
-export const createListing = async (point: Point): Promise<IListing | undefined> => {
+export const createListing = async (point: Point) => {
   const res = await reverseGeocode(point.coordinates[1], point.coordinates[0])
   const geocoderResult = res.data.results[0]
   if (!geocoderResult?.address_components) {
@@ -242,7 +284,9 @@ export const createListing = async (point: Point): Promise<IListing | undefined>
     geocoderResult.address_components
   )
   if (!listingAddressHasRequiredFields(address)) {
-    console.warn(`All required address fields are not present. No model created.`)
+    console.warn(
+      `All required address fields are not present. No model created.`
+    )
     return
   }
   return createRandomListingModel(
