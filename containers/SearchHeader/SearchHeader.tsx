@@ -5,16 +5,16 @@ import Logo from '../../components/header/Logo/Logo'
 import SearchFieldContainer from '../SearchFieldContainer/SearchFieldContainer'
 import Filters from '../Filters/Filters'
 import UserMenu from '../UserMenu/UserMenu'
-import MobileHidden from '../../components/MobileHidden/MobileHidden'
+import HideSmallAndDown from '../../components/HideSmallAndDown/HideSmallAndDown'
 
 const SearchHeader: NextPage = () => {
   const searchNewLocation = useSearchNewLocation()
 
   return (
     <header className={styles.header}>
-      <MobileHidden>
+      <HideSmallAndDown>
         <Logo />
-      </MobileHidden>
+      </HideSmallAndDown>
       <SearchFieldContainer
         onSearchInitiated={searchNewLocation}
         onOptionSelected={searchNewLocation}
