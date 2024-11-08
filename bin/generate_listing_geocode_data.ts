@@ -7,6 +7,8 @@ import {
   generateRandomGeospatialDataForPoly
 } from '../lib/random_data'
 
+const VerificationMax = 10
+
 const DefaultOutputPath = path.join(
   __dirname,
   '..',
@@ -44,8 +46,13 @@ const processArgv = async () => {
     .option('number', {
       alias: 'n',
       type: 'number',
-      default: 100,
+      default: 1,
       describe: 'Number of addresses to lookup for each polygon'
+    })
+    .option('verify', {
+      type: 'boolean',
+      describe:
+        'Verify that you want to execute API requests for a large number of addresses'
     })
     .option('output-path', {
       alias: 'o',
@@ -70,11 +77,20 @@ const processArgv = async () => {
 
 const main = async () => {
   try {
-    console.warn(
-      'Be careful about running this too much. We can get charged a lot for overages for Geocode API request'
-    )
     const argv = await processArgv()
 
+    if (argv.number > VerificationMax && !argv.verify) {
+      console.log(
+        `Number argument of "${argv.number}" is too large.`,
+        `Must pass "--verify" flag in order to do API requests for batches larger than ${VerificationMax}`,
+        'In order to avoid overages.'
+      )
+      process.exit(1)
+    }
+    console.warn(
+      'Warning! Be careful about running this too much.',
+      'We can get charged a lot for overages for Geocode API requests.'
+    )
     const boundaries = JSON.parse(
       fs.readFileSync(argv.file, 'utf-8')
     ) as IBoundary[]
