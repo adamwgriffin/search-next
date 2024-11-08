@@ -1,9 +1,10 @@
-import type { IBoundary } from '../models/BoundaryModel'
 import fs from 'fs'
 import path from 'path'
 import yargs from 'yargs'
-import generateListingData from '../lib/random_data'
-import { sleep } from '../lib'
+import {
+  type GeneratedListingGeocodeData,
+  createRandomListingModel
+} from '../lib/random_data'
 
 const DefaultOutputPath = path.join(
   __dirname,
@@ -20,7 +21,7 @@ const DefaultFilePath = path.join(
   'data',
   'seed_data',
   'development',
-  'dev_boundaries.json'
+  'dev_listing_geocode_data.json'
 )
 
 const processArgv = async () => {
@@ -30,20 +31,7 @@ const processArgv = async () => {
       type: 'string',
       default: DefaultFilePath,
       describe:
-        'Path to the file to use to load boundary data from, e.g., /app/data/my_file.json'
-    })
-    .option('sleep', {
-      alias: 's',
-      type: 'number',
-      default: 0,
-      describe:
-        'Amount of time to sleep in milliseconds between creating listings for each boundary'
-    })
-    .option('number', {
-      alias: 'n',
-      type: 'number',
-      default: 100,
-      describe: 'Number of listings to create for each polygon'
+        'Path to the file to use to load listing geocode data from, e.g., /app/data/my_file.json'
     })
     .option('output-path', {
       alias: 'o',
@@ -54,9 +42,8 @@ const processArgv = async () => {
     .alias('h', 'help')
     .help('help')
     .usage(`Usage: $0 [options]`)
-    .epilogue(
-      'Generate random Listing data within the bounds of an array of Boundaries'
-    ).argv
+    .epilogue('Generate random Listing data from listing geocode data file')
+    .argv
 
   if (argv.help) {
     yargs.showHelp()
@@ -67,19 +54,21 @@ const processArgv = async () => {
 }
 
 const main = async () => {
-  const argv = await processArgv()
+  try {
+    const argv = await processArgv()
 
-  const boundaries = JSON.parse(
-    fs.readFileSync(argv.file, 'utf-8')
-  ) as IBoundary[]
-  const listings = await Promise.all(
-    boundaries.map(async (boundary: IBoundary) => {
-      const listings = await generateListingData(boundary.geometry, argv.number)
-      await sleep(argv.sleep)
-      return listings
-    })
-  )
-  fs.writeFileSync(argv.outputPath, JSON.stringify(listings.flat(), null, 2))
+    const data = JSON.parse(
+      fs.readFileSync(argv.file, 'utf-8')
+    ) as GeneratedListingGeocodeData[]
+    console.info('Creating listing model data...')
+    const listings = data.map((d) => createRandomListingModel(d))
+    fs.writeFileSync(argv.outputPath, JSON.stringify(listings, null, 2))
+    console.info(`${listings.length} listings created.`)
+  } catch (error) {
+    const errorMessage = error instanceof Error ? `"${error.message}"` : ''
+    console.error('Encountered error generating listing data', errorMessage)
+    process.exit(1)
+  }
 }
 
 main()
