@@ -27,8 +27,12 @@ export async function GET(
       { status: 404 }
     )
   }
+  const currentOpenHouses = listing.openHouses?.filter((openHouse) => {
+    return openHouse.start > new Date()
+  })
   return NextResponse.json({
     ...listing.toObject(),
+    openHouses: currentOpenHouses,
     daysOnMarket: daysOnMarket(listing.listedDate, listing.soldDate)
   })
 }

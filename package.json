@@ -9,12 +9,11 @@
     "lint": "next lint --dir .",
     "check-types": "tsc --noEmit",
     "test": "jest",
-    "generate_listing_geocode_data": "bun run ./bin/generate_listing_geocode_data",
     "generate_listing_data": "bun run ./bin/generate_listing_data",
     "seed_listing_data": "bun run ./bin/seed_listing_data",
     "seed_boundary_data": "bun run ./bin/seed_boundary_data",
     "seed_dev_data": "bun run ./bin/seed_boundary_data && bun run ./bin/seed_listing_data",
-    "generate_and_seed_listing_data": "bun run ./bin/generate_listing_geocode_data && bun run ./bin/generate_listing_data && bun run ./bin/seed_listing_data",
+    "generate_and_seed_listing_data": "bun run ./bin/generate_listing_data && bun run ./bin/seed_listing_data",
     "prisma:generate:local": "dotenv -e .env.local prisma generate",
     "prisma:validate:local": "dotenv -e .env.local prisma validate"
   },
