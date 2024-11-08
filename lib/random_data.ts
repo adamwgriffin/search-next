@@ -1,3 +1,4 @@
+import { backOff } from 'exponential-backoff'
 import type { ListingAddress } from '../zod_schemas/listingSchema'
 import type {
   IListing,
@@ -24,6 +25,13 @@ import {
   RentalPropertyStatuses
 } from '../models/ListingModel'
 import { listingAddressHasRequiredFields } from './listing_search_helpers'
+
+export type GeneratedListingGeocodeData = {
+  address: ListingAddress
+  neighborhood: string
+  point: Point
+  placeId: string
+}
 
 export const RentalPropertyTypes = PropertyTypes.filter((t) => t !== 'land')
 
@@ -214,11 +222,9 @@ const createNewConstruction = (propertyType: PropertyType) =>
   propertyType === 'land' ? false : faker.datatype.boolean({ probability: 0.4 })
 
 export const createRandomListingModel = (
-  address: Partial<ListingAddress>,
-  neighborhood: string,
-  point: Point,
-  placeId: IListing['placeId']
+  listingGeocodeData: GeneratedListingGeocodeData
 ): IListing => {
+  const { address, neighborhood, point, placeId } = listingGeocodeData
   const today = new Date()
   const rental = faker.datatype.boolean({ probability: 0.4 })
   const propertyType = getPropertyType(rental)
@@ -262,12 +268,39 @@ export const createRandomListingModel = (
   return listing
 }
 
-export const createListing = async (point: Point) => {
-  const res = await reverseGeocode(point.coordinates[1], point.coordinates[0])
-  const geocoderResult = res.data.results[0]
+const reverseGeocodeWithExponentialBackoff = async (point: Point) => {
+  try {
+    const res = await backOff(
+      () => reverseGeocode(point.coordinates[1], point.coordinates[0]),
+      {
+        retry(error: unknown, attemptNumber) {
+          const errorMessage =
+            error instanceof Error ? `"${error.message}"` : ''
+          console.error(
+            `Encountered error during reverse geocode ${errorMessage},`,
+            `retrying request, attempt next number ${attemptNumber}`
+          )
+          return true
+        }
+      }
+    )
+    return res.data.results[0]
+  } catch (error) {
+    const errorMessage = error instanceof Error ? `"${error.message}"` : ''
+    throw new Error(
+      'Unabled to make reverse geocode request after multiple attempts' +
+        errorMessage
+    )
+  }
+}
+
+export const getGeocodeDataForPoint = async (
+  point: Point
+): Promise<GeneratedListingGeocodeData | undefined> => {
+  const geocoderResult = await reverseGeocodeWithExponentialBackoff(point)
   if (!geocoderResult?.address_components) {
     console.warn(
-      `No address_components found for reverseGeocode of ${point.coordinates}. No model created.`
+      `No address_components found for reverseGeocode of ${point.coordinates}. Skipping.`
     )
     return
   }
@@ -276,7 +309,7 @@ export const createListing = async (point: Point) => {
   )
   if (neighborhood === '' || neighborhood === undefined) {
     console.warn(
-      `No neighborhood found for reverseGeocode of ${point.coordinates}. No model created.`
+      `No neighborhood found for reverseGeocode of ${point.coordinates}. Skipping.`
     )
     return
   }
@@ -285,27 +318,31 @@ export const createListing = async (point: Point) => {
   )
   if (!listingAddressHasRequiredFields(address)) {
     console.warn(
-      `All required address fields are not present. No model created.`
+      `All required fields for address ${address.line1} are not present. Skipping.`
     )
     return
   }
-  return createRandomListingModel(
+  console.debug(`Got valid geocode data from point for ${address.line1}`)
+  return {
     address,
     neighborhood,
     point,
-    geocoderResult.place_id
-  )
+    placeId: geocoderResult.place_id
+  }
 }
 
-const generateListingData = async (
+export const generateRandomGeospatialDataForPoly = async (
   polygon: Polygon | MultiPolygon,
   amount: number
 ) => {
   const points = randomPointsWithinPolygon(polygon, amount)
-  const listings = await Promise.all(
-    points.map(async (point) => await createListing(point))
-  )
-  return listings.filter(Boolean)
+  const listingGeocodeData: GeneratedListingGeocodeData[] = []
+  // We are doing these geocode requests sequentially because doing them in parallel can cause lots of rate limit errors
+  for (const point of points) {
+    const data = await getGeocodeDataForPoint(point)
+    if (data) {
+      listingGeocodeData.push(data)
+    }
+  }
+  return listingGeocodeData
 }
-
-export default generateListingData
