@@ -76,10 +76,6 @@
 }
 
 @media smallAndUp {
-  .modalOverlay {
-    z-index: auto;
-  }
-
   .modalOverlayFullScreenOnMobile {
     padding-top: 0;
   }
