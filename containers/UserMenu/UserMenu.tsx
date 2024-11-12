@@ -38,12 +38,7 @@ const UserMenu: NextPage = () => {
 
   const handleLogin = useCallback(() => {
     toggleMenu(false)
-    dispatch(
-      openModal({
-        modalType: 'loginOrRegister',
-        modalProps: { title: 'Login or Sign Up' }
-      })
-    )
+    dispatch(openModal({ modalType: 'loginOrRegister' }))
   }, [dispatch, toggleMenu])
 
   return (

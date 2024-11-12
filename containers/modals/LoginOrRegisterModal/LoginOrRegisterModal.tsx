@@ -1,8 +1,9 @@
-import type { NextPage } from 'next'
+'use client'
+
 import { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
-  selectModalOpen,
+  selectLoginOrRegisterModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
@@ -10,15 +11,9 @@ import ModalHeader from '../../../components/design_system/modal/ModalHeader/Mod
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
 import LoginOrRegisterForm from '../../../components/form/LoginOrRegisterForm/LoginOrRegisterForm'
 
-export interface LoginOrRegisterModalProps {
-  title: string
-}
-
-const LoginOrRegisterModal: NextPage<LoginOrRegisterModalProps> = ({
-  title
-}) => {
+const LoginOrRegisterModal: React.FC = () => {
   const dispatch = useAppDispatch()
-  const modalOpen = useAppSelector(selectModalOpen)
+  const modalOpen = useAppSelector(selectLoginOrRegisterModalOpen)
 
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch])
 
@@ -28,7 +23,7 @@ const LoginOrRegisterModal: NextPage<LoginOrRegisterModalProps> = ({
       contentLabel='Login'
       onRequestClose={handleClose}
     >
-      <ModalHeader title={title} onClose={handleClose} />
+      <ModalHeader title='Login or Sign Up' onClose={handleClose} />
       <ModalBody>
         <LoginOrRegisterForm />
       </ModalBody>

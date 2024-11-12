@@ -13,6 +13,7 @@ import {
 import GoogleMapsProvider from '../../../providers/GoogleMapsProvider'
 import ListingDetailHeader from '../../../containers/ListingDetailHeader/ListingDetailHeader'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
+import LoginOrRegisterModal from '../../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
 
 const ListingPage: NextPage = () => {
   useGetCurrentUserIfAuthenticated()
@@ -31,9 +32,10 @@ const ListingPage: NextPage = () => {
       <GoogleMapsProvider>
         <ListingDetailHeader />
         <div className='listingDetailPage'>
-          {/* TODO: add a ContentLoader component for when the listing is still loading */}
+          {/* TODO: add a ContentLoader component for when the listing is still loading and using it with <Suspense> */}
           {listing && <ListingDetail listing={listing} />}
         </div>
+        <LoginOrRegisterModal />
       </GoogleMapsProvider>
       <style jsx>{styles}</style>
     </>

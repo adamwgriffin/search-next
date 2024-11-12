@@ -10,6 +10,7 @@ import styles from './Search.module.css'
 import SearchHeader from '../SearchHeader/SearchHeader'
 import SearchResults from '../../containers/SearchResults/SearchResults'
 import ListingMap from '../ListingMap/ListingMap'
+import SearchModals from '../../components/SearchModals'
 
 const Search: NextPage = () => {
   const viewType = useAppSelector(selectViewType)
@@ -38,6 +39,7 @@ const Search: NextPage = () => {
           {googleLoaded && <ListingMap />}
         </div>
       </div>
+      <SearchModals />
     </div>
   )
 }

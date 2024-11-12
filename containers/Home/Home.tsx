@@ -4,6 +4,7 @@ import GoogleMapsProvider from '../../providers/GoogleMapsProvider'
 import styles from './Home.module.css'
 import HomePageHeader from '../../components/header/HomePageHeader/HomePageHeader'
 import StandaloneSearchField from '../StandaloneSearchField/StandaloneSearchField'
+import LoginOrRegisterModal from '../modals/LoginOrRegisterModal/LoginOrRegisterModal'
 
 const Home: NextPage = () => {
   return (
@@ -49,6 +50,7 @@ const Home: NextPage = () => {
             </ul>
           </main>
         </div>
+        <LoginOrRegisterModal />
       </div>
     </GoogleMapsProvider>
   )

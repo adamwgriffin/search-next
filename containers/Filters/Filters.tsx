@@ -47,21 +47,11 @@ const Filters: NextPage = () => {
   }
 
   const handleFiltersButtonClick = () => {
-    dispatch(
-      openModal({
-        modalType: 'filters',
-        modalProps: { title: 'Filters' }
-      })
-    )
+    dispatch(openModal({ modalType: 'filters' }))
   }
 
   const handleSaveSearch = () => {
-    dispatch(
-      openModal({
-        modalType: 'saveSearch',
-        modalProps: { title: 'Save Search' }
-      })
-    )
+    dispatch(openModal({ modalType: 'saveSearch' }))
   }
 
   const handleViewSwitcherClick = () => {

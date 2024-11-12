@@ -1,7 +1,8 @@
-import type { NextPage } from 'next'
+'use client'
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
-  selectModalOpen,
+  selectFiltersModalOpen,
   closeModal
 } from '../../../store/application/applicationSlice'
 import { searchWithUpdatedFilters } from '../../../store/listingSearch/listingSearchCommon'
@@ -15,16 +16,12 @@ import More from '../../More/More'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
 
-export interface FiltersModalProps {
-  title: string
-}
-
 const showListingsMessage = (n: number) =>
   `Show ${n.toLocaleString()} ${n === 1 ? 'Home' : 'Homes'}`
 
-const FiltersModal: NextPage<FiltersModalProps> = ({ title }) => {
+const FiltersModal: React.FC = () => {
   const dispatch = useAppDispatch()
-  const modalOpen = useAppSelector(selectModalOpen)
+  const modalOpen = useAppSelector(selectFiltersModalOpen)
   const totalListings = useAppSelector(selectTotalListings)
 
   const handleClose = () => dispatch(closeModal())
@@ -41,7 +38,7 @@ const FiltersModal: NextPage<FiltersModalProps> = ({ title }) => {
       fullScreenOnMobile={true}
       onRequestClose={handleClose}
     >
-      <ModalHeader title={title} onClose={handleClose} />
+      <ModalHeader title={'Filters'} onClose={handleClose} />
       <ModalBody>
         <More />
       </ModalBody>
