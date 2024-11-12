@@ -13,8 +13,6 @@ export interface ModalProps {
   onAfterClose?: () => void
 }
 
-ReactModal.setAppElement('body')
-
 const Modal: NextPage<ModalProps> = ({
   isOpen = false,
   contentLabel,
@@ -32,7 +30,15 @@ const Modal: NextPage<ModalProps> = ({
     : styles.modalOverlay
 
   return (
+    // Setting ariaHideApp=false because it tries to set aria-hidden on the
+    // <body> tag by default, which is not allowed. According to
+    // https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/
+    // the aria-hidden attribute is no longer required if you use aria-modal,
+    // which React-Modal does. The aria-modal attribute has been around quite a
+    // while now and has very good screen reader support so we're opting out of
+    // this for now.
     <ReactModal
+      ariaHideApp={false}
       isOpen={isOpen}
       contentLabel={contentLabel}
       overlayClassName={{

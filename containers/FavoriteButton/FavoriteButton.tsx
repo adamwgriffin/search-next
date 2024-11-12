@@ -24,12 +24,7 @@ const FavoriteButton: NextPage<FavoriteButtonProps> = ({ listingId }) => {
       if (session?.user) {
         dispatch(toggleFavorite(listingId))
       } else {
-        dispatch(
-          openModal({
-            modalType: 'loginOrRegister',
-            modalProps: { title: 'Login or Sign Up' }
-          })
-        )
+        dispatch(openModal({ modalType: 'loginOrRegister' }))
       }
     },
     [dispatch, listingId, session?.user]

@@ -1,11 +1,12 @@
-import type { NextPage } from 'next'
+'use client'
+
 import type { SavedSearchData } from '../../../store/user/userSlice'
 import { useForm } from 'react-hook-form'
 import formStyles from '../../../styles/forms.module.css'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
-  selectModalOpen,
-  closeModal
+  selectSaveSearchModalOpen,
+  closeModal,
 } from '../../../store/application/applicationSlice'
 import {
   selectCurrentUser,
@@ -20,18 +21,14 @@ import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
 import { selectSearchState } from '../../../store/filters/filtersSelectors'
 
-export interface SaveSearchModalProps {
-  title: string
-}
-
 export type SaveSearchFormData = Pick<
   SavedSearchData,
   'name' | 'messageCadence'
 >
 
-const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
+const SaveSearchModal: React.FC = () => {
   const dispatch = useAppDispatch()
-  const modalOpen = useAppSelector(selectModalOpen)
+  const modalOpen = useAppSelector(selectSaveSearchModalOpen)
   const locationSearchField = useAppSelector(selectLocationSearchField)
   const searchState = useAppSelector(selectSearchState)
   const currentUser = useAppSelector(selectCurrentUser)
@@ -47,7 +44,7 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
 
   const handleSave = (formData: SaveSearchFormData) => {
     if (!currentUser?.id) {
-      console.error("No user user id available")
+      console.error('No user user id available')
       return
     }
     dispatch(
@@ -58,8 +55,9 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
         searchState: searchState
       })
     )
-    // should maybe wait for saved search to be created, then publish a toast upon success. we could do all of this
-    // inside of the createSavedSearch.fulfilled reducer
+    // TODO: Should maybe wait for saved search to be created, then publish a
+    // toast upon success. we could do all of this inside of the
+    // createSavedSearch.fulfilled reducer
     handleClose()
   }
 
@@ -69,7 +67,7 @@ const SaveSearchModal: NextPage<SaveSearchModalProps> = ({ title }) => {
       contentLabel='Save Search'
       onRequestClose={handleClose}
     >
-      <ModalHeader title={title} onClose={handleClose} />
+      <ModalHeader title='Save Search' onClose={handleClose} />
       <form onSubmit={handleSubmit(handleSave)}>
         <ModalBody>
           <div className={formStyles.inputGroup}>

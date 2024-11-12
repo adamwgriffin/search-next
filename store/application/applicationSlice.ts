@@ -1,10 +1,5 @@
 import type { AppState } from '..'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { FiltersModalProps } from '../../containers/modals/FiltersModal/FiltersModal'
-import type { SaveSearchModalProps } from '../../containers/modals/SaveSearchModal/SaveSearchModal'
-import type { ErrorModalProps } from '../../containers/modals/ErrorModal/ErrorModal'
-import type { ListingDetailModalProps } from '../../containers/modals/ListingDetailModal/ListingDetailModal'
-import type { LoginOrRegisterModalProps } from '../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
 import { createSlice } from '@reduxjs/toolkit'
 
 export type ViewType = 'list' | 'map'
@@ -12,31 +7,27 @@ export type ViewType = 'list' | 'map'
 export type ModalType =
   | 'filters'
   | 'saveSearch'
-  | 'error'
   | 'listingDetail'
   | 'loginOrRegister'
 
-export type ModalPropsTypes =
-  | FiltersModalProps
-  | SaveSearchModalProps
-  | ErrorModalProps
-  | ListingDetailModalProps
-  | LoginOrRegisterModalProps
-  | null
+export type ListingDetailModalProps = {
+  listingId: string
+}
 
-export interface ApplicationState {
+export type ModalPropsTypes = ListingDetailModalProps | null
+
+export type ApplicationState = {
   viewType: ViewType
   modalType: ModalType | null
   modalProps: ModalPropsTypes
   modalOpen: boolean
 }
 
-export interface OpenModalPayload {
+export type OpenModalPayload = {
   modalType: ModalType
-  modalProps: ModalPropsTypes
+  modalProps?: ModalPropsTypes
 }
 
-// TODO: use this state to display error messages to the user once UI has been created for this
 const initialState: ApplicationState = {
   viewType: 'list',
   modalType: null,
@@ -57,6 +48,8 @@ export const applicationSlice = createSlice({
     openModal(state, action: PayloadAction<OpenModalPayload>) {
       state.modalType = action.payload.modalType
       state.modalProps = action.payload.modalProps
+        ? action.payload.modalProps
+        : null
       state.modalOpen = true
     },
 
@@ -74,13 +67,24 @@ export const applicationSlice = createSlice({
 export const { setViewType, openModal, closeModal, resetModal } =
   applicationSlice.actions
 
+const modalTypeOpen = (state: AppState, modalType: ModalType) =>
+  state.application.modalType === modalType && state.application.modalOpen
+
 export const selectViewType = (state: AppState) => state.application.viewType
 
-export const selectModalType = (state: AppState) => state.application.modalType
+export const selectListingModalId = (state: AppState) =>
+  state.application.modalProps?.listingId
 
-export const selectModalProps = (state: AppState) =>
-  state.application.modalProps
+export const selectFiltersModalOpen = (state: AppState) =>
+  modalTypeOpen(state, 'filters')
 
-export const selectModalOpen = (state: AppState) => state.application.modalOpen
+export const selectSaveSearchModalOpen = (state: AppState) =>
+  modalTypeOpen(state, 'saveSearch')
+
+export const selectListingDetailModalOpen = (state: AppState) =>
+  modalTypeOpen(state, 'listingDetail')
+
+export const selectLoginOrRegisterModalOpen = (state: AppState) =>
+  modalTypeOpen(state, 'loginOrRegister')
 
 export default applicationSlice.reducer
