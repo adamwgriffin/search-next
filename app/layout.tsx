@@ -4,6 +4,7 @@ import SessionProvider from '../providers/SessionProvider'
 import StyledJsxRegistry from '../providers/StyledJsxRegistry'
 import ReduxProvider from '../providers/ReduxProvider'
 import ThemeProvider from '../providers/ThemeProvider'
+import ToastProvider from '../providers/ToastProvider'
 
 export const metadata: Metadata = {
   title: 'Awsom',
@@ -24,7 +25,7 @@ export default function RootLayout({
           <StyledJsxRegistry>
             <ReduxProvider>
               <ThemeProvider>
-                {children}
+                <ToastProvider>{children}</ToastProvider>
               </ThemeProvider>
             </ReduxProvider>
           </StyledJsxRegistry>

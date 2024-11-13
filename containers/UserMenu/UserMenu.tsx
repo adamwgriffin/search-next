@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react'
 import { useToggle } from 'react-use'
 import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 import { useAppDispatch } from '../../hooks/app_hooks'
 import { openModal } from '../../store/application/applicationSlice'
 import { resetCurrentUser } from '../../store/user/userSlice'
@@ -34,6 +35,7 @@ const UserMenu: NextPage = () => {
       : { redirect: false }
     await signOut(signOutOptions)
     dispatch(resetCurrentUser())
+    toast("You're logged out")
   }, [dispatch, pathname, toggleMenu])
 
   const handleLogin = useCallback(() => {

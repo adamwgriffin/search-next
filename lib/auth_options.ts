@@ -35,7 +35,6 @@ const authOptions: NextAuthOptions = {
     signIn: '/login',
     signOut: '/?has_logged_out=1'
   },
-  debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt'
   },

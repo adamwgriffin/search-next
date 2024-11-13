@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { selectGetSavedSearchesLoading } from '../../store/user/userSlice'
 import { useSearchWithFilterState } from '../../hooks/search_with_filter_state_hook'
@@ -40,7 +40,10 @@ const SavedSearchList: React.FC = () => {
               onUpdate={(update) =>
                 dispatch(updateSavedSearch({ id: savedSearch.id, ...update }))
               }
-              onDelete={() => dispatch(deleteSavedSearch(savedSearch.id))}
+              onDelete={ async () => {
+                await dispatch(deleteSavedSearch(savedSearch.id))
+                toast('Saved search delete')
+              }}
             />
           </li>
         ))}

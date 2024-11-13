@@ -18,14 +18,12 @@ const LoginOrRegisterModal: React.FC = () => {
   const handleClose = useCallback(() => dispatch(closeModal()), [dispatch])
 
   return (
-    <Modal
-      isOpen={modalOpen}
-      contentLabel='Login'
-      onRequestClose={handleClose}
-    >
+    <Modal isOpen={modalOpen} contentLabel='Login' onRequestClose={handleClose}>
       <ModalHeader title='Login or Sign Up' onClose={handleClose} />
       <ModalBody>
-        <LoginOrRegisterForm />
+        <LoginOrRegisterForm
+          onFormSuccess={handleClose}
+        />
       </ModalBody>
     </Modal>
   )
