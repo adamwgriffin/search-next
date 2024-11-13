@@ -1,12 +1,14 @@
 'use client'
 
 import type { SavedSearchData } from '../../../store/user/userSlice'
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import formStyles from '../../../styles/forms.module.css'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectSaveSearchModalOpen,
-  closeModal,
+  closeModal
 } from '../../../store/application/applicationSlice'
 import {
   selectCurrentUser,
@@ -40,26 +42,27 @@ const SaveSearchModal: React.FC = () => {
     }
   })
 
-  const handleClose = () => dispatch(closeModal())
+  const handleClose = useCallback(() => dispatch(closeModal()), [dispatch])
 
-  const handleSave = (formData: SaveSearchFormData) => {
-    if (!currentUser?.id) {
-      console.error('No user user id available')
-      return
-    }
-    dispatch(
-      createSavedSearch({
-        userId: currentUser.id,
-        name: formData.name,
-        messageCadence: Number(formData.messageCadence),
-        searchState: searchState
-      })
-    )
-    // TODO: Should maybe wait for saved search to be created, then publish a
-    // toast upon success. we could do all of this inside of the
-    // createSavedSearch.fulfilled reducer
-    handleClose()
-  }
+  const handleSave = useCallback(
+    async (formData: SaveSearchFormData) => {
+      if (!currentUser?.id) {
+        console.error('No user user id available')
+        return
+      }
+      await dispatch(
+        createSavedSearch({
+          userId: currentUser.id,
+          name: formData.name,
+          messageCadence: Number(formData.messageCadence),
+          searchState: searchState
+        })
+      )
+      handleClose()
+      toast('Saved search created')
+    },
+    [currentUser?.id, dispatch, handleClose, searchState]
+  )
 
   return (
     <Modal
