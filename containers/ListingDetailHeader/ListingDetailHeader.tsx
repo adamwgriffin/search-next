@@ -3,11 +3,14 @@ import styles from './ListingDetailHeader.module.css'
 import Logo from '../../components/header/Logo/Logo'
 import StandaloneSearchField from '../StandaloneSearchField/StandaloneSearchField'
 import UserMenu from '../UserMenu/UserMenu'
+import HideSmallAndDown from '../../components/HideSmallAndDown/HideSmallAndDown'
 
 const ListingDetailHeader: NextPage = () => {
   return (
     <header className={styles.header}>
-      <Logo />
+      <HideSmallAndDown>
+        <Logo />
+      </HideSmallAndDown>
       <StandaloneSearchField />
       <UserMenu />
     </header>
