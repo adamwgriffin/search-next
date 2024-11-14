@@ -24,7 +24,7 @@ const FavoritesList: React.FC = () => {
     if (currentUser?.favoriteIds.length) {
       dispatch(getFavoriteListings())
     }
-  }, [dispatch, currentUser])
+  }, [dispatch, currentUser?.favoriteIds])
 
   return (
     <ListingCards

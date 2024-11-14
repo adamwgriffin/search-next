@@ -160,6 +160,11 @@ export const userSlice = createSlice({
       state.currentUser.favoriteIds = state.currentUser.favoriteIds.filter(
         (id) => id !== action.payload
       )
+      // We also have to update favoriteListings in case they were loaded
+      // earlier for the saved homes page
+      state.favoriteListings = state.favoriteListings.filter(
+        (listing) => listing._id !== action.payload
+      )
     }
   },
 
