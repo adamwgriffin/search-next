@@ -15,6 +15,7 @@ const LotSize: NextPage<LotSizeProps> = ({ lotSizeMin, onChange }) => {
     <Fieldset>
       <Legend>Lot Size</Legend>
       <select
+        name='lot-size'
         className={formStyles.select}
         value={Number(lotSizeMin)}
         onChange={(e) => onChange?.({ lotSizeMin: +e.target.value })}

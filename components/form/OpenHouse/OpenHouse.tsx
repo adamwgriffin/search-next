@@ -18,7 +18,9 @@ const OpenHouse: React.FC<OpenHouseProps> = ({ checked, onChange }) => {
         checked={checked}
         onChange={onChange}
       />
-      <label className={formStyles.inputListLabel}>Open Houses</label>
+      <label htmlFor='openhouse' className={formStyles.inputListLabel}>
+        Open Houses
+      </label>
     </Fieldset>
   )
 }
