@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
 import formStyles from '../../../styles/forms.module.css'
 import Fieldset from '../../design_system/Fieldset/Fieldset'
@@ -8,8 +7,7 @@ interface OpenHouseProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const OpenHouse: NextPage<OpenHouseProps> = ({ checked, onChange }) => {
-
+const OpenHouse: React.FC<OpenHouseProps> = ({ checked, onChange }) => {
   return (
     <Fieldset>
       <input

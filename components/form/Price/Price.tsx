@@ -1,11 +1,10 @@
-import type { NextPage } from 'next'
 import type { PriceRangeFilters } from '../../../store/filters/filtersTypes'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
 import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
-export interface PriceProps {
+export type PriceProps = {
   priceRange: PriceRangeFilters
   onFocus?: () => void
   onBlur?: () => void
@@ -15,7 +14,7 @@ export interface PriceProps {
 // passing null to NumericFormat.value does not clear the input but "" does for some reason
 const normalizePrice = (price: number | null) => (price === null ? '' : price)
 
-const Price: NextPage<PriceProps> = ({
+const Price: React.FC<PriceProps> = ({
   priceRange,
   onFocus,
   onBlur,
