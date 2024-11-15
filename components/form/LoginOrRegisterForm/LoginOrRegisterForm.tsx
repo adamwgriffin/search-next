@@ -35,7 +35,7 @@ const LoginOrRegisterForm: React.FC<LoginOrRegisterFormProps> = ({
 
   return (
     <>
-      <p className={styles.message}>Login with</p>
+      <div>Login with</div>
       <div className={styles.loginButtons}>
         <LoginButton
           icon={FcGoogle}
