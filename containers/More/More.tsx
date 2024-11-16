@@ -1,4 +1,3 @@
-import type { NextPage } from 'next'
 import type { ChangeEvent } from 'react'
 import type { MoreFilters } from '../../store/filters/filtersTypes'
 import type {
@@ -40,7 +39,7 @@ import Features from '../../components/form/Features/Features'
 import SoldDays from '../../components/form/SoldDays/SoldDays'
 import { SearchTypes } from '../../lib/filter'
 
-const More: NextPage = () => {
+const More: React.FC = () => {
   const dispatch = useAppDispatch()
   const searchType = useAppSelector(selectSearchType)
   const priceRange = useAppSelector(selectPriceRange)

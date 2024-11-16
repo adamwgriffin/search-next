@@ -32,7 +32,9 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
         listing={listing}
         onClick={() => setSlideShowOpen(true)}
       />
-      <div className={styles.price}>{formatPriceFromListing(listing)}</div>
+      <div className={styles.price}>
+        {formatPriceFromListing(listing, { displayInterval: true })}
+      </div>
       <div className={styles.neighborhood}>{listing.neighborhood}</div>
       <ListingDetailAddress address={listing.address} />
       <ListingDetailBedsBathsSQFT listing={listing} />

@@ -1,11 +1,11 @@
-import type { NextPage } from 'next'
 import type { PriceRangeFilters } from '../../../store/filters/filtersTypes'
+import { useId } from 'react'
 import styles from './Price.module.css'
 import formStyles from '../../../styles/forms.module.css'
 import { NumericFormat } from 'react-number-format'
 import InputRangeSeparator from '../../design_system/InputRangeSeparator/InputRangeSeparator'
 
-export interface PriceProps {
+export type PriceProps = {
   priceRange: PriceRangeFilters
   onFocus?: () => void
   onBlur?: () => void
@@ -15,16 +15,20 @@ export interface PriceProps {
 // passing null to NumericFormat.value does not clear the input but "" does for some reason
 const normalizePrice = (price: number | null) => (price === null ? '' : price)
 
-const Price: NextPage<PriceProps> = ({
+const Price: React.FC<PriceProps> = ({
   priceRange,
   onFocus,
   onBlur,
   onChange
 }) => {
+  const uniqueID = useId()
+  const priceMinID = `price_min_${uniqueID}`
+  const priceMaxID = `price_max_${uniqueID}`
+
   return (
     <fieldset className={styles.price}>
       <legend className={styles.legend}>Price Range</legend>
-      <label htmlFor='price_min' className={formStyles.accessibleLabel}>
+      <label htmlFor={priceMinID} className={formStyles.accessibleLabel}>
         Min Price
       </label>
       <NumericFormat
@@ -36,14 +40,14 @@ const Price: NextPage<PriceProps> = ({
         onValueChange={(v) => onChange?.({ priceMin: v.floatValue || null })}
         placeholder='Min'
         className={formStyles.input}
-        id='price_min'
+        id={priceMinID}
         autoComplete='off'
         onFocus={onFocus}
         onBlur={onBlur}
         inputMode='numeric'
       />
       <InputRangeSeparator />
-      <label htmlFor='price_max' className={formStyles.accessibleLabel}>
+      <label htmlFor={priceMaxID} className={formStyles.accessibleLabel}>
         Max Price
       </label>
       <NumericFormat
@@ -55,7 +59,7 @@ const Price: NextPage<PriceProps> = ({
         onValueChange={(v) => onChange?.({ priceMax: v.floatValue || null })}
         placeholder='Max'
         className={formStyles.input}
-        id='price_max'
+        id={priceMaxID}
         autoComplete='off'
         onFocus={onFocus}
         onBlur={onBlur}

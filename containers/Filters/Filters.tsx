@@ -1,8 +1,7 @@
 import type { NextPage } from 'next'
-import type {
-  PriceRangeFilters,
-  BedsAndBathsFilters
-} from '../../store/filters/filtersTypes'
+import type { BedsAndBathsFilters } from '../../store/filters/filtersTypes'
+import { useCallback } from 'react'
+import { useSession } from 'next-auth/react'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import { useRunCallbackIfChanged } from '../../hooks/run_callback_if_changed_hook'
 import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearchCommon'
@@ -28,6 +27,7 @@ import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
 import OutlinedButton from '../../components/design_system/OutlinedButton/OutlinedButton'
 
 const Filters: NextPage = () => {
+  const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const priceRange = useAppSelector(selectPriceRange)
   const [setPreviousPriceRange, runSearchIfPriceRangeChanged] =
@@ -37,33 +37,30 @@ const Filters: NextPage = () => {
   const bedsAndBaths = useAppSelector(selectBedBathFilters)
   const viewType = useAppSelector(selectViewType)
 
-  const handleBedsAndBathsChange = (param: Partial<BedsAndBathsFilters>) => {
-    dispatch(setFilters(param))
-    dispatch(searchWithUpdatedFilters())
-  }
+  const handleBedsAndBathsChange = useCallback(
+    (param: Partial<BedsAndBathsFilters>) => {
+      dispatch(setFilters(param))
+      dispatch(searchWithUpdatedFilters())
+    },
+    [dispatch]
+  )
 
-  const handlePriceChange = (priceRange: Partial<PriceRangeFilters>) => {
-    dispatch(setFilters(priceRange))
-  }
-
-  const handleFiltersButtonClick = () => {
-    dispatch(openModal({ modalType: 'filters' }))
-  }
-
-  const handleSaveSearch = () => {
-    dispatch(openModal({ modalType: 'saveSearch' }))
-  }
-
-  const handleViewSwitcherClick = () => {
-    dispatch(setViewType(viewType === 'list' ? 'map' : 'list'))
-  }
+  const handleSaveSearch = useCallback(() => {
+    if (session?.user) {
+      dispatch(openModal({ modalType: 'saveSearch' }))
+    } else {
+      dispatch(openModal({ modalType: 'loginOrRegister' }))
+    }
+  }, [dispatch, session?.user])
 
   return (
     <div className={styles.filters}>
       <PriceMenuButton>
         <Price
           priceRange={priceRange}
-          onChange={handlePriceChange}
+          onChange={(priceRange) => {
+            dispatch(setFilters(priceRange))
+          }}
           onFocus={setPreviousPriceRange}
           onBlur={runSearchIfPriceRangeChanged}
         />
@@ -77,11 +74,20 @@ const Filters: NextPage = () => {
       <MoreMenuButton>
         <More />
       </MoreMenuButton>
-      <FiltersButton onClick={handleFiltersButtonClick} />
+      <FiltersButton
+        onClick={() => {
+          dispatch(openModal({ modalType: 'filters' }))
+        }}
+      />
       <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>
-      <ViewSwitcher viewType={viewType} onClick={handleViewSwitcherClick} />
+      <ViewSwitcher
+        viewType={viewType}
+        onClick={() => {
+          dispatch(setViewType(viewType === 'list' ? 'map' : 'list'))
+        }}
+      />
     </div>
   )
 }

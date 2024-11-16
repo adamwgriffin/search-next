@@ -41,7 +41,9 @@ const ListingCard: NextPage<ListingCardProps> = ({
     >
       <ListingCardImage listing={listing} />
       <div className={styles.details}>
-        <div className={styles.price}>{formatPriceFromListing(listing)}</div>
+        <div className={styles.price}>
+          {formatPriceFromListing(listing, { displayInterval: true })}
+        </div>
         <div className={styles.bedBathSqft}>
           <div>{listing.beds}bd</div>
           <div>{getBathrooms(listing)}ba</div>

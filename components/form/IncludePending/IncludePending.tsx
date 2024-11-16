@@ -12,10 +12,6 @@ const IncludePending: NextPage<IncludePendingProps> = ({
   includePending,
   onChange
 }) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e.target.checked)
-  }
-
   return (
     <Fieldset>
       <input
@@ -24,7 +20,7 @@ const IncludePending: NextPage<IncludePendingProps> = ({
         id='include_pending'
         className={formStyles.checkbox}
         checked={includePending}
-        onChange={handleChange}
+        onChange={(e) => onChange?.(e.target.checked)}
       />
       <label htmlFor='include_pending' className={formStyles.inputListLabel}>
         Include Pending
