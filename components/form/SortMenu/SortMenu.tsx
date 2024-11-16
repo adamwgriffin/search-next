@@ -6,7 +6,7 @@ import type {
 import type { SortFilters } from '../../../store/filters/filtersTypes'
 import { useToggle } from 'react-use'
 import styles from './SortMenu.module.css'
-import Dropdown from '../../design_system/Dropdown/Dropdown'
+import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
 import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
 
 export interface SortMenuProps {
@@ -72,7 +72,7 @@ const SortMenu: NextPage<SortMenuProps> = ({
   }
 
   return (
-    <Dropdown
+    <ControlledMenuButton
       open={open}
       label={`Sort: ${getCurrentSortLabel(sortBy)}`}
       condensed
@@ -97,7 +97,7 @@ const SortMenu: NextPage<SortMenuProps> = ({
           </li>
         ))}
       </ul>
-    </Dropdown>
+    </ControlledMenuButton>
   )
 }
 

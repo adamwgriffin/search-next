@@ -1,12 +1,11 @@
-import type { NextPage } from 'next'
 import type { ReactNode } from 'react'
-import styles from './Dropdown.module.css'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import OutlinedButton from '../OutlinedButton/OutlinedButton'
 import MenuOpenIcon from '../icons/MenuOpenIcon/MenuOpenIcon'
+import styles from './ControlledMenuButton.module.css'
 
-interface DropdownProps {
+export type ControlledMenuButtonProps = {
   open: boolean
   label: string
   alignRight?: boolean
@@ -18,7 +17,10 @@ interface DropdownProps {
   onClickAway?: (e: Event) => void
 }
 
-const Dropdown: NextPage<DropdownProps> = ({
+/**
+ * A controlled version of <MenuButton>
+ */
+const ControlledMenuButton: React.FC<ControlledMenuButtonProps> = ({
   label,
   open = false,
   alignRight = false,
@@ -50,4 +52,4 @@ const Dropdown: NextPage<DropdownProps> = ({
   )
 }
 
-export default Dropdown
+export default ControlledMenuButton
