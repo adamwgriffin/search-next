@@ -1,9 +1,7 @@
 import type { ReactNode } from 'react'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
-import OutlinedButton from '../OutlinedButton/OutlinedButton'
-import MenuOpenIcon from '../icons/MenuOpenIcon/MenuOpenIcon'
-import styles from './ControlledMenuButton.module.css'
+import ToggleOpenButton from '../ToggleOpenButton/ToggleOpenButton'
 
 export type ControlledMenuButtonProps = {
   open: boolean
@@ -33,14 +31,13 @@ const ControlledMenuButton: React.FC<ControlledMenuButtonProps> = ({
 }) => {
   return (
     <MenuContainter onClickAway={onClickAway}>
-      <OutlinedButton
-        highlighted={highlighted || open}
+      <ToggleOpenButton
+        open={open}
+        label={label}
+        highlighted={highlighted}
         onClick={onClick}
         condensed={condensed}
-      >
-        <span className={styles.label}>{label}</span>
-        <MenuOpenIcon open={open} />
-      </OutlinedButton>
+      />
       <MenuDropdown
         open={open}
         alignRight={alignRight}
