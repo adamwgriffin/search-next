@@ -18,10 +18,18 @@ const MoreMenuButton: React.FC = () => {
     <MenuContainter onClickAway={() => setOpen(false)}>
       <ToggleOpenButton
         label='More'
+        role='button'
+        aria-haspopup='menu'
+        aria-expanded={open}
+        aria-controls='more-menu-button-menu'
         open={open}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => setOpen(!open)}
       />
-      <div className={open ? styles.menuOpen : styles.menuClosed}>
+      <div
+        id='more-menu-button-menu'
+        role='menu'
+        className={open ? styles.menuOpen : styles.menuClosed}
+      >
         <div className={styles.content}>
           <More />
         </div>
@@ -34,9 +42,7 @@ const MoreMenuButton: React.FC = () => {
           >
             Clear all
           </TextButton>
-          <ContainedButton onClick={() => setOpen(false)}>
-            Done
-          </ContainedButton>
+          <ContainedButton onClick={() => setOpen(false)}>Done</ContainedButton>
         </Footer>
       </div>
     </MenuContainter>

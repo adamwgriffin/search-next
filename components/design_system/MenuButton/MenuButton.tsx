@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react'
-import { useToggle } from 'react-use'
+import { type ReactNode, useId, useState } from 'react'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import ToggleOpenButton from '../ToggleOpenButton/ToggleOpenButton'
@@ -27,22 +26,29 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   onOpen,
   onClose
 }) => {
-  const [open, toggleMenu] = useToggle(false)
+  const [open, setOpen] = useState(false)
+  const uniqueID = useId()
+  const menuId = `button-menu-${uniqueID}`
 
   return (
-    <MenuContainter onClickAway={() => toggleMenu(false)}>
+    <MenuContainter onClickAway={() => setOpen(false)}>
       <ToggleOpenButton
         open={open}
         label={label}
         highlighted={highlighted}
-        onClick={toggleMenu}
         condensed={condensed}
+        role='button'
+        aria-haspopup='menu'
+        aria-expanded={open}
+        aria-controls={menuId}
+        onClick={() => setOpen(!open)}
       />
       <MenuDropdown
+        id={menuId}
+        className={className}
         open={open}
         alignRight={alignRight}
         alignBottom={alignBottom}
-        className={className}
         onOpen={onOpen}
         onClose={onClose}
       >
