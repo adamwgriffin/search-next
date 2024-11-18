@@ -1,8 +1,6 @@
-import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
 import styles from './TextButton.module.css'
 
-const TextButton: NextPage<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+const TextButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
   ...props
 }) => {
