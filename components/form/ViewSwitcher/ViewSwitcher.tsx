@@ -1,17 +1,17 @@
-import type { NextPage } from 'next'
-import type { ViewType } from '../../../store/application/applicationSlice'
-import styles from './ViewSwitcher.module.css'
+import { selectViewType, setViewType } from '../../../store/application/applicationSlice'
+import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import ListIcon from '../../design_system/icons/ListIcon/ListIcon'
 import MapIcon from '../../design_system/icons/MapIcon/MapIcon'
+import styles from './ViewSwitcher.module.css'
 
-export interface ViewSwitcherProps {
-  viewType: ViewType
-  onClick: () => void
-}
-
-const ViewSwitcher: NextPage<ViewSwitcherProps> = ({ viewType, onClick }) => {
+const ViewSwitcher: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const viewType = useAppSelector(selectViewType)
+  
   return (
-    <button className={styles.viewSwitcher} onClick={onClick}>
+    <button className={styles.viewSwitcher} onClick={() => {
+      dispatch(setViewType(viewType === 'list' ? 'map' : 'list'))
+    }}>
       {viewType === 'list' ? (
         <>
           <MapIcon /> Map

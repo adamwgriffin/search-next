@@ -1,9 +1,3 @@
-import type { NextPage } from 'next'
-import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
-import {
-  selectViewType,
-  setViewType
-} from '../../store/application/applicationSlice'
 import styles from './Filters.module.css'
 import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButton'
 import BedsAndBathsMenuButton from '../../components/form/BedsAndBathsMenuButton/BedsAndBathsMenuButton'
@@ -12,10 +6,7 @@ import FiltersButton from '../../components/form/FiltersButton/FiltersButton'
 import ViewSwitcher from '../../components/form/ViewSwitcher/ViewSwitcher'
 import SaveSearchButton from '../../components/form/SaveSearchButton/SaveSearchButton'
 
-const Filters: NextPage = () => {
-  const dispatch = useAppDispatch()
-  const viewType = useAppSelector(selectViewType)
-
+const Filters: React.FC = () => {
   return (
     <div className={styles.filters}>
       <PriceMenuButton />
@@ -23,12 +14,7 @@ const Filters: NextPage = () => {
       <MoreMenuButton />
       <FiltersButton />
       <SaveSearchButton />
-      <ViewSwitcher
-        viewType={viewType}
-        onClick={() => {
-          dispatch(setViewType(viewType === 'list' ? 'map' : 'list'))
-        }}
-      />
+      <ViewSwitcher />
     </div>
   )
 }
