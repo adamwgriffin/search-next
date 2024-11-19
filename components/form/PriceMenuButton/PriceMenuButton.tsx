@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from 'react'
 import css from 'styled-jsx/css'
-import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
 
 export type PriceMenuButtonProps = {
   children: ReactNode
@@ -11,7 +11,7 @@ const PriceMenuButton: React.FC<PriceMenuButtonProps> = ({ children }) => {
 
   return (
     <>
-      <ControlledMenuButton
+      <MenuButton
         label='Price'
         open={open}
         className={className}
@@ -19,7 +19,7 @@ const PriceMenuButton: React.FC<PriceMenuButtonProps> = ({ children }) => {
         onClickAway={() => setOpen(false)}
       >
         {children}
-      </ControlledMenuButton>
+      </MenuButton>
       {styles}
     </>
   )

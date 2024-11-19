@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
 import PaginationButton from '../PaginationButton/PaginationButton'
 import ArrowRight from '../../design_system/icons/ArrorRight/ArrowRight'
 import ArrowLeft from '../../design_system/icons/ArrowLeft/ArrowLeft'
@@ -69,7 +69,7 @@ const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
             />
           ))}
           {morePages.length > 0 && (
-            <ControlledMenuButton
+            <MenuButton
               label={morePagesLabel}
               open={morePagesOpen}
               highlighted={morePages.includes(currentPage)}
@@ -89,7 +89,7 @@ const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
                   />
                 ))}
               </div>
-            </ControlledMenuButton>
+            </MenuButton>
           )}
           <PaginationButton
             title='Next Page'

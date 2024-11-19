@@ -4,7 +4,7 @@ import type {
 } from '../../../types/listing_service_params_types'
 import type { SortFilters } from '../../../store/filters/filtersTypes'
 import { useState } from 'react'
-import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
 import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
 import styles from './SortMenu.module.css'
 
@@ -66,7 +66,7 @@ const SortMenu: React.FC<SortMenuProps> = ({
   const [open, setOpen] = useState(false)
 
   return (
-    <ControlledMenuButton
+    <MenuButton
       open={open}
       label={`Sort: ${getCurrentSortLabel(sortBy)}`}
       condensed
@@ -93,7 +93,7 @@ const SortMenu: React.FC<SortMenuProps> = ({
           </li>
         ))}
       </ul>
-    </ControlledMenuButton>
+    </MenuButton>
   )
 }
 

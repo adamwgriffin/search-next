@@ -1,9 +1,10 @@
-import { type ReactNode, useId, useState } from 'react'
+import { type ReactNode, useId } from 'react'
 import MenuContainter from '../MenuContainter/MenuContainter'
 import MenuDropdown from '../MenuDropdown/MenuDropdown'
 import ToggleOpenButton from '../ToggleOpenButton/ToggleOpenButton'
 
 export type MenuButtonProps = {
+  open: boolean
   label: string
   alignRight?: boolean
   alignBottom?: boolean
@@ -11,27 +12,27 @@ export type MenuButtonProps = {
   condensed?: boolean
   className?: string
   children: ReactNode
-  onOpen?: () => void
-  onClose?: () => void
+  onClick?: () => void
+  onClickAway?: (e: Event) => void
 }
 
 const MenuButton: React.FC<MenuButtonProps> = ({
   label,
+  open = false,
   alignRight = false,
   alignBottom = false,
   highlighted = false,
   condensed = false,
   className,
   children,
-  onOpen,
-  onClose
+  onClick,
+  onClickAway
 }) => {
-  const [open, setOpen] = useState(false)
   const uniqueID = useId()
-  const menuId = `button-menu-${uniqueID}`
+  const menuId = `buttonMenu-${uniqueID}`
 
   return (
-    <MenuContainter onClickAway={() => setOpen(false)}>
+    <MenuContainter onClickAway={onClickAway}>
       <ToggleOpenButton
         open={open}
         label={label}
@@ -41,7 +42,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({
         aria-haspopup='menu'
         aria-expanded={open}
         aria-controls={menuId}
-        onClick={() => setOpen(!open)}
+        onClick={onClick}
       />
       <MenuDropdown
         id={menuId}
@@ -49,8 +50,6 @@ const MenuButton: React.FC<MenuButtonProps> = ({
         open={open}
         alignRight={alignRight}
         alignBottom={alignBottom}
-        onOpen={onOpen}
-        onClose={onClose}
       >
         {children}
       </MenuDropdown>
