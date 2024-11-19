@@ -1,14 +1,18 @@
-import type { NextPage } from 'next'
-import styles from './FiltersButton.module.css'
+import { useAppDispatch } from '../../../hooks/app_hooks'
+import { openModal } from '../../../store/application/applicationSlice'
 import FiltersIcon from '../../design_system/icons/FiltersIcon/FiltersIcon'
+import styles from './FiltersButton.module.css'
 
-export interface FiltersButtonProps {
-  onClick: () => void
-}
+const FiltersButton: React.FC = () => {
+  const dispatch = useAppDispatch()
 
-const FiltersButton: NextPage<FiltersButtonProps> = ({ onClick }) => {
   return (
-    <button className={styles.filtersButton} onClick={onClick}>
+    <button
+      className={styles.filtersButton}
+      onClick={() => {
+        dispatch(openModal({ modalType: 'filters' }))
+      }}
+    >
       <FiltersIcon />
       Filters
     </button>

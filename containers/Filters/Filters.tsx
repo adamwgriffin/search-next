@@ -1,11 +1,9 @@
 import type { NextPage } from 'next'
-import { useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useAppSelector, useAppDispatch } from '../../hooks/app_hooks'
 import {
   selectViewType,
   setViewType,
-  openModal
 } from '../../store/application/applicationSlice'
 import styles from './Filters.module.css'
 import PriceMenuButton from '../../components/form/PriceMenuButton/PriceMenuButton'
@@ -33,14 +31,10 @@ const Filters: NextPage = () => {
       <PriceMenuButton />
       <BedsAndBathsMenuButton />
       <MoreMenuButton />
-      <FiltersButton
-        onClick={() => {
-          dispatch(openModal({ modalType: 'filters' }))
-        }}
-      />
       <OutlinedButton textColor='var(--primary)' onClick={handleSaveSearch}>
         Save Search
       </OutlinedButton>
+      <FiltersButton />
       <ViewSwitcher
         viewType={viewType}
         onClick={() => {
