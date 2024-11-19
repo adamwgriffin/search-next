@@ -1,12 +1,9 @@
-import { type ReactNode, useState } from 'react'
+import { useState } from 'react'
 import css from 'styled-jsx/css'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
+import PriceContainer from '../../../containers/PriceContainer/PriceContainer'
 
-export type PriceMenuButtonProps = {
-  children: ReactNode
-}
-
-const PriceMenuButton: React.FC<PriceMenuButtonProps> = ({ children }) => {
+const PriceMenuButton: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -18,7 +15,7 @@ const PriceMenuButton: React.FC<PriceMenuButtonProps> = ({ children }) => {
         onClick={() => setOpen(!open)}
         onClickAway={() => setOpen(false)}
       >
-        {children}
+        <PriceContainer />
       </MenuButton>
       {styles}
     </>

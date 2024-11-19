@@ -42,7 +42,7 @@ const SavedSearchList: React.FC = () => {
               }
               onDelete={ async () => {
                 await dispatch(deleteSavedSearch(savedSearch.id))
-                toast('Saved search delete')
+                toast('Saved search deleted')
               }}
             />
           </li>

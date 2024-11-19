@@ -1,14 +1,10 @@
 import { type ReactNode, useState } from 'react'
 import css from 'styled-jsx/css'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
+import BedsAndBathsContainer from '../../../containers/BedsAndBathsContainer/BedsAndBathsContainer'
 
-export type BedsAndBathsMenuButtonProps = {
-  children: ReactNode
-}
 
-const BedsAndBathsMenuButton: React.FC<BedsAndBathsMenuButtonProps> = ({
-  children
-}) => {
+const BedsAndBathsMenuButton: React.FC= () => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -20,7 +16,7 @@ const BedsAndBathsMenuButton: React.FC<BedsAndBathsMenuButtonProps> = ({
         onClick={() => setOpen(!open)}
         onClickAway={() => setOpen(false)}
       >
-        {children}
+        <BedsAndBathsContainer />
       </MenuButton>
       {styles}
     </>
