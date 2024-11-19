@@ -1,13 +1,12 @@
-import type { NextPage } from 'next'
 import type {
   SortType,
-  SortDirection,
+  SortDirection
 } from '../../../types/listing_service_params_types'
 import type { SortFilters } from '../../../store/filters/filtersTypes'
-import { useToggle } from 'react-use'
-import styles from './SortMenu.module.css'
-import Dropdown from '../../design_system/Dropdown/Dropdown'
+import { useState } from 'react'
+import MenuButton from '../../design_system/MenuButton/MenuButton'
 import CheckIcon from '../../design_system/icons/CheckIcon/CheckIcon'
+import styles from './SortMenu.module.css'
 
 export interface SortMenuProps {
   sortBy: SortFilters
@@ -60,44 +59,41 @@ const getCurrentSortLabel = (sortParams: SortFilters) => {
   )?.label
 }
 
-const SortMenu: NextPage<SortMenuProps> = ({
+const SortMenu: React.FC<SortMenuProps> = ({
   sortBy = { sortBy: 'listedDate', sortDirection: 'desc' },
   onChange
 }) => {
-  const [open, toggleMenu] = useToggle(false)
-
-  const handleClick = (sortParams: SortFilters) => {
-    toggleMenu(false)
-    onChange?.(sortParams)
-  }
+  const [open, setOpen] = useState(false)
 
   return (
-    <Dropdown
+    <MenuButton
       open={open}
       label={`Sort: ${getCurrentSortLabel(sortBy)}`}
       condensed
       alignRight
-      onClick={toggleMenu}
-      onClickAway={() => toggleMenu(false)}
+      onClick={() => setOpen(!open)}
+      onClickAway={() => setOpen(false)}
     >
       <ul className={styles.menu}>
         {SortTypeLabels.map(({ type, label, direction }) => (
           <li
             key={`${type}-${direction}`}
-            onClick={() =>
-              handleClick({ sortBy: type, sortDirection: direction })
-            }
+            onClick={() => {
+              setOpen(false)
+              onChange?.({ sortBy: type, sortDirection: direction })
+            }}
             className={styles.menuItem}
           >
             <div>
-              {sortBy.sortBy === type &&
-                sortBy.sortDirection == direction && <CheckIcon />}
+              {sortBy.sortBy === type && sortBy.sortDirection == direction && (
+                <CheckIcon />
+              )}
             </div>
             <div>{label}</div>
           </li>
         ))}
       </ul>
-    </Dropdown>
+    </MenuButton>
   )
 }
 

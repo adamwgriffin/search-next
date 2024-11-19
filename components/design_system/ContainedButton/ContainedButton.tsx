@@ -1,13 +1,12 @@
-import type { NextPage } from 'next'
-import type { MouseEventHandler, ReactNode } from 'react'
 import styles from './ContainedButton.module.css'
 
-export interface ContainedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  textColor?: string
-  backgroundColor?: string
-}
+export type ContainedButtonProps =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    textColor?: string
+    backgroundColor?: string
+  }
 
-const ContainedButton: NextPage<ContainedButtonProps> = ({
+const ContainedButton: React.FC<ContainedButtonProps> = ({
   children,
   textColor,
   backgroundColor,

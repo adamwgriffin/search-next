@@ -1,24 +1,25 @@
-import type { NextPage } from 'next'
 import type { CSSProperties, ReactNode } from 'react'
 import { useUpdateEffect } from 'react-use'
 import css from 'styled-jsx/css'
 
 interface MenuDropdownProps {
   open: boolean
+  children: ReactNode
+  id?: string
+  className?: string
   alignRight?: boolean
   alignBottom?: boolean
-  className?: string
-  children: ReactNode
   onOpen?: () => void
   onClose?: () => void
 }
 
-const MenuDropdown: NextPage<MenuDropdownProps> = ({
+const MenuDropdown: React.FC<MenuDropdownProps> = ({
   open = false,
+  children,
+  id,
+  className,
   alignRight = false,
   alignBottom = false,
-  className = '',
-  children,
   onOpen,
   onClose
 }) => {
@@ -35,7 +36,7 @@ const MenuDropdown: NextPage<MenuDropdownProps> = ({
 
   return (
     <>
-      <div className={classNames} style={computedStyles}>
+      <div id={id} className={classNames} style={computedStyles}>
         {children}
       </div>
       <style jsx>{styles}</style>

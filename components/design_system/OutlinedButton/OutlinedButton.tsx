@@ -1,34 +1,30 @@
-import type { NextPage } from 'next'
-import type { MouseEventHandler, ReactNode } from 'react'
 import styles from './OutlinedButton.module.css'
 
-interface OutlinedButtonProps {
-  highlighted?: boolean
-  condensed?: boolean
-  textColor?: string
-  onClick?: MouseEventHandler<HTMLButtonElement>
-  children: ReactNode
-}
+export type OutlinedButtonProps =
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    highlighted?: boolean
+    condensed?: boolean
+    textColor?: string
+  }
 
-const OutlinedButton: NextPage<OutlinedButtonProps> = ({
+const OutlinedButton: React.FC<OutlinedButtonProps> = ({
   highlighted = false,
   condensed = false,
   textColor = 'inherit',
-  onClick,
-  children
+  children,
+  ...props
 }) => {
-  const buttonStyle = {
-    color: textColor,
-    height: condensed ? '30.5938px' : '40px',
-    padding: condensed ? '0 .6rem' : '0 .8rem'
-  }
   return (
     <button
       className={
         highlighted ? styles.outlinedButtonHighlighted : styles.outlinedButton
       }
-      style={buttonStyle}
-      onClick={onClick}
+      style={{
+        color: textColor,
+        height: condensed ? '30.5938px' : '40px',
+        padding: condensed ? '0 .6rem' : '0 .8rem'
+      }}
+      {...props}
     >
       {children}
     </button>

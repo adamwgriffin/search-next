@@ -16,7 +16,3 @@
 .containedButton:hover {
   background: var(--primary-dark);
 }
-
-.containedButton.highlighted {
-  background: rgba(4, 87, 175, 0.24);
-}

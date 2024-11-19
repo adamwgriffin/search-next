@@ -18,7 +18,7 @@ import { selectLocationSearchField } from '../../../store/filters/filtersSelecto
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
-import ModalFooter from '../../../components/design_system/modal/ModalFooter/ModalFooter'
+import ModalFooter from '../../../components/design_system/Footer/Footer'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
 import { selectSearchState } from '../../../store/filters/filtersSelectors'

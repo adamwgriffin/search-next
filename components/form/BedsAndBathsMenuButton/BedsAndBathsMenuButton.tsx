@@ -1,20 +1,25 @@
-import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import css from 'styled-jsx/css'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
 
-export interface BedsAndBathsMenuButtonProps {
+export type BedsAndBathsMenuButtonProps = {
   children: ReactNode
-  onClose?: () => void
 }
 
-const BedsAndBathsMenuButton: NextPage<BedsAndBathsMenuButtonProps> = ({
-  children,
-  onClose
+const BedsAndBathsMenuButton: React.FC<BedsAndBathsMenuButtonProps> = ({
+  children
 }) => {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
-      <MenuButton label='Beds & Baths' className={className} onClose={onClose}>
+      <MenuButton
+        label='Beds & Baths'
+        open={open}
+        className={className}
+        onClick={() => setOpen(!open)}
+        onClickAway={() => setOpen(false)}
+      >
         {children}
       </MenuButton>
       {styles}

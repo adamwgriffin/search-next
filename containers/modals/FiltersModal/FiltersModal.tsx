@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectFiltersModalOpen,
@@ -11,7 +12,7 @@ import { clearFilters } from '../../../store/filters/filtersSlice'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
-import ModalFooter from '../../../components/design_system/modal/ModalFooter/ModalFooter'
+import Footer from '../../../components/design_system/Footer/Footer'
 import More from '../../More/More'
 import TextButton from '../../../components/design_system/TextButton/TextButton'
 import ContainedButton from '../../../components/design_system/ContainedButton/ContainedButton'
@@ -24,12 +25,12 @@ const FiltersModal: React.FC = () => {
   const modalOpen = useAppSelector(selectFiltersModalOpen)
   const totalListings = useAppSelector(selectTotalListings)
 
-  const handleClose = () => dispatch(closeModal())
+  const handleClose = useCallback(() => dispatch(closeModal()), [dispatch])
 
-  const handleClearAll = () => {
+  const handleClearAll = useCallback(() => {
     dispatch(clearFilters())
     dispatch(searchWithUpdatedFilters())
-  }
+  }, [dispatch])
 
   return (
     <Modal
@@ -42,12 +43,12 @@ const FiltersModal: React.FC = () => {
       <ModalBody>
         <More />
       </ModalBody>
-      <ModalFooter>
+      <Footer>
         <TextButton onClick={handleClearAll}>Clear All</TextButton>
         <ContainedButton onClick={handleClose}>
           {showListingsMessage(totalListings)}
         </ContainedButton>
-      </ModalFooter>
+      </Footer>
     </Modal>
   )
 }
