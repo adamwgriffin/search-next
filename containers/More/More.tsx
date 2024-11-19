@@ -1,7 +1,6 @@
 import type { ChangeEvent } from 'react'
 import type { MoreFilters } from '../../store/filters/filtersTypes'
 import type {
-  BedsAndBathsFilters,
   SquareFeetRangeFilters,
   YearBuiltRangeFilters
 } from '../../store/filters/filtersTypes'
@@ -14,7 +13,6 @@ import { searchWithUpdatedFilters } from '../../store/listingSearch/listingSearc
 import { setFilters, setSearchType } from '../../store/filters/filtersSlice'
 import {
   selectSearchType,
-  selectBedBathFilters,
   selectOpenHouse,
   selectPropertyTypes,
   selectIncludePending,
@@ -26,7 +24,7 @@ import {
 import { PropertyTypeIDArray, PropertyTypes } from '../../lib/property_types'
 import SearchTypeSelector from '../../components/form/SearchTypeSelector/SearchTypeSelector'
 import PriceContainer from '../PriceContainer/PriceContainer'
-import BedsAndBaths from '../../components/form/BedsAndBaths/BedsAndBaths'
+import BedsAndBathsContainer from '../BedsAndBathsContainer/BedsAndBathsContainer'
 import IncludePending from '../../components/form/IncludePending/IncludePending'
 import PropertyType from '../../components/form/PropertyTypes/PropertyTypes'
 import SquareFeet from '../../components/form/SquareFeet/SquareFeet'
@@ -40,7 +38,6 @@ import { SearchTypes } from '../../lib/filter'
 const More: React.FC = () => {
   const dispatch = useAppDispatch()
   const searchType = useAppSelector(selectSearchType)
-  const bedsAndBaths = useAppSelector(selectBedBathFilters)
   const openHouse = useAppSelector(selectOpenHouse)
   const selectedPropertyTypes = useAppSelector(selectPropertyTypes)
   const includePending = useAppSelector(selectIncludePending)
@@ -63,11 +60,6 @@ const More: React.FC = () => {
 
   const handleSearchTypeChange = (searchType: SearchTypeOption) => {
     dispatch(setSearchType(searchType))
-    dispatch(searchWithUpdatedFilters())
-  }
-
-  const handleBedsAndBathsChange = (param: Partial<BedsAndBathsFilters>) => {
-    dispatch(setFilters(param))
     dispatch(searchWithUpdatedFilters())
   }
 
@@ -105,10 +97,7 @@ const More: React.FC = () => {
       />
       <div className={styles.mobileFilters}>
         <PriceContainer />
-        <BedsAndBaths
-          onChange={handleBedsAndBathsChange}
-          bedsAndBaths={bedsAndBaths}
-        />
+        <BedsAndBathsContainer />
       </div>
       {searchType === SearchTypes.Buy && (
         <div className={styles.buyFilters}>
