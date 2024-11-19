@@ -1,12 +1,12 @@
-import type { NextPage } from 'next'
-import styles from './ListingResultsPagination.module.css'
+import { useCallback } from 'react'
 import MenuButton from '../../design_system/MenuButton/MenuButton'
 import PaginationButton from '../PaginationButton/PaginationButton'
 import ArrowRight from '../../design_system/icons/ArrorRight/ArrowRight'
 import ArrowLeft from '../../design_system/icons/ArrowLeft/ArrowLeft'
 import PageButton from '../PageButton/PageButton'
+import styles from './ListingResultsPagination.module.css'
 
-export interface Pagination {
+export type Pagination = {
   start: number
   end: number
   total: number
@@ -14,12 +14,12 @@ export interface Pagination {
   currentPage: number
 }
 
-export interface ListingResultsPaginationProps extends Pagination {
+export type ListingResultsPaginationProps = {
   visiblePageAmount?: number
   onClick: (page: number) => void
-}
+} & Pagination
 
-const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
+const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
   start,
   end,
   total,
@@ -35,17 +35,17 @@ const ListingResultsPagination: NextPage<ListingResultsPaginationProps> = ({
     : 'More'
   const lastPage = pages.at(-1) ?? 0
 
-  const handlePreviousPageClick = () => {
+  const handlePreviousPageClick = useCallback(() => {
     if (currentPage !== pages[0]) {
       onClick(currentPage - 1)
     }
-  }
+  }, [currentPage, onClick, pages])
 
-  const handleNextPageClick = () => {
+  const handleNextPageClick = useCallback(() => {
     if (currentPage !== lastPage) {
       onClick(currentPage + 1)
     }
-  }
+  }, [currentPage, lastPage, onClick])
 
   return (
     <div className={styles.listingResultsPagination}>
