@@ -21,12 +21,12 @@ const MoreMenuButton: React.FC = () => {
         role='button'
         aria-haspopup='menu'
         aria-expanded={open}
-        aria-controls='more-menu-button-menu'
+        aria-controls='moreMenuButtonMenu'
         open={open}
         onClick={() => setOpen(!open)}
       />
       <div
-        id='more-menu-button-menu'
+        id='moreMenuButtonMenu'
         role='menu'
         className={open ? styles.menuOpen : styles.menuClosed}
       >

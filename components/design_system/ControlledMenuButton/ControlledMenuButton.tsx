@@ -10,6 +10,7 @@ export type ControlledMenuButtonProps = {
   alignBottom?: boolean
   highlighted?: boolean
   condensed?: boolean
+  className?: string
   children: ReactNode
   onClick?: () => void
   onClickAway?: (e: Event) => void
@@ -25,12 +26,13 @@ const ControlledMenuButton: React.FC<ControlledMenuButtonProps> = ({
   alignBottom = false,
   highlighted = false,
   condensed = false,
+  className,
   children,
   onClick,
   onClickAway
 }) => {
   const uniqueID = useId()
-  const menuId = `button-menu-${uniqueID}`
+  const menuId = `buttonMenu-${uniqueID}`
 
   return (
     <MenuContainter onClickAway={onClickAway}>
@@ -47,6 +49,7 @@ const ControlledMenuButton: React.FC<ControlledMenuButtonProps> = ({
       />
       <MenuDropdown
         id={menuId}
+        className={className}
         open={open}
         alignRight={alignRight}
         alignBottom={alignBottom}

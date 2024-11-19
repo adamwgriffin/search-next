@@ -1,22 +1,25 @@
-import type { NextPage } from 'next'
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import css from 'styled-jsx/css'
-import MenuButton from '../../design_system/MenuButton/MenuButton'
+import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
 
-export interface PriceMenuButtonProps {
+export type PriceMenuButtonProps = {
   children: ReactNode
-  onClose?: () => void
 }
 
-const PriceMenuButton: NextPage<PriceMenuButtonProps> = ({
-  children,
-  onClose
-}) => {
+const PriceMenuButton: React.FC<PriceMenuButtonProps> = ({ children }) => {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
-      <MenuButton label='Price' className={className} onClose={onClose}>
+      <ControlledMenuButton
+        label='Price'
+        open={open}
+        className={className}
+        onClick={() => setOpen(!open)}
+        onClickAway={() => setOpen(false)}
+      >
         {children}
-      </MenuButton>
+      </ControlledMenuButton>
       {styles}
     </>
   )

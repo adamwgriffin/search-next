@@ -1,5 +1,5 @@
-import { useCallback } from 'react'
-import MenuButton from '../../design_system/MenuButton/MenuButton'
+import { useState, useCallback } from 'react'
+import ControlledMenuButton from '../../design_system/ControlledMenuButton/ControlledMenuButton'
 import PaginationButton from '../PaginationButton/PaginationButton'
 import ArrowRight from '../../design_system/icons/ArrorRight/ArrowRight'
 import ArrowLeft from '../../design_system/icons/ArrowLeft/ArrowLeft'
@@ -28,6 +28,8 @@ const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
   visiblePageAmount = 6,
   onClick
 }) => {
+  const [morePagesOpen, setMorePagesOpen] = useState(false)
+
   const visiblePages = pages.slice(0, visiblePageAmount)
   const morePages = pages.slice(visiblePageAmount)
   const morePagesLabel = morePages.includes(currentPage)
@@ -67,12 +69,15 @@ const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
             />
           ))}
           {morePages.length > 0 && (
-            <MenuButton
+            <ControlledMenuButton
               label={morePagesLabel}
+              open={morePagesOpen}
               highlighted={morePages.includes(currentPage)}
               alignRight
               alignBottom
               condensed
+              onClick={() => setMorePagesOpen(!morePagesOpen)}
+              onClickAway={() => setMorePagesOpen(false)}
             >
               <div className={styles.morePages}>
                 {morePages.map((page, i) => (
@@ -84,7 +89,7 @@ const ListingResultsPagination: React.FC<ListingResultsPaginationProps> = ({
                   />
                 ))}
               </div>
-            </MenuButton>
+            </ControlledMenuButton>
           )}
           <PaginationButton
             title='Next Page'
