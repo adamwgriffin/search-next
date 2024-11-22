@@ -10,13 +10,6 @@ export interface FormatPriceOptions {
   displayInterval?: boolean
 }
 
-// some default sizes used for getting images from google maps streetview when the listing has no gallery
-export const ListingStreetViewImageSizeEnum = Object.freeze({
-  gallery: { width: 1920, height: 1080 },
-  full: { width: 480, height: 540 },
-  small: { width: 533, height: 300 }
-})
-
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
   currency: Currency,

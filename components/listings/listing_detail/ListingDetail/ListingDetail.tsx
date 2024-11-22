@@ -29,6 +29,8 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
         {listing.soldDate && formatSoldDate(listing.soldDate)}
       </div>
       <ListingDetailImage
+        // test fallback
+        // listing={{ ...listing, photoGallery: [] }}
         listing={listing}
         onClick={() => setSlideShowOpen(true)}
       />
