@@ -1,8 +1,16 @@
+@value smallAndUp from '../../../styles/breakpoints.module.css';
+
 .listingCards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
-  gap: .8rem;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+@media smallAndUp {
+  .listingCards {
+    grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  }
 }
