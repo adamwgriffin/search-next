@@ -3,11 +3,11 @@ import type { ListingAddress } from '../../../../types/listing_types'
 import css from 'styled-jsx/css'
 import { cityStateZip } from '../../../../lib/listing_helpers'
 
-export interface ListingMainImageProps {
+export interface ListingDetailAddressProps {
   address: ListingAddress
 }
 
-const ListingMainImage: NextPage<ListingMainImageProps> = ({ address }) => {
+const ListingDetailAddress: NextPage<ListingDetailAddressProps> = ({ address }) => {
   return (
     <>
       <address className='address'>
@@ -33,4 +33,4 @@ const styles = css`
   }
 `
 
-export default ListingMainImage
+export default ListingDetailAddress
