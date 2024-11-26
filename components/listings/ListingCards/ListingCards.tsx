@@ -28,10 +28,7 @@ const ListingCards: NextPage<ListingCardProps> = ({
               listing={listing}
               url={`/listing/${listing._id}`}
               onClick={() =>
-                onListingCardClick(
-                  `/listing/${listing._id}`,
-                  listing._id
-                )
+                onListingCardClick(`/listing/${listing._id}`, listing._id)
               }
               onMouseEnter={() => onListingCardMouseEnter?.(listing._id)}
               onMouseLeave={() => onListingCardMouseLeave?.(listing._id)}
@@ -39,12 +36,31 @@ const ListingCards: NextPage<ListingCardProps> = ({
           </li>
         ))}
 
-      {listingSearchRunning &&
-        [...Array(6)].map((_, i) => (
-          <li key={i}>
+      {listingSearchRunning && (
+        <>
+          <li>
             <ListingCardLoader />
           </li>
-        ))}
+          <li>
+            <ListingCardLoader />
+          </li>
+          <li>
+            <ListingCardLoader />
+          </li>
+          <li>
+            <ListingCardLoader />
+          </li>
+          <li>
+            <ListingCardLoader />
+          </li>
+          <li>
+            <ListingCardLoader />
+          </li>
+          <li>
+            <ListingCardLoader />
+          </li>
+        </>
+      )}
     </ul>
   )
 }
