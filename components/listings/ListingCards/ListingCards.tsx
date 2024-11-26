@@ -23,7 +23,7 @@ const ListingCards: NextPage<ListingCardProps> = ({
     <ul className={styles.listingCards}>
       {!listingSearchRunning &&
         listings.map((listing) => (
-          <li key={listing._id.toString()}>
+          <li key={listing._id}>
             <ListingCard
               listing={listing}
               url={`/listing/${listing._id}`}
