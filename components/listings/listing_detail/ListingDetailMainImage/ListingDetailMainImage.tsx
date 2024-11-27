@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { type ImgHTMLAttributes, useState, useCallback } from 'react'
 import {
   buildSrcSet,
   streetViewImageUrl
@@ -31,12 +31,17 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
 
   const handleImageLoadError = useCallback(() => setImageLoadError(true), [])
 
+  const commonImgAttrs: ImgHTMLAttributes<HTMLImageElement> = {
+    alt,
+    fetchPriority: 'high',
+    className: styles.listingDetailMainImage
+  }
+
   if (imageLoadError) {
     return (
       <img
         src={ImageLoadErrorFallbackUrl}
-        alt={alt}
-        className={styles.listingDetailMainImage}
+        {...commonImgAttrs}
       />
     )
   }
@@ -52,12 +57,11 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
           srcSet={buildSrcSet(imageUrl, HeightRatio)}
           sizes='800px'
           src={imageUrl}
-          alt={alt}
-          className={styles.listingDetailMainImage}
           onClick={onClick}
           // If there is no image for the location the street view service will
           // return an error status that triggers this
           onError={handleImageLoadError}
+          {...commonImgAttrs}
         />
       </picture>
     )
@@ -76,9 +80,8 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
           GoogleStreetViewMaxImageSize,
           GoogleStreetViewMaxImageSize / HeightRatio
         )}
-        alt={alt}
-        className={styles.listingDetailMainImage}
         onError={handleImageLoadError}
+        {...commonImgAttrs}
       />
     </picture>
   )
