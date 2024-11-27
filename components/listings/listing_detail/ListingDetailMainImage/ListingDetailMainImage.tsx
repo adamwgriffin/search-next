@@ -50,7 +50,7 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
         />
         <img
           srcSet={buildSrcSet(imageUrl, HeightRatio)}
-          sizes='768px'
+          sizes='800px'
           src={imageUrl}
           alt={alt}
           className={styles.listingDetailMainImage}

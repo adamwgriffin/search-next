@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import type { ListingDetail } from '../../../../types/listing_types'
+import { useState } from 'react'
 import {
   formatPriceFromListing,
   formatSoldDate
