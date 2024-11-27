@@ -5,7 +5,7 @@ import {
   formatSoldDate
 } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
-import ListingDetailImage from '../ListingDetailImage/ListingDetailImage'
+import ListingDetailImage from '../ListingDetailImage'
 import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
 import ListingDetailBedsBathsSQFT from '../ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
 import Description from '../Description/Description'
@@ -29,8 +29,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
         {listing.soldDate && formatSoldDate(listing.soldDate)}
       </div>
       <ListingDetailImage
-        // test fallback
-        // listing={{ ...listing, photoGallery: [] }}
         listing={listing}
         onClick={() => setSlideShowOpen(true)}
       />

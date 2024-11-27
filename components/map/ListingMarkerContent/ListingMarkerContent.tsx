@@ -6,23 +6,18 @@ import {
   formatSqft,
   cityStateZip
 } from '../../../lib/listing_helpers'
-import {
-  getStreetViewImage,
-  fallbackToDefaultImageOnError
-} from '../../../lib/listing_image_helpers'
 import styles from './ListingMarkerContent.module.css'
 import Link from 'next/link'
 import ListingImageContainer from '../../listings/ListingImageContainer/ListingImageContainer'
 import ListingImageContainerElements from '../../listings/ListingImageContainerElements/ListingImageContainerElements'
 import FavoriteButton from '../../../containers/FavoriteButton/FavoriteButton'
+import ListingMainImage from '../../listings/listing_detail/ListingMainImage'
 
 export type ListingMarkerContentProps = {
   listing: Listing
   link: string
   highlighted?: boolean
 }
-
-const handleError = fallbackToDefaultImageOnError('small')
 
 const ListingMarkerContent: React.FC<ListingMarkerContentProps> = ({
   listing,
@@ -54,19 +49,17 @@ const ListingMarkerContent: React.FC<ListingMarkerContentProps> = ({
             <ListingImageContainerElements>
               <FavoriteButton listingId={listing._id} />
             </ListingImageContainerElements>
-            <img
-              src={
-                listing?.photoGallery?.[0]?.fullUrl ||
-                getStreetViewImage(
-                  listing.latitude,
-                  listing.longitude,
-                  768,
-                  483
-                )
-              }
-              alt='Listing photo'
+            <ListingMainImage
+              imageUrl={listing.photoGallery?.[0]?.url}
+              imageHeightRatio={16 / 9}
+              // This chooses a size from the img srcSet that most closely
+              // matches the 14rem width of the popup, accounting for device
+              // pixel density
+              sizes='14rem'
+              latitude={listing.latitude}
+              longitude={listing.longitude}
               className={styles.listingMarkerImage}
-              onError={handleError}
+              fallbackImageUrl='/default_listing_image/default_listing_image_small.jpg'
             />
           </ListingImageContainer>
           <div className={styles.details}>

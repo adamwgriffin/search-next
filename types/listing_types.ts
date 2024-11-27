@@ -15,13 +15,9 @@ export interface ListingAddress {
 }
 
 export interface PhotoGalleryImage {
-  galleryUrl: string // used for slideshow image
-  fullUrl: string // used for listing detail image
-  smallUrl: string // used for listing card image
+  url: string
   caption?: string
 }
-
-export type PhotoGalleryImageSizes = 'gallery' | 'full' | 'small'
 
 export interface SubFeature {
   subfeature_name: string

@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
 import type { PhotoGalleryImage } from '../../../../types/listing_types'
 import { useState, useCallback } from 'react'
-import styles from './SlideShow.module.css'
+import { buildSrcSet } from '../../../../lib/listing_image_helpers'
 import Overlay from '../../../design_system/Overlay/Overlay'
+import styles from './SlideShow.module.css'
 
 export interface SlideShowProps {
   images: PhotoGalleryImage[]
@@ -49,8 +50,9 @@ const SlideShow: NextPage<SlideShowProps> = ({ images, open, onClose }) => {
               </div>
               <div>
                 <img
+                  srcSet={buildSrcSet(images[currentImage].url, 16 / 9)}
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${images[currentImage].url}`}
                   alt={`Listing Image ${currentImage}`}
-                  src={images[currentImage].fullUrl}
                   className={styles.listingImage}
                 />
               </div>

@@ -43,9 +43,7 @@ export type PropertyType = (typeof PropertyTypes)[number]
 export type PropertyStatus = (typeof AllPropertyStatuses)[number]
 
 export interface PhotoGalleryImage {
-  galleryUrl: string // 1920x1080 (used for slideshow image)
-  fullUrl: string // 853x480(used for listing detail image)
-  smallUrl: string // 533x300 (used for listing card image)
+  url: string
   caption?: string
 }
 
@@ -273,9 +271,7 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   photoGallery: {
     type: [
       {
-        galleryUrl: { type: String, required: true },
-        fullUrl: { type: String, required: true },
-        smallUrl: { type: String, required: true },
+        url: { type: String, required: true },
         caption: { type: String }
       }
     ],
