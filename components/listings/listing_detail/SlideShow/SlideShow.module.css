@@ -4,7 +4,9 @@
   left: 0;
   z-index: 100;
   display: grid;
-  grid-template-rows: 95px calc(100% - 95px);
+  grid-template-rows: var(--slideshow-header-height) calc(
+      100% - var(--slideshow-header-height)
+    );
   height: 100vh;
   width: 100%;
   background-color: black;
@@ -32,7 +34,7 @@
 
 .listingImage {
   max-width: 100%;
-  max-height: calc(100% - 95px);
+  max-height: calc(100% - var(--slideshow-header-height));
 }
 
 .header {

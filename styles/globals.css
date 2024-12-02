@@ -35,6 +35,7 @@ body,
   --loading-dots-small: 0.625rem;
   --active-listing: green;
   --sold-listing: red;
+  --slideshow-header-height: 6rem;
 }
 
 [data-theme='purple'] {
