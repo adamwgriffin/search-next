@@ -18,6 +18,8 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   const handleNextImage = useCallback(() => {
     if (currentImage < images.length - 1) {
       setCurrentImage(currentImage + 1)
+    } else {
+      setCurrentImage(0)
     }
   }, [currentImage, images.length])
 
