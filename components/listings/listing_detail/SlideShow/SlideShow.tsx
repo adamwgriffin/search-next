@@ -82,7 +82,8 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
             srcSet={buildSrcSet(images[currentImage].url)}
             src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${images[currentImage].url}`}
             fetchPriority='low'
-            alt={`Listing photo ${currentImage}`}
+            decoding='async'
+            alt={`Listing gallery photo ${currentImage}`}
             className={styles.listingImage}
           />
           <figcaption className={styles.caption}>
