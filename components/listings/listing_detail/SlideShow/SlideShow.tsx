@@ -26,8 +26,10 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   const handlePreviousImage = useCallback(() => {
     if (currentImage > 0) {
       setCurrentImage(currentImage - 1)
+    } else {
+      setCurrentImage(images.length - 1)
     }
-  }, [currentImage])
+  }, [currentImage, images.length])
 
   const handleClose = useCallback(() => {
     setCurrentImage(0)
