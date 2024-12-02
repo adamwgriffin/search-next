@@ -1,5 +1,5 @@
 import type { ListingDetail } from '../../../../types/listing_types'
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import {
   formatPriceFromListing,
