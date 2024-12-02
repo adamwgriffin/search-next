@@ -56,7 +56,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
             className={styles.listingImage}
           />
           <figcaption className={styles.caption}>
-            {images[0].caption}
+            {images[currentImage].caption}
           </figcaption>
         </figure>
 
