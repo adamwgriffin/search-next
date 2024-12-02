@@ -1,17 +1,17 @@
-import type { NextPage } from 'next'
+'use client'
+
 import type { PhotoGalleryImage } from '../../../../types/listing_types'
 import { useState, useCallback } from 'react'
 import { buildSrcSet } from '../../../../lib/listing_image_helpers'
-import Overlay from '../../../design_system/Overlay/Overlay'
 import styles from './SlideShow.module.css'
 
-export interface SlideShowProps {
+export type SlideShowProps = {
   images: PhotoGalleryImage[]
   open: boolean
   onClose?: () => void
 }
 
-const SlideShow: NextPage<SlideShowProps> = ({ images, open, onClose }) => {
+const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   const [currentImage, setCurrentImage] = useState(0)
 
   const handleNextImage = useCallback(() => {
@@ -27,48 +27,46 @@ const SlideShow: NextPage<SlideShowProps> = ({ images, open, onClose }) => {
   }, [currentImage])
 
   return (
-    <>
-      {open && (
-        <Overlay>
-          <div className={styles.slideShow}>
-            <div className={styles.header}>
-              <button className={styles.close} onClick={onClose}>
-                X Close
-              </button>
-              <div className={styles.imageCount}>
-                {currentImage + 1} / {images.length}
-              </div>
-            </div>
-            <div className={styles.carousel}>
-              <div>
-                <button
-                  className={styles.carouselButton}
-                  onClick={handlePreviousImage}
-                >
-                  &lt;
-                </button>
-              </div>
-              <div>
-                <img
-                  srcSet={buildSrcSet(images[currentImage].url, 16 / 9)}
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${images[currentImage].url}`}
-                  alt={`Listing Image ${currentImage}`}
-                  className={styles.listingImage}
-                />
-              </div>
-              <div>
-                <button
-                  className={styles.carouselButton}
-                  onClick={handleNextImage}
-                >
-                  &gt;
-                </button>
-              </div>
-            </div>
-          </div>
-        </Overlay>
-      )}
-    </>
+    <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
+      <div className={styles.header}>
+        <button className={styles.close} onClick={onClose}>
+          X Close
+        </button>
+        <div className={styles.imageCount}>
+          {currentImage + 1} / {images.length}
+        </div>
+      </div>
+
+      <div className={styles.carousel}>
+        <div className={styles.carouselButtonContainer}>
+          <button
+            className={styles.carouselButton}
+            onClick={handlePreviousImage}
+          >
+            &lt;
+          </button>
+        </div>
+
+        <figure className={styles.listingImageFigure}>
+          <img
+            srcSet={buildSrcSet(images[currentImage].url)}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${images[currentImage].url}`}
+            fetchPriority='low'
+            alt={`Listing photo ${currentImage}`}
+            className={styles.listingImage}
+          />
+          <figcaption className={styles.caption}>
+            {images[0].caption}
+          </figcaption>
+        </figure>
+
+        <div className={styles.carouselButtonContainer}>
+          <button className={styles.carouselButton} onClick={handleNextImage}>
+            &gt;
+          </button>
+        </div>
+      </div>
+    </dialog>
   )
 }
 
