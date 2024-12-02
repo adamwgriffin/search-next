@@ -23,11 +23,6 @@ export type ListingDetailProps = {
 const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
   const [slideShowOpen, setSlideShowOpen] = useState(false)
 
-  const openSlideShow = useCallback((open: boolean) => {
-    document.body.style.overflow = open ? 'hidden' : ''
-    setSlideShowOpen(open)
-  }, [])
-
   return (
     <div className={styles.listingDetail}>
       <div className={styles.status}>
@@ -36,7 +31,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
       </div>
       <ListingDetailImage
         listing={listing}
-        onClick={() => openSlideShow(true)}
+        onClick={() => setSlideShowOpen(true)}
       />
       <div className={styles.price}>
         {formatPriceFromListing(listing, { displayInterval: true })}
@@ -55,7 +50,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
       {createPortal(
         <SlideShow
           open={slideShowOpen}
-          onClose={() => openSlideShow(false)}
+          onClose={() => setSlideShowOpen(false)}
           images={listing.photoGallery || []}
         />,
         document.body

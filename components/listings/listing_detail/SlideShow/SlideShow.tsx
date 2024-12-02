@@ -1,7 +1,7 @@
 'use client'
 
 import type { PhotoGalleryImage } from '../../../../types/listing_types'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useLayoutEffect } from 'react'
 import { buildSrcSet } from '../../../../lib/listing_image_helpers'
 import styles from './SlideShow.module.css'
 
@@ -25,6 +25,13 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
       setCurrentImage(currentImage - 1)
     }
   }, [currentImage])
+
+  // Using useLayoutEffect helps avoid any kind of flicker associated with
+  // maniplulating the DOM like this because it happens before the browser
+  // repaints the screen
+  useLayoutEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+  }, [open])
 
   return (
     <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
