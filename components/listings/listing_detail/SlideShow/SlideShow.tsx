@@ -2,6 +2,7 @@
 
 import type { PhotoGalleryImage } from '../../../../types/listing_types'
 import { useState, useCallback, useLayoutEffect } from 'react'
+import { useEvent } from 'react-use'
 import { buildSrcSet } from '../../../../lib/listing_image_helpers'
 import styles from './SlideShow.module.css'
 
@@ -37,6 +38,21 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   useLayoutEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
   }, [open])
+
+  useEvent('keydown', (event) => {
+    if (!open) return
+    switch (event.key) {
+      case 'ArrowLeft':
+        handlePreviousImage()
+        break
+      case 'ArrowRight':
+        handleNextImage()
+        break
+      case 'Escape':
+        handleClose()
+        break
+    }
+  })
 
   return (
     <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
