@@ -15,30 +15,22 @@ export type SlideShowProps = {
 const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   const [currentImage, setCurrentImage] = useState(0)
 
-  const handleNextImage = useCallback(() => {
-    if (currentImage < images.length - 1) {
-      setCurrentImage(currentImage + 1)
-    } else {
-      setCurrentImage(0)
-    }
+  const cycleForward = useCallback(() => {
+    setCurrentImage((currentImage + 1) % images.length)
   }, [currentImage, images.length])
 
-  const handlePreviousImage = useCallback(() => {
-    if (currentImage > 0) {
-      setCurrentImage(currentImage - 1)
-    } else {
-      setCurrentImage(images.length - 1)
-    }
+  const cycleBackward = useCallback(() => {
+    setCurrentImage((currentImage - 1 + images.length) % images.length)
   }, [currentImage, images.length])
 
-  const handleClose = useCallback(() => {
+  const closeSlideShow = useCallback(() => {
     setCurrentImage(0)
     onClose?.()
   }, [onClose])
 
-  // Using useLayoutEffect helps avoid any kind of flicker associated with
-  // maniplulating the DOM like this because it happens before the browser
-  // repaints the screen
+  // With useLayoutEffect we can avoid any potential flicker associated with
+  // manually maniplulating the DOM like this because it happens before the
+  // browser repaints the screen
   useLayoutEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
   }, [open])
@@ -47,13 +39,13 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
     if (!open) return
     switch (event.key) {
       case 'ArrowLeft':
-        handlePreviousImage()
+        cycleBackward()
         break
       case 'ArrowRight':
-        handleNextImage()
+        cycleForward()
         break
       case 'Escape':
-        handleClose()
+        closeSlideShow()
         break
     }
   })
@@ -61,7 +53,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   return (
     <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
       <div className={styles.header}>
-        <button className={styles.close} onClick={handleClose}>
+        <button className={styles.close} onClick={closeSlideShow}>
           X Close
         </button>
         <div className={styles.imageCount}>
@@ -71,10 +63,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
 
       <div className={styles.carousel}>
         <div className={styles.carouselButtonContainer}>
-          <button
-            className={styles.carouselButton}
-            onClick={handlePreviousImage}
-          >
+          <button className={styles.carouselButton} onClick={cycleBackward}>
             &lt;
           </button>
         </div>
@@ -94,7 +83,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
         </figure>
 
         <div className={styles.carouselButtonContainer}>
-          <button className={styles.carouselButton} onClick={handleNextImage}>
+          <button className={styles.carouselButton} onClick={cycleForward}>
             &gt;
           </button>
         </div>
