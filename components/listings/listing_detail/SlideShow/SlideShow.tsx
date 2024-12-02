@@ -26,6 +26,11 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
     }
   }, [currentImage])
 
+  const handleClose = useCallback(() => {
+    setCurrentImage(0)
+    onClose?.()
+  }, [onClose])
+
   // Using useLayoutEffect helps avoid any kind of flicker associated with
   // maniplulating the DOM like this because it happens before the browser
   // repaints the screen
@@ -36,7 +41,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   return (
     <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
       <div className={styles.header}>
-        <button className={styles.close} onClick={onClose}>
+        <button className={styles.close} onClick={handleClose}>
           X Close
         </button>
         <div className={styles.imageCount}>
