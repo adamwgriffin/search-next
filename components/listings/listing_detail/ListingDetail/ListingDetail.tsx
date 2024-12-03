@@ -40,9 +40,9 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
       <ListingDetailAddress address={listing.address} />
       <ListingDetailBedsBathsSQFT listing={listing} />
       <Description description={listing.description} />
-      {listing.openHouses.length && (
+      {listing.openHouses.length ? (
         <OpenHouseList openHouses={listing.openHouses} />
-      )}
+      ) : null}
       <HomeHighlights listing={listing} />
       {listing.propertyDetails && (
         <PropertyDetails propertyDetails={listing.propertyDetails} />
