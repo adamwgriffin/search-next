@@ -60,12 +60,7 @@ const SearchPage: NextPage<SearchPageProps> = () => {
   useEffect(() => {
     getSearchParamsAndSetSearchState()
     searchNewLocation()
-  }, [
-    dispatch,
-    getSearchParamsAndSetSearchState,
-    initialSearchComplete,
-    searchNewLocation
-  ])
+  }, [getSearchParamsAndSetSearchState, searchNewLocation])
 
   // If the user clicks the back or forward button in the browser, we want to get the url that was loaded from the
   // previous/next part of the browser history, and then run a new search to match the url params. The "popstate" event
