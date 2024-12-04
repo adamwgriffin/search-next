@@ -15,6 +15,7 @@ export interface ListingAddress {
 }
 
 export interface PhotoGalleryImage {
+  _id: string
   url: string
   caption?: string
 }
