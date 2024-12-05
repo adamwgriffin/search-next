@@ -7,7 +7,9 @@ import { useSession } from 'next-auth/react'
 import { GoogleMapsMapOptions } from '../../config/googleMapsOptions'
 import { GoogleMapsPolygonOptions } from '../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
-import GoogleMap, { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+import GoogleMap, {
+  GoogleMapState
+} from '../../components/map/GoogleMap/GoogleMap'
 import ListingMarker from '../../components/map/ListingMarker/ListingMarker'
 import MapBoundary from '../../components/map/MapBoundary/MapBoundary'
 import MapControl from '../../components/map/MapControl/MapControl'
@@ -131,9 +133,14 @@ const ListingMap: NextPage = () => {
         options={GoogleMapsMapOptions}
         bounds={bounds}
         zoom={mapState.zoom}
-        onIdle={handleIdle}
-        onDragEnd={handleUserAdjustedMap}
-        onZoomChanged={handleUserAdjustedMap}
+        // Passing the handleIdle function directly to the prop seems to cause
+        // some kind of race condition with these events for some reason, so we're
+        // calling it with an anonymous function instead.
+        onIdle={(currentMapState) => handleIdle(currentMapState)}
+        onDragEnd={(currentMapState) => handleUserAdjustedMap(currentMapState)}
+        onZoomChanged={(currentMapState) =>
+          handleUserAdjustedMap(currentMapState)
+        }
       >
         {listings.map((l, i) => (
           <ListingMarker
