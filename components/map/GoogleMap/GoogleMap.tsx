@@ -1,4 +1,4 @@
-import { useRef, useEffect, ReactNode } from 'react'
+import { type ReactNode, useRef, useEffect, useCallback } from 'react'
 import { useEffectOnce } from 'react-use'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import styles from './GoogleMap.module.css'
@@ -35,54 +35,49 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   const mapEl = useRef(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
 
-  const getCurrentMapState = (): GoogleMapState => {
-    if (!googleMap) {
-      throw new Error('googleMap is not available.')
-    }
+  const getCurrentMapState = useCallback((): GoogleMapState => {
     return {
-      bounds: googleMap.getBounds()?.toJSON(),
-      center: googleMap.getCenter()?.toJSON(),
-      zoom: googleMap.getZoom()
+      bounds: googleMap?.getBounds()?.toJSON(),
+      center: googleMap?.getCenter()?.toJSON(),
+      zoom: googleMap?.getZoom()
     }
-  }
+  }, [googleMap])
 
-  // a generic handler for event props that just returns data about the map state if the event prop was defined
-  const eventHandlerFactoryFunc = (
-    fn: Function | undefined
-  ): Function | undefined => {
-    if (fn) return () => fn(getCurrentMapState())
-  }
-
-  const eventListenerMapping = {
-    dragstart: eventHandlerFactoryFunc(onDragStart),
-    dragend: eventHandlerFactoryFunc(onDragEnd),
-    zoom_changed: eventHandlerFactoryFunc(onZoomChanged),
-    idle: eventHandlerFactoryFunc(onIdle)
-  }
-
-  const createEventListeners = () => {
+  const createEventListeners = useCallback(() => {
+    if (!googleMap) return
+    const eventListenerMapping = {
+      dragstart: onDragStart,
+      dragend: onDragEnd,
+      zoom_changed: onZoomChanged,
+      idle: onIdle
+    }
     for (const [eventName, callback] of Object.entries(eventListenerMapping)) {
-      if (googleMap && typeof callback === 'function') {
-        eventListeners.push(
-          google.maps.event.addListener(googleMap, eventName, callback)
+      if (typeof callback !== 'function') continue
+      eventListeners.push(
+        google.maps.event.addListener(googleMap, eventName, () =>
+          callback(getCurrentMapState())
         )
-      }
+      )
     }
-  }
+  }, [
+    getCurrentMapState,
+    googleMap,
+    onDragEnd,
+    onDragStart,
+    onIdle,
+    onZoomChanged
+  ])
 
-  const destroyEventListeners = () => {
+  const destroyEventListeners = useCallback(() => {
     eventListeners.forEach((eventListener) =>
       google.maps.event.removeListener(eventListener)
     )
-  }
+    eventListeners.length = 0
+  }, [])
 
   useEffectOnce(() => {
-    if (mapEl.current !== null) {
+    if (mapEl.current) {
       setGoogleMap(new google.maps.Map(mapEl.current, options))
-    } else {
-      throw new Error(
-        'Reference to map container div is null. Unable to create map instance.'
-      )
     }
   })
 
@@ -103,8 +98,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       createEventListeners()
     }
     return destroyEventListeners
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [googleMap, onDragStart, onDragEnd, onZoomChanged, onIdle])
+  }, [createEventListeners, destroyEventListeners, googleMap])
 
   return (
     <div ref={mapEl} id={styles.googleMap}>
