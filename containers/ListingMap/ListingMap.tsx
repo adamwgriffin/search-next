@@ -108,14 +108,6 @@ const ListingMap: NextPage = () => {
     [dispatch]
   )
 
-  const handleZoomIn = useCallback(() => {
-    handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
-  }, [handleUserAdjustedMap, mapState.zoom])
-
-  const handleZoomOut = useCallback(() => {
-    handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
-  }, [handleUserAdjustedMap, mapState.zoom])
-
   const handleIdle = useCallback(
     (newMapState: GoogleMapState) => {
       dispatch(setMapData(newMapState))
@@ -127,20 +119,23 @@ const ListingMap: NextPage = () => {
     [dispatch, doListingSearchOnMapIdle]
   )
 
+  const handleZoomIn = useCallback(() => {
+    handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
+  }, [handleUserAdjustedMap, mapState.zoom])
+
+  const handleZoomOut = useCallback(() => {
+    handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
+  }, [handleUserAdjustedMap, mapState.zoom])
+
   return (
     <div className={styles.listingMap}>
       <GoogleMap
         options={GoogleMapsMapOptions}
         bounds={bounds}
         zoom={mapState.zoom}
-        // Passing the handleIdle function directly to the prop seems to cause
-        // some kind of race condition with these events for some reason, so we're
-        // calling it with an anonymous function instead.
-        onIdle={(currentMapState) => handleIdle(currentMapState)}
-        onDragEnd={(currentMapState) => handleUserAdjustedMap(currentMapState)}
-        onZoomChanged={(currentMapState) =>
-          handleUserAdjustedMap(currentMapState)
-        }
+        onIdle={handleIdle}
+        onDragEnd={handleUserAdjustedMap}
+        onUserChangedZoom={handleUserAdjustedMap}
       >
         {listings.map((l, i) => (
           <ListingMarker
