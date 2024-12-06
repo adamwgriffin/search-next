@@ -12,9 +12,7 @@ export type GoogleMapProps = {
   options: google.maps.MapOptions
   bounds?: google.maps.LatLngBoundsLiteral | null
   zoom?: number
-  onDragStart?: (currentMapState: GoogleMapState) => void
   onDragEnd?: (currentMapState: GoogleMapState) => void
-  onZoomChanged?: (currentMapState: GoogleMapState) => void
   onUserChangedZoom?: (currentMapState: GoogleMapState) => void
   onIdle?: (currentMapState: GoogleMapState) => void
   children: ReactNode
@@ -27,9 +25,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   bounds,
   zoom = 12,
   children,
-  onDragStart,
   onDragEnd,
-  onZoomChanged,
   onUserChangedZoom,
   onIdle
 }) => {
@@ -74,11 +70,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     if (!googleMap) return
     const eventListeners: google.maps.MapsEventListener[] = []
     eventListeners.push(
-      google.maps.event.addListener(googleMap, 'dragstart', () =>
-        onDragStart?.(getCurrentMapState())
-      )
-    )
-    eventListeners.push(
       google.maps.event.addListener(googleMap, 'dragend', () =>
         onDragEnd?.(getCurrentMapState())
       )
@@ -88,7 +79,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
         if (!zoomChangedProgrammatically) {
           onUserChangedZoom?.(getCurrentMapState())
         }
-        onZoomChanged?.(getCurrentMapState())
       })
     )
     eventListeners.push(
@@ -110,15 +100,7 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       )
       eventListeners.length = 0
     }
-  }, [
-    getCurrentMapState,
-    googleMap,
-    onDragEnd,
-    onDragStart,
-    onIdle,
-    onUserChangedZoom,
-    onZoomChanged
-  ])
+  }, [getCurrentMapState, googleMap, onDragEnd, onIdle, onUserChangedZoom])
 
   return (
     <div ref={mapEl} id={styles.googleMap}>
