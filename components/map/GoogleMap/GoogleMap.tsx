@@ -51,6 +51,12 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   })
 
+  useEffect(() => {
+    if (googleMap && googleMap.getZoom() !== zoom) {
+      googleMap.setZoom(zoom)
+    }
+  }, [zoom, googleMap])
+
   // A side effect of calling fitBounds() is that it will trigger a
   // "zoom_changed" event. We only want to call the onUserChangedZoom() event
   // callback if the user actually took some action to trigger "zoom_changed" so
@@ -61,12 +67,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       googleMap.fitBounds(bounds)
     }
   }, [bounds, googleMap])
-
-  useEffect(() => {
-    if (googleMap && googleMap.getZoom() !== zoom) {
-      googleMap.setZoom(zoom)
-    }
-  }, [zoom, googleMap])
 
   useEffect(() => {
     if (!googleMap) return
