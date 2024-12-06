@@ -1,5 +1,4 @@
 import { type ReactNode, useRef, useEffect, useCallback } from 'react'
-import { useEffectOnce } from 'react-use'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import styles from './GoogleMap.module.css'
 
@@ -45,11 +44,14 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [googleMap])
 
-  useEffectOnce(() => {
-    if (mapEl.current) {
+  useEffect(() => {
+    if (!mapEl.current) return
+    if (!googleMap) {
       setGoogleMap(new google.maps.Map(mapEl.current, options))
+    } else {
+      googleMap.setOptions(options)
     }
-  })
+  }, [googleMap, options, setGoogleMap])
 
   useEffect(() => {
     if (googleMap && googleMap.getZoom() !== zoom) {
