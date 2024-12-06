@@ -1,32 +1,52 @@
 .slideShow {
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: var(--slideshow-header-height) calc(
+      100% - var(--slideshow-header-height)
+    );
+  height: 100vh;
+  width: 100%;
+  background-color: black;
   color: white;
+  border: none;
+  padding: 0;
+}
+
+.slideShowClosed {
+  display: none;
 }
 
 .carousel {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  place-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listingImageFigure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 }
 
 .listingImage {
-  box-sizing: border-box;
-  display: block;
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  border: 0;
-  background: rgba(116, 245, 115, 0.18)
+  max-width: 100%;
+  max-height: calc(100% - var(--slideshow-header-height));
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5rem 3rem 1.25rem 2.5rem;
+  padding: 2.5rem 0 0 2.5rem;
+}
+
+.caption {
+  padding: 0.5rem;
+  text-align: center;
 }
 
 .close {
@@ -49,6 +69,11 @@
 .imageCount {
   text-align: center;
   flex-grow: 1;
+}
+
+.carouselButtonContainer {
+  display: flex;
+  align-items: center;
 }
 
 .carouselButton {

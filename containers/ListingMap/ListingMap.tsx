@@ -7,7 +7,9 @@ import { useSession } from 'next-auth/react'
 import { GoogleMapsMapOptions } from '../../config/googleMapsOptions'
 import { GoogleMapsPolygonOptions } from '../../config/googleMapsOptions'
 import styles from './ListingMap.module.css'
-import GoogleMap, { GoogleMapState } from '../../components/map/GoogleMap/GoogleMap'
+import GoogleMap, {
+  GoogleMapState
+} from '../../components/map/GoogleMap/GoogleMap'
 import ListingMarker from '../../components/map/ListingMarker/ListingMarker'
 import MapBoundary from '../../components/map/MapBoundary/MapBoundary'
 import MapControl from '../../components/map/MapControl/MapControl'
@@ -106,14 +108,6 @@ const ListingMap: NextPage = () => {
     [dispatch]
   )
 
-  const handleZoomIn = useCallback(() => {
-    handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
-  }, [handleUserAdjustedMap, mapState.zoom])
-
-  const handleZoomOut = useCallback(() => {
-    handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
-  }, [handleUserAdjustedMap, mapState.zoom])
-
   const handleIdle = useCallback(
     (newMapState: GoogleMapState) => {
       dispatch(setMapData(newMapState))
@@ -125,6 +119,14 @@ const ListingMap: NextPage = () => {
     [dispatch, doListingSearchOnMapIdle]
   )
 
+  const handleZoomIn = useCallback(() => {
+    handleUserAdjustedMap({ zoom: mapState.zoom + 1 })
+  }, [handleUserAdjustedMap, mapState.zoom])
+
+  const handleZoomOut = useCallback(() => {
+    handleUserAdjustedMap({ zoom: mapState.zoom - 1 })
+  }, [handleUserAdjustedMap, mapState.zoom])
+
   return (
     <div className={styles.listingMap}>
       <GoogleMap
@@ -133,7 +135,7 @@ const ListingMap: NextPage = () => {
         zoom={mapState.zoom}
         onIdle={handleIdle}
         onDragEnd={handleUserAdjustedMap}
-        onZoomChanged={handleUserAdjustedMap}
+        onUserChangedZoom={handleUserAdjustedMap}
       >
         {listings.map((l, i) => (
           <ListingMarker

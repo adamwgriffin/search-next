@@ -1,0 +1,15 @@
+@value smallAndUp from '../../../../styles/breakpoints.module.css';
+
+.listingDetailMainImage {
+  object-fit: cover;
+  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+}
+
+@media smallAndUp {
+  .listingDetailMainImage {
+    aspect-ratio: 16 / 9;
+  }
+}

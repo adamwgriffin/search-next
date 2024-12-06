@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-import type { CSSProperties } from 'react'
 import type { Listing } from '../../../types/listing_types'
 import {
   formatPriceFromListing,
@@ -13,23 +11,15 @@ import Link from 'next/link'
 import ListingImageContainer from '../../listings/ListingImageContainer/ListingImageContainer'
 import ListingImageContainerElements from '../../listings/ListingImageContainerElements/ListingImageContainerElements'
 import FavoriteButton from '../../../containers/FavoriteButton/FavoriteButton'
-import ListingMainImage from '../../listings/ListingMainImage/ListingMainImage'
+import ListingMainImage from '../../listings/listing_detail/ListingMainImage'
 
-export interface ListingMarkerContentProps {
+export type ListingMarkerContentProps = {
   listing: Listing
   link: string
   highlighted?: boolean
 }
 
-const listingMainImageStyles: CSSProperties = {
-  objectFit: 'cover',
-  width: '100%',
-  height: '7.5rem',
-  borderTopLeftRadius: '.8rem',
-  borderTopRightRadius: '.8rem'
-}
-
-const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
+const ListingMarkerContent: React.FC<ListingMarkerContentProps> = ({
   listing,
   link,
   highlighted = false
@@ -43,9 +33,10 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
     : styles.listingMarker
 
   return (
-    // we're only using a link here so that we can change the color of the marker depending on whether it has been
-    // visited in the browser history. the actual action taken when clicking the link is handled programmatically, which
-    // is why we're using preventDefault.
+    // We're only using a link here so that we can change the color of the
+    // marker depending on whether it has been visited in the browser history.
+    // The actual action taken when clicking the link is handled
+    // programmatically, which is why we're using preventDefault.
     <Link
       href={link}
       className={styles.link}
@@ -59,15 +50,22 @@ const ListingMarkerContent: NextPage<ListingMarkerContentProps> = ({
               <FavoriteButton listingId={listing._id} />
             </ListingImageContainerElements>
             <ListingMainImage
-              image={listing?.photoGallery?.[0]}
+              imageUrl={listing.photoGallery?.[0]?.url}
+              imageHeightRatio={16 / 9}
+              // This chooses a size from the img srcSet that most closely
+              // matches the 14rem width of the popup, accounting for device
+              // pixel density
+              sizes='14rem'
               latitude={listing.latitude}
               longitude={listing.longitude}
-              size='small'
-              style={listingMainImageStyles}
+              className={styles.listingMarkerImage}
+              fallbackImageUrl='/default_listing_image/default_listing_image_small.jpg'
             />
           </ListingImageContainer>
           <div className={styles.details}>
-            <div className={styles.price}>{formatPriceFromListing(listing)}</div>
+            <div className={styles.price}>
+              {formatPriceFromListing(listing)}
+            </div>
             <div className={styles.bedBathSqft}>
               <div>{listing.beds}bd</div>
               <div>{getBathrooms(listing)}ba</div>

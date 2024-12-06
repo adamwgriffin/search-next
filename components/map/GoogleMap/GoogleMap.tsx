@@ -1,18 +1,6 @@
-import { useRef, useEffect, ReactNode } from 'react'
-import { useEffectOnce } from 'react-use'
+import { type ReactNode, useRef, useEffect, useCallback } from 'react'
 import { useGoogleMaps } from '../../../providers/GoogleMapsProvider'
 import styles from './GoogleMap.module.css'
-
-export type GoogleMapProps = {
-  options: google.maps.MapOptions
-  bounds?: google.maps.LatLngBoundsLiteral | null
-  zoom?: number
-  onDragStart?: (currentMapState: GoogleMapState) => void
-  onDragEnd?: (currentMapState: GoogleMapState) => void
-  onZoomChanged?: (currentMapState: GoogleMapState) => void
-  onIdle?: (currentMapState: GoogleMapState) => void
-  children: ReactNode
-}
 
 export type GoogleMapState = {
   bounds: google.maps.LatLngBoundsLiteral | undefined
@@ -20,77 +8,46 @@ export type GoogleMapState = {
   zoom: number | undefined
 }
 
-const eventListeners: google.maps.MapsEventListener[] = []
+export type GoogleMapProps = {
+  options: google.maps.MapOptions
+  bounds?: google.maps.LatLngBoundsLiteral | null
+  zoom?: number
+  onDragEnd?: (currentMapState: GoogleMapState) => void
+  onUserChangedZoom?: (currentMapState: GoogleMapState) => void
+  onIdle?: (currentMapState: GoogleMapState) => void
+  children: ReactNode
+}
+
+let fitBoundsInProgress = false
 
 const GoogleMap: React.FC<GoogleMapProps> = ({
   options,
   bounds,
   zoom = 12,
   children,
-  onDragStart,
   onDragEnd,
-  onZoomChanged,
+  onUserChangedZoom,
   onIdle
 }) => {
-  const mapEl = useRef(null)
+  const mapEl = useRef<HTMLDivElement>(null)
   const { googleMap, setGoogleMap } = useGoogleMaps()
 
-  const getCurrentMapState = (): GoogleMapState => {
-    if (!googleMap) {
-      throw new Error('googleMap is not available.')
-    }
+  const getCurrentMapState = useCallback((): GoogleMapState => {
     return {
-      bounds: googleMap.getBounds()?.toJSON(),
-      center: googleMap.getCenter()?.toJSON(),
-      zoom: googleMap.getZoom()
+      bounds: googleMap?.getBounds()?.toJSON(),
+      center: googleMap?.getCenter()?.toJSON(),
+      zoom: googleMap?.getZoom()
     }
-  }
-
-  // a generic handler for event props that just returns data about the map state if the event prop was defined
-  const eventHandlerFactoryFunc = (
-    fn: Function | undefined
-  ): Function | undefined => {
-    if (fn) return () => fn(getCurrentMapState())
-  }
-
-  const eventListenerMapping = {
-    dragstart: eventHandlerFactoryFunc(onDragStart),
-    dragend: eventHandlerFactoryFunc(onDragEnd),
-    zoom_changed: eventHandlerFactoryFunc(onZoomChanged),
-    idle: eventHandlerFactoryFunc(onIdle)
-  }
-
-  const createEventListeners = () => {
-    for (const [eventName, callback] of Object.entries(eventListenerMapping)) {
-      if (googleMap && typeof callback === 'function') {
-        eventListeners.push(
-          google.maps.event.addListener(googleMap, eventName, callback)
-        )
-      }
-    }
-  }
-
-  const destroyEventListeners = () => {
-    eventListeners.forEach((eventListener) =>
-      google.maps.event.removeListener(eventListener)
-    )
-  }
-
-  useEffectOnce(() => {
-    if (mapEl.current !== null) {
-      setGoogleMap(new google.maps.Map(mapEl.current, options))
-    } else {
-      throw new Error(
-        'Reference to map container div is null. Unable to create map instance.'
-      )
-    }
-  })
+  }, [googleMap])
 
   useEffect(() => {
-    if (bounds && googleMap) {
-      googleMap.fitBounds(bounds)
+    if (!mapEl.current) return
+    if (!googleMap) {
+      setGoogleMap(new google.maps.Map(mapEl.current, options))
+    } else {
+      googleMap.setOptions(options)
     }
-  }, [bounds, googleMap])
+  }, [googleMap, options, setGoogleMap])
 
   useEffect(() => {
     if (googleMap && googleMap.getZoom() !== zoom) {
@@ -98,13 +55,53 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [zoom, googleMap])
 
+  // A side effect of calling fitBounds() is that it may sometimes trigger a
+  // "zoom_changed" event. We only want to call things like the
+  // onUserChangedZoom() event callback if the user actually took some action to
+  // trigger "zoom_changed," so we set the fitBoundsInProgress flag and unset it
+  // later so we can tell the difference.
   useEffect(() => {
-    if (googleMap) {
-      createEventListeners()
+    if (bounds && googleMap) {
+      fitBoundsInProgress = true
+      googleMap.fitBounds(bounds)
     }
-    return destroyEventListeners
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [googleMap, onDragStart, onDragEnd, onZoomChanged, onIdle])
+  }, [bounds, googleMap])
+
+  useEffect(() => {
+    if (!googleMap) return
+    const eventListeners: google.maps.MapsEventListener[] = []
+    eventListeners.push(
+      google.maps.event.addListener(googleMap, 'dragend', () =>
+        onDragEnd?.(getCurrentMapState())
+      )
+    )
+    eventListeners.push(
+      google.maps.event.addListener(googleMap, 'zoom_changed', () => {
+        // Make sure we only call this when a user action changed the zoom event
+        // rather than the bounds changing
+        if (!fitBoundsInProgress) {
+          onUserChangedZoom?.(getCurrentMapState())
+        }
+      })
+    )
+    eventListeners.push(
+      google.maps.event.addListener(googleMap, 'idle', () => {
+        // Reset fitBoundsInProgress after fitBounds() completes and map is
+        // idle.
+        fitBoundsInProgress = false
+        onIdle?.(getCurrentMapState())
+      })
+    )
+    // The events get re-added each time a dependency changes in this useEffect,
+    // so we have to clean them up, otherwise they will multiply quickly and
+    // cause many unecessary api requests.
+    return () => {
+      eventListeners.forEach((eventListener) =>
+        google.maps.event.removeListener(eventListener)
+      )
+      eventListeners.length = 0
+    }
+  }, [getCurrentMapState, googleMap, onDragEnd, onIdle, onUserChangedZoom])
 
   return (
     <div ref={mapEl} id={styles.googleMap}>

@@ -25,6 +25,7 @@ import {
   RentalPropertyStatuses
 } from '../models/ListingModel'
 import { listingAddressHasRequiredFields } from './listing_search_helpers'
+import { galleryData } from '../data/seed_data/development/photo_galleries'
 
 export type GeneratedListingGeocodeData = {
   address: ListingAddress
@@ -96,18 +97,14 @@ const getStatus = (rental: boolean): PropertyStatus =>
 const getPropertyType = (rental: boolean) =>
   faker.helpers.arrayElement(rental ? RentalPropertyTypes : PropertyTypes)
 
-const createPhotoGallery = (numberOfImages: number): PhotoGalleryImage[] => {
-  const lock = faker.number.int()
-  const images = []
-  for (let i = 0; i < numberOfImages; i++) {
-    images.push({
-      galleryUrl: `https://loremflickr.com/1920/1080/house?lock=${lock + i}`,
-      fullUrl: `https://loremflickr.com/853/480/house?lock=${lock + i}`,
-      smallUrl: `https://loremflickr.com/533/300/house?lock=${lock + i}`,
-      caption: faker.lorem.words({ min: 4, max: 10 })
-    })
-  }
-  return images
+const createPhotoGallery = (): PhotoGalleryImage[] => {
+  const [galleryName, fileNames] = faker.helpers.objectEntry(galleryData)
+  return fileNames.map((fileName) => {
+    return {
+      url: `/gallery/${galleryName}/${fileName}`,
+      caption: titleCase(faker.lorem.words({ min: 4, max: 10 }))
+    }
+  })
 }
 
 const randomWordArray = (min: number, max: number) =>
@@ -247,7 +244,7 @@ export const createRandomListingModel = (
     yearBuilt: faker.number.int({ min: 1910, max: today.getFullYear() }),
     newConstruction: createNewConstruction(propertyType),
     ...createAmenities(propertyType),
-    photoGallery: createPhotoGallery(faker.number.int({ min: 2, max: 5 })),
+    photoGallery: createPhotoGallery(),
     propertyDetails: createPropertyDetails(
       faker.number.int({ min: 4, max: 12 })
     )

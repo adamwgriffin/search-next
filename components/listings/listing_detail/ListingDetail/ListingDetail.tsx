@@ -1,11 +1,12 @@
-import { useState } from 'react'
 import type { ListingDetail } from '../../../../types/listing_types'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   formatPriceFromListing,
   formatSoldDate
 } from '../../../../lib/listing_helpers'
 import ListingStatusIndicator from '../../ListingStatusIndicator/ListingStatusIndicator'
-import ListingDetailImage from '../ListingDetailImage/ListingDetailImage'
+import ListingDetailImage from '../ListingDetailImage'
 import ListingDetailAddress from '../ListingDetailAddress/ListingDetailAddress'
 import ListingDetailBedsBathsSQFT from '../ListingDetailBedsBathsSQFT/ListingDetailBedsBathsSQFT'
 import Description from '../Description/Description'
@@ -39,18 +40,21 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
       <ListingDetailAddress address={listing.address} />
       <ListingDetailBedsBathsSQFT listing={listing} />
       <Description description={listing.description} />
-      {listing.openHouses.length && (
+      {listing.openHouses.length ? (
         <OpenHouseList openHouses={listing.openHouses} />
-      )}
+      ) : null}
       <HomeHighlights listing={listing} />
       {listing.propertyDetails && (
         <PropertyDetails propertyDetails={listing.propertyDetails} />
       )}
-      <SlideShow
-        open={slideShowOpen}
-        onClose={() => setSlideShowOpen(false)}
-        images={listing.photoGallery || []}
-      />
+      {createPortal(
+        <SlideShow
+          open={slideShowOpen}
+          onClose={() => setSlideShowOpen(false)}
+          images={listing.photoGallery || []}
+        />,
+        document.body
+      )}
     </div>
   )
 }
