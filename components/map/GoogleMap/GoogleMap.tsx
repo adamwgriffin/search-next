@@ -68,17 +68,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [zoom, googleMap])
 
-  const handleZoomChanged = useCallback(
-    (currentMapState: GoogleMapState) => {
-      // Only call onUserChangedZoom() if the user took some action to trigger the "zoom_changed" event
-      if (!zoomChangedProgrammatically) {
-        onUserChangedZoom?.(currentMapState)
-      }
-      onZoomChanged?.(currentMapState)
-    },
-    [onUserChangedZoom, onZoomChanged]
-  )
-
   useEffect(() => {
     if (!googleMap) return
     const eventListeners: google.maps.MapsEventListener[] = []
@@ -93,9 +82,12 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
       )
     )
     eventListeners.push(
-      google.maps.event.addListener(googleMap, 'zoom_changed', () =>
-        handleZoomChanged?.(getCurrentMapState())
-      )
+      google.maps.event.addListener(googleMap, 'zoom_changed', () => {
+        if (!zoomChangedProgrammatically) {
+          onUserChangedZoom?.(getCurrentMapState())
+        }
+        onZoomChanged?.(getCurrentMapState())
+      })
     )
     eventListeners.push(
       google.maps.event.addListener(googleMap, 'idle', () => {
@@ -119,7 +111,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
   }, [
     getCurrentMapState,
     googleMap,
-    handleZoomChanged,
     onDragEnd,
     onDragStart,
     onIdle,
