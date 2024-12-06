@@ -18,7 +18,7 @@ export type GoogleMapProps = {
   children: ReactNode
 }
 
-let zoomChangedProgrammatically = false
+let fitBoundsInProgress = false
 
 const GoogleMap: React.FC<GoogleMapProps> = ({
   options,
@@ -55,13 +55,14 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     }
   }, [zoom, googleMap])
 
-  // A side effect of calling fitBounds() is that it will trigger a
-  // "zoom_changed" event. We only want to call the onUserChangedZoom() event
-  // callback if the user actually took some action to trigger "zoom_changed" so
-  // we set this flag and unset it later so we can tell.
+  // A side effect of calling fitBounds() is that it may sometimes trigger a
+  // "zoom_changed" event. We only want to call things like the
+  // onUserChangedZoom() event callback if the user actually took some action to
+  // trigger "zoom_changed," so we set the fitBoundsInProgress flag and unset it
+  // later so we can tell the difference.
   useEffect(() => {
     if (bounds && googleMap) {
-      zoomChangedProgrammatically = true
+      fitBoundsInProgress = true
       googleMap.fitBounds(bounds)
     }
   }, [bounds, googleMap])
@@ -76,18 +77,18 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
     )
     eventListeners.push(
       google.maps.event.addListener(googleMap, 'zoom_changed', () => {
-        if (!zoomChangedProgrammatically) {
+        // Make sure we only call this when a user action changed the zoom event
+        // rather than the bounds changing
+        if (!fitBoundsInProgress) {
           onUserChangedZoom?.(getCurrentMapState())
         }
       })
     )
     eventListeners.push(
       google.maps.event.addListener(googleMap, 'idle', () => {
-        // On first load zoomChangedProgrammatically gets set to true, which
-        // prevents any user initiated zoom changes from being registered.
-        // Unsetting the flag after the map settles seems to be the best way to
-        // avoid this.
-        zoomChangedProgrammatically = false
+        // Reset fitBoundsInProgress after fitBounds() completes and map is
+        // idle.
+        fitBoundsInProgress = false
         onIdle?.(getCurrentMapState())
       })
     )
