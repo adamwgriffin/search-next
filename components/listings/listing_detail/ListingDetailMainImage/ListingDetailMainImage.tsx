@@ -19,6 +19,10 @@ const MobileHeightRatio = 1 / 1
 const ImageLoadErrorFallbackUrl =
   '/default_listing_image/default_listing_image_full.jpg'
 const MobileMediaQuery = '(max-width: 576px)'
+const commonImgAttrs: ImgHTMLAttributes<HTMLImageElement> = {
+  fetchPriority: 'high',
+  className: styles.listingDetailMainImage
+}
 
 const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
   imageUrl,
@@ -31,16 +35,11 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
 
   const handleImageLoadError = useCallback(() => setImageLoadError(true), [])
 
-  const commonImgAttrs: ImgHTMLAttributes<HTMLImageElement> = {
-    alt,
-    fetchPriority: 'high',
-    className: styles.listingDetailMainImage
-  }
-
   if (imageLoadError) {
     return (
       <img
         src={ImageLoadErrorFallbackUrl}
+        alt={alt}
         {...commonImgAttrs}
       />
     )
@@ -61,6 +60,7 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
           // If there is no image for the location the street view service will
           // return an error status that triggers this
           onError={handleImageLoadError}
+          alt={alt}
           {...commonImgAttrs}
         />
       </picture>
@@ -81,6 +81,7 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
           GoogleStreetViewMaxImageSize / HeightRatio
         )}
         onError={handleImageLoadError}
+        alt={alt}
         {...commonImgAttrs}
       />
     </picture>
