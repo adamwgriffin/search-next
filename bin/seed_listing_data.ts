@@ -52,7 +52,7 @@ const main = async (): Promise<void> => {
     // If we don't call this it will only create the _id and one other index in MongoDB Atlas. No idea why as it works
     // fine with a local instance of MongoDB.
     await Listing.syncIndexes()
-    console.log("Finished syncing all indexes.")
+    console.log('Finished syncing all indexes.')
     await disconnectDatabase()
     process.exit(0)
   } catch (err) {

@@ -210,15 +210,15 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   },
   sqft: {
     type: Number,
-    required: true,
+    required: true
   },
   lotSize: {
     type: Number,
-    required: true,
+    required: true
   },
   yearBuilt: {
     type: Number,
-    required: true,
+    required: true
   },
   rental: {
     type: Boolean,
@@ -227,35 +227,35 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   },
   waterfront: {
     type: Boolean,
-    default: false,
+    default: false
   },
   view: {
     type: Boolean,
-    default: false,
+    default: false
   },
   fireplace: {
     type: Boolean,
-    default: false,
+    default: false
   },
   basement: {
     type: Boolean,
-    default: false,
+    default: false
   },
   garage: {
     type: Boolean,
-    default: false,
+    default: false
   },
   newConstruction: {
     type: Boolean,
-    default: false,
+    default: false
   },
   pool: {
     type: Boolean,
-    default: false,
+    default: false
   },
   airConditioning: {
     type: Boolean,
-    default: false,
+    default: false
   },
   photoGallery: {
     type: [
@@ -281,7 +281,7 @@ const ListingSchema = new Schema<IListing, IListingModel>({
       }
     ],
     required: false,
-    default: [],
+    default: []
   },
   openHouses: {
     type: [
