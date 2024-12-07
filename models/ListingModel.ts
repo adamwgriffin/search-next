@@ -211,17 +211,14 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   sqft: {
     type: Number,
     required: true,
-    index: true
   },
   lotSize: {
     type: Number,
     required: true,
-    index: true
   },
   yearBuilt: {
     type: Number,
     required: true,
-    index: true
   },
   rental: {
     type: Boolean,
@@ -231,42 +228,34 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   waterfront: {
     type: Boolean,
     default: false,
-    index: true
   },
   view: {
     type: Boolean,
     default: false,
-    index: true
   },
   fireplace: {
     type: Boolean,
     default: false,
-    index: true
   },
   basement: {
     type: Boolean,
     default: false,
-    index: true
   },
   garage: {
     type: Boolean,
     default: false,
-    index: true
   },
   newConstruction: {
     type: Boolean,
     default: false,
-    index: true
   },
   pool: {
     type: Boolean,
     default: false,
-    index: true
   },
   airConditioning: {
     type: Boolean,
     default: false,
-    index: true
   },
   photoGallery: {
     type: [
@@ -293,7 +282,6 @@ const ListingSchema = new Schema<IListing, IListingModel>({
     ],
     required: false,
     default: [],
-    index: true
   },
   openHouses: {
     type: [
@@ -419,10 +407,6 @@ ListingSchema.statics.findWithinRadius = async function <
     }
   ])
 }
-
-// looks like this is how we need to do the index if we plan on querying the fields inside the OpenHouses array.
-ListingSchema.index({ 'openHouses.start': 1 })
-ListingSchema.index({ 'openHouses.end': 1 })
 
 export default (mongoose.models.Listing as IListingModel) ||
   model<IListing, IListingModel>('Listing', ListingSchema)
