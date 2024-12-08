@@ -4,7 +4,7 @@ import {
 } from '../store/listingMap/listingMapTypes'
 import type { PropertyType } from '../lib/property_types'
 
-export type PropertyStatus = 'active' | 'pending' | 'sold'
+export type PropertyStatus = 'active' | 'pending' | 'sold' | 'rented'
 
 export interface ListingAddress {
   line1: string
