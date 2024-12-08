@@ -34,6 +34,8 @@ export type GeneratedListingGeocodeData = {
   placeId: string
 }
 
+export type ListingData = Omit<IListing, 'slug'>
+
 export const RentalPropertyTypes = PropertyTypes.filter((t) => t !== 'land')
 
 export const AddressComponentAddressTemplate: ListingAddress = Object.freeze({
@@ -69,7 +71,7 @@ export const randomNumberInRangeRounded = (
   roundTo: number
 ): number => roundDownToNearest(faker.number.int({ min, max }), roundTo)
 
-export const addSoldData = (listing: IListing): IListing => {
+export const addSoldData = (listing: ListingData): ListingData => {
   const today = new Date()
   const soldDate = faker.date.between({
     from: listing.listedDate,
@@ -220,12 +222,12 @@ const createNewConstruction = (propertyType: PropertyType) =>
 
 export const createRandomListingModel = (
   listingGeocodeData: GeneratedListingGeocodeData
-): IListing => {
+): ListingData => {
   const { address, neighborhood, point, placeId } = listingGeocodeData
   const today = new Date()
   const rental = faker.datatype.boolean({ probability: 0.4 })
   const propertyType = getPropertyType(rental)
-  const listing: IListing = {
+  const listing: ListingData = {
     listPrice: getListPrice(rental),
     listedDate: faker.date.between({
       from: subMonths(today, 6),
@@ -337,7 +339,11 @@ export const generateRandomGeospatialDataForPoly = async (
   // We are doing these geocode requests sequentially because doing them in parallel can cause lots of rate limit errors
   for (const point of points) {
     const data = await getGeocodeDataForPoint(point)
-    if (data) {
+    // For some reason they way we do this generates a lot of duplicate place_ids,
+    // even though the coordinates are technically different, so we're de-duping
+    // them here.
+    const alreadyExists = listingGeocodeData.some((d) => d.placeId === data?.placeId)
+    if (data && !alreadyExists) {
       listingGeocodeData.push(data)
     }
   }

@@ -7,14 +7,14 @@ export const useOpenListingDetail = (addUrlOnModalOpen = true) => {
   const dispatch = useAppDispatch()
   const isSmallAndUp = useMedia('(min-width: 576px)', false)
 
-  return (url: string, listingId: string) => {
+  return (url: string, listingSlug: string) => {
     if (isSmallAndUp) {
       window.open(url, '_blank')
     } else {
       dispatch(
         openModal({
           modalType: 'listingDetail',
-          modalProps: { listingId }
+          modalProps: { listingSlug }
         })
       )
       if (addUrlOnModalOpen) addUrlToBrowserHistory(url)

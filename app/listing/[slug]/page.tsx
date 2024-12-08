@@ -1,5 +1,6 @@
 'use client'
 
+import type { ListingDetailParams } from '../../api/listing_detail/[slug]/route'
 import { useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { useAppSelector, useAppDispatch } from '../../../hooks/app_hooks'
@@ -15,15 +16,15 @@ import LoginOrRegisterModal from '../../../containers/modals/LoginOrRegisterModa
 
 const ListingPage: React.FC = () => {
   useGetCurrentUserIfAuthenticated()
-  const params = useParams()
+  const params = useParams<ListingDetailParams>()
   const dispatch = useAppDispatch()
   const listing = useAppSelector(selectListing)
 
   useEffect(() => {
-    if (!listing && typeof params?.listing_id === 'string') {
-      dispatch(getListingDetail(params.listing_id))
+    if (!listing && typeof params?.slug === 'string') {
+      dispatch(getListingDetail(params.slug))
     }
-  }, [params?.listing_id, dispatch, listing])
+  }, [params?.slug, dispatch, listing])
 
   return (
     <GoogleMapsProvider>

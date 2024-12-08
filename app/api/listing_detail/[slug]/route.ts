@@ -6,24 +6,22 @@ import { ListingDetailResultProjectionFields } from '../../../../config/listing_
 import { daysOnMarket } from '../../../../lib/listing_search_helpers'
 
 export type ListingDetailParams = {
-  params: {
-    listing_id: string
-  }
+  slug: string
 }
 
 export async function GET(
   _request: NextRequest,
-  { params }: ListingDetailParams
+  { params }: { params: ListingDetailParams }
 ) {
   await mongooseConnect()
 
-  const listing = await Listing.findById(
-    params.listing_id,
+  const listing = await Listing.findOne(
+    { slug: params.slug },
     ListingDetailResultProjectionFields
   )
   if (!listing) {
     return NextResponse.json(
-      { message: `Listing not found with ID ${params.listing_id}` },
+      { message: `Listing not found with slug ${params.slug}` },
       { status: 404 }
     )
   }

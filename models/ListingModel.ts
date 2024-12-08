@@ -8,6 +8,7 @@ import type {
 import type { ListingAddress } from '../zod_schemas/listingSchema'
 import type { PaginationParams } from '../zod_schemas/listingSearchParamsSchema'
 import mongoose, { Model, ProjectionFields, Schema, model } from 'mongoose'
+import slugify from 'slugify'
 import PointSchema from './PointSchema'
 import {
   ListingResultProjectionFields,
@@ -81,6 +82,7 @@ export interface IListing extends ListingAmenities {
   listedDate: Date
   soldDate?: Date
   address: ListingAddress
+  slug: string
   geometry: Point
   placeId?: string
   neighborhood: string
@@ -171,6 +173,11 @@ const ListingSchema = new Schema<IListing, IListingModel>({
       minlength: 1
     }
   },
+  slug: {
+    type: String,
+    unique: true,
+    index: true
+  },
   geometry: {
     type: PointSchema,
     index: '2dsphere',
@@ -210,15 +217,15 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   },
   sqft: {
     type: Number,
-    required: true,
+    required: true
   },
   lotSize: {
     type: Number,
-    required: true,
+    required: true
   },
   yearBuilt: {
     type: Number,
-    required: true,
+    required: true
   },
   rental: {
     type: Boolean,
@@ -227,35 +234,35 @@ const ListingSchema = new Schema<IListing, IListingModel>({
   },
   waterfront: {
     type: Boolean,
-    default: false,
+    default: false
   },
   view: {
     type: Boolean,
-    default: false,
+    default: false
   },
   fireplace: {
     type: Boolean,
-    default: false,
+    default: false
   },
   basement: {
     type: Boolean,
-    default: false,
+    default: false
   },
   garage: {
     type: Boolean,
-    default: false,
+    default: false
   },
   newConstruction: {
     type: Boolean,
-    default: false,
+    default: false
   },
   pool: {
     type: Boolean,
-    default: false,
+    default: false
   },
   airConditioning: {
     type: Boolean,
-    default: false,
+    default: false
   },
   photoGallery: {
     type: [
@@ -281,7 +288,7 @@ const ListingSchema = new Schema<IListing, IListingModel>({
       }
     ],
     required: false,
-    default: [],
+    default: []
   },
   openHouses: {
     type: [
@@ -294,6 +301,21 @@ const ListingSchema = new Schema<IListing, IListingModel>({
     default: [],
     required: false
   }
+})
+
+ListingSchema.pre('save', async function (next) {
+  if (this.isModified('address') || !this.slug) {
+    const address = Object.values(this.address).filter(Boolean).join(' ')
+    const baseSlug = slugify(address, { lower: true, strict: true })
+    let slug = baseSlug
+    let count = 0
+    while (await mongoose.models.Listing.exists({ slug })) {
+      count += 1
+      slug = `${baseSlug}-${count}`
+    }
+    this.slug = slug
+  }
+  next()
 })
 
 /**

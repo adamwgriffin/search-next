@@ -13,7 +13,10 @@ export type SlideShowProps = {
   onClose?: () => void
 }
 
+/** Number of extra images to load both before and after the current image */
 const ExtraImagesToLoad = 1
+/** Total number of images that will be loaded at once */
+const TotalImagesToLoad = ExtraImagesToLoad * 2 + 1
 
 const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -26,6 +29,9 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
    * around this way.
    */
   const gallerySlice = useCallback(() => {
+    if (images.length <= TotalImagesToLoad) {
+      return images
+    }
     return sliceWrap(
       images,
       currentIndex - ExtraImagesToLoad,

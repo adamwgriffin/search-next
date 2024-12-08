@@ -8,7 +8,8 @@ export type ListingStatusIndicatorProps = {
 export const StatusLabels = {
   active: 'Active',
   pending: 'Pending',
-  sold: 'Sold'
+  sold: 'Sold',
+  rented: 'Rented'
 }
 
 const statusClass = (status: ListingStatusIndicatorProps['status']) => {
@@ -16,6 +17,7 @@ const statusClass = (status: ListingStatusIndicatorProps['status']) => {
     case 'active':
       return styles.statusActive
     case 'sold':
+    case 'rented':
       return styles.statusSold
     default:
       return styles.status

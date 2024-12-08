@@ -14,9 +14,9 @@ const initialState: ListingDetailState = {
 
 export const getListingDetail = createAppAsyncThunk<ListingDetail, string>(
   'listingDetail/getListingDetail',
-  async (listingID) => {
+  async (listingSlug) => {
     const response = await http.get<ListingDetail>(
-      `/api/listing_detail/${listingID}`
+      `/api/listing_detail/${listingSlug}`
     )
     return response.data
   }

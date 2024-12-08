@@ -11,7 +11,7 @@ export type ModalType =
   | 'loginOrRegister'
 
 export type ListingDetailModalProps = {
-  listingId: string
+  listingSlug: string
 }
 
 export type ModalPropsTypes = ListingDetailModalProps | null
@@ -72,8 +72,8 @@ const modalTypeOpen = (state: AppState, modalType: ModalType) =>
 
 export const selectViewType = (state: AppState) => state.application.viewType
 
-export const selectListingModalId = (state: AppState) =>
-  state.application.modalProps?.listingId
+export const selectListingModalSlug = (state: AppState) =>
+  state.application.modalProps?.listingSlug
 
 export const selectFiltersModalOpen = (state: AppState) =>
   modalTypeOpen(state, 'filters')
