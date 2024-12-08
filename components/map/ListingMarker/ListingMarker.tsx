@@ -16,7 +16,7 @@ export interface ListingMarkerProps {
   authenticaticated: boolean
   onMouseEnter?: (listingid: string) => void
   onMouseLeave?: () => void
-  onClick?: (listingid: string) => void
+  onClick?: (listingSlug: string) => void
 }
 
 const ListingMarker: NextPage<ListingMarkerProps> = ({
@@ -49,7 +49,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
     (
       marker: google.maps.marker.AdvancedMarkerElement
     ): { handleMouseEnter: () => void; handleMouseLeave: () => void } => {
-      marker.addListener('click', () => onClick?.(listing._id))
+      marker.addListener('click', () => onClick?.(listing.slug))
       // there are currently only a few events that AdvancedMarkerElement supports, so we have to attach events to the
       // element itself for others to work. Note: marker.element is not the the markerContainer we created
       const markerElement = marker.element
@@ -91,7 +91,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
   return createPortal(
     <ListingMarkerContent
       listing={listing}
-      link={`/listing/${listing._id}`}
+      link={`/listing/${listing.slug}`}
       highlighted={highlighted}
     />,
     markerContainer

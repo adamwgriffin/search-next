@@ -32,8 +32,6 @@ export interface Feature {
   subfeatures: SubFeature[]
 }
 
-// The _id is added by Mongo automatically, so it's not defined explicityl in the Listing Service version of this type
-// definition
 export interface PropertDetail {
   _id: string
   name: string
@@ -65,6 +63,7 @@ export interface Listing {
   neighborhood: string
   description: string | null
   address: ListingAddress
+  slug: string
   latitude: number
   longitude: number
   rental?: boolean

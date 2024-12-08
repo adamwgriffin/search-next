@@ -88,8 +88,8 @@ const ListingMap: NextPage = () => {
   }, [dispatch, isSmallAndUp])
 
   const handleListingMarkerMouseClick = useCallback(
-    (listingId: string) => {
-      openListingDetail(`/listing/${listingId}`, listingId)
+    (listingSlug: string) => {
+      openListingDetail(`/listing/${listingSlug}`, listingSlug)
     },
     [openListingDetail]
   )

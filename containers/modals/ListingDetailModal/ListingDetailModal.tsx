@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectListingDetailModalOpen,
-  selectListingModalId,
+  selectListingModalSlug,
   closeModal,
   resetModal
 } from '../../../store/application/applicationSlice'
@@ -21,14 +21,14 @@ import ListingDetail from '../../../components/listings/listing_detail/ListingDe
 const ListingDetailModal: React.FC = () => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectListingDetailModalOpen)
-  const listingId = useAppSelector(selectListingModalId)
+  const listingSlug = useAppSelector(selectListingModalSlug)
   const listing = useAppSelector(selectListing)
 
   useEffect(() => {
-    if (listingId) {
-      dispatch(getListingDetail(listingId))
+    if (listingSlug) {
+      dispatch(getListingDetail(listingSlug))
     }
-  }, [listingId, dispatch])
+  }, [listingSlug, dispatch])
 
   const handleClose = () => {
     dispatch(closeModal())

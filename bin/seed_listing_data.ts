@@ -47,7 +47,13 @@ const main = async (): Promise<void> => {
     const listingData = JSON.parse(
       fs.readFileSync(argv.file, 'utf-8')
     ) as IListing[]
-    const listings = await Listing.create(listingData)
+    let listings = []
+    // We creating these one at a time instead of passing all the data to
+    // Listing.create() because doing it that way doesn't seem to allow the slug
+    // dedupe logic to work correctly.
+    for (const listing of listingData) {
+      listings.push(await Listing.create(listing))
+    }
     console.log(`${listings.length} listings created.`)
     // If we don't call this it will only create the _id and one other index in MongoDB Atlas. No idea why as it works
     // fine with a local instance of MongoDB.

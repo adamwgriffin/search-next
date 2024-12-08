@@ -15,7 +15,8 @@ export const ListingResultProjectionFields = {
   rental: 1,
   photoGallery: 1,
   openHouses: 1,
-  placeId: 1
+  placeId: 1,
+  slug: 1
 }
 
 // "distance" refers to the fieldname set in the  "distanceField" for the $geoNear query used in the findWithinRadius

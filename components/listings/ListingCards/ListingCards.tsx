@@ -26,9 +26,9 @@ const ListingCards: NextPage<ListingCardProps> = ({
           <li key={listing._id}>
             <ListingCard
               listing={listing}
-              url={`/listing/${listing._id}`}
+              url={`/listing/${listing.slug}`}
               onClick={() =>
-                onListingCardClick(`/listing/${listing._id}`, listing._id)
+                onListingCardClick(`/listing/${listing.slug}`, listing.slug)
               }
               onMouseEnter={() => onListingCardMouseEnter?.(listing._id)}
               onMouseLeave={() => onListingCardMouseLeave?.(listing._id)}
