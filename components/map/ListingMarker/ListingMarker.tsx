@@ -66,7 +66,7 @@ const ListingMarker: NextPage<ListingMarkerProps> = ({
       markerElement.addEventListener('mouseleave', handleMouseLeave)
       return { handleMouseEnter, handleMouseLeave }
     },
-    [highlighted, listing._id, onClick, onMouseEnter, onMouseLeave, zIndex]
+    [highlighted, listing, onClick, onMouseEnter, onMouseLeave, zIndex]
   )
 
   useEffect(() => {
