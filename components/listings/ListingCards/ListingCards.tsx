@@ -1,10 +1,9 @@
-import type { NextPage } from 'next'
 import type { Listing } from '../../../types/listing_types'
-import styles from './ListingCards.module.css'
 import ListingCard from '../ListingCard/ListingCard'
 import ListingCardLoader from '../ListingCardLoader/ListingCardLoader'
+import styles from './ListingCards.module.css'
 
-export interface ListingCardProps {
+export type ListingCardProps = {
   listings: Listing[]
   listingSearchRunning: boolean
   onListingCardClick: (url: string, listingId: string) => void
@@ -12,55 +11,40 @@ export interface ListingCardProps {
   onListingCardMouseLeave?: (listingId: string) => void
 }
 
-const ListingCards: NextPage<ListingCardProps> = ({
+const ListingCards: React.FC<ListingCardProps> = ({
   listings,
   listingSearchRunning,
   onListingCardClick,
   onListingCardMouseEnter,
   onListingCardMouseLeave
 }) => {
+  if (listingSearchRunning) {
+    return (
+      <ul className={styles.listingCards}>
+        {[...Array(6)].map((_, i) => (
+        <li key={i}>
+          <ListingCardLoader />
+        </li>
+      ))}
+      </ul>
+    )
+  }
+
   return (
     <ul className={styles.listingCards}>
-      {!listingSearchRunning &&
-        listings.map((listing) => (
-          <li key={listing._id}>
-            <ListingCard
-              listing={listing}
-              url={`/listing/${listing.slug}`}
-              onClick={() =>
-                onListingCardClick(`/listing/${listing.slug}`, listing.slug)
-              }
-              onMouseEnter={() => onListingCardMouseEnter?.(listing._id)}
-              onMouseLeave={() => onListingCardMouseLeave?.(listing._id)}
-            />
-          </li>
-        ))}
-
-      {listingSearchRunning && (
-        <>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-          <li>
-            <ListingCardLoader />
-          </li>
-        </>
-      )}
+      {listings.map((listing) => (
+        <li key={listing._id}>
+          <ListingCard
+            listing={listing}
+            url={`/listing/${listing.slug}`}
+            onClick={() =>
+              onListingCardClick(`/listing/${listing.slug}`, listing.slug)
+            }
+            onMouseEnter={() => onListingCardMouseEnter?.(listing._id)}
+            onMouseLeave={() => onListingCardMouseLeave?.(listing._id)}
+          />
+        </li>
+      ))}
     </ul>
   )
 }
