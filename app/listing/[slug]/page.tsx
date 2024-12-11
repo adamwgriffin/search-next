@@ -27,7 +27,7 @@ const ListingPage: React.FC = () => {
   }, [params?.slug, dispatch, listing])
 
   return (
-    <GoogleMapsProvider>
+    <GoogleMapsProvider libraries={['places']}>
       <ListingDetailHeader />
       {listing && <ListingDetail listing={listing} />}
       <LoginOrRegisterModal />

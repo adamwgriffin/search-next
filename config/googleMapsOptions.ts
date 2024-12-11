@@ -5,21 +5,21 @@ export const GoogleMapsStreetViewURL =
 
 export const GoogleStreetViewMaxImageSize = 640
 
-// options for @googlemaps/loader, which loads Google Maps by creating a script
-// tag with these params in it. things like your api key and the libraries you
+// Options for @googlemaps/loader, which loads Google Maps by creating a script
+// tag with these params in it. Things like your api key and the libraries you
 // want to load go here
-export const GoogleMapsLoaderOptions: LoaderOptions = {
+export const DefaultGoogleMapsLoaderOptions: LoaderOptions = {
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   version: 'quarterly'
 }
 
-export const GoogleMapsLibraries: Libraries = ['maps', 'places', 'marker']
+export const DefaultGoogleMapsLibraries: Libraries = ['maps', 'places', 'marker']
 
-// default options for the map itself, such as what UI controls to enable, etc.
-// seems that we can't use Object.freeze on this object, otherwise the map won't
+// Default options for the map itself, such as what UI controls to enable, etc.
+// Seems that we can't use Object.freeze on this object, otherwise the map won't
 // load
 export const GoogleMapsMapOptions: google.maps.MapOptions = {
-  // using a mapId is required for using AdvancedMarkerView
+  // Using a mapId is required for using AdvancedMarkerView
   mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID!,
   center: {
     lat: 47.6560479,

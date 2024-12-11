@@ -7,7 +7,7 @@ import styles from './page.module.css'
 
 const HomePage: React.FC = () => {
   return (
-    <GoogleMapsProvider>
+    <GoogleMapsProvider libraries={['places']}>
       <div className={styles.home}>
         <div>
           <HomePageHeader />
