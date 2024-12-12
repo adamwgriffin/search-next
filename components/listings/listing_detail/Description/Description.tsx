@@ -1,24 +1,16 @@
-import type { NextPage } from 'next'
-import css from 'styled-jsx/css'
+import styles from './Description.module.css'
 
-export interface DescriptionProps {
+export type DescriptionProps = {
   description: string | null
 }
 
-const Description: NextPage<DescriptionProps> = ({ description }) => {
+const Description: React.FC<DescriptionProps> = ({ description }) => {
   return (
     <div>
-      <h4 className='heading'>Description</h4>
-      <p className='description'>{description}</p>
-      <style jsx>{styles}</style>
+      <h4>Description</h4>
+      <p className={styles.description}>{description}</p>
     </div>
   )
 }
-
-const styles = css`
-  .description {
-    margin: 0;
-  }
-`
 
 export default Description
