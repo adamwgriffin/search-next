@@ -1,6 +1,7 @@
 import type { AppState } from '..'
 import type { ListingDetail } from '../../types/listing_types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { createAppAsyncThunk } from '../../lib/store_helpers'
 import http from '../../lib/http'
 
@@ -21,6 +22,18 @@ export const getListingDetail = createAppAsyncThunk<ListingDetail, string>(
     return response.data
   }
 )
+
+export const listingDetailApi = createApi({
+  reducerPath: 'listingDetailApi',
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  endpoints: (builder) => ({
+    getListingDetail: builder.query<ListingDetail, string>({
+      query: (listingSlug) => `listing_detail/${listingSlug}`
+    })
+  })
+})
+
+export const { useGetListingDetailQuery } = listingDetailApi
 
 export const listingDetailSlice = createSlice({
   name: 'listingDetail',

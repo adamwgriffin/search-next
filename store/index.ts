@@ -7,6 +7,7 @@ import listingMapReducer from './listingMap/listingMapSlice'
 import autocompleteReducer from './autocomplete/autocompleteSlice'
 import errorReducer from './error/errorSlice'
 import userReducer from './user/userSlice'
+import { listingDetailApi } from './listingDetail/listingDetailSlice'
 
 export function makeStore() {
   return configureStore({
@@ -18,8 +19,11 @@ export function makeStore() {
       listingMap: listingMapReducer,
       autocomplete: autocompleteReducer,
       error: errorReducer,
-      user: userReducer
+      user: userReducer,
+      [listingDetailApi.reducerPath]: listingDetailApi.reducer
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(listingDetailApi.middleware)
   })
 }
 
