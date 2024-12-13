@@ -47,7 +47,7 @@ export const useSearchNewLocation = () => {
     // a listing for that address
     if (res.listingDetail) {
       await dispatch(listingFoundForAddressSearch(res.listingDetail))
-      router.push(`/listing/${res.listingDetail._id}`)
+      router.push(`/listing/${res.listingDetail.slug}`)
       return res
     }
 
