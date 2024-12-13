@@ -16,11 +16,6 @@ import { listingFoundForAddressSearch } from '../store/listingDetail/listingDeta
 import { selectViewportBounds } from '../store/listingMap/listingMapSelectors'
 import { unwrapResult } from '@reduxjs/toolkit'
 
-const sameViewportBoundsAsPreviousNewLocationSearch = (
-  currentViewportBounds: ViewportLatLngBounds | null,
-  listingSearchResponse: ListingSearchGeocodeResponse
-) => isEqual(currentViewportBounds, listingSearchResponse.viewport)
-
 /**
  * Makes a new request to the Listing Service to geocode what is entered in the search field then dispatches the
  * appropriate action based on the data returned from the service.
@@ -61,9 +56,7 @@ export const useSearchNewLocation = () => {
     if (!res.viewport) {
       throw new Error('Invalid response.')
     }
-    if (
-      sameViewportBoundsAsPreviousNewLocationSearch(currentViewportBounds, res)
-    ) {
+    if (isEqual(currentViewportBounds, res.viewport)) {
       dispatch(searchCurrentLocation())
     } else {
       dispatch(noBoundaryFoundForNewLocationSearch(res))
