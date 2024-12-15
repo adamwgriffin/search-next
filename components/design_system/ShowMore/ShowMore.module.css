@@ -7,7 +7,7 @@
 
 .textContainerShow {
   composes: textContainer;
-  max-height: 2000px;
+  max-height: none;
 }
 
 .textContainer::before {
