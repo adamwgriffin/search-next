@@ -10,6 +10,8 @@ export interface FormatPriceOptions {
   displayInterval?: boolean
 }
 
+const SQFT_PER_ACRE = 43560
+
 export const LongCurrencyFormat: Intl.NumberFormatOptions = {
   style: 'currency',
   currency: Currency,
@@ -79,7 +81,20 @@ export const getBathrooms = (listing: Listing | ListingDetail): number => {
 }
 
 export const formatSqft = ({ sqft }: Listing | ListingDetail) =>
-  sqft?.toLocaleString()
+  sqft?.toLocaleString(Locale)
+
+export const formatLotSize = (sqft: number) => {
+  if (sqft >= SQFT_PER_ACRE) {
+    const acres = sqft / SQFT_PER_ACRE
+    return (
+      acres.toLocaleString(Locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + ' acres'
+    )
+  }
+  return sqft.toLocaleString(Locale) + ' sqft'
+}
 
 export const cityStateZip = (location: ListingAddress) => {
   const { city, state, zip } = location

@@ -31,7 +31,8 @@ export const ListingDetailResultProjectionFields = {
   propertyType: 1,
   yearBuilt: 1,
   soldDate: 1,
-  propertyDetails: 1
+  propertyDetails: 1,
+  lotSize: 1
 }
 
 export const DefaultMaxDistance = 1609.34 // 1 mile in meters
