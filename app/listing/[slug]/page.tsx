@@ -1,34 +1,50 @@
-'use client'
-
 import type { ListingDetailParams } from '../../api/listing_detail/[slug]/route'
-import { useParams } from 'next/navigation'
-import { useGetListingDetailQuery } from '../../../store/listingDetail/listingDetailSlice'
 import GoogleMapsProvider from '../../../providers/GoogleMapsProvider'
+import mongooseConnect from '../../../lib/mongooseConnect'
+import { getListingDetail } from '../../../lib/listing_search_helpers'
 import ListingDetailHeader from '../../../containers/ListingDetailHeader/ListingDetailHeader'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
 import LoginOrRegisterModal from '../../../containers/modals/LoginOrRegisterModal/LoginOrRegisterModal'
-import LoadingDots from '../../../components/design_system/LoadingDots/LoadingDots'
 import styles from './page.module.css'
 
-const ListingPage: React.FC = () => {
-  const params = useParams<ListingDetailParams>()
-  const {
-    data: listing,
-    error,
-    isLoading
-  } = useGetListingDetailQuery(params.slug)
+export type ListingPageProps = {
+  params: ListingDetailParams
+}
+
+const ListingPage: React.FC<ListingPageProps> = async ({ params }) => {
+  let listingDetail = null
+  let error = false
+
+  try {
+    await mongooseConnect()
+    const listing = await getListingDetail(params.slug)
+    // We have to serialize the listing because we get errors when trying to pass
+    // the POJO returned from the db query in getListingDetail()
+    listingDetail = JSON.parse(
+      JSON.stringify(listing, (_key, value) =>
+        value instanceof Date ? value.toISOString() : value
+      )
+    )
+  } catch (err) {
+    console.error(err)
+    error = true
+  }
 
   return (
     <GoogleMapsProvider libraries={['places']}>
       <div className={styles.page}>
         <ListingDetailHeader />
         <div className={styles.pageContainer}>
-          {isLoading && <LoadingDots size='2rem' />}
-          {listing && <ListingDetail listing={listing} />}
-          {error && (
+          {listingDetail && <ListingDetail listing={listingDetail} />}
+          {!listingDetail && !error && (
             <div className={styles.notFound}>
               <div className={styles.notFoundIcon}>🤷‍♂️</div>
               <div>We couldn&apos;t find that one</div>
+            </div>
+          )}
+          {error && (
+            <div className={styles.notFound}>
+              <div>Something went wrong :(</div>
             </div>
           )}
         </div>

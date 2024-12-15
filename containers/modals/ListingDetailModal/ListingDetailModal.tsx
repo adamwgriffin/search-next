@@ -8,7 +8,7 @@ import {
   closeModal,
   resetModal
 } from '../../../store/application/applicationSlice'
-import { useGetListingDetailQuery } from '../../../store/listingDetail/listingDetailSlice'
+import { useGetListingDetailQuery } from '../../../store/listingDetailApi/listingDetailApi'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'

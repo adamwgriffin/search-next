@@ -2,12 +2,11 @@ import { configureStore } from '@reduxjs/toolkit'
 import filtersReducer from './filters/filtersSlice'
 import applicationReducer from './application/applicationSlice'
 import listingSearchReducer from './listingSearch/listingSearchSlice'
-import listingDetailReducer from './listingDetail/listingDetailSlice'
 import listingMapReducer from './listingMap/listingMapSlice'
 import autocompleteReducer from './autocomplete/autocompleteSlice'
 import errorReducer from './error/errorSlice'
 import userReducer from './user/userSlice'
-import { listingDetailApi } from './listingDetail/listingDetailSlice'
+import { listingDetailApi } from './listingDetailApi/listingDetailApi'
 
 export function makeStore() {
   return configureStore({
@@ -15,7 +14,6 @@ export function makeStore() {
       application: applicationReducer,
       listingSearch: listingSearchReducer,
       filters: filtersReducer,
-      listingDetail: listingDetailReducer,
       listingMap: listingMapReducer,
       autocomplete: autocompleteReducer,
       error: errorReducer,

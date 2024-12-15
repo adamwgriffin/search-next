@@ -12,7 +12,7 @@ import {
   boundaryFoundForNewLocationSearch,
   noBoundaryFoundForNewLocationSearch
 } from '../store/listingSearch/listingSearchSlice'
-import { listingFoundForAddressSearch } from '../store/listingDetail/listingDetailSlice'
+import { listingFoundForAddressSearch } from '../store/listingSearch/listingSearchSlice'
 import { selectViewportBounds } from '../store/listingMap/listingMapSelectors'
 import { unwrapResult } from '@reduxjs/toolkit'
 
@@ -41,7 +41,7 @@ export const useSearchNewLocation = () => {
     // If listingDetail is present, we can assume that what was searched for was an address, and that the service found
     // a listing for that address
     if (res.listingDetail) {
-      await dispatch(listingFoundForAddressSearch(res.listingDetail))
+      await dispatch(listingFoundForAddressSearch())
       router.push(`/listing/${res.listingDetail.slug}`)
       return res
     }
