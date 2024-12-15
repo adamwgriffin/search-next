@@ -21,7 +21,7 @@
 }
 
 .detailsName {
-  color: #767676;
+  color: var(--listing-details-name-foreground);
 }
 
 @media smallAndUp {
