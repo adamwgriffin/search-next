@@ -37,15 +37,13 @@ const ListingPage: React.FC<ListingPageProps> = async ({ params }) => {
         <div className={styles.pageContainer}>
           {listingDetail && <ListingDetail listing={listingDetail} />}
           {!listingDetail && !error && (
-            <div className={styles.notFound}>
+            <div className={styles.message}>
               <div className={styles.notFoundIcon}>🤷‍♂️</div>
               <div>We couldn&apos;t find that one</div>
             </div>
           )}
           {error && (
-            <div className={styles.notFound}>
-              <div>Something went wrong :(</div>
-            </div>
+            <div className={styles.message}>Something went wrong :(</div>
           )}
         </div>
       </div>
