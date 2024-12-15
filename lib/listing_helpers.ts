@@ -52,7 +52,7 @@ export const formatPrice = (
   rental: boolean,
   options: FormatPriceOptions = defaultFormatPriceOptions
 ) => {
-  const opts = { defaultFormatPriceOptions, ...options }
+  const opts = { ...defaultFormatPriceOptions, ...options }
   const priceFormatted = Intl.NumberFormat(
     Locale,
     opts.numberFormatOptions
