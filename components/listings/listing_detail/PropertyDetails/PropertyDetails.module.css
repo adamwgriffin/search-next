@@ -21,7 +21,8 @@
 
 .detailsName {
   font-size: 0.875rem;
-  color: #767676;
+  color: var(--property-details-name-foreground);
+  /* color: rgb(162, 162, 162); */
 }
 
 @media smallAndUp {

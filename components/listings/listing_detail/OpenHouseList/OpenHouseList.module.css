@@ -15,3 +15,8 @@
 .time {
   text-align: right;
 }
+
+.date,
+.time {
+  white-space: nowrap;
+}

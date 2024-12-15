@@ -1,36 +1,20 @@
-import type { NextPage } from 'next'
 import type { ListingAddress } from '../../../../types/listing_types'
-import css from 'styled-jsx/css'
 import { cityStateZip } from '../../../../lib/listing_helpers'
+import styles from './ListingDetailAddress.module.css'
 
-export interface ListingDetailAddressProps {
+export type ListingDetailAddressProps = {
   address: ListingAddress
 }
 
-const ListingDetailAddress: NextPage<ListingDetailAddressProps> = ({ address }) => {
+const ListingDetailAddress: React.FC<ListingDetailAddressProps> = ({
+  address
+}) => {
   return (
-    <>
-      <address className='address'>
-        <div className='addressLine1'>
-          {address.line1}
-        </div>
-        <div className='addressLine2'>
-          {cityStateZip(address)}
-        </div>
-      </address>
-      <style jsx>{styles}</style>
-    </>
+    <address className={styles.address}>
+      <div className={styles.addressLine1}>{address.line1}</div>
+      <div>{cityStateZip(address)}</div>
+    </address>
   )
 }
-
-const styles = css`
-  .address {
-    font-style: normal;
-  }
-
-  .addressLine1 {
-    font-size: 1.5rem;
-  }
-`
 
 export default ListingDetailAddress

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { skipToken } from '@reduxjs/toolkit/query/react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/app_hooks'
 import {
   selectListingDetailModalOpen,
@@ -8,50 +8,43 @@ import {
   closeModal,
   resetModal
 } from '../../../store/application/applicationSlice'
-import {
-  getListingDetail,
-  resetListingDetail,
-  selectListing
-} from '../../../store/listingDetail/listingDetailSlice'
+import { useGetListingDetailQuery } from '../../../store/listingDetailApi/listingDetailApi'
 import Modal from '../../../components/design_system/modal/Modal/Modal'
 import ModalHeader from '../../../components/design_system/modal/ModalHeader/ModalHeader'
 import ModalBody from '../../../components/design_system/modal/ModalBody/ModalBody'
 import ListingDetail from '../../../components/listings/listing_detail/ListingDetail/ListingDetail'
+import LoadingDots from '../../../components/design_system/LoadingDots/LoadingDots'
+import styles from './ListingDetailModal.module.css'
 
 const ListingDetailModal: React.FC = () => {
   const dispatch = useAppDispatch()
   const modalOpen = useAppSelector(selectListingDetailModalOpen)
   const listingSlug = useAppSelector(selectListingModalSlug)
-  const listing = useAppSelector(selectListing)
 
-  useEffect(() => {
-    if (listingSlug) {
-      dispatch(getListingDetail(listingSlug))
-    }
-  }, [listingSlug, dispatch])
-
-  const handleClose = () => {
-    dispatch(closeModal())
-  }
-
-  // The modal doesn't animate out correctly unless we reset this data on
-  // react-modal's onAfterClose event. if we don't reset the data at all then it
-  // may either show the previous listing detail or not trigger a re-render,
-  // causing it to show nothing.
-  const handleAfterClose = () => {
-    dispatch(resetModal())
-    dispatch(resetListingDetail())
-  }
+  const {
+    data: listing,
+    error,
+    isLoading
+  } = useGetListingDetailQuery(listingSlug ?? skipToken)
 
   return (
     <Modal
       isOpen={modalOpen}
       contentLabel='Listing Detail'
       fullScreenOnMobile={true}
-      onAfterClose={handleAfterClose}
     >
-      <ModalHeader title='' onClose={handleClose} />
-      <ModalBody>{listing && <ListingDetail listing={listing} />}</ModalBody>
+      <ModalHeader title='' onClose={() => dispatch(closeModal())} />
+      <ModalBody>
+        {isLoading && (
+          <div className={styles.loadingState}>
+            <LoadingDots />
+          </div>
+        )}
+        {listing && <ListingDetail listing={listing} />}
+        {error && (
+          <div className={styles.loadingState}>Something went wrong :(</div>
+        )}
+      </ModalBody>
     </Modal>
   )
 }

@@ -5,7 +5,7 @@ import type { GeocodeBoundaryQueryParams } from '../zod_schemas/geocodeBoundaryS
 import type { BoundsParams } from '../zod_schemas/listingSearchParamsSchema'
 import type { BoundarySearchQueryParams } from '../zod_schemas/boundarySearchRequestSchema'
 import { bboxPolygon, intersect } from '@turf/turf'
-import { differenceInDays, subDays } from 'date-fns'
+import { differenceInDays } from 'date-fns'
 import {
   addressComponentsToListingAddress,
   getPlaceDetails,
@@ -144,4 +144,21 @@ export const getResponseForBoundary = async (
     pagination
   )
   return listingSearchGeocodeView(boundary, results, pagination)
+}
+
+export const getListingDetail = async (slug: string) => {
+  const listing = await Listing.findOne(
+    { slug },
+    ListingDetailResultProjectionFields
+  ).lean()
+  if (!listing) return null
+  const currentOpenHouses =
+    listing.openHouses?.filter((openHouse) => {
+      return openHouse.start > new Date()
+    }) || []
+  return {
+    ...listing,
+    openHouses: currentOpenHouses,
+    daysOnMarket: daysOnMarket(listing.listedDate, listing.soldDate)
+  }
 }

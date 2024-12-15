@@ -75,7 +75,7 @@ const SlideShow: React.FC<SlideShowProps> = ({ images, open, onClose }) => {
   })
 
   return (
-    <dialog className={open ? styles.slideShow : styles.slideShowClosed}>
+    <dialog open={open} className={styles.slideShow}>
       <div className={styles.header}>
         <button className={styles.close} onClick={closeSlideShow}>
           X Close

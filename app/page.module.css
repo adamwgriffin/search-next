@@ -1,4 +1,4 @@
-@value smallAndUp from '../../styles/breakpoints.module.css';
+@value smallAndUp from '../styles/breakpoints.module.css';
 
 .home {
   display: grid;

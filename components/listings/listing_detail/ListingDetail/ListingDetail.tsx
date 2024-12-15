@@ -1,6 +1,4 @@
 import type { ListingDetail } from '../../../../types/listing_types'
-import { useState } from 'react'
-import { createPortal } from 'react-dom'
 import {
   formatPriceFromListing,
   formatSoldDate
@@ -12,7 +10,6 @@ import ListingDetailBedsBathsSQFT from '../ListingDetailBedsBathsSQFT/ListingDet
 import Description from '../Description/Description'
 import HomeHighlights from '../Highlights/HomeHighlights'
 import PropertyDetails from '../PropertyDetails/PropertyDetails'
-import SlideShow from '../SlideShow/SlideShow'
 import OpenHouseList from '../OpenHouseList/OpenHouseList'
 import styles from './ListingDetail.module.css'
 
@@ -21,18 +18,13 @@ export type ListingDetailProps = {
 }
 
 const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
-  const [slideShowOpen, setSlideShowOpen] = useState(false)
-
   return (
     <div className={styles.listingDetail}>
       <div className={styles.status}>
         <ListingStatusIndicator status={listing.status} />
         {listing.soldDate && formatSoldDate(listing.soldDate)}
       </div>
-      <ListingDetailImage
-        listing={listing}
-        onClick={() => setSlideShowOpen(true)}
-      />
+      <ListingDetailImage listing={listing} />
       <div className={styles.price}>
         {formatPriceFromListing(listing, { displayInterval: true })}
       </div>
@@ -46,14 +38,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({ listing }) => {
       <HomeHighlights listing={listing} />
       {listing.propertyDetails && (
         <PropertyDetails propertyDetails={listing.propertyDetails} />
-      )}
-      {createPortal(
-        <SlideShow
-          open={slideShowOpen}
-          onClose={() => setSlideShowOpen(false)}
-          images={listing.photoGallery || []}
-        />,
-        document.body
       )}
     </div>
   )

@@ -78,6 +78,7 @@ export interface ListingDetail extends Listing {
   soldDate?: string
   daysOnMarket: number
   propertyDetails?: PropertDetailsSection[]
+  lotSize: number
 }
 
 export interface BoundaryRecord {

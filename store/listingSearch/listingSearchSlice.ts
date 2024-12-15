@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { ListingSearchGeocodeResponse } from '../../types/listing_types'
-import { createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import {
   SelectedListing,
   HighlightedMarker,
@@ -10,7 +10,6 @@ import {
   newLocationGeocodeSearch,
   searchCurrentLocation
 } from './listingSearchCommon'
-import { listingFoundForAddressSearch } from '../listingDetail/listingDetailSlice'
 
 const initialState: ListingSearchState = {
   boundaryId: null,
@@ -49,6 +48,12 @@ export const listingSearchSlice = createSlice({
       _action: PayloadAction<ListingSearchGeocodeResponse>
     ) => {
       state.doListingSearchOnMapIdle = true
+    },
+
+    // Reset the boundaryId to null for actions that indicate there is no
+    // boundary available or needed based on the listing service response
+    listingFoundForAddressSearch: (state) => {
+      state.boundaryId = initialState.boundaryId
     },
 
     setSelectedListing: (state, action: PayloadAction<SelectedListing>) => {
@@ -94,24 +99,13 @@ export const listingSearchSlice = createSlice({
       state.listingSearchRunning = false
       console.error(action.error)
     })
-
-    // Reset the boundaryId to null for actions that indicate there is no boundary available or needed based on the
-    // listing service response
-    builder.addMatcher(
-      isAnyOf(
-        listingFoundForAddressSearch,
-        noBoundaryFoundForNewLocationSearch
-      ),
-      (state) => {
-        state.boundaryId = initialState.boundaryId
-      }
-    )
   }
 })
 
 export const {
   boundaryFoundForNewLocationSearch,
   noBoundaryFoundForNewLocationSearch,
+  listingFoundForAddressSearch,
   setSelectedListing,
   setHighlightedMarker,
   setDoListingSearchOnMapIdle

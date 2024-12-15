@@ -33,16 +33,10 @@ const ListingDetailMainImage: React.FC<ListingDetailMainImageProps> = ({
 }) => {
   const [imageLoadError, setImageLoadError] = useState(false)
 
-  const handleImageLoadError = useCallback(() => setImageLoadError(true), [])
+  const handleImageLoadError = () => setImageLoadError(true)
 
   if (imageLoadError) {
-    return (
-      <img
-        src={ImageLoadErrorFallbackUrl}
-        alt={alt}
-        {...commonImgAttrs}
-      />
-    )
+    return <img src={ImageLoadErrorFallbackUrl} alt={alt} {...commonImgAttrs} />
   }
 
   if (imageUrl) {
